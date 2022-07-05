@@ -5,15 +5,15 @@ import { Router, Request, Response,NextFunction } from 'express';
 // import { productService } from '../services';
 // import { adminRequired } from '../middlewares/admin-required';
 
-const userRouter = Router();
+const reviewRouter = Router();
 
 // 주문 api (아래는 /register이지만, 실제로는 /product/order 요청해야 함.)
 // orderList, email, address, phonenumber등을 받음
 
-userRouter.get('/:menuId', async (req: Request <{menuId: number},{},{},{}>, res:Response, next:NextFunction) => {
+reviewRouter.get('/all', async (req: Request, res:Response, next:NextFunction) => {
   try {
-    let menu :number = req.params.menuId;
-    
+
+    const {eamil} = req.body
     // const products = await productService.getAllProduct();
 
     //@ts-ignore
@@ -25,4 +25,4 @@ userRouter.get('/:menuId', async (req: Request <{menuId: number},{},{},{}>, res:
 });
 
 
-export { userRouter };
+export { reviewRouter };
