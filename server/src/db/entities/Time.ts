@@ -1,7 +1,7 @@
 import {BaseEntity, Entity, Column, PrimaryGeneratedColumn,PrimaryColumn, CreateDateColumn} from "typeorm"
 
 @Entity('Time')
-export class Restaurant extends BaseEntity{
+export class Time extends BaseEntity{
   @PrimaryGeneratedColumn()
   timeId: number;
 

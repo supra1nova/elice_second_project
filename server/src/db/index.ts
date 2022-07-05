@@ -1,5 +1,5 @@
 import { createConnection } from "typeorm"
-import {User, Restaurant } from "./entities/index"
+import {User, Restaurant, Like, Category, Menu, OwnerReview, Reserve, Time } from "./entities/index"
 const main = async ()=>{
  try{
   const connection = await createConnection({
@@ -10,7 +10,7 @@ const main = async ()=>{
     password: '0000',
     database: 'matjip',
     synchronize: true,
-    entities: [User, Restaurant]
+    entities: [Like, Category, Menu, OwnerReview, Reserve, Restaurant, Time, User]
   })
   console.log("CONNECTED TO MYSQL")
  } catch (error){
