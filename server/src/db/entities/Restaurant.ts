@@ -3,7 +3,7 @@ import {BaseEntity, Entity, Column, PrimaryColumn} from "typeorm"
 @Entity('Restaurant')
 export class Restaurant extends BaseEntity{
   @PrimaryColumn()
-  REGNUMBER: string;
+  REGNumber: string;
 
   @Column()
   name: string;

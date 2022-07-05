@@ -1,33 +1,24 @@
-import {BaseEntity, Entity, Column, PrimaryColumn} from "typeorm"
+import {BaseEntity, Entity, Column, PrimaryGeneratedColumn } from "typeorm"
 
-@Entity('Restaurant')
-export class Restaurant extends BaseEntity{
-  @PrimaryColumn()
-  REGNUMBER: string;
+@Entity('Menu')
+export class Menu extends BaseEntity{
+  @PrimaryGeneratedColumn()
+  timeId: number;
+
+  @Column()
+  REGNumber: string;
 
   @Column()
   name: string;
 
   @Column()
-  category: string;
+  price: number;
 
   @Column({
-    type: "simple-json",
-    nullable: true
+    length: 500
   })
-  address: {
-    address1: string,
-    address2: string,
-    postalcode: number
-  } 
-
-  @Column({
-    length: 10
-  })
-  phoneNumber: string;
+  description: string;
 
   @Column()
   image: string;
-
-
 }

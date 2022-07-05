@@ -33,4 +33,9 @@ export class User extends BaseEntity{
 
   @Column()
   REGNumber: string;
+
+  @Column({
+    type:"simple-json",
+  })
+  image: string
 }
