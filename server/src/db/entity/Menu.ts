@@ -4,7 +4,7 @@ import { Restaurant } from "./Restaurant";
 @Entity('Menu')
 export class Menu extends BaseEntity{
   @PrimaryGeneratedColumn()
-  timeId: number;
+  menuId: number;
 
   @Column()
   REGNumber: string;
@@ -12,14 +12,15 @@ export class Menu extends BaseEntity{
   @Column()
   name: string;
 
-  @Column()
+  @Column({nullable:true
+  })
   price: number;
 
-  @Column({
+  @Column({nullable:true
   })
   description: string;
 
-  @Column()
+  @Column({nullable:true})
   image: string;
 
   @ManyToOne(()=> Restaurant, restaurant=>restaurant.menus, {onDelete: 'CASCADE'})// 식당 삭제시 메뉴 삭제
