@@ -1,4 +1,5 @@
-import {BaseEntity, Entity, Column, PrimaryColumn} from "typeorm"
+import {BaseEntity, Entity, Column, PrimaryColumn, OneToOne,JoinColumn} from "typeorm"
+import {User} from "./user"
 
 @Entity('Restaurant')
 export class Restaurant extends BaseEntity{
@@ -22,12 +23,13 @@ export class Restaurant extends BaseEntity{
   } 
 
   @Column({
-    length: 10
   })
   phoneNumber: string;
 
   @Column()
   image: string;
 
-
+  @OneToOne( ()=>User, (user)=> user.REGNumber)
+  @JoinColumn()
+  user: User
 }

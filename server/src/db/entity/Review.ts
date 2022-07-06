@@ -6,7 +6,6 @@ export class Review extends BaseEntity{
   reserveId: string;
 
   @Column({
-    length: 500
   })
   comment: string;
 
