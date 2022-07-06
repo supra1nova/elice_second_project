@@ -8,4 +8,4 @@ import { Review } from "./Review"
 import { Time } from "./Time"
 import { User } from "./User"
 
-export { Like, Category, Menu, OwnerReview, Reserve, Restaurant, Time, User } 
+export { Like, Category, Menu, Review, OwnerReview, Reserve, Restaurant, Time, User } 
