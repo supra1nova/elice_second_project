@@ -37,14 +37,14 @@ app.get('/api/customers',(req,res)=>{
 // api 라우팅
 // 아래처럼 하면, userRouter 에서 '/login' 으로 만든 것이 실제로는 앞에 /api가 붙어서
 // /api/login 으로 요청을 해야 하게 됨. 백엔드용 라우팅을 구분하기 위함임.
-app.use('/api/like', likeRouter);
-app.use('/api/menu', menuRouter);
-app.use('/api/ownerReview', ownerReviewRouter);
-app.use('/api/reserve', reserveRouter);
-app.use('/api/restaurant', restaurantRouter);
-app.use('/api/review', reviewRouter);
-app.use('/api/time', timeRouter);
-app.use('/api/user', userRouter);
+app.use('/api/likes', likeRouter);
+app.use('/api/menus', menuRouter);
+app.use('/api/ownerReviews', ownerReviewRouter);
+app.use('/api/reserves', reserveRouter);
+app.use('/api/restaurants', restaurantRouter);
+app.use('/api/reviews', reviewRouter);
+app.use('/api/times', timeRouter);
+app.use('/api/users', userRouter);
 
 // 순서 중요 (errorHandler은 다른 일반 라우팅보다 나중에 있어야 함)
 // 그래야, 에러가 났을 때 next(error) 했을 때 여기로 오게 됨
