@@ -1,0 +1,24 @@
+import {Request, Response} from "express";
+import {getManager} from "typeorm";
+import {Category} from "../entity/index";
+
+/**
+ * Loads all posts from the database.
+ */
+export class CategoryModel{
+  async postGetAllAction(request: Request, response: Response) {
+
+    // get a post repository to perform operations with post
+    const CategoryRepository = getManager().getRepository(Category);
+
+    // load posts
+    const posts = await CategoryRepository.find();
+
+    // return loaded posts
+    response.send(posts);
+  }
+
+}
+
+const categoryModel= new CategoryModel();
+export{categoryModel};
