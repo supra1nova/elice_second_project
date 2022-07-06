@@ -1,4 +1,6 @@
-import {BaseEntity, Entity, Column, PrimaryColumn} from "typeorm"
+import {BaseEntity, Entity, Column, PrimaryColumn, OneToOne, JoinColumn} from "typeorm"
+import { OwnerReview } from "./OwnerReview";
+import { Reserve } from "./Reserve";
 
 @Entity('Review')   // mySQL 예약어 Like와 겹쳐도 되는가...?
 export class Review extends BaseEntity{
@@ -19,4 +21,11 @@ export class Review extends BaseEntity{
     {type: "simple-json"}
   )
   image: string;
+
+  @OneToOne(()=>Reserve, reserve=>reserve.review, {onDelete:'CASCADE'})
+  @JoinColumn()
+  reserve:Reserve;
+
+  @OneToOne(()=>OwnerReview, ownerreview=> ownerreview.review)
+  ownerreview:OwnerReview;
 }

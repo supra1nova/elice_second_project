@@ -1,4 +1,5 @@
-import {BaseEntity, Entity, Column, PrimaryColumn} from "typeorm"
+import {BaseEntity, Entity, Column, PrimaryColumn, OneToOne, JoinColumn} from "typeorm"
+import { Review } from "./Review";
 
 @Entity('OwnerReview')   // mySQL 예약어 Like와 겹쳐도 되는가...?
 export class OwnerReview extends BaseEntity{
@@ -8,4 +9,8 @@ export class OwnerReview extends BaseEntity{
   @Column({
   })
   comment: string;
+
+  @OneToOne(()=>Review, review=> review.ownerreview)
+  @JoinColumn()
+  review:Review
 }

@@ -11,4 +11,4 @@ const main = async ()=>{
   }}
 main();
 
-export * from './controller/CategoryController';
+export * from './model/Category-Model';
