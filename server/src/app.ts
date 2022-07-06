@@ -1,8 +1,20 @@
 import cors from 'cors';
 import express, {Request, Response} from 'express';
 import {likeRouter,  menuRouter,ownerReviewRouter,  restaurantRouter,  reserveRouter,  reviewRouter,  timeRouter,  userRouter,} from './routers';
-
 import { } from './middlewares';
+import { AppDataSource } from "./db/data-source"
+
+const main = async ()=>{
+ try{
+  AppDataSource.initialize();
+  console.log("CONNECTED TO MYSQL");
+  }
+  catch (error){
+  console.error(error);
+  throw new Error("Unable to connect to mysql")
+  }}
+  
+main();
 
 const app = express();
 
