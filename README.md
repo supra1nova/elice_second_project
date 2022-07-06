@@ -70,8 +70,6 @@ client
 
 ## 🗄 Server
 
-<br>
-
 ### **Title**
 
 내용적기
