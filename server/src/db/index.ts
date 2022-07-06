@@ -9,7 +9,7 @@ const main = async ()=>{
     username: "admin",
     password: '0000',
     database: 'matjip',
-    synchronize: true,
+    synchronize: false,
     entities: [Like, Category, Menu, OwnerReview, Reserve, Restaurant, Time, User]
   })
   console.log("CONNECTED TO MYSQL")
