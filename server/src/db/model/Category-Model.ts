@@ -1,21 +1,18 @@
-import {Request, Response} from "express";
-import {getManager} from "typeorm";
-import {Category} from "../entity/index";
+import {AppDataSource} from "../data-source"
+import {User} from '../entity/User'
 
 /**
  * Loads all posts from the database.
  */
 export class CategoryModel{
-  async postGetAllAction(request: Request, response: Response) {
-
+  
+  async findUserbyEmail(email:string) {
+    const userRepository= AppDataSource.getRepository(User);
     // get a post repository to perform operations with post
-    const CategoryRepository = getManager().getRepository(Category);
-
-    // load posts
-    const posts = await CategoryRepository.find();
-
-    // return loaded posts
-    response.send(posts);
+    const user = await userRepository.findOneBy({
+    email: email
+  })
+    return (user);
   }
 
 }
