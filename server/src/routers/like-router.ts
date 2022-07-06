@@ -7,22 +7,47 @@ import { Router, Request, Response,NextFunction } from 'express';
 
 const likeRouter = Router();
 
-// 주문 api (아래는 /register이지만, 실제로는 /product/order 요청해야 함.)
-// orderList, email, address, phonenumber등을 받음
-
-likeRouter.get('/all', async (req: Request, res:Response, next:NextFunction) => {
+// 1. 찜 생성
+likeRouter.post('/create', async (req: Request, res:Response, next:NextFunction) => {
   try {
-
-    const {eamil} = req.body
-    // const products = await productService.getAllProduct();
-
-    //@ts-ignore
-
-    res.status(201).json(products);
+    const { REGNumber, name, category, address1, address2, postalNumber, phoneNumber, image } = req.body
+    const newRestaurant = await restaurantService.addRestaurant({ REGNumber, name, category, address1, address2, postalNumber, phoneNumber, image });
+    res.status(201).json(newRestaurant);
   } catch (error) {
     next(error);
   }
 });
+
+// 2. 찜 목록 조회
+likeRouter.get('/', async (req: Request, res:Response, next:NextFunction) => {
+  try {
+    // res.status(201).json('');
+    res.status(201).send('GET - This is from likeRouter');
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 2. 찜 목록 조회
+likeRouter.put('/', async (req: Request, res:Response, next:NextFunction) => {
+  try {
+    // res.status(201).json('');
+    res.status(201).send('PUT - This is from likeRouter');
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 4. 찜 삭제 조회
+likeRouter.delete('/', async (req: Request, res:Response, next:NextFunction) => {
+  try {
+    // res.status(201).json('');
+    res.status(201).send('DELETE - This is from likeRouter');
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 
 export { likeRouter };
