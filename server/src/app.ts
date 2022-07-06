@@ -1,7 +1,7 @@
 import cors from 'cors';
-import express, {Request, Response} from 'express';
-import { } from './routers';
-import { } from './middlewares';
+import express, { Request, Response } from 'express';
+import {} from './routers';
+import {} from './middlewares';
 
 const app = express();
 
@@ -13,11 +13,11 @@ app.use(express.json());
 
 // Content-Type: application/x-www-form-urlencoded 형태의 데이터를 인식하고 핸들링할 수 있게 함.
 app.use(express.urlencoded({ extended: false }));
-app.get('/api/customers',(req,res)=>{
-  const customers=[
-    {id:1, firstName: 'Kate'},
-    {id:2, firstName: 'John'},
-    {id:3, firstName: "oliver"},
+app.get('/api/customers', (req, res) => {
+  const customers = [
+    { id: 1, firstName: 'Kate' },
+    { id: 2, firstName: 'John' },
+    { id: 3, firstName: 'oliver' },
   ];
   res.json(customers);
 });
