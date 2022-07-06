@@ -1,6 +1,9 @@
-import {BaseEntity, Entity, Column, PrimaryColumn, OneToOne,JoinColumn} from "typeorm"
-import {User} from "./user"
-
+import {BaseEntity, Entity, Column, PrimaryColumn, OneToOne,JoinColumn, OneToMany, ManyToMany, ManyToOne, Like} from "typeorm"
+import {User} from "./User"
+import {Menu} from "./Menu"
+import { Category } from "./Category";
+import { Time } from "./Time";
+import { Wish } from "./Wish"
 @Entity('Restaurant')
 export class Restaurant extends BaseEntity{
   @PrimaryColumn()
@@ -14,7 +17,6 @@ export class Restaurant extends BaseEntity{
 
   @Column({
     type: "simple-json",
-    nullable: true
   })
   address: {
     address1: string,
@@ -22,14 +24,25 @@ export class Restaurant extends BaseEntity{
     postalcode: number
   } 
 
-  @Column({
+  @Column({nullable:true
   })
   phoneNumber: string;
 
-  @Column()
+  @Column({nullable:true})
   image: string;
 
-  @OneToOne( ()=>User, (user)=> user.REGNumber)
-  @JoinColumn()
+  @OneToOne( ()=>User, (user)=> user.restaurant, {onDelete:'CASCADE'})//회원 삭제시 식당 삭제
   user: User
+
+  @OneToMany(()=> Menu, menu=>menu.restaurant)
+  menus: Menu[];
+
+  @ManyToOne(()=> Category, categoryEntity=>categoryEntity.restaurants ,{onDelete:'SET NULL'})
+  categoryEntity:Category 
+
+  @OneToMany(()=>Time, time=>time.restaurant )
+  times: Time[];
+
+  @OneToMany(()=>Wish, wish=>wish.restaurant)
+  wishes:Wish[];
 }

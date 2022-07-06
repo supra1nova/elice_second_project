@@ -1,9 +1,11 @@
-import {BaseEntity, Entity, Column, PrimaryColumn} from "typeorm"
+import {BaseEntity, Entity, Column, PrimaryColumn, OneToOne, JoinColumn, PrimaryGeneratedColumn} from "typeorm"
+import { OwnerReview } from "./OwnerReview";
+import { Reserve } from "./Reserve";
 
 @Entity('Review')   // mySQL 예약어 Like와 겹쳐도 되는가...?
 export class Review extends BaseEntity{
-  @PrimaryColumn()
-  reserveId: string;
+  @PrimaryGeneratedColumn()
+  reserveId: number;
 
   @Column({
   })
@@ -16,7 +18,14 @@ export class Review extends BaseEntity{
   rating: number;
 
   @Column(
-    {type: "simple-json"}
+    {type: "simple-array"}
   )
-  image: string;
+  image: string[];
+
+  @OneToOne(()=>Reserve, reserve=>reserve.review, {onDelete:'CASCADE'})
+  @JoinColumn()
+  reserve:Reserve;
+
+  @OneToOne(()=>OwnerReview, ownerreview=> ownerreview.review)
+  ownerreview:OwnerReview;
 }

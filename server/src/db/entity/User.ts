@@ -1,11 +1,7 @@
-import {BaseEntity, Entity, Column, PrimaryColumn, OneToOne, JoinColumn} from "typeorm"
+import {BaseEntity, Entity, Column, PrimaryColumn, OneToOne, JoinColumn, OneToMany} from "typeorm"
+import { Reserve } from "./Reserve";
 import { Restaurant } from "./Restaurant";
-
-// export enum RoleTypes{
-//   ADMIN="ADMIN",
-//   OWNER="OWNER",
-//   USER="USER"
-// }
+import { Wish } from "./Wish";
 
 @Entity('User')
 export class User extends BaseEntity{
@@ -25,19 +21,23 @@ export class User extends BaseEntity{
   })
   phoneNumber: string;
 
-  @Column({
-    nullable:true
-  })
+  @Column({nullable:true})
   role: string;
 
-  // @Column()
-  // REGNumber: string;
+  @Column({ nullable: true })
+  REGNumber: string;
 
-  @Column({
+  @Column({ nullable:true
   })
   image: string
 
-  @OneToOne(()=>Restaurant)
+  @OneToOne(()=>Restaurant, (restaurant)=>restaurant.user, {nullable: true})
   @JoinColumn()
-  REGNumber: Restaurant
+  restaurant: Restaurant
+
+  @OneToMany(()=>Wish, wish=>wish.user)
+  wishes:Wish[];
+
+  @OneToMany(()=>Reserve,reserve=>reserve.user)
+  reserves:Reserve[];
 }
