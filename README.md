@@ -32,20 +32,29 @@ npm run start
 ### **Client Architecture**
 
 ```
-client
-├─ public
-│  ├─ images
-│  │  ├─ favicon
-│  ├─ index.html
-│  └─ robots.txt
-├─ src
-│  ├─ App.tsx
-│  ├─ components
-│  │  ├─ atoms
-│  │  ├─ molecules
-│  │  └─ oranisms
-│  ├─ index.tsx
-│  └─ pages
+reservation_web
+├─ client
+│  ├─ .prettierrc.json
+│  ├─ package-lock.json
+│  ├─ package.json
+│  ├─ public
+│  │  ├─ images
+│  │  │  ├─ favicon
+│  │  ├─ index.html
+│  │  └─ robots.txt
+│  ├─ src
+│  │  ├─ App.tsx
+│  │  ├─ api
+│  │  ├─ components
+│  │  │  ├─ atoms
+│  │  │  ├─ molecules
+│  │  │  └─ oranisms
+│  │  ├─ constants
+│  │  ├─ pages
+│  │  ├─ redux
+│  │  │  ├─ actions
+│  │  │  └─ reducers
+│  │  └─ styles
 ```
 
 - client/public => static 파일 폴더
@@ -57,6 +66,7 @@ client
 - client/constants => 상수 파일 폴더
 - client/src/pages => router에 연결되는 page 파일 폴더
 - client/src/redux => redux 파일 폴더
+- client/src/style => 전역적으로 사용될 style 파일 폴더
 
 [Atomic Design Pattern 관련 내용 바로가기 - 개념](https://brunch.co.kr/@ultra0034/63)<br>
 [Atomic Design Pattern 관련 내용 바로가기 - 활용](https://yeoulcoding.me/m/220)
