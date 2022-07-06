@@ -5,7 +5,7 @@ import {Category} from "../entity/index";
 /**
  * Loads all posts from the database.
  */
-export class CategoryController{
+export class CategoryModel{
   async postGetAllAction(request: Request, response: Response) {
 
     // get a post repository to perform operations with post
@@ -20,5 +20,5 @@ export class CategoryController{
 
 }
 
-const categoryController= new CategoryController();
-export{categoryController};
+const categoryModel= new CategoryModel();
+export{categoryModel};

@@ -1,5 +1,5 @@
 import { Category } from "./Category"
-import { Like } from "./Like"
+import { Wish } from "./Wish"
 import { Menu } from "./Menu"
 import { OwnerReview } from "./OwnerReview"
 import { Reserve } from "./Reserve"
@@ -8,4 +8,4 @@ import { Review } from "./Review"
 import { Time } from "./Time"
 import { User } from "./User"
 
-export { Like, Category, Menu, Review, OwnerReview, Reserve, Restaurant, Time, User } 
+export { Wish, Category, Menu, Review, OwnerReview, Reserve, Restaurant, Time, User } 
