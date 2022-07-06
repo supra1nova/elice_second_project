@@ -1,20 +1,16 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import { Home } from "./pages/Home";
+import { MyPage } from "./pages/MyPage";
 
 //fetch test
 function App() {
     return (
         <div className="App">
-            <button
-                onClick={() => {
-                    fetch("/api/customers")
-                        .then((res) => res.json())
-                        .then((data) => console.log(data));
-                }}
-            >
-                Get data
-            </button>
+            <Routes>
+                <Route path="/" element={<Home />}></Route>
+                <Route path="/myPage" element={<MyPage />}></Route>
+            </Routes>
         </div>
     );
 }
