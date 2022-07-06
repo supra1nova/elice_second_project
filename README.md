@@ -25,12 +25,6 @@ npx prettier --write ".prettierrc.json" // prettier 설정
 npm run start
 ```
 
-<br>
-
----
-
-<br>
-
 ## 🖥 **Client**
 
 <br>
@@ -73,10 +67,6 @@ client
 - ui 구성을 이루는 components, pages => PascalCase
 - 그외 나머지 파일은 => camelCase
   <br><br>
-
----
-
-<br>
 
 ## 🗄 Server
 
