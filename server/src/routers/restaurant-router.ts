@@ -21,7 +21,7 @@ restaurantRouter.post('/register', async (req: Request, res:Response, next:NextF
 // 2. 업체 목록 조회 (배열 형태로 반환)
 restaurantRouter.get('/', loginRequired, async (req: Request, res:Response, next:NextFunction) => {
   try {
-    const restaurants = await restaurantService.getUsers();
+    const restaurants = await restaurantService.getRestaurants();
     res.status(200).json(restaurants);
   } catch (error) {
     next(error);

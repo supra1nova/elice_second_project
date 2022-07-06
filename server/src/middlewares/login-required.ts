@@ -24,7 +24,7 @@ function loginRequired(req: Request, res:Response, next:NextFunction) {
     const { userId, role } = jwtDecoded;
 
     // 라우터에서 req.currentUserId를 통해 유저의 id에 접근 가능하게 됨
-    req.currentUserId = userId;
+    req.currentUserEmail = userEmail;
     req.role = role;
 
     next();
