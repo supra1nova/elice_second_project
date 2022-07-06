@@ -21,13 +21,13 @@ export class User extends BaseEntity{
   })
   phoneNumber: string;
 
-  @Column({})
+  @Column({nullable:true})
   role: string;
 
   @Column({ nullable: true })
   REGNumber: string;
 
-  @Column({
+  @Column({ nullable:true
   })
   image: string
 
