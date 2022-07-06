@@ -25,9 +25,9 @@ npx prettier --write ".prettierrc.json" // prettier 설정
 npm run start
 ```
 
-## 🖥 **Client**
-
 <br>
+
+## 🖥 **Client**
 
 ### **Client Architecture**
 
