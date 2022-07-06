@@ -1,28 +1,49 @@
 import { Router, Request, Response,NextFunction } from 'express';
-// import is from '@sindresorhus/is';
-// 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
-// import { loginRequired } from '../middlewares';
-// import { productService } from '../services';
-// import { adminRequired } from '../middlewares/admin-required';
+import { loginRequired } from 'src/middlewares';
 
 const reserveRouter = Router();
 
-// 주문 api (아래는 /register이지만, 실제로는 /product/order 요청해야 함.)
-// orderList, email, address, phonenumber등을 받음
-
-reserveRouter.get('/all', async (req: Request, res:Response, next:NextFunction) => {
+// 1. 예약 생성
+reserveRouter.post('/create', loginRequired, async (req: Request, res:Response, next:NextFunction) => {
   try {
-
-    const {eamil} = req.body
-    // const products = await productService.getAllProduct();
-
-    //@ts-ignore
-
-    res.status(201).json(products);
+    const { reserveId, timeId, timestamp, email, number, menus, totalPrice } = req.body
+    const newReserve = await reserveService.addTime({ reserveId, timeId, timestamp, email, number, menus, totalPrice });
+    res.status(201).json(newReserve);
   } catch (error) {
     next(error);
   }
 });
 
+// 2. 예약 목록 조회 (배열 형태로 반환)
+reserveRouter.get('/', loginRequired, async (req: Request, res:Response, next:NextFunction) => {
+  try {
+    const reserves = await reserveService.getReserves();
+    res.status(200).json(reserves);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 3. 예약 상세 정보 조회
+reserveRouter.get('/:reserveId', async function (req: Request, res:Response, next:NextFunction) {
+  try {
+    const { reserveId } = req.params;
+    const reserve = await reserveService.findReserve(reserveId);
+    res.status(200).json(reserve);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 4. 예약 정보 삭제
+reserveRouter.delete('/:reserveId', loginRequired, async (req, res, next) => {
+  try {
+    const { reserveId } = req.params;
+    const result = await reserveService.removeReserve(reserveId);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
 
 export { reserveRouter };
