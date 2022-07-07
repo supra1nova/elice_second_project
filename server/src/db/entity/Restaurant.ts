@@ -37,13 +37,13 @@ export class Restaurant extends BaseEntity{
   @JoinColumn()
   user: User;
 
-  @OneToMany(()=> Menu, menu=>menu.restaurant)
+  @OneToMany(()=> Menu, menu=>menu.restaurant,{ cascade: ['insert', 'update'] })
   menus: Menu[];
 
   @ManyToOne(()=> Category, categoryEntity=>categoryEntity.restaurants ,{onDelete:'SET NULL'})
   categoryEntity:Category 
 
-  @OneToMany(()=>Time, time=>time.restaurant )
+  @OneToMany(()=>Time, time=>time.restaurant, { cascade: ['insert', 'update'] })
   times: Time[];
 
 

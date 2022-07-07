@@ -24,7 +24,6 @@ function loginRequired(req: Request, res:Response, next:NextFunction) {
     const { email, role } = <any>jwtDecoded;
     //아니면 특정 타입은 throw error해야할수도 있음.
     // 라우터에서 req.currentUserId를 통해 유저의 id에 접근 가능하게 됨
-    console.log(email,role);
     req.email = email;
     req.role = role;
 
