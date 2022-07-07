@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+import jwt from 'jsonwebtoken';
+=======
 import jwt  from 'jsonwebtoken';
+>>>>>>> dev
 import { Request, Response,NextFunction } from 'express';
 
 function loginRequired(req: Request, res:Response, next:NextFunction) {
@@ -22,8 +26,13 @@ function loginRequired(req: Request, res:Response, next:NextFunction) {
    
     const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
     const jwtDecoded = jwt.verify(userToken, secretKey);
+<<<<<<< HEAD
+    const { userEmail, role } = jwtDecoded;
+
+=======
     const { email, role } = <any>jwtDecoded;
     //아니면 특정 타입은 throw error해야할수도 있음.
+>>>>>>> dev
     // 라우터에서 req.currentUserId를 통해 유저의 id에 접근 가능하게 됨
     console.log(email,role);
     req.email = email;
