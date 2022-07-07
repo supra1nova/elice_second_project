@@ -13,8 +13,8 @@ class ReviewService {
   // 1. 생성
   async addReview(reviewInfo:reviewInfo) {
     const newReviewInfo:reviewInfo = reviewInfo;
-    const createdNewUser = await this.reviewModel.create(newReviewInfo);
-    return createdNewUser;
+    const createdNewReview = await this.reviewModel.create(newReviewInfo);
+    return createdNewReview;
   }
 
   // 2. 삭제
