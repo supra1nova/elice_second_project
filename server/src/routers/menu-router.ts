@@ -1,4 +1,5 @@
 import { Router, Request, Response,NextFunction } from 'express';
+import { ownerRequired } from 'src/middlewares';
 // import is from '@sindresorhus/is';
 // 폴더에서 import하면, 자동으로 폴더의 index.js에서 가져옴
 // import { loginRequired } from '../middlewares';
@@ -19,7 +20,7 @@ menuRouter.post('/create', async (req: Request, res:Response, next:NextFunction)
 });
 
 // 2. 메뉴 목록 조회 (배열 형태로 반환)
-menuRouter.get('/', loginRequired, async (req: Request, res:Response, next:NextFunction) => {
+menuRouter.get('/', async (req: Request, res:Response, next:NextFunction) => {
   try {
     const restaurants = await menuService.getUsers();
     res.status(200).json(restaurants);
@@ -40,7 +41,7 @@ menuRouter.get('/:menuId', async function (req: Request, res:Response, next:Next
 });
 
 // 4. 메뉴 정보 업데이트
-menuRouter.patch('/:menuId', loginRequired, ownerRequired, async (req: Request, res:Response, next:NextFunction) => {
+menuRouter.patch('/:menuId', ownerRequired, async (req: Request, res:Response, next:NextFunction) => {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
