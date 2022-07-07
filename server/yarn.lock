@@ -27,8 +27,6 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-<<<<<<< HEAD
-=======
 "@mapbox/node-pre-gyp@^1.0.0":
   "integrity" "sha512-aDF3S3rK9Q2gey/WAttUlISduDItz5BU3306M9Eyv6/oS40aMprnopshtlKTykxRNIBEZuRMaZAnbrQ4QtKGyw=="
   "resolved" "https://registry.npmjs.org/@mapbox/node-pre-gyp/-/node-pre-gyp-1.0.9.tgz"
@@ -49,7 +47,6 @@
   "resolved" "https://registry.npmjs.org/@sindresorhus/is/-/is-5.2.0.tgz"
   "version" "5.2.0"
 
->>>>>>> dev
 "@sqltools/formatter@^1.2.2":
   "integrity" "sha512-O3uyB/JbkAEMZaP3YqyHH7TMnex7tWyCbCI4EfJdOCoN6HIhqdJBWTM6aCCiWQ/5f5wxjgU735QAIpJbjDvmzg=="
   "resolved" "https://registry.npmjs.org/@sqltools/formatter/-/formatter-1.2.3.tgz"
