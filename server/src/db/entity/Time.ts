@@ -14,8 +14,8 @@ export class Time extends BaseEntity{
   startAt: {
     year: string,
     month: string,
-    date: number
-    hour: number
+    date: string,
+    hour: string
   } 
 
   @Column()

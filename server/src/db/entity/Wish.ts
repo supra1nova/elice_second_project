@@ -10,9 +10,9 @@ export class Wish extends BaseEntity{
   @PrimaryColumn()
   email: string;
 
-  @ManyToOne(()=>Restaurant, restaurant=>restaurant.wishes)
+  @ManyToOne(()=>Restaurant, restaurant=>restaurant.wishes, {onDelete:"CASCADE"})
   restaurant: Restaurant;
 
-  @ManyToOne(()=>User, user=>user.wishes)
+  @ManyToOne(()=>User, user=>user.wishes,{onDelete:"CASCADE"})
   user:User;
 }
