@@ -5,4 +5,4 @@
 // export * from './reserve-service';
 // export * from './review-service';
 // export * from './time-service';
-// export * from './user-service';
+export * from './user-service';

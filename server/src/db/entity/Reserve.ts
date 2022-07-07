@@ -1,4 +1,3 @@
-import { reviewRouter } from "src/routers";
 import {BaseEntity, Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, OneToOne,CreateDateColumn} from "typeorm"
 import { Review } from "./Review";
 import { Time } from "./Time";

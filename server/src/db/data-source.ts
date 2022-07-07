@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm"
-import { Wish, User, Category, Menu, OwnerReview, Reserve, Restaurant, Review, Time } from "./entity/index"
+import {  User, Category, Menu, OwnerReview, Reserve, Restaurant, Review, Time } from "./entity/index"
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -8,10 +8,11 @@ export const AppDataSource = new DataSource({
   username: "admin",
   password: '0000',
   database: 'matjip',
-  synchronize: false,
+  synchronize: true,
   logging: true,
-  entities: [ Wish, User, Category, Menu, OwnerReview, Reserve, Restaurant, Review, Time],
+  entities: [  User, Category, Menu, OwnerReview, Reserve, Restaurant, Review, Time],
   migrations: [],
 })
 
-// export * from './model/Category-Model';
+export * from './model/Category-Model';
+export * from './model/User-Model';
