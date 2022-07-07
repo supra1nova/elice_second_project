@@ -1,22 +1,28 @@
 import { Router, Request, Response,NextFunction } from 'express';
-// import is from '@sindresorhus/is';
-// import { ownerRequired } from 'src/middlewares';
+import { loginRequired, ownerRequired } from 'src/middlewares';
 import { reviewService } from '../services/review-service';
-
-
-// const reviewRouter = Router();
-
-
 
 const reviewRouter = Router();
 
-// 1. 리뷰 생성 등록
-reviewRouter.post('/create', async (req:Request, res:Response, next:NextFunction) => {
+// 1-1. 유저 리뷰 생성
+reviewRouter.post('/create/users', loginRequired, async (req:Request, res:Response, next:NextFunction) => {
   try {
       let reviewInfo:reviewInfo= req.body
       const newReview = await reviewService.addReview(reviewInfo);
       res.status(201).json(newReview);
     }
+  catch (error) {
+    next(error);
+  }
+});
+
+// 1-2. 업주 리뷰 생성
+reviewRouter.post('/create/owners', ownerRequired, async (req:Request, res:Response, next:NextFunction) => {
+  try {
+    let reviewInfo:reviewInfo= req.body
+    const newReview = await reviewService.addReview(reviewInfo);
+    res.status(201).json(newReview);
+  }
   catch (error) {
     next(error);
   }
@@ -66,8 +72,8 @@ reviewRouter.post('/create', async (req:Request, res:Response, next:NextFunction
 //   }
 // });
 
-// 5. 업주 리뷰 정보 삭제
-reviewRouter.delete('/', async (req: Request, res:Response, next:NextFunction) => {
+// 5. 리뷰 정보 삭제
+reviewRouter.delete('/', loginRequired, async (req: Request, res:Response, next:NextFunction) => {
   try {
     const reviewInfo:reviewInfo= req.body;
     const result = await reviewService.removeReview(reviewInfo);
