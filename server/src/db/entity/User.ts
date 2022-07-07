@@ -1,7 +1,6 @@
 import {BaseEntity, Entity, Column, PrimaryColumn, OneToOne, JoinColumn, OneToMany} from "typeorm"
 import { Reserve } from "./Reserve";
 import { Restaurant } from "./Restaurant";
-import { Wish } from "./Wish";
 
 @Entity('User')
 export class User extends BaseEntity{
@@ -24,19 +23,15 @@ export class User extends BaseEntity{
   @Column({nullable:true})
   role: string;
 
-  @Column({ nullable: true })
-  REGNumber: string;
-
   @Column({ nullable:true
   })
   image: string
 
-  @OneToOne(()=>Restaurant, (restaurant)=>restaurant.user, {nullable: true})
-  @JoinColumn()
-  restaurant: Restaurant
+  @Column({type:'simple-array'})
+  wishList:string[];
 
-  @OneToMany(()=>Wish, wish=>wish.user)
-  wishes:Wish[];
+  @OneToOne(()=>Restaurant,restaurant=>restaurant.user)
+  restaurant:Restaurant;
 
   @OneToMany(()=>Reserve,reserve=>reserve.user)
   reserves:Reserve[];
