@@ -143,7 +143,7 @@ export interface userInfo{
   phoneNumber?:string,
   role?:string,
   image?:string
-  wishList?:string[];
+  wishList?:string[],
 }
 
 export { userRouter };
