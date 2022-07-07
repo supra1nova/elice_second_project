@@ -5,8 +5,10 @@ import { reviewService } from '../services/review-service';
 const reviewRouter = Router();
 
 // 1-1. 유저 리뷰 생성
-reviewRouter.post('/create/users', loginRequired, async (req:Request, res:Response, next:NextFunction) => {
+// reviewRouter.post('/create/users', loginRequired, async (req:Request, res:Response, next:NextFunction) => {
+reviewRouter.post('/create/users', async (req: Request, res: Response, next: NextFunction) => {
   try {
+    console.log(req.body);
       let reviewInfo:reviewInfo= req.body
       const newReview = await reviewService.addReview(reviewInfo);
       res.status(201).json(newReview);
@@ -17,10 +19,12 @@ reviewRouter.post('/create/users', loginRequired, async (req:Request, res:Respon
 });
 
 // 1-2. 업주 리뷰 생성
-reviewRouter.post('/create/owners', ownerRequired, async (req:Request, res:Response, next:NextFunction) => {
+// reviewRouter.post('/create/owners', ownerRequired, async (req:Request, res:Response, next:NextFunction) => {
+reviewRouter.post('/create/owners', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    let reviewInfo:reviewInfo= req.body
-    const newReview = await reviewService.addReview(reviewInfo);
+    // let reviewInfo:reviewInfo= req.body
+    const { reserveId, ownerComment }= req.body
+    const newReview = await reviewService.addOwnerReview(reserveId, ownerComment);
     res.status(201).json(newReview);
   }
   catch (error) {
@@ -86,6 +90,7 @@ reviewRouter.delete('/', loginRequired, async (req: Request, res:Response, next:
 export interface reviewInfo{
   reserveId:number,
   comment: string,
+  ownerComment?: string,
   rating: number,
   image: string[],
 }

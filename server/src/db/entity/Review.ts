@@ -6,14 +6,16 @@ export class Review extends BaseEntity{
   @PrimaryGeneratedColumn()
   reserveId: number;
   
-    @Column({
+  @Column({
     })
-    comment: string;
+  comment: string;
   
   @Column()
   email: string;
   
-  @Column()
+  @Column({
+    nullable: true
+  })
   ownerComment: string;
 
   @Column()
