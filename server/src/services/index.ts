@@ -1,5 +1,4 @@
 // export * from './menu-service';
-export * from './ownerReview-service';
 export * from './restaurant-service';
 // export * from './reserve-service';
 export * from './review-service';

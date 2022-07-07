@@ -27,7 +27,7 @@ export class User extends BaseEntity{
   })
   image: string
 
-  @Column({type:'simple-array'})
+  @Column({type:'simple-array', nullable:true})
   wishList:string[];
 
   @OneToOne(()=>Restaurant,restaurant=>restaurant.user,{ cascade: ['insert', 'update'] })
