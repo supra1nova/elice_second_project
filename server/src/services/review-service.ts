@@ -17,6 +17,12 @@ class ReviewService {
     return createdNewReview;
   }
 
+  // 1. 생성
+  async addOwnerReview(reserveId:number, ownerComment:string) {
+    const createdNewReview = await this.reviewModel.reply(reserveId, ownerComment);
+    return createdNewReview;
+  }
+
   // 2. 삭제
   async removeReview(reviewInfo:reviewInfo){
     const {reserveId}= reviewInfo;

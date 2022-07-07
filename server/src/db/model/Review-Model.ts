@@ -27,6 +27,15 @@ export class ReviewModel{
     .execute()
   }
 
+  async reply(reserveId:number, ownerComment:string){
+    await AppDataSource
+      .createQueryBuilder()
+      .update(Review)
+      .set({ ownerComment: ownerComment})
+      .where("reserveId = :reserveId", { reserveId: reserveId })
+      .execute()
+  }
+
   async deleteReview(reserveId:number){
     await AppDataSource
     .createQueryBuilder()
