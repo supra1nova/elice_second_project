@@ -145,11 +145,12 @@ class UserService {
       );
     }
     //유저 이메일 불러와서 삭제하기
-    user = await this.userModel.deleteUser(
+    try{
+    await this.userModel.deleteUser(
       email
     );
-
-    if (!user) {
+    }
+    catch(error) {
       throw new Error(
         '삭제에 실패했습니다. 다시 한 번 확인해 주세요.' // 확인 필요
       );

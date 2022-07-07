@@ -1,6 +1,6 @@
 // import is from '@sindresorhus/is';
 import { Router, Request, Response, NextFunction } from 'express';
-import { loginRequired } from 'src/middlewares';
+import { loginRequired } from '../middlewares';
 // import { loginRequired } from 'src/middlewares';
 // import { updateLanguageServiceSourceFile } from 'typescript';
 import { userService } from '../services/user-service';
@@ -124,7 +124,7 @@ userRouter.post('/login', async function (req: Request, res:Response, next:NextF
 // });
 
 // 5. 사용자 삭제
-userRouter.delete('/user', loginRequired, async function (req: Request, res:Response, next:NextFunction) {
+userRouter.delete('/', loginRequired, async function (req: Request, res:Response, next:NextFunction) {
   try {
     const userInfo:userInfo= req.body;
     const result = await userService.removeUser(userInfo);

@@ -8,7 +8,7 @@ export const AppDataSource = new DataSource({
   username: "admin",
   password: '0000',
   database: 'matjip',
-  synchronize: true,
+  synchronize: false,
   logging: true,
   entities: [  User, Category, Menu, OwnerReview, Reserve, Restaurant, Review, Time],
   migrations: [],
