@@ -3,7 +3,6 @@ import {User} from "./User"
 import {Menu} from "./Menu"
 import { Category } from "./Category";
 import { Time } from "./Time";
-import { Wish } from "./Wish"
 @Entity('Restaurant')
 export class Restaurant extends BaseEntity{
   @PrimaryColumn()
@@ -32,7 +31,8 @@ export class Restaurant extends BaseEntity{
   image: string;
 
   @OneToOne( ()=>User, (user)=> user.restaurant, {onDelete:'CASCADE'})//회원 삭제시 식당 삭제
-  user: User
+  @JoinColumn()
+  user: User;
 
   @OneToMany(()=> Menu, menu=>menu.restaurant)
   menus: Menu[];
@@ -43,6 +43,5 @@ export class Restaurant extends BaseEntity{
   @OneToMany(()=>Time, time=>time.restaurant )
   times: Time[];
 
-  @OneToMany(()=>Wish, wish=>wish.restaurant)
-  wishes:Wish[];
+
 }
