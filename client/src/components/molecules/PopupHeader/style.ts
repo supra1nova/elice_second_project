@@ -15,7 +15,7 @@ export const SubTitle = styled.div`
 `;
 
 export const Close = styled.button`
-  position: abosolute;
+  position: absolute;
   right: 0;
   top: 0;
   width: 40px;
