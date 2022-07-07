@@ -12,7 +12,7 @@ export class Restaurant extends BaseEntity{
   name: string;
 
   @Column()
-  category: string;
+  ownerEmail: string;
 
   @Column({
     type: "simple-json",
@@ -29,6 +29,9 @@ export class Restaurant extends BaseEntity{
 
   @Column({nullable:true})
   image: string;
+
+  @Column()
+  category: string;
 
   @OneToOne( ()=>User, (user)=> user.restaurant, {onDelete:'CASCADE'})//회원 삭제시 식당 삭제
   @JoinColumn()
