@@ -1,5 +1,5 @@
 import React from 'react';
-import * as S from './style';
+import * as UI from './style';
 import PopupHeader from '../../molecules/PopupHeader';
 
 export interface Props {
@@ -10,14 +10,14 @@ export interface Props {
 export const Popup = ({ title, subTitle }: Props) => {
   return (
     <>
-      <S.Container>
-        <S.Content>
-          <S.Section>
+      <UI.Container>
+        <UI.Content>
+          <UI.Section>
             <PopupHeader title={title} subTitle={subTitle} />
-          </S.Section>
-        </S.Content>
-        <S.Dimd />
-      </S.Container>
+          </UI.Section>
+        </UI.Content>
+        <UI.Dimd />
+      </UI.Container>
     </>
   );
 };

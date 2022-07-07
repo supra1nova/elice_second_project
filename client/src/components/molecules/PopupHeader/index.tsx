@@ -1,5 +1,5 @@
 import React from 'react';
-import * as S from './style';
+import * as UI from './style';
 import Close from '../../../assets/svg/Close';
 
 export interface Props {
@@ -10,11 +10,11 @@ export interface Props {
 const PopupHeader = ({ title, subTitle }: Props) => {
   return (
     <>
-      <S.Title>{title}</S.Title>
-      <S.SubTitle>{subTitle}</S.SubTitle>
-      <S.Close>
+      <UI.Title>{title}</UI.Title>
+      <UI.SubTitle>{subTitle}</UI.SubTitle>
+      <UI.Close>
         <Close />
-      </S.Close>
+      </UI.Close>
     </>
   );
 };
