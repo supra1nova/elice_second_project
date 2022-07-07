@@ -1,5 +1,5 @@
 import { Router, Request, Response,NextFunction } from 'express';
-import { loginRequired, ownerRequired } from 'src/middlewares';
+import { loginRequired, ownerRequired } from '../middlewares';
 import { reviewService } from '../services/review-service';
 
 const reviewRouter = Router();
