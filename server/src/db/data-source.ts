@@ -16,4 +16,6 @@ export const AppDataSource = new DataSource({
 
 export * from './model/Category-Model';
 export * from './model/User-Model';
-export * from './model/Restaurant-Model';
+// export * from './model/Restaurant-Model';
+export * from './model/OwnerReview-Model';
+export * from './model/Review-Model';

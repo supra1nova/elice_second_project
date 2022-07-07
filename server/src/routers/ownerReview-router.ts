@@ -1,9 +1,31 @@
-// import { Router, Request, Response,NextFunction } from 'express';
+import { Router, Request, Response,NextFunction } from 'express';
 // import is from '@sindresorhus/is';
 // import { ownerRequired } from 'src/middlewares';
+import { ownerReviewService } from '../services/ownerReview-service';
 
 
 // const ownerReviewRouter = Router();
+
+
+
+const ownerReviewRouter = Router();
+
+// 1-2. 일반 사용자 등록
+ownerReviewRouter.post('/create', async (req:Request, res:Response, next:NextFunction) => {
+  try {
+    // if (is.emptyObject(req.body)) {
+    //   throw new Error(
+    //     'headers의 Content-Type을 application/json으로 설정해주세요'
+    //   );
+    // }
+      let ownerReviewInfo:ownerReviewInfo= req.body
+      const newOwnerReview = await ownerReviewService.addOwnerReview(ownerReviewInfo);
+      res.status(201).json(newOwnerReview);
+    }
+  catch (error) {
+    next(error);
+  }
+});
 
 // // 1. 업주 리뷰 생성
 // ownerReviewRouter.post('/create', ownerRequired, async (req: Request, res:Response, next:NextFunction) => {
@@ -60,15 +82,20 @@
 //   }
 // });
 
-// // 5. 업주 리뷰 정보 삭제
-// ownerReviewRouter.delete('/:reserveId', ownerRequired, async (req, res, next) => {
-//   try {
-//     const { reserveId } = req.params;
-//     const result = await ownerReviewService.removeOwnerReview(reserveId);
-//     res.status(200).json(result);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+// 5. 업주 리뷰 정보 삭제
+ownerReviewRouter.delete('/', async (req: Request, res:Response, next:NextFunction) => {
+  try {
+    const ownerReviewInfo:ownerReviewInfo= req.body;
+    const result = await ownerReviewService.removeOwnerReview(ownerReviewInfo);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
 
-// export { ownerReviewRouter };
+export interface ownerReviewInfo{
+  reserveId:number,
+  comment:string,
+}
+
+export { ownerReviewRouter };
