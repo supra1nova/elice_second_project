@@ -24,6 +24,6 @@ export class Time extends BaseEntity{
   @ManyToOne(()=>Restaurant, restaurant=> restaurant.times, {onDelete:'CASCADE'})
   restaurant:Restaurant
 
-  @OneToMany(()=>Reserve, reserve=>reserve.time)
+  @OneToMany(()=>Reserve, reserve=>reserve.time,{ cascade: ['insert', 'update'] })
   reserves: Reserve[]
 }

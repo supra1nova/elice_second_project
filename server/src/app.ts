@@ -1,6 +1,6 @@
 import cors from 'cors';
 import express, {Request, Response} from 'express';
-import { userRouter} from './routers';
+import { userRouter,restaurantRouter} from './routers';
 // likeRouter,  menuRouter,ownerReviewRouter,  restaurantRouter,  reviewRouter,  timeRouter,
 import { } from './middlewares';
 import { AppDataSource } from "./db/data-source"

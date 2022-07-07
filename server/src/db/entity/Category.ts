@@ -6,6 +6,6 @@ export class Category extends BaseEntity{
   @PrimaryColumn()
   category: string;
 
-  @OneToMany(()=> Restaurant, (restaurants)=>restaurants.categoryEntity)
+  @OneToMany(()=> Restaurant, (restaurants)=>restaurants.categoryEntity, { cascade: ['insert', 'update'] })
   restaurants: Restaurant[]
 }
