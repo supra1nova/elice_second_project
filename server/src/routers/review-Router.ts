@@ -1,10 +1,11 @@
 import { Router, Request, Response,NextFunction } from 'express';
+import { loginRequired, ownerRequired } from 'src/middlewares';
 import { reviewService } from '../services/review-service';
 
 const reviewRouter = Router();
 
 // 1-1. 유저 리뷰 생성
-reviewRouter.post('/create/users', async (req:Request, res:Response, next:NextFunction) => {
+reviewRouter.post('/create/users', loginRequired, async (req:Request, res:Response, next:NextFunction) => {
   try {
       let reviewInfo:reviewInfo= req.body
       const newReview = await reviewService.addReview(reviewInfo);
@@ -16,7 +17,7 @@ reviewRouter.post('/create/users', async (req:Request, res:Response, next:NextFu
 });
 
 // 1-2. 업주 리뷰 생성
-reviewRouter.post('/create/owners', async (req:Request, res:Response, next:NextFunction) => {
+reviewRouter.post('/create/owners', ownerRequired, async (req:Request, res:Response, next:NextFunction) => {
   try {
     let reviewInfo:reviewInfo= req.body
     const newReview = await reviewService.addReview(reviewInfo);
@@ -72,7 +73,7 @@ reviewRouter.post('/create/owners', async (req:Request, res:Response, next:NextF
 // });
 
 // 5. 리뷰 정보 삭제
-reviewRouter.delete('/', async (req: Request, res:Response, next:NextFunction) => {
+reviewRouter.delete('/', loginRequired, async (req: Request, res:Response, next:NextFunction) => {
   try {
     const reviewInfo:reviewInfo= req.body;
     const result = await reviewService.removeReview(reviewInfo);
