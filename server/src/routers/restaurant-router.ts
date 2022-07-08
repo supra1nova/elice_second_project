@@ -73,8 +73,11 @@ restaurantRouter.post('/', async (req: Request, res:Response, next:NextFunction)
 
 restaurantRouter.delete('/', async (req, res, next) => {
   try {
-    const { REGNumber } = req.body;
-    const result = await restaurantService.removeRestaurant(REGNumber);
+    //menu다 지워야 함
+    //req.role 이 ADMIN이면 삭제 가능 or email 비교
+
+    const { REGNumber,email } = req.body;
+    const result = await restaurantService.removeRestaurant(REGNumber,email);
     res.status(200).json(result);
   } catch (error) {
     next(error);
