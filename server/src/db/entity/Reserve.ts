@@ -33,12 +33,12 @@ export class Reserve extends BaseEntity{
   @Column()
   totalPrice: number;
 
-  @ManyToOne(()=>Time, time=>time.reserves)
-  time:Time
+  // @ManyToOne(()=>Time, time=>time.reserves)
+  // time:Time
 
-  @OneToOne(()=>Review, review=> review.reserve)
-  review:Review
+  // @OneToOne(()=>Review, review=> review.reserve)
+  // review:Review
   
-  @ManyToOne(()=>User, user=>user.reserves)
-  user:User;
+  // @ManyToOne(()=>User, user=>user.reserves)
+  // user:User;
 }

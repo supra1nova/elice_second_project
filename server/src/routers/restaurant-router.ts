@@ -1,22 +1,22 @@
 // import is from '@sindresorhus/is';
-// import { Router, Request, Response, NextFunction } from 'express';
-// import { ownerRequired, loginRequired } from '../middlewares';
+import { Router, Request, Response, NextFunction } from 'express';
+import { restaurantService } from '../services';
+import { ownerRequired, loginRequired } from '../middlewares';
 // // import { adminRequired } from '../middlewares/admin-required';
 
-// const restaurantRouter = Router();
+const restaurantRouter = Router();
 
-// //@ts-ignore
 
-// // 1. 업체 생성
-// restaurantRouter.post('/register', async (req: Request, res:Response, next:NextFunction) => {
-//   try {
-//     const { REGNumber, name, category, address1, address2, postalNumber, phoneNumber, image } = req.body
-//     const newRestaurant = await restaurantService.addRestaurant({ REGNumber, name, category, address1, address2, postalNumber, phoneNumber, image });
-//     res.status(201).json(newRestaurant);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+// 1. 업체 생성
+restaurantRouter.post('/register', async (req: Request, res:Response, next:NextFunction) => {
+  try {
+    const restaurantInfo:restaurantInfo = req.body
+    const newRestaurant = await restaurantService.addRestaurant(restaurantInfo);
+    res.status(201).json(newRestaurant);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // // 2. 업체 목록 조회 (배열 형태로 반환)
 // restaurantRouter.get('/', loginRequired, async (req: Request, res:Response, next:NextFunction) => {
@@ -78,5 +78,17 @@
 //     next(error);
 //   }
 // });
-
-// export { restaurantRouter };
+export interface restaurantInfo{
+  REGNumber: string, 
+  name?:string,
+  ownerEmail?:string,
+  address?:{
+    address1:string,
+    address2:string,
+    postalcode:number
+  },
+  phoneNumber?:string,
+  image?:string
+  category?:string;
+}
+export { restaurantRouter };

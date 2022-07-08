@@ -27,12 +27,12 @@ export class User extends BaseEntity{
   })
   image: string
 
-  @Column({type:'simple-array'})
+  @Column({type:'simple-array', nullable:true})
   wishList:string[];
 
-  @OneToOne(()=>Restaurant,restaurant=>restaurant.user)
-  restaurant:Restaurant;
+  // @OneToOne(()=>Restaurant,restaurant=>restaurant.user,{ cascade: ['insert', 'update'] })
+  // restaurant:Restaurant;
 
-  @OneToMany(()=>Reserve,reserve=>reserve.user)
-  reserves:Reserve[];
+  // @OneToMany(()=>Reserve,reserve=>reserve.user,{ cascade: ['insert', 'update'] })
+  // reserves:Reserve[];
 }

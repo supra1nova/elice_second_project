@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"typeRoots": ["./node_modules/@types","./src/customType"], 
 		"target": "es6",
 		"module": "commonjs",
 		"lib": [
@@ -27,7 +28,7 @@
 		"experimentalDecorators": true,
 		"resolveJsonModule": true,
 		"baseUrl": ".",
-		"typeRoots": ["./src/types","./node_modules/@types"],
+		"typeRoots": ["./src/types","./node_modules/@types"]
 	},
 	"exclude": ["node_modules"],
 	"include": ["./src/**/*.tsx", "./src/**/*.ts"]
