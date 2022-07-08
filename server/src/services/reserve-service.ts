@@ -37,7 +37,7 @@ class ReserveService {
     let a:string|undefined = reserve?.email
     if(a===undefined) throw new Error("Time not found");
     else{
-      if(a!==email) throw new Error("잔여좌석이 없습니다");
+      if(a!==email) throw new Error("리뷰를 삭제할 권한이 없습니다.");
       else{        
         const deletedReserve = await this.reserveModel.deleteReserve(reserveId);
         return deletedReserve;

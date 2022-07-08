@@ -43,8 +43,7 @@ reserveRouter.delete('/', async (req, res, next) => {
   try {
     const {reserveId, email} = req.body;
     console.log(req)
-    console.log(req.email);
-    if(req.email===undefined) throw new Error("Request에 email이 존재하지 않습니다")
+    
     const result = await reserveService.removeReserve(reserveId,email);
     res.status(200).json(result);
   } catch (error) {
