@@ -1,19 +1,21 @@
-// import { Router, Request, Response,NextFunction } from 'express';
-// import { loginRequired } from 'src/middlewares';
+import { Router, Request, Response,NextFunction } from 'express';
+import { reserveService } from '../services/reserve-service';
+import { loginRequired } from 'src/middlewares';
 
-// const reserveRouter = Router();
+const reserveRouter = Router();
 
 // // 1. 예약 생성
-// reserveRouter.post('/create', loginRequired, async (req: Request, res:Response, next:NextFunction) => {
-//   try {
-//     const { reserveId, timeId, timestamp, email, number, menus, totalPrice } = req.body
-//     const newReserve = await reserveService.addTime({ reserveId, timeId, timestamp, email, number, menus, totalPrice });
-//     res.status(201).json(newReserve);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
+reserveRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    console.log(req.body);
+      let reserveInfo:reserveInfo= req.body
+      const newReview = await reserveService.addReserve(reserveInfo);
+      res.status(201).json(newReview);
+    }
+  catch (error) {
+    next(error);
+  }
+});
 // // 2. 예약 목록 조회 (배열 형태로 반환)
 // reserveRouter.get('/', loginRequired, async (req: Request, res:Response, next:NextFunction) => {
 //   try {
@@ -36,14 +38,27 @@
 // });
 
 // // 4. 예약 정보 삭제
-// reserveRouter.delete('/:reserveId', loginRequired, async (req, res, next) => {
-//   try {
-//     const { reserveId } = req.params;
-//     const result = await reserveService.removeReserve(reserveId);
-//     res.status(200).json(result);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+// reserveRouter.delete('/', loginRequired, async (req, res, next) => {
+reserveRouter.delete('/', async (req, res, next) => {
+  try {
+    const {reserveId, email} = req.body;
+    console.log(req)
+    console.log(req.email);
+    if(req.email===undefined) throw new Error("Request에 email이 존재하지 않습니다")
+    const result = await reserveService.removeReserve(reserveId,email);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
 
-// export { reserveRouter };
+export interface reserveInfo{
+  reserveId?:number,
+  timeId: number,
+  email: string,
+  number: number,
+  menuList: number[],
+  quantityList:number[],
+  totalPrice:number
+}
+export { reserveRouter };

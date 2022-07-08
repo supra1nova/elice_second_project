@@ -9,7 +9,7 @@ export class Reserve extends BaseEntity{
   reserveId: number;
 
   @Column()
-  timId:number;
+  timeId:number;
 
   @CreateDateColumn({type:"timestamp"})
   createdAt: Date;
@@ -23,12 +23,12 @@ export class Reserve extends BaseEntity{
   @Column(
     {type: "simple-array"}
   )
-  menuList: string;
+  menuList: number[];
 
   @Column(
     {type: "simple-array"}
   )
-  quantityList: number;
+  quantityList: number[];
 
   @Column()
   totalPrice: number;
