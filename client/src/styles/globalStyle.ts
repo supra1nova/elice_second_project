@@ -24,6 +24,7 @@ export default createGlobalStyle`
     a {
       color: $font-color-base;
       text-decoration: none;
+      color: black;
     
       &:hover,
       &:focus {
