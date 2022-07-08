@@ -35,9 +35,9 @@ class RestaurantService {
    const createdproduct = await this.restaurantModel.create(restaurantInfo);
    return createdproduct;
  }
-  async removeRestaurant (restaurantInfo:restaurantInfo){
-    const {REGNumber} = restaurantInfo;
+  async removeRestaurant (REGNumber:string){
     const deletedCount= await this.restaurantModel.deleteRestaurant(REGNumber);
+    //MENU삭제가 수반되어야 함. 
     return deletedCount;
   }
  

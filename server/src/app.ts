@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express, {Request, Response} from 'express';
-import { userRouter,restaurantRouter, reviewRouter, reserveRouter,timeRouter} from './routers';
-// likeRouter,  menuRouter,ownerReviewRouter,  restaurantRouter,  reviewRouter,  ,
+import { userRouter,restaurantRouter, reviewRouter, reserveRouter,timeRouter,menuRouter} from './routers';
+// likeRouter,ownerReviewRouter,  restaurantRouter,  reviewRouter,  ,
 import { } from './middlewares';
 import { AppDataSource } from "./db/data-source"
 
@@ -42,7 +42,7 @@ app.get('/api/customers', (req, res) => {
 // 아래처럼 하면, userRouter 에서 '/login' 으로 만든 것이 실제로는 앞에 /api가 붙어서
 // /api/login 으로 요청을 해야 하게 됨. 백엔드용 라우팅을 구분하기 위함임.
 // app.use('/api/likes', likeRouter);
-// app.use('/api/menus', menuRouter);
+app.use('/api/menus', menuRouter);
 // app.use('/api/ownerReviews', ownerReviewRouter);
 app.use('/api/reserves', reserveRouter);
 app.use('/api/restaurants', restaurantRouter);

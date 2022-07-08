@@ -17,23 +17,23 @@ class TimeService {
 
 
   // 2. 삭제
-  // async removeTime(timeInfo:timeInfo){
-  //   const {reserveId}= timeInfo;
-  //   let review = await this.timeModel.findReviewByReserveId(reserveId);
-  //   if (review == null) {
-  //     throw new Error('존재하지 않는 리뷰입니다.')
-  //   };
-  //   try{
-  //     await this.timeModel.deleteReview( reserveId );
-  //   }
-  //   catch(error) {
-  //     throw new Error(
-  //       '삭제에 실패했습니다. 다시 한 번 확인해 주세요.'
-  //     );
-  //   }
-  //   return review;
-
-  // }
+  async removeTime(timeId:number){
+    let time = await this.timeModel.findTimeByTimeId(timeId);
+    if (time == null) {
+      throw new Error('존재하지 않는 시간대입니다.');
+    }
+    else if (time.initialRemainder!==time.remainder){
+      throw new Error('예약자가 존재합니다');
+    }
+    else{
+      try{
+        const time= await this.timeModel.deleteTime( timeId );
+      }catch(error) {
+        throw new Error('삭제에 실패했습니다. 다시 한 번 확인해 주세요.');
+      }
+    }
+    return time;
+  }
 }
 
 const timeService = new TimeService(timeModel);

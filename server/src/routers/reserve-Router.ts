@@ -7,7 +7,6 @@ const reserveRouter = Router();
 // // 1. 예약 생성
 reserveRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(req.body);
       let reserveInfo:reserveInfo= req.body
       const newReview = await reserveService.addReserve(reserveInfo);
       res.status(201).json(newReview);

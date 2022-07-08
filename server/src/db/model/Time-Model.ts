@@ -10,10 +10,10 @@ export class TimeModel{
   async findTimeByTimeId(timeId:number) {
     const timeRepository= AppDataSource.getRepository(Time);
     // get a post repository to perform operations with post
+
     const time = await timeRepository.findOneBy({
       timeId: timeId
     })
-    
     return (time);
   }
 

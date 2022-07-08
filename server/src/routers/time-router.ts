@@ -1,6 +1,6 @@
 import { Router, Request, Response,NextFunction } from 'express';
 import {timeService} from '../services'
-import { ownerRequired } from 'src/middlewares';
+import { ownerRequired } from '../middlewares';
 
 const timeRouter = Router();
 
@@ -65,15 +65,17 @@ timeRouter.post('/', async (req: Request, res: Response, next: NextFunction) => 
 // });
 
 // // 5. 타임 정보 삭제
-// timeRouter.delete('/:timeId', ownerRequired, async (req, res, next) => {
-//   try {
-//     const { timeId } = req.params;
-//     const result = await timeService.removeTime(timeId);
-//     res.status(200).json(result);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+// timeRouter.delete('/', ownerRequired, async (req, res, next) => {
+
+timeRouter.delete('/', async (req, res, next) => {
+  try {
+    const {timeId}= req.body;
+    const result = await timeService.removeTime(timeId);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
 
 export interface startAt{
   year:number,
@@ -87,6 +89,7 @@ export interface timeInfo{
   REGNumber: string,
   startAt:startAt,
   remainder: number,
+  initialRemainder: number,
 }
 
 export { timeRouter };

@@ -32,6 +32,9 @@ export class Time extends BaseEntity{
   @Column()
   remainder: number;
 
+  @Column()
+  initialRemainder:number;
+
   // @ManyToOne(()=>Restaurant, restaurant=> restaurant.times, {onDelete:'CASCADE'})
   // restaurant:Restaurant
 

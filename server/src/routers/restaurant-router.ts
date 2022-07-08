@@ -8,7 +8,7 @@ const restaurantRouter = Router();
 
 
 // 1. 업체 생성
-restaurantRouter.post('/register', async (req: Request, res:Response, next:NextFunction) => {
+restaurantRouter.post('/', async (req: Request, res:Response, next:NextFunction) => {
   try {
     const restaurantInfo:restaurantInfo = req.body
     const newRestaurant = await restaurantService.addRestaurant(restaurantInfo);
@@ -69,26 +69,30 @@ restaurantRouter.post('/register', async (req: Request, res:Response, next:NextF
 // });
 
 // // 5. 음식점 정보 삭제
-// restaurantRouter.delete('/:REGNumber', ownerRequired, async (req, res, next) => {
-//   try {
-//     const { REGNumber } = req.params;
-//     const result = await restaurantService.removeRestaurant(REGNumber);
-//     res.status(200).json(result);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+// restaurantRouter.delete('/', ownerRequired, async (req, res, next) => {
+
+restaurantRouter.delete('/', async (req, res, next) => {
+  try {
+    const { REGNumber } = req.body;
+    const result = await restaurantService.removeRestaurant(REGNumber);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export interface restaurantInfo{
   REGNumber: string, 
-  name?:string,
-  ownerEmail?:string,
-  address?:{
+  name:string,
+  ownerEmail:string,
+  address:{
     address1:string,
     address2:string,
     postalcode:number
   },
   phoneNumber?:string,
   image?:string
-  category?:string;
+  category:string;
+  description?:string;
 }
 export { restaurantRouter };
