@@ -26,8 +26,8 @@ export class Review extends BaseEntity{
     )
     image: string[];
 
-  @OneToOne(()=>Reserve, reserve=>reserve.review, {onDelete:'CASCADE'})
-  @JoinColumn()
-  reserve:Reserve;
+  // @OneToOne(()=>Reserve, reserve=>reserve.review, {onDelete:'CASCADE'})
+  // @JoinColumn()
+  // reserve:Reserve;
 
 }

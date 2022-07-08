@@ -33,18 +33,18 @@ export class Restaurant extends BaseEntity{
   @Column()
   category: string;
 
-  @OneToOne( ()=>User, (user)=> user.restaurant, {onDelete:'CASCADE'})//회원 삭제시 식당 삭제
-  @JoinColumn()
-  user: User;
+  // @OneToOne( ()=>User, (user)=> user.restaurant, {onDelete:'CASCADE'})//회원 삭제시 식당 삭제
+  // @JoinColumn()
+  // user: User;
 
-  @OneToMany(()=> Menu, menu=>menu.restaurant,{ cascade: ['insert', 'update'] })
-  menus: Menu[];
+  // @OneToMany(()=> Menu, menu=>menu.restaurant,{ cascade: ['insert', 'update'] })
+  // menus: Menu[];
 
-  @ManyToOne(()=> Category, categoryEntity=>categoryEntity.restaurants ,{onDelete:'SET NULL'})
-  categoryEntity:Category 
+  // @ManyToOne(()=> Category, categoryEntity=>categoryEntity.restaurants ,{onDelete:'SET NULL'})
+  // categoryEntity:Category 
 
-  @OneToMany(()=>Time, time=>time.restaurant, { cascade: ['insert', 'update'] })
-  times: Time[];
+  // @OneToMany(()=>Time, time=>time.restaurant, { cascade: ['insert', 'update'] })
+  // times: Time[];
 
 
 }

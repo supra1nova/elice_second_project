@@ -30,9 +30,9 @@ export class User extends BaseEntity{
   @Column({type:'simple-array', nullable:true})
   wishList:string[];
 
-  @OneToOne(()=>Restaurant,restaurant=>restaurant.user,{ cascade: ['insert', 'update'] })
-  restaurant:Restaurant;
+  // @OneToOne(()=>Restaurant,restaurant=>restaurant.user,{ cascade: ['insert', 'update'] })
+  // restaurant:Restaurant;
 
-  @OneToMany(()=>Reserve,reserve=>reserve.user,{ cascade: ['insert', 'update'] })
-  reserves:Reserve[];
+  // @OneToMany(()=>Reserve,reserve=>reserve.user,{ cascade: ['insert', 'update'] })
+  // reserves:Reserve[];
 }
