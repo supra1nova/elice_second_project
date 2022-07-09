@@ -5,12 +5,12 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.div`
-  color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.font1};
   font-size: ${(props) => props.theme.fontSize.title}px;
 `;
 
 export const SubTitle = styled.div`
-  color: ${(props) => props.theme.colors.dateText};
+  color: ${(props) => props.theme.colors.font1};
   font-size: ${(props) => props.theme.fontSize.subTitle}px;
 `;
 

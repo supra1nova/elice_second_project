@@ -45,11 +45,11 @@ const font = {
     fontSize: 14,
     fontWeight: 'normal',
   },
-  cation: {
+  caption: {
     fontSize: 12,
     fontWeight: 'normal',
   },
-  cationBold: {
+  captionBold: {
     fontSize: 12,
     fontWeight: 'bold',
   },
