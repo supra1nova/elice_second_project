@@ -1,9 +1,19 @@
 import * as UI from './style';
 import { Link } from 'react-router-dom';
-import Grade from '../../atoms/Grade';
-import SeeMore from '../../atoms/SeeMore';
-import Img from '../../atoms/Img';
-import * as Icon from '../../../assets/svg';
+import Grade from '../../../atoms/Grade';
+import SeeMore from '../../../atoms/SeeMore';
+import Like from '../../../atoms/LikeBtn';
+import Img from '../../../atoms/Img';
+import * as Icon from '../../../../assets/svg';
+import LikeBtn from '../../../atoms/LikeBtn';
+
+// heart가 interative 하게 만들어야 함
+// // 클릭 > 색이 생기고, 유저의 찜리스트에 해당 shop 추가
+// 링크는 각 리스트 아이템의 shop detail로 갈 수 있도록
+// grade는 계산된 shop의 데이터 가져오기 (atoms/grade)
+// description 의 내용은 해당 shop의 가장 최신 리뷰를 들고 와야함.
+// 리뷰의 profile은 리뷰작성자의 정보를 가져와야 함
+
 interface WeekBestCardProps {
   title: String;
   address: String;
@@ -21,7 +31,7 @@ const WeekBestCard = ({ title, address, description }: WeekBestCardProps) => {
             <UI.Title>
               {title}
               <Grade />
-              <Icon.Heart width={23.69} height={22} />
+              <LikeBtn />
             </UI.Title>
             <UI.SubTitle>{address}</UI.SubTitle>
             <UI.descriptionWrapper>

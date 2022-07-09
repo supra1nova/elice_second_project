@@ -5,10 +5,6 @@ export const CardWrapperHorizon = styled.div`
   border: 1px solid gray;
   width: 544px;
 `;
-export const CardWrapperVertical = styled.div`
-  display: flex;
-  flex-directoin: column;
-`;
 
 export const ImgWrapper = styled.div`
   min-width: 170px;
@@ -27,11 +23,13 @@ export const Title = styled.div`
   align-items: center;
   ${(props) => props.theme.font.title2};
   line-height: 29px;
+
   > span {
     margin-left: 10px;
   }
-  svg {
+  button {
     margin-left: auto;
+    display: flex;
   }
 `;
 
@@ -58,21 +56,10 @@ export const Description = styled.p`
 `;
 
 export const SeeDetails = styled.div`
-  text-align: end;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   margin-top: 27px;
   ${(props) => props.theme.font.caption}
   color: ${(props) => props.theme.colors.font2}
-`;
-
-// 좋아요 수, 리뷰 수에 들어가는 아이콘
-// 이미지 위 하트
-export const UseCount = styled.i`
-    none;
-`;
-
-export const DividerLine = styled.div`
-  width: 100%;
-  height: 1px;
-  background-color: black;
-  margin: 20px 0;
 `;
