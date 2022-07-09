@@ -1,13 +1,14 @@
 import React from 'react';
 import * as UI from './style';
-import Close from '../../../assets/svg/Close';
+import Close from '../../../../assets/svg/Close';
 
 export interface Props {
-  title: string;
-  subTitle: string;
+  title?: string;
+  subTitle?: string;
+  onClick?: () => void;
 }
 
-const PopupHeader = ({ title, subTitle }: Props) => {
+const Header = ({ title, subTitle, onClick }: Props) => {
   return (
     <>
       <UI.Title>{title}</UI.Title>
@@ -19,4 +20,4 @@ const PopupHeader = ({ title, subTitle }: Props) => {
   );
 };
 
-export default PopupHeader;
+export default Header;
