@@ -19,8 +19,7 @@ export const InfoWrapper = styled.div`
 `;
 
 export const Title = styled.h3`
-  font-size: ${(props) => props.theme.fontSize.title};
-  font-weight: bold;
+  ${(props) => props.theme.font.title1};
 `;
 
 export const Grade = styled.h3`
@@ -29,8 +28,8 @@ export const Grade = styled.h3`
 `;
 
 export const SubTitle = styled.h4`
-  font-size: 12px;
-  color: #a1a39e;
+  ${(props) => props.theme.font.title2}
+  color: ${(props) => props.theme.colors.font2}
 `;
 
 export const Description = styled.p`

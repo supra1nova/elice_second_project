@@ -1,6 +1,7 @@
 import * as UI from './style';
 import { Link } from 'react-router-dom';
-
+import * as CategoryIcon from '../../../assets/svg/categoryIcon';
+import * as Icon from '../../../assets/svg';
 interface WeekBestCardProps {
   title: String;
   address: String;
@@ -21,6 +22,30 @@ const WeekBestCard = ({ title, address, description }: WeekBestCardProps) => {
         </UI.CardWrapperHorizon>
       </Link>
       <UI.DividerLine />
+      <CategoryIcon.KFood />
+      <CategoryIcon.Meat />
+      <CategoryIcon.Brunch />
+      <CategoryIcon.Buffet />
+      <CategoryIcon.Cafe />
+      <CategoryIcon.Chicken />
+      <CategoryIcon.CourseMeal />
+      <CategoryIcon.DiningBar />
+      <CategoryIcon.Family />
+      <CategoryIcon.Noodle />
+      <CategoryIcon.Pasta />
+      <CategoryIcon.Pizza />
+      <CategoryIcon.SeaFood />
+      <CategoryIcon.Vegan />
+      <p></p>
+      <Icon.Calender />
+      <Icon.Close />
+      <Icon.Exit />
+      <Icon.Heart />
+      <Icon.Review />
+      <Icon.Search />
+      <Icon.Setting />
+      <Icon.Clock />
+      <Icon.Person />
     </div>
   );
 };
