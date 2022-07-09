@@ -35,11 +35,20 @@ class RestaurantService {
    const createdproduct = await this.restaurantModel.create(restaurantInfo);
    return createdproduct;
  }
-  async removeRestaurant (restaurantInfo:restaurantInfo){
-    const {REGNumber} = restaurantInfo;
-    const deletedCount= await this.restaurantModel.deleteRestaurant(REGNumber);
-    return deletedCount;
+
+  async removeRestaurant (REGNumber:string, email:string){
+
+    const restaurant = await restaurantModel.findRestaurantByOwnerEmail(email);
+
+    let a:string|undefined = restaurant?.REGNumber
+    if(a===undefined) throw new Error("권한이 없습니다") // 자기소유의 restaurant없음
+    else{ 
+        if(a!==REGNumber) throw new Error("권한이 없슴");
+          const deletedRestaurant= await this.restaurantModel.deleteRestaurant(REGNumber);
+          return deletedRestaurant;
+        }
   }
+  
  
   // async getAllProduct(){
   //   const allProducts= await this.productModel.findAll();

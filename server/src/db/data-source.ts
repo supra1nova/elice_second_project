@@ -18,4 +18,8 @@ export * from './model/Category-Model';
 export * from './model/User-Model';
 export * from './model/Restaurant-Model';
 export * from './model/Review-Model';
+export * from './model/Reserve-Model';
+export * from './model/Time-Model';
+export * from './model/Menu-Model';
+
 // export * from './model/Restaurant-Model';

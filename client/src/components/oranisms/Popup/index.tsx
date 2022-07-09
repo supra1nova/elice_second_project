@@ -1,19 +1,22 @@
 import React from 'react';
 import * as UI from './style';
-import PopupHeader from '../../molecules/PopupHeader';
+import Header from './Header';
+import Contents from './Contents';
 
 export interface Props {
-  title: string;
-  subTitle: string;
+  title?: string;
+  subTitle?: string;
+  children?: React.ReactElement | string;
 }
 
-export const Popup = ({ title, subTitle }: Props) => {
+export const Popup = ({ title, subTitle, children }: Props) => {
   return (
     <>
       <UI.Container>
         <UI.Content>
           <UI.Section>
-            <PopupHeader title={title} subTitle={subTitle} />
+            <Header title={title} subTitle={subTitle} />
+            <Contents>{children}</Contents>
           </UI.Section>
         </UI.Content>
         <UI.Dimd />

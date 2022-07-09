@@ -16,7 +16,7 @@ export class Menu extends BaseEntity{
   })
   price: number;
 
-  @Column({nullable:true
+  @Column({nullable:true, length:500
   })
   description: string;
 

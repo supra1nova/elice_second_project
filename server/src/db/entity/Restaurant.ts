@@ -33,6 +33,8 @@ export class Restaurant extends BaseEntity{
   @Column()
   category: string;
 
+  @Column({nullable:true, length:1000})
+  description:string;
   // @OneToOne( ()=>User, (user)=> user.restaurant, {onDelete:'CASCADE'})//회원 삭제시 식당 삭제
   // @JoinColumn()
   // user: User;

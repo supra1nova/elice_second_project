@@ -24,6 +24,14 @@ export class RestaurantModel{
     return (restaurant);
   }
 
+  async findRestaurantByOwnerEmail(ownerEmail:string){
+    const restaurantRepository= AppDataSource.getRepository(Restaurant);
+    const restaurant = await restaurantRepository.findOneBy({
+    ownerEmail: ownerEmail
+    })
+    return (restaurant);
+  }
+
   async create(restaurantInfo:restaurantInfo){
     // const {email, name,password, nickName, phoneNumber,REGNumber}= userInfo;
     await AppDataSource

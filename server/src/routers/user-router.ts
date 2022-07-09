@@ -142,7 +142,7 @@ export interface userInfo{
   nickName?:string,
   phoneNumber?:string,
   role?:string,
-  image?:string
+  image?:string,
   wishList?:string[],
 }
 

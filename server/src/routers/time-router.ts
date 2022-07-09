@@ -1,19 +1,22 @@
-// import is from '@sindresorhus/is';
-// import { Router, Request, Response,NextFunction } from 'express';
-// import { ownerRequired } from 'src/middlewares';
+import { Router, Request, Response,NextFunction } from 'express';
+import {timeService} from '../services'
+import { ownerRequired } from '../middlewares';
 
-// const timeRouter = Router();
+const timeRouter = Router();
 
 // // 1. 타임 생성
-// timeRouter.post('/create', ownerRequired, async (req: Request, res:Response, next:NextFunction) => {
-//   try {
-//     const { timeId, REGNumber, startAt, remainder } = req.body
-//     const newTime = await timeService.addTime({ timeId, REGNumber, startAt, remainder });
-//     res.status(201).json(newTime);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+timeRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+      let timeInfo:timeInfo= req.body
+      console.log(req.body)
+      const newReview = await timeService.addTime(timeInfo);
+      res.status(201).json(newReview);
+    }
+  catch (error) {
+    next(error);
+  }
+});
+
 
 // // 2. 타임 목록 조회 (배열 형태로 반환)
 // timeRouter.get('/', ownerRequired, async (req: Request, res:Response, next:NextFunction) => {
@@ -62,14 +65,31 @@
 // });
 
 // // 5. 타임 정보 삭제
-// timeRouter.delete('/:timeId', ownerRequired, async (req, res, next) => {
-//   try {
-//     const { timeId } = req.params;
-//     const result = await timeService.removeTime(timeId);
-//     res.status(200).json(result);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+// timeRouter.delete('/', ownerRequired, async (req, res, next) => {
 
-// export { timeRouter };
+timeRouter.delete('/', async (req, res, next) => {
+  try {
+    const {timeId}= req.body;
+    const result = await timeService.removeTime(timeId);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+export interface startAt{
+  year:number,
+  month:number,
+  date:number,
+  hour:number
+}
+
+export interface timeInfo{
+  timeId?: number,
+  REGNumber: string,
+  startAt:startAt,
+  remainder: number,
+  initialRemainder: number,
+}
+
+export { timeRouter };
