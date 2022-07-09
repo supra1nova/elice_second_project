@@ -1,7 +1,6 @@
 import cors from 'cors';
 import express, {Request, Response} from 'express';
-import { userRouter,restaurantRouter, reviewRouter, reserveRouter,timeRouter,menuRouter} from './routers';
-// likeRouter,ownerReviewRouter,  restaurantRouter,  reviewRouter,  ,
+import { userRouter,restaurantRouter, reviewRouter, reserveRouter,timeRouter,menuRouter, categoryRouter} from './routers';
 import { } from './middlewares';
 import { AppDataSource } from "./db/data-source"
 
@@ -43,7 +42,7 @@ app.get('/api/customers', (req, res) => {
 // /api/login 으로 요청을 해야 하게 됨. 백엔드용 라우팅을 구분하기 위함임.
 // app.use('/api/likes', likeRouter);
 app.use('/api/menus', menuRouter);
-// app.use('/api/ownerReviews', ownerReviewRouter);
+app.use('/api/categories', categoryRouter);
 app.use('/api/reserves', reserveRouter);
 app.use('/api/restaurants', restaurantRouter);
 app.use('/api/reviews', reviewRouter);

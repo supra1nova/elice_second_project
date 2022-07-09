@@ -1,21 +1,20 @@
-// import is from '@sindresorhus/is';
-// import { Router, Request, Response, NextFunction } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 // import { ownerRequired, loginRequired, adminRequired } from '../middlewares';
+import { categoryService } from '../services';
+const categoryRouter = Router();
 
-// const categoryRouter = Router();
-
-// //@ts-ignore
 
 // // 1. 카테고리 생성
 // categoryRouter.post('/create', adminRequired, async (req: Request, res:Response, next:NextFunction) => {
-//   try {
-//     const { category } = req.body
-//     const newCategory = await categoryService.addCategory({ category });
-//     res.status(201).json(newCategory);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+categoryRouter.post('/', async (req: Request, res:Response, next:NextFunction) => {
+  try {
+    let categoryInfo:categoryInfo= req.body;
+    const newCategory = await categoryService.addCategory(categoryInfo);
+    res.status(201).json(newCategory);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // // 2. 카테고리 목록 조회 (배열 형태로 반환)
 // categoryRouter.get('/', loginRequired, async (req: Request, res:Response, next:NextFunction) => {
@@ -39,14 +38,18 @@
 // });
 
 // // 4. 카테고리 정보 삭제
-// categoryRouter.delete('/:category', ownerRequired, async (req, res, next) => {
-//   try {
-//     const { category } = req.params;
-//     const result = await categoryService.removeCategory(category);
-//     res.status(200).json(result);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+categoryRouter.delete('/', async (req, res, next) => {
+  try {
+    let {category}= req.body;
+    const result = await categoryService.removeCategory(category);
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
 
-// export { categoryRouter };
+export interface categoryInfo{
+  category:string,
+  image:string
+}
+export { categoryRouter };
