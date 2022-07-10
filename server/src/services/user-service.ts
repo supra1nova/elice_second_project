@@ -14,6 +14,7 @@ class UserService {
   async addUser(userInfo:userInfo) {
     const { email, name, password,nickName,phoneNumber } = userInfo;
     // 이메일 중복 확인
+    if(email==undefined) throw new Error("Email was not given");
     const user = await this.userModel.findUserbyEmail(email);
     if (user) {
       throw new Error(
@@ -22,6 +23,7 @@ class UserService {
     }
     // 이메일 중복은 이제 아니므로, 회원가입을 진행함
     // 우선 비밀번호 해쉬화(암호화)
+    if(password==undefined) throw new Error("Password was not given");
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUserInfo:userInfo = userInfo;
     newUserInfo.password= hashedPassword;
@@ -36,18 +38,20 @@ class UserService {
     // 객체 destructuring
     const { email, password } = loginInfo;
     // 우선 해당 이메일의 사용자 정보가  db에 존재하는지 확인
+    if(email==undefined) throw new Error("Email was not given");
+
     const user = await this.userModel.findUserbyEmail(email);
     if (!user) {
       throw new Error(
         '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.'
       );
     }
-    // 이제 이메일은 문제 없는 경우이므로, 비밀번호를 확인함
 
     // 비밀번호 일치 여부 확인
     const correctPasswordHash = user.password; // db에 저장되어 있는 암호화된 비밀번호
 
     // 매개변수의 순서 중요 (1번째는 프론트가 보내온 비밀번호, 2번쨰는 db에 있떤 암호화된 비밀번호)
+    if(password==undefined) throw new Error("password was not given");
     const isPasswordCorrect = await bcrypt.compare(
       password,
       correctPasswordHash
@@ -68,6 +72,10 @@ class UserService {
     return { token };
   }
 
+  async findUser(email:string){
+    const user=await this.userModel.findUserbyEmail(email);
+    return user;
+  }
   // // 사용자 목록을 받음.
   // async getUsers() {
   //   const users = await this.userModel.findAll();
@@ -80,59 +88,70 @@ class UserService {
   // }
 
   // // 유저정보 수정, 현재 비밀번호가 있어야 수정 가능함.
-  // async setUser(userInfoRequired, toUpdate) {
-  //   // 객체 destructuring
-  //   const { userId, currentPassword } = userInfoRequired;
+  async setUser(currentPassword:string, userInfo:userInfo) {
+    const {email} = userInfo;
+    if(email==undefined) throw new Error("email not provided");
+    const user = await this.userModel.findUserbyEmail(email);
+    if (!user) {
+      throw new Error(
+        '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.'
+      );
+    }
+    const correctPasswordHash = user.password; // db에 저장되어 있는 암호화된 비밀번호
 
-  //   // 우선 해당 id의 유저가 db에 있는지 확인
-  //   let user = await this.userModel.findById(userId);
+    // 매개변수의 순서 중요 (1번째는 프론트가 보내온 비밀번호, 2번쨰는 db에 있떤 암호화된 비밀번호)
+    const isPasswordCorrect = await bcrypt.compare(
+      currentPassword,
+      correctPasswordHash
+    );
 
-  //   // db에서 찾지 못한 경우, 에러 메시지 반환
-  //   if (!user) {
-  //     throw new Error('가입 내역이 없습니다. 다시 한 번 확인해 주세요.');
-  //   }
+    if (!isPasswordCorrect) {
+      throw new Error(
+        '비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.'
+      );
+    }
 
-  //   // 이제, 정보 수정을 위해 사용자가 입력한 비밀번호가 올바른 값인지 확인해야 함
+    // 이제 드디어 업데이트 시작
 
-  //   // 비밀번호 일치 여부 확인
-  //   const correctPasswordHash = user.password;
-  //   const isPasswordCorrect = await bcrypt.compare(
-  //     currentPassword,
-  //     correctPasswordHash
-  //   );
+    // 비밀번호도 변경하는 경우에는, 회원가입 때처럼 해쉬화 해주어야 함.
+    const { password } = userInfo;
 
-  //   if (!isPasswordCorrect) {
-  //     throw new Error(
-  //       '현재 비밀번호가 일치하지 않습니다. 다시 한 번 확인해 주세요.'
-  //     );
-  //   }
+    if (password) {
+      const newPasswordHash = await bcrypt.hash(password, 10);
+      userInfo.password = newPasswordHash;
+    }
 
-  //   // 이제 드디어 업데이트 시작
+    // 업데이트 진행
+    // console.log("============",email);
+    // console.log("============",userInfo);
+    delete userInfo.email;
+    console.log("===============", userInfo);
+    console.log("============", email)
+    const updateduser = await this.userModel.updateUser(email,userInfo);
+    return updateduser;
+  }
+    // 3. 전체 제품 품목 수(SKU) 조회
 
-  //   // 비밀번호도 변경하는 경우에는, 회원가입 때처럼 해쉬화 해주어야 함.
-  //   const { password } = toUpdate;
+  async countUsers() {
+    const userCount = await this.userModel.countAll();
+    return userCount;
+  }
 
-  //   if (password) {
-  //     const newPasswordHash = await bcrypt.hash(password, 10);
-  //     toUpdate.password = newPasswordHash;
-  //   }
-
-  //   // 업데이트 진행
-  //   user = await this.userModel.update({
-  //     userId,
-  //     update: toUpdate,
-  //   });
-
-  //   return user;
-  // }
-  
+  // 4. 특정 범위(페이지) 위치한 제품 정보 조회
+  async getRangedUsers(page:number,perPage:number) {
+    const rangedProductsInfo = await this.userModel.getInRange(page, perPage);
+    return rangedProductsInfo;
+  }
   // //유저 정보 삭제, 현재 비밀번호가 있어야 수정 가능함.
   //박세웅
   async removeUser(userInfo:userInfo){
     const {email, password}= userInfo;
+    if(email==undefined) throw new Error("Email was not given");
     let user = await this.userModel.findUserbyEmail(email);
     if(user==null){throw new Error('존재하지 않는 아이디입니다.')}
     const correctPasswordHash = user.password;
+
+    if(password==undefined) throw new Error("Password was not given");
     const isPasswordCorrect = await bcrypt.compare(
       password,
       correctPasswordHash,
