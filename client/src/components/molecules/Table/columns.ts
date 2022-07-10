@@ -1,22 +1,30 @@
 export const COLUMNS = [
     {
-        Header : 'Id',
+        Header : '예약번호',
         accessor : 'id'
     },
     {
-        Header : 'First Name',
-        accessor : 'first_name'
+        Header : '식당이름',
+        accessor : 'restaurant'
     },
     {
-        Header : 'Last Name',
-        accessor : 'last_name'
+        Header : '예약자',
+        accessor : 'name'
     },
     {
-        Header : 'Email',
-        accessor : 'email'
+        Header : '인원',
+        accessor : 'number'
     },
     {
-        Header : 'Gender',
-        accessor : 'gender'
-    }
+        Header : '예약날짜',
+        accessor : 'date'
+    },
+    {
+        Header : '예약시간',
+        accessor : 'time'
+    },
+    {
+        Header : '결제 금액',
+        accessor : '\bpayment'
+    },
 ];
