@@ -1,4 +1,4 @@
-import {BaseEntity, Entity, Column, PrimaryColumn, OneToOne, JoinColumn, OneToMany} from "typeorm"
+import {BaseEntity, Entity, Column, PrimaryColumn, CreateDateColumn,OneToOne, JoinColumn, OneToMany} from "typeorm"
 import { Reserve } from "./Reserve";
 import { Restaurant } from "./Restaurant";
 
@@ -13,10 +13,10 @@ export class User extends BaseEntity{
   @Column()
   password: string;
 
-  @Column()
+  @Column({nullable:true})
   nickName: string;
 
-  @Column({
+  @Column({nullable:true
   })
   phoneNumber: string;
 
@@ -30,6 +30,8 @@ export class User extends BaseEntity{
   @Column({type:'simple-array', nullable:true})
   wishList:string[];
 
+  @CreateDateColumn({type:"timestamp"})
+  createdAt: Date;
   // @OneToOne(()=>Restaurant,restaurant=>restaurant.user,{ cascade: ['insert', 'update'] })
   // restaurant:Restaurant;
 
