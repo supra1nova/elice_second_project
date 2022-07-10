@@ -50,33 +50,21 @@ restaurantRouter.get('/', async (req: Request, res:Response, next:NextFunction) 
 // });
 
 // // 4. 업체 정보 업데이트
-// restaurantRouter.patch('/:REGNumber', loginRequired, ownerRequired, async (req: Request, res:Response, next:NextFunction) => {
-//   try {
-//     if (is.emptyObject(req.body)) {
-//       throw new Error(
-//         'headers의 Content-Type을 application/json으로 설정해주세요'
-//       );
-//     }
-//     const REGNumber = req.params.REGNumber;
-//     const { name, category, address1, address2, postalNumber, phoneNumber, image } = req.body;    // req.body 로부터 업데이트할 정보 추출
-//     const toUpdate = {    // 업데이트할 정보가 있다면, 업데이트용 객체에 삽입
-//       ...(name && { name }),
-//       ...(category && { category }),
-//       ...(address1 && { address1 }),
-//       ...(address2 && { address2 }),
-//       ...(postalNumber && { postalNumber }),
-//       ...(phoneNumber && { phoneNumber }),  // postalCode가 더 나을 것으로 보이는데 확인필요
-//       ...(image && { image }),
-//     };
-//     const updatedRestaurantInfo = await restaurantService.setRestaurant(
-//       REGNumber,
-//       toUpdate
-//     );
-//     res.status(200).json(updatedRestaurantInfo);    // 업데이트된 데이터를 프론트에 json 형태로 전달
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+restaurantRouter.patch('/:REGNumber', loginRequired, ownerRequired, async (req: Request, res:Response, next:NextFunction) => {
+  try {
+    
+    const REGNumber = req.params.REGNumber;
+    const updateRestaurantInfo:updateRestaurantInfo=req.body;
+  
+    const updatedRestaurantInfo = await restaurantService.setRestaurant(
+      REGNumber,
+      updateRestaurantInfo
+    );
+    res.status(200).json(updatedRestaurantInfo);    // 업데이트된 데이터를 프론트에 json 형태로 전달
+  } catch (error) {
+    next(error);
+  }
+});
 
 // // 5. 음식점 정보 삭제
 // restaurantRouter.delete('/', ownerRequired, async (req, res, next) => {
@@ -106,6 +94,19 @@ export interface restaurantInfo{
   phoneNumber?:string,
   image?:string
   category:string;
+  description?:string;
+}
+
+export interface updateRestaurantInfo{
+  name?:string,
+  address?:{
+    address1?:string,
+    address2?:string,
+    postalcode?:number
+  },
+  phoneNumber?:string,
+  image?:string
+  category?:string;
   description?:string;
 }
 export { restaurantRouter };

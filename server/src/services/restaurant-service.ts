@@ -1,4 +1,4 @@
-import { restaurantInfo } from 'src/routers';
+import { restaurantInfo, updateRestaurantInfo } from '../routers';
 import { RestaurantModel,restaurantModel } from '../db/data-source';
 
 
@@ -71,15 +71,12 @@ class RestaurantService {
   //   return deletedCount;
   // }
 
-  // async setProduct(product_id,toUpdate) {
+  async setRestaurant(REGNumber:string,updateRestaurantInfo:updateRestaurantInfo) {
  
-  //   const updatedProduct = await this.productModel.update({
-  //     product_id,
-  //     update: toUpdate,
-  //   });
+    const updatedRestaurant = await this.restaurantModel.updateRestaurant(REGNumber,updateRestaurantInfo);
 
-  //   return updatedProduct;
-  // }
+    return updatedRestaurant;
+  }
 }
 
 

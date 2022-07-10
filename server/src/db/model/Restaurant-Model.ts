@@ -1,4 +1,4 @@
-import { restaurantInfo } from "../../routers";
+import { restaurantInfo, updateRestaurantInfo } from "../../routers";
 import {AppDataSource} from "../data-source"
 import {Restaurant} from '../entity'
 
@@ -72,7 +72,13 @@ export class RestaurantModel{
     });
     return restaurantsInRange;
   }
+  async updateRestaurant(REGNumber:string, updateRestaurantInfo:updateRestaurantInfo){
+    const restaurantRepository=AppDataSource.getRepository(Restaurant)
+    const updated= await restaurantRepository.update(REGNumber, updateRestaurantInfo)
+    return updated.affected
+  }
 }
+
 
 const restaurantModel= new RestaurantModel();
 export{restaurantModel};
