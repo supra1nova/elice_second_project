@@ -1,4 +1,4 @@
-import {BaseEntity, Entity, Column, PrimaryColumn, OneToOne,JoinColumn, OneToMany, ManyToMany, ManyToOne, Like} from "typeorm"
+import {BaseEntity, Entity, Column, PrimaryColumn,CreateDateColumn, OneToOne,JoinColumn, OneToMany, ManyToMany, ManyToOne, Like} from "typeorm"
 import {User} from "./User"
 import {Menu} from "./Menu"
 import { Category } from "./Category";
@@ -35,6 +35,10 @@ export class Restaurant extends BaseEntity{
 
   @Column({nullable:true, length:1000})
   description:string;
+  
+  @CreateDateColumn({type:"timestamp"})
+  createdAt: Date;
+
   // @OneToOne( ()=>User, (user)=> user.restaurant, {onDelete:'CASCADE'})//회원 삭제시 식당 삭제
   // @JoinColumn()
   // user: User;

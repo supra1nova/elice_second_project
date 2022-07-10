@@ -50,6 +50,16 @@ class RestaurantService {
   }
   
  
+  async countRestaurants() {
+    const userCount = await this.restaurantModel.countAll();
+    return userCount;
+  }
+
+  // 4. 특정 범위(페이지) 위치한 제품 정보 조회
+  async getRangedRestaurants(page:number,perPage:number) {
+    const rangedProductsInfo = await this.restaurantModel.getInRange(page, perPage);
+    return rangedProductsInfo;
+  }
   // async getAllProduct(){
   //   const allProducts= await this.productModel.findAll();
   //   return allProducts;

@@ -1,4 +1,4 @@
-import { restaurantInfo } from "src/routers";
+import { restaurantInfo } from "../../routers";
 import {AppDataSource} from "../data-source"
 import {Restaurant} from '../entity'
 
@@ -50,6 +50,27 @@ export class RestaurantModel{
     .from(Restaurant)
     .where('REGNumber = :REGNumber',{REGNumber:REGNumber})
     .execute()
+  }
+
+  async countAll() {
+    const restaurantRepository= AppDataSource.getRepository(Restaurant);
+    const count = await restaurantRepository.count({
+    })
+    return count;
+  }
+
+  // 4. 특정 범위(페이지) 위치한 제품 정보 조회
+  async getInRange(page:number, perPage:number) {
+    const restaurantRepository= AppDataSource.getRepository(Restaurant);
+
+    const restaurantsInRange = await restaurantRepository.find({
+      order:{
+        createdAt:"ASC"
+      },
+      skip:perPage*(page-1),
+      take:perPage
+    });
+    return restaurantsInRange;
   }
 }
 

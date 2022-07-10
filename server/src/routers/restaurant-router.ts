@@ -20,14 +20,24 @@ restaurantRouter.post('/', async (req: Request, res:Response, next:NextFunction)
 
 // // 2. 업체 목록 조회 (배열 형태로 반환)
 // restaurantRouter.get('/', loginRequired, async (req: Request, res:Response, next:NextFunction) => {
-//   try {
-//     const restaurants = await restaurantService.getRestaurants();
-//     res.status(200).json(restaurants);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+restaurantRouter.get('/', async (req: Request, res:Response, next:NextFunction) => {
+  try {
+    const page= Number(req.query.page) ||1;
+    const perPage= Number(req.query.perPage) ||12;
 
+    const [total, restaurants] = await Promise.all([
+      await restaurantService.countRestaurants(),
+      await restaurantService.getRangedRestaurants(page, perPage)
+    ]);
+    
+    const totalPage = Math.ceil(total / perPage);
+    
+    // 제품 목록(배열), 현재 페이지, 전체 페이지 수, 전체 제품 수량 등 을 json 형태로 프론트에 전달
+    res.status(200).json({ restaurants, page, perPage, totalPage, total });
+  } catch (error) {
+    next(error);
+  }
+})
 // // 3. 업체 상세 정보 조회
 // restaurantRouter.get('/:REGNumber', async function (req: Request, res:Response, next:NextFunction) {
 //   try {
