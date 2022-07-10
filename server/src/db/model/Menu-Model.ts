@@ -16,6 +16,15 @@ export class MenuModel{
     return (review);
   }
 
+  async findMenuByREGNumber(REGNumber:string) {
+    const reviewRepository= AppDataSource.getRepository(Menu);
+    // get a post repository to perform operations with post
+    const review = await reviewRepository.find({
+      where: {REGNumber: REGNumber}
+    })
+    return (review);
+  }
+
   async create(menuInfo:menuInfo){
     await AppDataSource
     .createQueryBuilder()
@@ -27,14 +36,14 @@ export class MenuModel{
     .execute()
   }
 
-  // async reply(menuId:number, ownerComment:string){
-  //   await AppDataSource
-  //     .createQueryBuilder()
-  //     .update(Menu)
-  //     .set({ ownerComment: ownerComment})
-  //     .where("menuId = :menuId", { menuId: menuId })
-  //     .execute()
-  // }
+  async updateMenu(menuId:number, menuInfo:menuInfo){
+    await AppDataSource
+      .createQueryBuilder()
+      .update(Menu)
+      .set(menuInfo)
+      .where("menuId = :menuId", { menuId: menuId })
+      .execute()
+  }
 
   async deleteMenu(menuId:number){
     await AppDataSource
