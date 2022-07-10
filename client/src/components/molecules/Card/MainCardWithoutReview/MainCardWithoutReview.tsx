@@ -10,9 +10,11 @@ import Grade from '../../../atoms/Grade';
 // 링크는 각 리스트 아이템의 shop detail로 갈 수 있도록
 // grade는 계산된 shop의 데이터 가져오기 (atoms/grade)
 // likeCount, reviewCount 도 atoms로 빼는게 좋겠음 (shop detail에서도 사용)
-// util에 toLocaleString 추가 하는게 좋을듯
+// util에 toLocaleString 추가?
 
-interface ShopCardVerticalProps {
+// large props를 이용 (large(true) => searchList , large(false) => main2card)
+
+interface MainCardWithoutReviewProps {
   title: String;
   address: String;
   description: String;
@@ -22,18 +24,18 @@ interface ShopCardVerticalProps {
   likeCount?: String;
   reviewCount?: String;
 }
-const ShopCardVertical = ({
+const MainCardWithoutReview = ({
   title,
   address,
   foodType,
   large,
   likeCount,
   reviewCount,
-}: ShopCardVerticalProps) => {
+}: MainCardWithoutReviewProps) => {
   return (
     <div>
       <Link to=''>
-        <UI.CardWrapperVertical large={large}>
+        <UI.Container large={large}>
           <UI.ImgWrapper large={large}>
             <Img></Img>
             <LikeBtn />
@@ -55,13 +57,13 @@ const ShopCardVertical = ({
               )}
             </UI.SubTitle>
           </UI.InfoWrapper>
-        </UI.CardWrapperVertical>
+        </UI.Container>
       </Link>
     </div>
   );
 };
 
-ShopCardVertical.defaultProps = {
+MainCardWithoutReview.defaultProps = {
   title: '오츠에스프레소',
   address: '판교',
   foodType: '이탈리안음식',
@@ -71,4 +73,4 @@ ShopCardVertical.defaultProps = {
   reviewCount: 75,
 };
 
-export default ShopCardVertical;
+export default MainCardWithoutReview;

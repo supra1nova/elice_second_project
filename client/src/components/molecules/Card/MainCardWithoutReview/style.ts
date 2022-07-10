@@ -5,7 +5,7 @@ interface Props {
   large: boolean;
 }
 
-export const CardWrapperVertical = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: ${(props: Props) => (props.large ? '396px' : '193px')};

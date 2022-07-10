@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const CardWrapperHorizon = styled.div`
+export const Container = styled.div`
   display: flex;
   border: 1px solid gray;
   width: 544px;
