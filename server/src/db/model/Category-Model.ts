@@ -35,6 +35,21 @@ export class CategoryModel{
     .where('category = :category',{category:category})
     .execute()
   }
+
+  async findCategory( ){
+    const categoryRepository= AppDataSource.getRepository(Category)
+    const categories= await categoryRepository.find()
+    
+    return categories
+  }
+  async updateCategory(current_category:string, categoryInfo:categoryInfo){
+    await AppDataSource
+      .createQueryBuilder()
+      .update(Category)
+      .set(categoryInfo)
+      .where("category = :category", { category: current_category })
+      .execute()
+  }
 }
 
 const categoryModel= new CategoryModel();

@@ -38,6 +38,14 @@ class MenuService {
       }
     }
   }
+  async getMenus(REGNumber:string){
+    const menus= await menuModel.findMenuByREGNumber(REGNumber);
+    return menus;
+  }
+  async setMenu(menuId:number, menuInfo:menuInfo){
+    const menu =await menuModel.updateMenu(menuId,menuInfo);
+    return menu;
+  }
 }
 
 const menuService = new MenuService(menuModel);
