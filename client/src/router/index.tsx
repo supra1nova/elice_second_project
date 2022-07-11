@@ -5,6 +5,7 @@ import HalfLayout from './HalfLayout';
 import { Home } from '../pages/Home';
 import AccountRestaurants from '../pages/Account/AccountRestaurants';
 import AccountReserves from '../pages/Account/AccountReserves';
+import AccountRestaurantsList from '../pages/Account/AccountRestaurantsList';
 import Login from '../pages/Users/Login';
 
 function Router() {
@@ -20,6 +21,10 @@ function Router() {
           <Route
             path='/account/reserves'
             element={<AccountReserves />}
+          ></Route>
+          <Route
+            path='/account/restaurants/list'
+            element={<AccountRestaurantsList />}
           ></Route>
         </Route>
         <Route element={<HalfLayout />}>

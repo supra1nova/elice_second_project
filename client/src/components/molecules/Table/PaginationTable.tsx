@@ -13,6 +13,9 @@ const BtnModification = styled(TableButton)`
     background-color: #fff;
     border: 1px solid #E5E5E5;
 `;
+const StyledTableContainer = styled.div`
+    padding: 40px 40px 0;
+`
 const StyledTable = styled.table`
     font-family: 'Noto Sans KR';
     border-collapse: collapse;
