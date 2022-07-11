@@ -15,26 +15,73 @@ reserveRouter.post('/', async (req: Request, res: Response, next: NextFunction) 
     next(error);
   }
 });
-// // 2. 예약 목록 조회 (배열 형태로 반환)
-// reserveRouter.get('/', loginRequired, async (req: Request, res:Response, next:NextFunction) => {
-//   try {
-//     const reserves = await reserveService.getReserves();
-//     res.status(200).json(reserves);
-  // } catch (error) {
-//     next(error);
-//   }
-// });
 
-// // 3. 예약 상세 정보 조회
-// reserveRouter.get('/:reserveId', async function (req: Request, res:Response, next:NextFunction) {
-//   try {
-//     const { reserveId } = req.params;
-//     const reserve = await reserveService.findReserve(reserveId);
-//     res.status(200).json(reserve);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+// admin 전용 전체 예약 조회
+reserveRouter.get('/admin/', async (req: Request, res:Response, next:NextFunction) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const perPage= Number(req.query.perPage) ||12;
+
+    const [total, reserves] = await Promise.all([
+      reserveService.countReserves(),
+      await reserveService.getRangedReserves(page, perPage)
+    ]);
+    const totalPage = Math.ceil(total / perPage);
+    // 제품 목록(배열), 현재 페이지, 전체 페이지 수, 전체 제품 수량 등 을 json 형태로 프론트에 전달
+    res.status(200).json({ reserves, page, perPage, totalPage, total });
+  } catch (error) {
+    next(error);
+  }
+})
+
+// 특정 사업자 기준 예약 조회
+reserveRouter.get('/owner/:REGNumber', async (req: Request, res:Response, next:NextFunction) => {
+  try {
+    const { REGNumber } = req.params
+    const page = Number(req.query.page) || 1;
+    const perPage= Number(req.query.perPage) ||12;
+
+    const [total, reserves] = await Promise.all([
+      reserveService.countReservesByREGNumber(REGNumber),
+      await reserveService.getRangedReservesByREGNumber(REGNumber, page, perPage)
+    ]);
+    const totalPage = Math.ceil(total / perPage);
+    // 제품 목록(배열), 현재 페이지, 전체 페이지 수, 전체 제품 수량 등 을 json 형태로 프론트에 전달
+    res.status(200).json({ reserves, page, perPage, totalPage, total });
+  } catch (error) {
+    next(error);
+  }
+})
+
+// 특정 이메일 기준 예약 조회
+reserveRouter.get('/user/:email', async (req: Request, res:Response, next:NextFunction) => {
+  try {
+    const { email } = req.params
+    const page = Number(req.query.page) || 1;
+    const perPage= Number(req.query.perPage) ||12;
+
+    const [total, reserves] = await Promise.all([
+      reserveService.countReservesByEmail(email),
+      await reserveService.getRangedReservesByEmail(email, page, perPage)
+    ]);
+    const totalPage = Math.ceil(total / perPage);
+    // 제품 목록(배열), 현재 페이지, 전체 페이지 수, 전체 제품 수량 등 을 json 형태로 프론트에 전달
+    res.status(200).json({ reserves, page, perPage, totalPage, total });
+  } catch (error) {
+    next(error);
+  }
+})
+
+// 3. 예약 상세 정보 조회
+reserveRouter.get('/:reserveId', async function (req: Request, res:Response, next:NextFunction) {
+  try {
+    const reserveId = Number(req.params.reserveId);
+    const reserve = await reserveService.findReserve(reserveId);
+    res.status(200).json(reserve);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // // 4. 예약 정보 삭제
 // reserveRouter.delete('/', loginRequired, async (req, res, next) => {
