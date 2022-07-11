@@ -33,6 +33,9 @@ export class Reserve extends BaseEntity{
   @Column()
   totalPrice: number;
 
+  @Column()
+  REGNumber: string;
+
   // @ManyToOne(()=>Time, time=>time.reserves)
   // time:Time
 

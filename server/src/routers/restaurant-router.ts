@@ -51,7 +51,7 @@ restaurantRouter.get('/:REGNumber', async function (req: Request, res:Response, 
 });
 
 // // 4. 업체 정보 업데이트
-restaurantRouter.patch('/:REGNumber', loginRequired, ownerRequired, async (req: Request, res:Response, next:NextFunction) => {
+restaurantRouter.patch('/:REGNumber', async (req: Request, res:Response, next:NextFunction) => {
   try {
     
     const REGNumber = req.params.REGNumber;
