@@ -2,17 +2,22 @@ import React from 'react';
 import * as UI from './style';
 
 interface Props {
-  color?: React.ReactElement | string;
-  size?: React.ReactElement | string;
+  component?: string;
+  size?: string;
   children?: React.ReactElement | string;
 }
 
-const Button = ({ color, size, children }: Props) => {
+const Button = ({ component, size, children }: Props) => {
   return (
-    <UI.Button type='button' color={color} size={size}>
+    <UI.Button type='button' component={component} size={size}>
       {children}
     </UI.Button>
   );
+};
+
+Button.defulatProps = {
+  component: 'default',
+  size: 'small',
 };
 
 export default Button;

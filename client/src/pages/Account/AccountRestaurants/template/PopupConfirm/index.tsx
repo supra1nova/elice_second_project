@@ -3,7 +3,7 @@ import { TITLE } from '../../../../../constants/title';
 import Popup from '../../../../../components/oranisms/Popup';
 
 const PopupConfirm = () => {
-  return <Popup title={TITLE.ACCOUNT_SAVE_CONFIRM} footer />;
+  return <Popup title={TITLE.ACCOUNT_SAVE_CONFIRM} footer primary={true} />;
 };
 
 export default PopupConfirm;

@@ -11,9 +11,8 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.div`
+  ${(props) => props.theme.font.subtitle1};
   color: ${(props) => props.theme.colors.font1};
-  font-size: ${(props) => props.theme.font.subtitle1}px;
-
   ${(props: Props) =>
     props.primary &&
     css`

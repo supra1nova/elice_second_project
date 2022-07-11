@@ -13,7 +13,7 @@ interface Props {
   children?: React.ReactElement | string;
 }
 
-const Popup = ({ title, subTitle, footer, children }: Props) => {
+const Popup = ({ title, subTitle, primary, footer, children }: Props) => {
   const modalDiv = document.getElementById('modal')!;
   const [domReady, setDomReady] = useState(false);
   useEffect(() => {
@@ -25,7 +25,7 @@ const Popup = ({ title, subTitle, footer, children }: Props) => {
           <UI.Container>
             <UI.Content>
               <UI.Section>
-                <Header title={title} subTitle={subTitle} />
+                <Header title={title} subTitle={subTitle} primary={false} />
                 {children && <Contents>{children}</Contents>}
                 {footer && <Footer />}
               </UI.Section>
