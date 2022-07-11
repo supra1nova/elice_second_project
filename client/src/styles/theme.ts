@@ -31,7 +31,7 @@ const font = {
   },
   subtitle1: {
     fontSize: 16,
-    fontWeight: 'medium',
+    fontWeight: '500',
   },
   subtitle2: {
     fontSize: 14,
@@ -45,11 +45,11 @@ const font = {
     fontSize: 14,
     fontWeight: 'normal',
   },
-  cation: {
+  caption: {
     fontSize: 12,
     fontWeight: 'normal',
   },
-  cationBold: {
+  captionBold: {
     fontSize: 12,
     fontWeight: 'bold',
   },
