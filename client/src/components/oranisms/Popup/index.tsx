@@ -11,7 +11,7 @@ interface Props {
   footer?: boolean;
   foooterType?: string;
   children?: React.ReactElement | string;
-  setModal: (value: boolean) => void;
+  primary?: boolean;
 }
 
 const Popup = ({
@@ -20,22 +20,20 @@ const Popup = ({
   footer,
   foooterType,
   children,
-  setModal,
+  primary,
 }: Props) => {
   const modalDiv = document.getElementById('modal')!;
   const [domReady, setDomReady] = useState(false);
-  const handleModal = () => {
-    setModal(false);
-  };
+
   useEffect(() => {
     setDomReady(true);
   });
   return domReady
     ? createPortal(
-        <UI.Container onClick={handleModal}>
+        <UI.Container>
           <UI.Content>
             <UI.Section>
-              <Header title={title} subTitle={subTitle} primary={false} />
+              <Header title={title} subTitle={subTitle} primary={primary!} />
               {children && <Contents>{children}</Contents>}
               {footer && <Footer foooterType={foooterType} />}
             </UI.Section>

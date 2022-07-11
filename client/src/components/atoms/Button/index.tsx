@@ -6,11 +6,18 @@ interface Props {
   size?: string;
   block?: boolean;
   children?: React.ReactNode | string;
+  onClick?: (e: any) => void;
 }
 
-const Button = ({ component, size, children, block }: Props) => {
+const Button = ({ component, size, block, children, onClick }: Props) => {
   return (
-    <UI.Button type='button' component={component} size={size}>
+    <UI.Button
+      type='button'
+      component={component}
+      size={size}
+      block={block!}
+      onClick={onClick}
+    >
       {children}
     </UI.Button>
   );

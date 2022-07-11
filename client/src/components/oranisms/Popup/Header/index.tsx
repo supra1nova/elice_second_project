@@ -6,19 +6,23 @@ export interface Props {
   title?: string;
   subTitle?: string;
   primary?: boolean;
-  onClick?: () => void;
+  onClick?: (e: any) => void;
 }
 
 const Header = ({ title, subTitle, primary, onClick }: Props) => {
   return (
     <UI.Container>
-      <UI.Title primary>{title}</UI.Title>
+      <UI.Title primary={primary!}>{title}</UI.Title>
       {subTitle && <UI.SubTitle>{subTitle}</UI.SubTitle>}
       <UI.Close>
-        <Close />
+        <Close onClick={onClick} />
       </UI.Close>
     </UI.Container>
   );
+};
+
+Header.defaultProps = {
+  primary: false,
 };
 
 export default Header;

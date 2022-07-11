@@ -3,11 +3,13 @@ import styled, { css } from 'styled-components';
 interface Props {
   component?: string;
   size?: string;
+  block: boolean;
 }
 
 export const Button = styled.button`
   position: relative;
-  display: inline-block;
+  display: ${(props: Props) => (props.block ? 'block' : 'inline-block')};
+  width: ${(props: Props) => (props.block ? '100%' : 'auto')};
   text-align: center;
   border-radius: 23px;
   border-width: 1px;
