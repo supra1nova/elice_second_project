@@ -3,7 +3,7 @@ import MOCK_DATA from './MOCK_DATA.json'
 import { COLUMNS } from './columns'
 import { usePagination, useTable } from 'react-table'
 import styled from 'styled-components';
-import { TableButton } from '../../atoms/TableButton'
+import { TableButton } from '../../atoms/TableButton/TableButton'
 
 const BtnReview = styled(TableButton)`
     color: #fff;
