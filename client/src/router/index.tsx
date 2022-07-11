@@ -4,6 +4,7 @@ import GlobalLayout from './GlobalLayout';
 import HalfLayout from './HalfLayout';
 import { Home } from '../pages/Home';
 import AccountRestaurants from '../pages/Account/AccountRestaurants';
+import AccountReserves from '../pages/Account/AccountReserves';
 import Login from '../pages/Users/Login';
 
 function Router() {
@@ -15,6 +16,10 @@ function Router() {
           <Route
             path='/account/restaurants'
             element={<AccountRestaurants />}
+          ></Route>
+          <Route
+            path='/account/reserves'
+            element={<AccountReserves />}
           ></Route>
         </Route>
         <Route element={<HalfLayout />}>
