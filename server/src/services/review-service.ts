@@ -49,8 +49,8 @@ class ReviewService {
   
   // 5. 특정 리뷰 조회
   async findReview(reserveId: number) {
-    const rangedReviewsInfo = await this.reviewModel.findReviewByReserveId(reserveId);
-    return rangedReviewsInfo;
+    const rangedReviewInfo = await this.reviewModel.findReviewByReserveId(reserveId);
+    return rangedReviewInfo;
   }
 
   // 3. 삭제

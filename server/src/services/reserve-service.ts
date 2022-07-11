@@ -31,18 +31,47 @@ class ReserveService {
     //Time의 remainder를 우선적으로 줄이되 0보다 작으면 거절함.
   }
 
+  // 전체 예약 숫자 카운트
+  async countReserves() {
+    const reservesNumber = await this.reserveModel.countAll();
+    return reservesNumber;
+  }
+  
+  // 전체 예약 조회
+  async getRangedReserves(page:number,perPage:number) {
+    const rangedReservesInfo = await this.reserveModel.getInRange(page, perPage);
+    return rangedReservesInfo;
+  }
 
-  // 특정 이메일 기준 리뷰 숫자 카운트
+  // 특정 이메일 기준 예약 숫자 카운트
   async countReservesByEmail(email: string) {
     const reservesNumber = await this.reserveModel.countAllByEmail(email);
     return reservesNumber;
   }
   
-  // 2. 이메일 기준 전체 리뷰 조회
+  // 특정 이메일 기준 전체 예약 조회
   async getRangedReservesByEmail(email:string, page:number,perPage:number) {
     const rangedReservesInfo = await this.reserveModel.getInRangeByEmail(email, page, perPage);
     return rangedReservesInfo;
   }
+
+    // 특정 사업자 기준 예약 숫자 카운트
+    async countReservesByREGNumber(REGNumber: string) {
+      const reservesNumber = await this.reserveModel.countAllByREGNumber(REGNumber);
+      return reservesNumber;
+    }
+    
+    // 특정 사업자 기준 전체 예약 조회
+    async getRangedReservesByREGNumber(REGNumber:string, page:number,perPage:number) {
+      const rangedReservesInfo = await this.reserveModel.getInRangeByREGNumber(REGNumber, page, perPage);
+      return rangedReservesInfo;
+    }
+  
+    // 5. 특정 예약 조회
+    async findReserve(reserveId: number) {
+      const rangedReseveInfo = await this.reserveModel.findReserveByReserveId(reserveId);
+      return rangedReseveInfo;
+    }
 
 
   // 2. 삭제
