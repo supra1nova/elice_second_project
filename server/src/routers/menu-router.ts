@@ -19,14 +19,15 @@ menuRouter.post('/', async (req: Request, res:Response, next:NextFunction) => {
 
 
 // 2. 메뉴 목록 조회 (배열 형태로 반환)
-// menuRouter.get('/', loginRequired, async (req: Request, res:Response, next:NextFunction) => {
-//   try {
-//     const restaurants = await menuService.getUsers();
-//     res.status(200).json(restaurants);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+menuRouter.get('/:REGNumber', async (req: Request, res:Response, next:NextFunction) => {
+  try {
+    const REGNumber= req.params.REGNumber;
+    const restaurants = await menuService.getMenus(REGNumber);
+    res.status(200).json(restaurants);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // 3. 메뉴 상세 정보 조회
 // menuRouter.get('/:menuId', async function (req: Request, res:Response, next:NextFunction) {
@@ -42,32 +43,18 @@ menuRouter.post('/', async (req: Request, res:Response, next:NextFunction) => {
 
 // 4. 메뉴 정보 업데이트
 // menuRouter.patch('/:menuId', loginRequired, ownerRequired, async (req: Request, res:Response, next:NextFunction) => {
-//   try {
-//     if (is.emptyObject(req.body)) {
-//       throw new Error(
-//         'headers의 Content-Type을 application/json으로 설정해주세요'
-//       );
-//     }
-//     const menuId = req.params.menuId;
-//     const { name, REGNumber, price, description, postalNumber, phoneNumber, image } = req.body;    // req.body 로부터 업데이트할 정보 추출
-//     const toUpdate = {    // 업데이트할 정보가 있다면, 업데이트용 객체에 삽입
-//       ...(name && { name }),
-//       ...(REGNumber && { REGNumber }),
-//       ...(price && { price }),
-//       ...(description && { description }),
-//       ...(postalNumber && { postalNumber }),
-//       ...(phoneNumber && { phoneNumber }),  // postalCode가 더 나을 것으로 보이는데 확인필요
-//       ...(image && { image }),
-//     };
-//     const updatedRestaurantInfo = await menuService.setRestaurant(
-//       menuId,
-//       toUpdate
-//     );
-//     res.status(200).json(updatedRestaurantInfo);    // 업데이트된 데이터를 프론트에 json 형태로 전달
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+
+menuRouter.patch('/:menuId', async (req: Request, res:Response, next:NextFunction) => {
+  try {
+    //REGNuber가 request에 있어서는 안된다. REGNumber은 수정가능한 값이 아니기떄문에 
+    const menuId = Number(req.params.menuId);
+    const menuInfo:menuInfo= req.body
+    const updatedRestaurantInfo = await menuService.setMenu(menuId, menuInfo);
+    res.status(200).json(updatedRestaurantInfo);    // 업데이트된 데이터를 프론트에 json 형태로 전달
+  } catch (error) {
+    next(error);
+  }
+});
 
 // 5. 메뉴 정보 삭제
 // menuRouter.delete('/', ownerRequired, async (req, res, next) => {
@@ -85,8 +72,8 @@ menuRouter.delete('/', async (req, res, next) => {
 
 export interface menuInfo{
   menuId?: number,
-  REGNumber: string,
-  name: string,
+  REGNumber?: string,
+  name?: string,
   price?: number,
   description?: string,
   image?:string

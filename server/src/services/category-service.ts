@@ -10,13 +10,16 @@ class CateogryService {
 
   // 1. 생성
   async addCategory(categoryInfo:categoryInfo) {
-        const createdNewReserve = await this.categoryModel.create(categoryInfo);
-        return createdNewReserve;
+        const createdNewCategory = await this.categoryModel.create(categoryInfo);
+        return createdNewCategory;
       }
     
     //Time의 remainder를 우선적으로 줄이되 0보다 작으면 거절함.
 
-  
+  async getCategories(){
+    const retrievedCategory= await this.categoryModel.findCategory();
+    return retrievedCategory
+  }
 
 
   // 2. 삭제
@@ -25,6 +28,12 @@ class CateogryService {
         const deletedCategory = await this.categoryModel.deleteCategory(category);
         return deletedCategory;
   }
+
+  async setCategory(current_category:string, categoryInfo:categoryInfo) {
+
+    const deletedCategory = await this.categoryModel.updateCategory(current_category,categoryInfo);
+    return deletedCategory;
+}
 }
 
 const categoryService = new CateogryService(categoryModel);
