@@ -1,26 +1,21 @@
-import React from 'react';
-import * as UI from './style';
-import Header from './Header';
-import Contents from './Contents';
+import React, { useState, useEffect, Children } from 'react';
+import { createPortal } from 'react-dom';
+import Template from './Template';
 
 export interface Props {
-  title?: string;
-  subTitle?: string;
+  title?: React.ReactElement | string;
+  subTitle?: React.ReactElement | string;
   children?: React.ReactElement | string;
 }
 
-export const Popup = ({ title, subTitle, children }: Props) => {
-  return (
-    <>
-      <UI.Container>
-        <UI.Content>
-          <UI.Section>
-            <Header title={title} subTitle={subTitle} />
-            <Contents>{children}</Contents>
-          </UI.Section>
-        </UI.Content>
-        <UI.Dimd />
-      </UI.Container>
-    </>
-  );
+const Popup = ({ children }: Props) => {
+  const [domReady, setDomReady] = useState(false);
+  const modalDiv = document.getElementById('modal')!;
+  useEffect(() => {
+    setDomReady(true);
+  });
+
+  return domReady ? createPortal(<Template></Template>, modalDiv) : null;
 };
+
+export default Popup;
