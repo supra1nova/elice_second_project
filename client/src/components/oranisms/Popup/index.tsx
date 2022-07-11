@@ -9,11 +9,11 @@ interface Props {
   title?: React.ReactElement | string;
   primary?: boolean;
   subTitle?: React.ReactElement | string;
-  footer?: React.ReactElement | string;
+  footer?: boolean;
   children?: React.ReactElement | string;
 }
 
-const Popup = ({ title, subTitle, children }: Props) => {
+const Popup = ({ title, subTitle, footer, children }: Props) => {
   const modalDiv = document.getElementById('modal')!;
   const [domReady, setDomReady] = useState(false);
   useEffect(() => {
@@ -26,8 +26,8 @@ const Popup = ({ title, subTitle, children }: Props) => {
             <UI.Content>
               <UI.Section>
                 <Header title={title} subTitle={subTitle} />
-                <Contents>{children}</Contents>
-                <Footer />
+                {children && <Contents>{children}</Contents>}
+                {footer && <Footer />}
               </UI.Section>
             </UI.Content>
             <UI.Dimd />
