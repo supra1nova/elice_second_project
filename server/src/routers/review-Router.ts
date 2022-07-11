@@ -52,8 +52,9 @@ reviewRouter.post('/owner', async (req: Request, res: Response, next: NextFuncti
   })
   
   // 3. 리뷰 상세 정보 조회
-  reviewRouter.get('/:reserveId', async function (req: Request, res:Response, next:NextFunction) {
+  reviewRouter.get('/specific/:reserveId', async function (req: Request, res:Response, next:NextFunction) {
     try {
+      console.log(1);
       const reserveId = Number(req.params.reserveId);
       const review = await reviewService.findReview(reserveId);
       res.status(200).json(review);
