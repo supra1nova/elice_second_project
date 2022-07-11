@@ -20,6 +20,9 @@ export class Review extends BaseEntity{
 
   @Column()
   rating: number;
+
+  @Column()
+  REGNumber: string;
   
   @Column(
     {type: "simple-array"}
