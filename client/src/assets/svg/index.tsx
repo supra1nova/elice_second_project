@@ -11,6 +11,7 @@ import Profile from './Profile';
 import Arrow from './Arrow';
 import NextArrow from './NextArrow';
 import PrevArrow from './PrevArrow';
+import Check from './Check';
 
 export {
   Profile,
@@ -25,5 +26,6 @@ export {
   Person,
   Arrow,
   NextArrow,
-  PrevArrow
+  PrevArrow,
+  Check
 };

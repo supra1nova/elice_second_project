@@ -31,7 +31,7 @@ const font = {
   },
   subtitle1: {
     fontSize: 16,
-    fontWeight: '500',
+    fontWeight: 'medium',
   },
   subtitle2: {
     fontSize: 14,
