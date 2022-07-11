@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import PopupConfirm from './PopupConfirm';
-import PopupFinish from './PopupFinish';
+import PopupSaveConfirm from './PopupSaveConfirm';
+import Button from '../../../../components/atoms/Button';
 const AccountRestaurantsTemplate = () => {
+  const [openPopupSaveConfirm, setOpenPopupSaveConfirm] = useState(false);
+
   return (
     <>
-      <PopupConfirm />
-      <PopupFinish />
+      <Button component='primary' block>
+        변경사항 저장
+      </Button>
+      {openPopupSaveConfirm && <PopupSaveConfirm />}
+      {}
     </>
   );
 };
