@@ -7,10 +7,10 @@ const reserveRouter = Router();
 // // 1. 예약 생성
 reserveRouter.post('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-      let reserveInfo:reserveInfo= req.body
-      const newReview = await reserveService.addReserve(reserveInfo);
-      res.status(201).json(newReview);
-    }
+    let reserveInfo:reserveInfo= req.body
+    const newReview = await reserveService.addReserve(reserveInfo);
+    res.status(201).json(newReview);
+  }
   catch (error) {
     next(error);
   }
@@ -51,12 +51,13 @@ reserveRouter.delete('/', async (req, res, next) => {
 });
 
 export interface reserveInfo{
-  reserveId?:number,
+  reserveId:number,
   timeId: number,
   email: string,
   number: number,
   menuList: number[],
   quantityList:number[],
-  totalPrice:number
+  totalPrice: number,
+  REGNumber: string
 }
 export { reserveRouter };

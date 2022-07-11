@@ -45,7 +45,7 @@ userRouter.post('/login', async function (req: Request, res:Response, next:NextF
   }
 });
 
-// 2. 페이지네이션 된 제품 리스트 조회 - 페이지네이션 적용
+// 2. 페이지네이션 된 유저 리스트 조회 - 페이지네이션 적용
 userRouter.get('/', async function (req, res, next) {
   try {
 

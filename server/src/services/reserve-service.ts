@@ -10,11 +10,13 @@ class ReserveService {
   constructor(reserveModel:ReserveModel) {
     this.reserveModel = reserveModel;
   }
-
+  
   // 1. 생성
   async addReserve(reserveInfo:reserveInfo) {
-    const {timeId, number} =reserveInfo;
+    const { timeId, number } = reserveInfo;
     const time = await timeModel.findTimeByTimeId(timeId);
+    console.log(11111);
+    console.log(time);
     let a:number|undefined = time?.remainder
     if(a===undefined) throw new Error("Time not found");
     else{

@@ -1,4 +1,4 @@
-import { BaseEntity, Entity, Column, PrimaryColumn, OneToOne, JoinColumn, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Entity, Column, PrimaryColumn, OneToOne, JoinColumn, PrimaryGeneratedColumn, CreateDateColumn } from "typeorm";
 import { Reserve } from "./Reserve";
 
 @Entity('Review')   // mySQL 예약어 Like와 겹쳐도 되는가...?
@@ -27,7 +27,10 @@ export class Review extends BaseEntity{
   @Column(
     {type: "simple-array"}
     )
-    image: string[];
+  image: string[];
+  
+  @CreateDateColumn({type:"timestamp"})
+  createdAt: Date;
 
   // @OneToOne(()=>Reserve, reserve=>reserve.review, {onDelete:'CASCADE'})
   // @JoinColumn()
