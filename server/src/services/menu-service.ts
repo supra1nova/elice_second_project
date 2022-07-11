@@ -8,20 +8,37 @@ class MenuService {
     this.menuModel = menuModel;
   }
 
-  // 1. 생성
+  // 1. 메뉴 생성
   async addMenu(menuInfo:menuInfo) {
-        const createdNewReserve = await this.menuModel.create(menuInfo);
-        return createdNewReserve;
-      }
-    
-    //Time의 remainder를 우선적으로 줄이되 0보다 작으면 거절함.
-
+    const createdNewReserve = await this.menuModel.create(menuInfo);
+    return createdNewReserve;
+  }
   
-
-
-  // 2. 삭제
+  // 2. 상호 관련 전체 메뉴 목록 조회
+  async getMenus(REGNumber:string){
+    const menus= await menuModel.findMenuByREGNumber(REGNumber);
+    return menus;
+  }
+  
+  // 3. 메뉴 상세 보기
+  async getMenu(menuId:number){
+    const menu= await this.menuModel.findMenuByMenuId(menuId);
+    if(!menu){
+      throw new Error(
+        '해당 제품이 존재하지 않습니다. 다시 한 번 확인해 주세요.'
+      );
+    }
+    return menu;
+  }
+  
+  // 4. 메뉴 업데이트
+  async setMenu(menuId:number, menuInfo:menuInfo){
+    const menu =await menuModel.updateMenu(menuId,menuInfo);
+    return menu;
+  }
+  
+  // 5. 메뉴 삭제
   async removeMenu(menuId:number, email:string) {
-
     const restaurant = await restaurantModel.findRestaurantByOwnerEmail(email);
     const menu= await this.menuModel.findMenuByMenuId(menuId);
     let a:string|undefined = restaurant?.REGNumber
@@ -37,14 +54,6 @@ class MenuService {
         }
       }
     }
-  }
-  async getMenus(REGNumber:string){
-    const menus= await menuModel.findMenuByREGNumber(REGNumber);
-    return menus;
-  }
-  async setMenu(menuId:number, menuInfo:menuInfo){
-    const menu =await menuModel.updateMenu(menuId,menuInfo);
-    return menu;
   }
 }
 
