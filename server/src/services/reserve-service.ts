@@ -29,7 +29,19 @@ class ReserveService {
       }
     }
     //Time의 remainder를 우선적으로 줄이되 0보다 작으면 거절함.
+  }
 
+
+  // 특정 이메일 기준 리뷰 숫자 카운트
+  async countReservesByEmail(email: string) {
+    const reservesNumber = await this.reserveModel.countAllByEmail(email);
+    return reservesNumber;
+  }
+  
+  // 2. 이메일 기준 전체 리뷰 조회
+  async getRangedReservesByEmail(email:string, page:number,perPage:number) {
+    const rangedReservesInfo = await this.reserveModel.getInRangeByEmail(email, page, perPage);
+    return rangedReservesInfo;
   }
 
 

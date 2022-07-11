@@ -6,15 +6,6 @@ import { reserveInfo } from "src/routers/reserve-Router";
  */
 export class ReserveModel{
   
-  async findReserveByReserveId(reserveId:number) {
-    const reserveRepository= AppDataSource.getRepository(Reserve);
-    // get a post repository to perform operations with post
-    const reserve = await reserveRepository.findOneBy({
-      reserveId: reserveId
-    })
-    return (reserve);
-  }
-
   async create(reserveInfo:reserveInfo){
     await AppDataSource
     .createQueryBuilder()
@@ -24,6 +15,37 @@ export class ReserveModel{
       reserveInfo
     ])
     .execute()
+  }
+  
+  async findReserveByReserveId(reserveId:number) {
+    const reserveRepository= AppDataSource.getRepository(Reserve);
+    // get a post repository to perform operations with post
+    const reserve = await reserveRepository.findOneBy({
+      reserveId: reserveId
+    })
+    return (reserve);
+  }
+  
+  async countAllByEmail(email: string) {
+    const reserveRepository= AppDataSource.getRepository(Reserve);
+    const reservesNumber = await reserveRepository.count({
+      where: { email:email }
+    })
+    return reservesNumber;
+  }
+  
+  async getInRangeByEmail(email:string, page:number, perPage:number) {
+    const reserveRepository= AppDataSource.getRepository(Reserve);
+
+    const reservesInRange = await reserveRepository.find({
+      where: { email:email },
+      order:{
+        createdAt:"ASC"
+      },
+      skip:perPage*(page-1),
+      take:perPage
+    });
+    return reservesInRange;
   }
 
   // async reply(reserveId:number, ownerComment:string){

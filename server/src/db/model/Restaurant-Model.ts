@@ -82,6 +82,7 @@ export class RestaurantModel{
     });
     return restaurantsInRange;
   }
+  
   async updateRestaurant(REGNumber:string, updateRestaurantInfo:updateRestaurantInfo){
     const restaurantRepository=AppDataSource.getRepository(Restaurant)
     const updated= await restaurantRepository.update(REGNumber, updateRestaurantInfo)
