@@ -2,7 +2,45 @@ import React, { useMemo } from 'react';
 import MOCK_DATA from './MOCK_DATA.json'
 import { COLUMNS } from './columns'
 import { usePagination, useTable } from 'react-table'
-import './table.css'
+import styled from 'styled-components';
+import { TableButton } from '../../atoms/TableButton'
+
+const BtnReview = styled(TableButton)`
+    color: #fff;
+    background-color: #64AD57;
+`;
+const BtnModification = styled(TableButton)`
+    background-color: #fff;
+    border: 1px solid #E5E5E5;
+`;
+const StyledTable = styled.table`
+    font-family: 'Noto Sans KR';
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+    border-color: #E5E5E5;
+`
+const StyledTh = styled.td`
+    border: 1px solid #E5E5E5;
+    padding: 8px;
+    background-color: #F4F6F3;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+`
+const StyledTd = styled.td`
+    border: 1px solid #E5E5E5;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+`
+const StyledTablePagination = styled.div`
+    margin: 60px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
 
 export const PaginationTable = () => {
     const columns = useMemo(() => COLUMNS, [])
@@ -20,7 +58,6 @@ export const PaginationTable = () => {
         pageOptions,
         gotoPage,
         pageCount,
-        setPageSize,
         state,
         prepareRow,
     } = useTable({
@@ -31,19 +68,22 @@ export const PaginationTable = () => {
         usePagination
     );
 
-    const { pageIndex, pageSize } = state
+    const { pageIndex } = state
 
     return (
         <div className="table">
-            <table {...getTableProps()}>
+            <StyledTable {...getTableProps()}>
                 <thead>
                     {headerGroups.map((headerGroup) => (                   
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map((column) => (
-                                <th {...column.getHeaderProps()}>
+                                <StyledTh {...column.getHeaderProps()}>
                                     {column.render('Header')}
-                                </th>
+                                </StyledTh>
                             ))}
+                            <StyledTh>승인상태</StyledTh>
+                            <StyledTh>예약관리</StyledTh>
+                            <StyledTh>리뷰</StyledTh>
                         </tr>
                     ))}
                 </thead>
@@ -55,18 +95,24 @@ export const PaginationTable = () => {
                             <tr {...row.getRowProps()}>
                                 {row.cells.map((cell: any) => {
                                     return (
-                                        <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                        <StyledTd {...cell.getCellProps()}>{cell.render('Cell')}</StyledTd>
                                     );
                                 })}
+                                <StyledTd role="cell">예약 완료</StyledTd>
+                                <StyledTd role="cell">
+                                    <BtnModification>수정</BtnModification>
+                                    <TableButton>취소</TableButton>
+                                </StyledTd>
+                                <StyledTd role="cell"><BtnReview>작성하기</BtnReview></StyledTd>
                             </tr>
                         );
                     })}
                 </tbody>
-            </table>
+            </StyledTable>
 
-            <div className="table-pagination" style={{margin: '5px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <StyledTablePagination>
                 <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                    {'<<'}
+                    {'<'}
                 </button>
                 <button onClick={() => previousPage()} disabled={!canPreviousPage}>
                     Previous
@@ -76,33 +122,13 @@ export const PaginationTable = () => {
                         {pageIndex + 1} / {pageOptions.length} 
                     </strong>
                 </span>
-                <span>
-                    Go to page: {' '}
-                    <input type="number" defaultValue={pageIndex + 1}
-                    onChange={(e) => {
-                        const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0 
-                        gotoPage(pageNumber)
-                    }} 
-                    style={{width: '50px'}} />
-                </span>
                 <button onClick={() => nextPage()} disabled={!canNextPage}>
                     Next
                 </button>
                 <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                    {'>>'}
+                    {'>'}
                 </button>
-            </div>
-            <div className="table-pagesize" style={{margin: '5px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center'}}>
-                <select value={pageSize} onChange={(e) => setPageSize(Number(e.target.value))}>
-                    {
-                        [10, 25, 50].map(pageSize => (
-                            <option key={pageSize} value={pageSize}>
-                                {pageSize}개 씩 보기
-                            </option>
-                        ))
-                    }
-                </select>
-            </div>
+            </StyledTablePagination>
         </div>
     );
 }
