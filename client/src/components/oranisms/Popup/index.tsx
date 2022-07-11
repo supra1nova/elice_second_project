@@ -7,32 +7,41 @@ import * as UI from './style';
 
 interface Props {
   title?: React.ReactElement | string;
-  primary?: boolean;
   subTitle?: React.ReactElement | string;
   footer?: boolean;
+  foooterType?: string;
   children?: React.ReactElement | string;
+  setModal: (value: boolean) => void;
 }
 
-const Popup = ({ title, subTitle, primary, footer, children }: Props) => {
+const Popup = ({
+  title,
+  subTitle,
+  footer,
+  foooterType,
+  children,
+  setModal,
+}: Props) => {
   const modalDiv = document.getElementById('modal')!;
   const [domReady, setDomReady] = useState(false);
+  const handleModal = () => {
+    setModal(false);
+  };
   useEffect(() => {
     setDomReady(true);
   });
   return domReady
     ? createPortal(
-        <>
-          <UI.Container>
-            <UI.Content>
-              <UI.Section>
-                <Header title={title} subTitle={subTitle} primary={false} />
-                {children && <Contents>{children}</Contents>}
-                {footer && <Footer />}
-              </UI.Section>
-            </UI.Content>
-            <UI.Dimd />
-          </UI.Container>
-        </>,
+        <UI.Container onClick={handleModal}>
+          <UI.Content>
+            <UI.Section>
+              <Header title={title} subTitle={subTitle} primary={false} />
+              {children && <Contents>{children}</Contents>}
+              {footer && <Footer foooterType={foooterType} />}
+            </UI.Section>
+          </UI.Content>
+          <UI.Dimd />
+        </UI.Container>,
         modalDiv,
       )
     : null;

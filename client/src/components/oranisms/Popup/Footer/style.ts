@@ -2,6 +2,10 @@ import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
+  text-align: center;
+  button + button {
+    margin-left: 10px;
+  }
 `;
 
 export const Title = styled.div`

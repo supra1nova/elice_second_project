@@ -3,22 +3,27 @@ import Button from '../../../atoms/Button';
 import * as UI from './style';
 
 interface Props {
-  component?: React.ReactElement | string;
-  size?: React.ReactElement | string;
-  children?: React.ReactElement | string;
+  children?: JSX.Element | JSX.Element[];
+  footerType?: string;
 }
 
-const Footer = ({ children }: Props) => {
+const Footer = ({ children, footerType }: Props) => {
   return (
     <UI.Container>
-      <Button component={'primary'} size={'medium'}>
-        버튼1
-      </Button>
-      <Button component={'default'} size={'small'}>
-        버튼2
-      </Button>
+      {footerType === 'checkType' && (
+        <>
+          <Button component={'primary'}>확인</Button>
+          <Button>취소</Button>
+        </>
+      )}
+      {footerType === 'closeType' && <Button>취소</Button>}
+      {footerType === 'customType' && { children }}
     </UI.Container>
   );
+};
+
+Footer.defaultProps = {
+  footerType: 'checkType',
 };
 
 export default Footer;
