@@ -10,20 +10,50 @@ class ReviewService {
     this.reviewModel = reviewModel;
   }
 
-  // 1. 생성
+  // 1-1. 유저 리뷰 생성
   async addReview(reviewInfo:reviewInfo) {
     const newReviewInfo:reviewInfo = reviewInfo;
     const createdNewReview = await this.reviewModel.create(newReviewInfo);
     return createdNewReview;
   }
 
-  // 1. 생성
+  // 1-2. 업주 리뷰 생성
   async addOwnerReview(reserveId:number, ownerComment:string) {
     const createdNewReview = await this.reviewModel.reply(reserveId, ownerComment);
     return createdNewReview;
   }
 
-  // 2. 삭제
+  // 전체 리뷰 숫자 카운트
+  async countReviews() {
+    const reviewsNumber = await this.reviewModel.countAll();
+    return reviewsNumber;
+  }
+
+  // 특정 업체 리뷰 숫자 카운트
+  async countReviewsByREGNumber(REGNumber: string) {
+    const reviewsNumber = await this.reviewModel.countAllByREGNumber(REGNumber);
+    return reviewsNumber;
+  }
+  
+  // 4-1. 특정 범위(페이지) 위치한 리뷰 조회
+  async getRangedReviewsByREGNumber(REGNumber:string, page:number,perPage:number) {
+    const rangedReviewsInfo = await this.reviewModel.getInRangeByREGNumber(REGNumber, page, perPage);
+    return rangedReviewsInfo;
+  }
+
+  // 4-2. 특정 범위(페이지) 위치한 리뷰 조회
+  async getRangedReviews(page:number,perPage:number) {
+    const rangedReviewsInfo = await this.reviewModel.getInRange(page, perPage);
+    return rangedReviewsInfo;
+  }
+  
+  // 5. 특정 리뷰 조회
+  async findReview(reserveId: number) {
+    const rangedReviewsInfo = await this.reviewModel.findReviewByReserveId(reserveId);
+    return rangedReviewsInfo;
+  }
+
+  // 3. 삭제
   async removeReview(reviewInfo:reviewInfo){
     const {reserveId}= reviewInfo;
     let review = await this.reviewModel.findReviewByReserveId(reserveId);
