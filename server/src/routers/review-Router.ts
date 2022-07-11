@@ -6,7 +6,7 @@ const reviewRouter = Router();
 
 // 1-1. 유저 리뷰 생성
 // reviewRouter.post('/create/users', loginRequired, async (req:Request, res:Response, next:NextFunction) => {
-reviewRouter.post('/create/users', async (req: Request, res: Response, next: NextFunction) => {
+reviewRouter.post('/user', async (req: Request, res: Response, next: NextFunction) => {
   try {
     console.log(req.body);
       let reviewInfo:reviewInfo= req.body
@@ -20,7 +20,7 @@ reviewRouter.post('/create/users', async (req: Request, res: Response, next: Nex
 
 // 1-2. 업주 리뷰 생성
 // reviewRouter.post('/create/owners', ownerRequired, async (req:Request, res:Response, next:NextFunction) => {
-reviewRouter.post('/create/owners', async (req: Request, res: Response, next: NextFunction) => {
+reviewRouter.post('/owner', async (req: Request, res: Response, next: NextFunction) => {
   try {
     // let reviewInfo:reviewInfo= req.body
     const { reserveId, ownerComment }= req.body
@@ -32,22 +32,41 @@ reviewRouter.post('/create/owners', async (req: Request, res: Response, next: Ne
   }
 });
 
+// 2-1. 사업자번호별 리뷰 목록 조회 (배열 형태로 반환)
+  reviewRouter.get('/:REGNumber', async (req: Request, res:Response, next:NextFunction) => {
+    try {
+      const { REGNumber } = req.params
+      const page = Number(req.query.page) || 1;
+      const perPage= Number(req.query.perPage) ||12;
+  
+      const [total, reviews] = await Promise.all([
+        reviewService.countReviewsByREGNumber(REGNumber),
+        await reviewService.getRangedReviewsByREGNumber(REGNumber, page, perPage)
+      ]);
+      const totalPage = Math.ceil(total / perPage);
+      // 제품 목록(배열), 현재 페이지, 전체 페이지 수, 전체 제품 수량 등 을 json 형태로 프론트에 전달
+      res.status(200).json({ reviews, page, perPage, totalPage, total });
+    } catch (error) {
+      next(error);
+    }
+  })
+  
+  // 3. 리뷰 상세 정보 조회
+  reviewRouter.get('/:reserveId', async function (req: Request, res:Response, next:NextFunction) {
+    try {
+      const reserveId = Number(req.params.reserveId);
+      const review = await reviewService.findReview(reserveId);
+      res.status(200).json(review);
+    } catch (error) {
+      next(error);
+    }
+  });
+
 // // 2. 업주 리뷰 목록 조회 (배열 형태로 반환)
 // reviewRouter.get('/', async (req: Request, res:Response, next:NextFunction) => {
 //   try {
 //     const reviews = await reviewService.getOwnerReviews();
 //     res.status(200).json(reviews);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
-// // 3. 업주 리뷰 상세 정보 조회
-// reviewRouter.get('/:reserveId', async function (req: Request, res:Response, next:NextFunction) {
-//   try {
-//     const { reserveId } = req.params;
-//     const review = await reviewService.findReview(reserveId);
-//     res.status(200).json(review);
 //   } catch (error) {
 //     next(error);
 //   }
@@ -93,6 +112,7 @@ export interface reviewInfo{
   ownerComment?: string,
   rating: number,
   image: string[],
+  REGNumber: string,
 }
 
 export { reviewRouter };

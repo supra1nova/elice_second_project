@@ -7,13 +7,16 @@ import { timeInfo } from "../../routers";
  */
 export class TimeModel{
   
-  async findTimeByTimeId(timeId:number) {
+  async findTimeByTimeId(timeId: number) {
+    console.log(22222);
     const timeRepository= AppDataSource.getRepository(Time);
     // get a post repository to perform operations with post
-
+    console.log(33333);
+    console.log(timeRepository)
     const time = await timeRepository.findOneBy({
       timeId: timeId
-    })
+    });
+    console.log(44444);
     return (time);
   }
 

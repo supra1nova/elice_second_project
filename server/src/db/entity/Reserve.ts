@@ -10,32 +10,32 @@ export class Reserve extends BaseEntity{
 
   @Column()
   timeId:number;
-
-  @CreateDateColumn({type:"timestamp"})
-  createdAt: Date;
-
+  
   @Column()
   email: string;
-
+  
   @Column()
   number: number;
-
+  
   @Column(
     {type: "simple-array"}
   )
   menuList: number[];
-
+    
   @Column(
     {type: "simple-array"}
   )
   quantityList: number[];
-
+    
   @Column()
   totalPrice: number;
-
+  
   @Column()
   REGNumber: string;
 
+  @CreateDateColumn({type:"timestamp"})
+  createdAt: Date;
+      
   // @ManyToOne(()=>Time, time=>time.reserves)
   // time:Time
 
