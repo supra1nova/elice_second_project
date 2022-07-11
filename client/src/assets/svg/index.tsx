@@ -9,6 +9,8 @@ import Clock from './Clock';
 import Person from './Person';
 import Profile from './Profile';
 import Arrow from './Arrow';
+import NextArrow from './NextArrow';
+import PrevArrow from './PrevArrow';
 
 export {
   Profile,
@@ -22,4 +24,6 @@ export {
   Clock,
   Person,
   Arrow,
+  NextArrow,
+  PrevArrow
 };
