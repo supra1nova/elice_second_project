@@ -1,11 +1,7 @@
 import * as UI from './style';
 import { Link } from 'react-router-dom';
-import Grade from '../../../atoms/Grade';
-import SeeMore from '../../../atoms/SeeMore';
-import Like from '../../../atoms/LikeBtn';
 import Img from '../../../atoms/Img';
 import * as Icon from '../../../../assets/svg';
-import LikeBtn from '../../../atoms/LikeBtn';
 
 // name , timestamp 불러오기
 
