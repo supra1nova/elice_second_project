@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { ReserveButton } from '../../../atoms/ReserveButton/index'
-import * as Icon from '../../../../assets/svg';
+import { ReserveButton } from '../../atoms/ReserveButton/index'
+import * as Icon from '../../../assets/svg';
 
 const StyledInfoContainer = styled.div`
     margin: 0 40px;
@@ -50,7 +50,7 @@ const StyledCaption = styled.p`
     padding-top: 5px;
 `
 
-const RestaurantInfo = () => {
+const RestaurantTitle = () => {
     return (
       <StyledInfoContainer>
             <StyledTitleBox>
@@ -77,4 +77,4 @@ const RestaurantInfo = () => {
     );
   };
   
-  export default RestaurantInfo;
+  export default RestaurantTitle;
