@@ -11,15 +11,16 @@ class RestaurantService {
   //구현필요
   
 
-  // async getItem(product_id){
-  //   const product= await this.productModel.findByProductId(product_id);
-  //   if(!product){
-  //     throw new Error(
-  //       '해당 제품이 존재하지 않습니다. 다시 한 번 확인해 주세요.'
-  //     );
-  //   }
-  //   return product;
-  // }
+  async getRestaurant(REGNumber:string){
+    const product= await this.restaurantModel.findRestaurantByREGNumber(REGNumber);
+    if(!product){
+      throw new Error(
+        '해당 제품이 존재하지 않습니다. 다시 한 번 확인해 주세요.'
+      );
+    }
+    return product;
+  }
+
   // async getItems(req_input){
   //   const {sex,type}= req_input;
   //   const category= {sex,type};
@@ -31,10 +32,11 @@ class RestaurantService {
   //   }
   //   return products
   // }
- async addRestaurant (restaurantInfo:restaurantInfo){
-   const createdproduct = await this.restaurantModel.create(restaurantInfo);
-   return createdproduct;
- }
+
+  async addRestaurant (restaurantInfo:restaurantInfo){
+    const createdproduct = await this.restaurantModel.create(restaurantInfo);
+    return createdproduct;
+  }
 
   async removeRestaurant (REGNumber:string, email:string){
 
@@ -49,7 +51,6 @@ class RestaurantService {
         }
   }
   
- 
   async countRestaurants() {
     const userCount = await this.restaurantModel.countAll();
     return userCount;
@@ -60,6 +61,7 @@ class RestaurantService {
     const rangedProductsInfo = await this.restaurantModel.getInRange(page, perPage);
     return rangedProductsInfo;
   }
+
   // async getAllProduct(){
   //   const allProducts= await this.productModel.findAll();
   //   return allProducts;
@@ -72,9 +74,7 @@ class RestaurantService {
   // }
 
   async setRestaurant(REGNumber:string,updateRestaurantInfo:updateRestaurantInfo) {
- 
     const updatedRestaurant = await this.restaurantModel.updateRestaurant(REGNumber,updateRestaurantInfo);
-
     return updatedRestaurant;
   }
 }

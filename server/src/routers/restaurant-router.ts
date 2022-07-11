@@ -38,16 +38,17 @@ restaurantRouter.get('/', async (req: Request, res:Response, next:NextFunction) 
     next(error);
   }
 })
+
 // // 3. 업체 상세 정보 조회
-// restaurantRouter.get('/:REGNumber', async function (req: Request, res:Response, next:NextFunction) {
-//   try {
-//     const { REGNumber } = req.params;
-//     const restaurant = await restaurantService.findRestaurant(REGNumber);
-//     res.status(200).json(restaurant);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+restaurantRouter.get('/:REGNumber', async function (req: Request, res:Response, next:NextFunction) {
+  try {
+    const { REGNumber } = req.params;
+    const restaurant = await restaurantService.getRestaurant(REGNumber);
+    res.status(200).json(restaurant);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // // 4. 업체 정보 업데이트
 restaurantRouter.patch('/:REGNumber', loginRequired, ownerRequired, async (req: Request, res:Response, next:NextFunction) => {

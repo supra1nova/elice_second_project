@@ -18,7 +18,7 @@ menuRouter.post('/', async (req: Request, res:Response, next:NextFunction) => {
 });
 
 
-// 2. 메뉴 목록 조회 (배열 형태로 반환)
+// 2. 특정 상호 관련 전체 메뉴 목록 조회 (배열 형태로 반환)
 menuRouter.get('/:REGNumber', async (req: Request, res:Response, next:NextFunction) => {
   try {
     const REGNumber= req.params.REGNumber;
@@ -30,15 +30,15 @@ menuRouter.get('/:REGNumber', async (req: Request, res:Response, next:NextFuncti
 });
 
 // 3. 메뉴 상세 정보 조회
-// menuRouter.get('/:menuId', async function (req: Request, res:Response, next:NextFunction) {
-//   try {
-//     const { menuId } = req.params;
-//     const restaurant = await menuService.findRestaurant(menuId);
-//     res.status(200).json(restaurant);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+menuRouter.get('/menu/:menuId', async function (req: Request, res:Response, next:NextFunction) {
+  try {
+    const menuId = Number(req.params.menuId);
+    const restaurant = await menuService.getMenu(menuId);
+    res.status(200).json(restaurant);
+  } catch (error) {
+    next(error);
+  }
+});
 
 
 // 4. 메뉴 정보 업데이트
@@ -58,7 +58,6 @@ menuRouter.patch('/:menuId', async (req: Request, res:Response, next:NextFunctio
 
 // 5. 메뉴 정보 삭제
 // menuRouter.delete('/', ownerRequired, async (req, res, next) => {
-
 menuRouter.delete('/', async (req, res, next) => {
   try {
     //req.email이 나중에는 input이 되어야 한다.

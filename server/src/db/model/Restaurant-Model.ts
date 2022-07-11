@@ -15,6 +15,7 @@ export class RestaurantModel{
     })
     return (restaurant);
   }
+
   async findRestaurantbyNickName(nickName:string) {
     const userRepository= AppDataSource.getRepository(Restaurant);
     // get a post repository to perform operations with post
@@ -32,6 +33,14 @@ export class RestaurantModel{
     return (restaurant);
   }
 
+  async findRestaurantByREGNumber(REGNumber:string) {
+    const restaurantRepository= AppDataSource.getRepository(Restaurant);
+    const restaurant = await restaurantRepository.findOneBy({
+      REGNumber: REGNumber
+    })
+    return (restaurant);
+  }
+
   async create(restaurantInfo:restaurantInfo){
     // const {email, name,password, nickName, phoneNumber,REGNumber}= userInfo;
     await AppDataSource
@@ -43,6 +52,7 @@ export class RestaurantModel{
     ])
     .execute()
   }
+
   async deleteRestaurant(REGNumber:string){
     await AppDataSource
     .createQueryBuilder()
