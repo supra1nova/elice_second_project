@@ -50,7 +50,7 @@ export const descriptionWrapper = styled.div`
 
 export const Description = styled.p`
   ${(props) => props.theme.font.description2};
-  color: ${(props) => props.theme.font.font1};
+  color: ${(props) => props.theme.colors.font1};
   line-height: 20px;
   padding-left: 10px;
 `;
