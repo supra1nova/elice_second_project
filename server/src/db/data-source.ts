@@ -8,7 +8,7 @@ export const AppDataSource = new DataSource({
   username: "admin",
   password: '0000',
   database: 'matjip',
-  synchronize: true,
+  synchronize: false,
   // synchronize: true,
   logging: true,
   entities: [  User, Category, Menu, Reserve, Restaurant, Review, Time,Wish],
@@ -22,5 +22,6 @@ export * from './model/Review-Model';
 export * from './model/Reserve-Model';
 export * from './model/Time-Model';
 export * from './model/Menu-Model';
+export * from './model/Wish-Model';
 
 // export * from './model/Restaurant-Model';
