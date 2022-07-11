@@ -5,18 +5,19 @@ import Close from '../../../../assets/svg/Close';
 export interface Props {
   title?: string;
   subTitle?: string;
+  primary?: boolean;
   onClick?: () => void;
 }
 
-const Header = ({ title, subTitle, onClick }: Props) => {
+const Header = ({ title, subTitle, primary, onClick }: Props) => {
   return (
-    <>
-      <UI.Title>{title}</UI.Title>
-      <UI.SubTitle>{subTitle}</UI.SubTitle>
+    <UI.Container>
+      <UI.Title primary>{title}</UI.Title>
+      {subTitle && <UI.SubTitle>{subTitle}</UI.SubTitle>}
       <UI.Close>
         <Close />
       </UI.Close>
-    </>
+    </UI.Container>
   );
 };
 

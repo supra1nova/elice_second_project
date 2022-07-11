@@ -7,7 +7,9 @@ import * as UI from './style';
 
 interface Props {
   title?: React.ReactElement | string;
+  primary?: boolean;
   subTitle?: React.ReactElement | string;
+  footer?: React.ReactElement | string;
   children?: React.ReactElement | string;
 }
 

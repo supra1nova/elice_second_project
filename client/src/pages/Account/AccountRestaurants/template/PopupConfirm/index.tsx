@@ -1,12 +1,9 @@
 import React from 'react';
+import { TITLE } from '../../../../../constants/title';
 import Popup from '../../../../../components/oranisms/Popup';
 
 const PopupConfirm = () => {
-  return (
-    <Popup title={'aaa'} subTitle={'bbb'}>
-      testadf
-    </Popup>
-  );
+  return <Popup title={TITLE.ACCOUNT_SAVE_CONFIRM} footer={'check'} />;
 };
 
 export default PopupConfirm;

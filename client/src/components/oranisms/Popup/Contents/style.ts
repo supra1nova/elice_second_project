@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 export const Container = styled.div`
   position: relative;
 `;
-//계속 오류나서 잠깐 바꿈
+
 export const Title = styled.div`
   color: ${(props) => props.theme.colors.bg};
   font-size: ${(props) => props.theme.fontSize.title}px;
