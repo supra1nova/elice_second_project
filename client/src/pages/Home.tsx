@@ -6,7 +6,8 @@ import ReservationListCard from '../components/molecules/Card/SideBarCard/Reserv
 import SearchInputOnly from '../components/molecules/Search/filterSearch/inputOnly';
 import FilterSearch from '../components/molecules/Search/filterSearch';
 import ToSearch from '../components/molecules/Search/SearchBtn';
-import CategoryFilter from '../components/molecules/Search/filterSearch/CategoryFilter';
+import Category from '../components/molecules/Category';
+import TimeFilter from '../components/molecules/Search/filterSearch/TimeFIlter';
 // import LocationFilter from '../components/molecules/Search/filterSearch/LocationFilter';
 // import PriceFilter from '../components/molecules/Search/filterSearch/PriceFilter';
 // import TimeFilter from '../components/molecules/Search/filterSearch/TimeFilter';
@@ -16,8 +17,9 @@ export const Home = () => {
     <>
       <ToSearch />
       <SearchInputOnly />
+      <Category />
       <FilterSearch />
-      {/* <CategoryFilter /> */}
+      <TimeFilter />
       <WeekBestCard></WeekBestCard>
       <RecentReviewCard></RecentReviewCard>
       <ReservationListCard></ReservationListCard>

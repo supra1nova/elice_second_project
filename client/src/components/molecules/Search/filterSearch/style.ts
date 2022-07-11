@@ -11,10 +11,14 @@ export const EXContainer = styled.div`
   align-items: center;
   padding: 19px 40px;
   border-bottom: 1px solid ${(props) => props.theme.colors.line};
+
+  > svg {
+    min-width: 22px;
+  }
 `;
 
 export const Container = styled.div`
-  /* width: 763px; */
+  min-width: 763px;
   height: 40px;
   background: #f7f7f7;
   border: 1px solid #e5e5e5;
