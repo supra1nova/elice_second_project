@@ -10,25 +10,18 @@ export class Time extends BaseEntity{
   @Column()
   REGNumber: string;
 
-  // @Column()
-  // milliseconds: number; //2019-05-31-09:00
+  @Column()
+  year: number;
 
-  // @Column()
-  // month: number; 
-  // @Column()
-  // date: number; 
-  // @Column()
-  // hour: number; 
-  
-  @Column({type: "simple-json"})
-  
-  startAt: {
-    year: number,
-    month: number,
-    date: number,
-    hour: number
-  }
+  @Column()
+  month: number;
 
+  @Column()
+  date: number;
+
+  @Column()
+  hour: number;
+  
   @Column()
   remainder: number;
 

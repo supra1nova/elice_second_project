@@ -1,5 +1,5 @@
 import { TimeModel, timeModel} from "../db/data-source"
-import {timeInfo} from '../routers'
+import { timeInfo} from '../routers'
 
 class TimeService {
   timeModel: TimeModel
@@ -33,6 +33,21 @@ class TimeService {
       }
     }
     return time;
+  }
+
+  async getTime(REGNumber:string, year:number,month:number, date:number){
+    console.log("---------", REGNumber,year,month,date);
+    const times= await this.timeModel.findTimeByQuery(REGNumber,year,month,date)
+    return times;
+  }
+
+  async setTime(timeId:number,  year:number,month:number, date:number,hour:number){
+    const updatedTime = await this.timeModel.updateTime (timeId,  year,month, date,hour);
+    return updatedTime;  }
+
+  async findTime(timeId:number){
+    const time= await this.timeModel.findTime(timeId)
+    return time
   }
 }
 
