@@ -1,11 +1,7 @@
 import * as UI from './style';
 import { Link } from 'react-router-dom';
 import Grade from '../../../atoms/Grade';
-import SeeMore from '../../../atoms/SeeMore';
-import Like from '../../../atoms/LikeBtn';
 import Img from '../../../atoms/Img';
-import * as Icon from '../../../../assets/svg';
-import LikeBtn from '../../../atoms/LikeBtn';
 
 // heart가 interative 하게 만들어야 함
 // // 클릭 > 색이 생기고, 유저의 찜리스트에 해당 shop 추가

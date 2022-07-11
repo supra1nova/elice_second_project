@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import testImg from '../../../assets/images/testImg.png';
+import testImg from '/images/testImg.png';
 
 export const Img = styled.img`
   height: inherit;
@@ -8,5 +8,5 @@ export const Img = styled.img`
 `;
 
 Img.defaultProps = {
-  src: testImg,
+  src: process.env.PUBLIC_URL + '/images/testImg.png',
 };
