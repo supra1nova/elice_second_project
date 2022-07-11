@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "shopName": "오츠에스프레소",
+    "address": "서울특별시 마포구 독막로14길 32",
+    "review": {
+      "userId": "ddd",
+      "timestamp": "하루전"
+    },
+    "reviewCount": 500,
+    "grade": 4.3,
+    "likeCount": 4700
+  }
+]
