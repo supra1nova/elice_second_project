@@ -45,6 +45,43 @@ export class TimeModel{
     .where('timeId = :timeId',{timeId:timeId})
     .execute()
   }
+  async findTimeByQuery(REGNumber:string, year:number,month:number,date:number){
+ 
+    const timeRepository= AppDataSource.getRepository(Time)
+    const times= await timeRepository
+    .find({
+      where:{
+        REGNumber:REGNumber,
+          year:year,
+          month:month,
+          date:date,
+        }
+      })
+    return times;
+  }
+  async updateTime( timeId:number, year:number, month:number, date:number, hour:number){
+    await AppDataSource
+      .createQueryBuilder()
+      .update(Time)
+      .set({
+        year:year,
+        month:month,
+        date:date,
+        hour:hour,
+      })
+      .where("timeId = :timeId", { timeId: timeId })
+      .execute()
+  }
+  async findTime(timeId:number){
+    const timeRepository= AppDataSource.getRepository(Time)
+    const time = await timeRepository
+    .find({
+      where:{
+        timeId:timeId
+      }
+    })
+    return time;
+  }
 }
 
 const timeModel= new TimeModel();
