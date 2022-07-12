@@ -21,9 +21,9 @@ interface MainCardWithoutReviewProps {
   description: String;
   category: String;
   large: boolean;
-  // Number를 어떻게.... 못받음
-  likeCount?: any;
-  reviewCount?: any;
+  // Number로 받으면 reactNode가 두개라 함..
+  likeCount: any;
+  reviewCount: any;
   shopImg: string;
 }
 const MainCardWithoutReview = ({
@@ -50,14 +50,12 @@ const MainCardWithoutReview = ({
             </UI.Title>
             <UI.SubTitle>
               {address} - {category}
-              {large && (
-                <UI.Caption>
-                  <Icon.Heart fill={'gray'} />
-                  {likeCount}
-                  <Icon.Review />
-                  {reviewCount}
-                </UI.Caption>
-              )}
+              <UI.Caption>
+                <Icon.Heart fill={'gray'} />
+                {likeCount}
+                <Icon.Review />
+                {reviewCount}
+              </UI.Caption>
             </UI.SubTitle>
           </UI.InfoWrapper>
         </Link>
