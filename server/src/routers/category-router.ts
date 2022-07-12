@@ -1,13 +1,36 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { adminRequired } from 'src/middlewares';
 // import { ownerRequired, loginRequired, adminRequired } from '../middlewares';
-import { categoryService } from '../services';
-const categoryRouter = Router();
+import { categoryService} from '../services';
+import { S3Client } from "@aws-sdk/client-s3";
 
+const categoryRouter = Router();
+////////////////////////////////////
+import multer from 'multer'
+import multerS3 from "multer-s3"
+import aws  from'aws-sdk'
+aws.config.loadFromPath(__dirname + '/config.json');
+const s3 = new S3Client({"region":"ap-northeast-2"});//"region":"ap-northeast-2"
+  
+const upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: '버킷이름',
+        acl: 'public-read',
+        key: function(req:any, file:any, cb:any) {
+            cb(null, Math.floor(Math.random() * 1000).toString() + Date.now() + '.' + file.originalname.split('.').pop());
+        }
+    }),
+    limits: {
+        fileSize: 1000 * 1000 * 10
+    }
+});
+
+////////////////////////////////////
 
 // // 1. 카테고리 생성
 // categoryRouter.post('/create', adminRequired, async (req: Request, res:Response, next:NextFunction) => {
-categoryRouter.post('/', async (req: Request, res:Response, next:NextFunction) => {
+categoryRouter.post('/', upload.single('image'),async (req: Request, res:Response, next:NextFunction) => {
   try {
     let categoryInfo:categoryInfo= req.body;
     const newCategory = await categoryService.addCategory(categoryInfo);
