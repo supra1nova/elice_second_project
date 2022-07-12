@@ -1,12 +1,13 @@
 import React, { ReactEventHandler, useState } from 'react';
 import * as UI from './style';
 import * as Icon from '../../../../assets/svg';
+import TimeFilter from '../filterSearch/TimeFIlter';
 
 interface Props {
   userSelection: String;
 }
 
-const tabs = ['날짜 / 인원', '위치', '카테고리', '가격'];
+const tabs = ['날짜 / 인원', '위치', '가격'];
 
 const FilterSearch = ({ userSelection }: Props) => {
   const [currTab, setCurrTab] = useState('날짜 / 인원');
@@ -16,24 +17,28 @@ const FilterSearch = ({ userSelection }: Props) => {
   }
 
   return (
-    <UI.EXContainer>
-      <Icon.Search width={22} height={22} />
-      <UI.Container>
-        <UI.Input placeholder='음식종류/ 식당 입력' />
-        {tabs.map((tab, i) => {
-          return (
-            <UI.SelectBtn
-              key={`${tab} - ${i}`}
-              active={currTab === tab}
-              onClick={() => handleClick(tab)}
-            >
-              {tab}
-              <UI.BtnSubTtile>{userSelection}</UI.BtnSubTtile>
-            </UI.SelectBtn>
-          );
-        })}
-      </UI.Container>
-    </UI.EXContainer>
+    <>
+      <UI.EXContainer>
+        <Icon.Search width={22} height={22} />
+        <UI.Container>
+          <UI.Input placeholder='음식종류/ 식당 입력' />
+          {tabs.map((tab, i) => {
+            return (
+              <UI.SelectBtn
+                key={`${tab} - ${i}`}
+                active={currTab === tab}
+                onClick={() => handleClick(tab)}
+              >
+                {tab}
+                <UI.BtnSubTtile>{userSelection}</UI.BtnSubTtile>
+              </UI.SelectBtn>
+            );
+          })}
+          <UI.SearchBtn>검색</UI.SearchBtn>
+        </UI.Container>
+      </UI.EXContainer>
+      {currTab === '날짜 / 인원' && <TimeFilter></TimeFilter>}
+    </>
   );
 };
 

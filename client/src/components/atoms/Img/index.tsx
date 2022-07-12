@@ -1,10 +1,10 @@
 import React from 'react';
 import * as UI from './style';
 
-const Img = () => {
+const Img = ({ src }: any) => {
   return (
     <>
-      <UI.Img />
+      <UI.Img src={src} />
     </>
   );
 };

@@ -10,6 +10,8 @@ export const Container = styled.div`
   background: #f7f7f7;
   border: 1px solid #e5e5e5;
   padding: 20px 72px;
+  z-index: 99;
+  position: absolute;
 `;
 
 export const Title = styled.div`
