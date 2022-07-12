@@ -2,7 +2,7 @@ import * as UI from './style';
 import { Link } from 'react-router-dom';
 import Img from '../../../atoms/Img';
 import * as Icon from '../../../../assets/svg';
-import LikeBtn from '../../../atoms/LikeBtn';
+import LikeBtn from '../../../atoms/LikeButton/LikeBtn';
 import Grade from '../../../atoms/Grade';
 
 // heart가 interative 하게 만들어야 함

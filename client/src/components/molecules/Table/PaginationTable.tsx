@@ -3,7 +3,7 @@ import MOCK_DATA from './MOCK_DATA.json'
 import { COLUMNS } from './columns'
 import { usePagination, useTable } from 'react-table'
 import styled from 'styled-components';
-import { TableButton } from '../../atoms/TableButton'
+import { TableButton } from '../../atoms/TableButton/TableButton'
 
 const BtnReview = styled(TableButton)`
     color: #fff;
@@ -13,6 +13,9 @@ const BtnModification = styled(TableButton)`
     background-color: #fff;
     border: 1px solid #E5E5E5;
 `;
+const StyledTableContainer = styled.div`
+    padding: 40px 40px 0;
+`
 const StyledTable = styled.table`
     font-family: 'Noto Sans KR';
     border-collapse: collapse;

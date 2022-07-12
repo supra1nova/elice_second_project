@@ -6,7 +6,7 @@ export default createGlobalStyle`
     ${reset}
     html,
     body {
-      overflow: hidden;
+      overflow: auto;
     }
 
 
