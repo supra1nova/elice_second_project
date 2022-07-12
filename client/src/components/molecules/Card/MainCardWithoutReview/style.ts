@@ -44,13 +44,13 @@ export const Title = styled.div`
   margin-bottom: ${(props: Props) => (props.large ? '5px' : '0')};
 `;
 
-export const SubTitle = styled.h4`
+export const SubTitle = styled.div`
   ${(props) => props.theme.font.caption};
   color: ${(props) => props.theme.colors.font2};
   line-height: 17.38px;
 `;
 
-export const Caption = styled.h4`
+export const Caption = styled.div`
   ${(props) => props.theme.font.caption};
   color: ${(props) => props.theme.colors.font2};
   display: flex;
