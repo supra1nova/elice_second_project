@@ -14,14 +14,23 @@ export class Restaurant extends BaseEntity{
   @Column()
   ownerEmail: string;
 
-  @Column({
-    type: "simple-json",
-  })
-  address: {
-    address1: string,
-    address2: string,
-    postalcode: number
-  } 
+  // @Column({
+  //   type: "simple-json",
+  // })
+  // address: {
+  //   address1: string,
+  //   address2: string,
+  //   postalcode: number
+  // } 
+
+  @Column()
+  address1: string;
+  
+  @Column()
+  address2: string;
+    
+  @Column()
+  postalcode: number;
 
   @Column({nullable:true
   })
