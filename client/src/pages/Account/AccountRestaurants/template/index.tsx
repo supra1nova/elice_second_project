@@ -1,13 +1,36 @@
 import React, { useState } from 'react';
+import PopupSaveConfirm from './PopupSaveConfirm';
+import Button from '../../../../components/atoms/Button';
 
-import PopupConfirm from './PopupConfirm';
-import PopupFinish from './PopupFinish';
+export interface PopupProps {
+  close: () => void;
+}
 
-const AccountRestaurantsTemplate = () => {
+const AccountRestaurantsTemplate = ({ close: PopupProps }) => {
+  const [openPopupSaveConfirm, setOpenPopupSaveConfirm] = useState(false);
+  const handleOpenPopupSaveConfirm = (e: any) => {
+    e.preventDefault();
+    setOpenPopupSaveConfirm(true);
+  };
+
+  const handleClosePopupSaveConfirm = () => {
+    setOpenPopupSaveConfirm(true);
+  };
+
   return (
     <>
-      <PopupConfirm />
-      <PopupFinish />
+      <Button
+        component='primary'
+        size='large'
+        block
+        onClick={handleOpenPopupSaveConfirm}
+      >
+        변경사항 저장
+      </Button>
+      {openPopupSaveConfirm && (
+        <PopupSaveConfirm close={handleClosePopupSaveConfirm} />
+      )}
+      {}
     </>
   );
 };
