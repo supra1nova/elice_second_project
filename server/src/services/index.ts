@@ -8,3 +8,4 @@ export * from './menu-service';
 export * from './wish-service';
 
 export * from './category-service';
+// export * from './upload-image';
