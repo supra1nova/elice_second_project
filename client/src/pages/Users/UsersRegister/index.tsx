@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import InputText from '../../../components/atoms/InputText';
 import InputSwitch from '../../../components/atoms/InputSwitch';
+import InputSwitchDescription from '../../../components/atoms/InputSwitchDescription';
 import Form from '../../../components/atoms/Form';
 import FormHeader from '../../../components/molecules/FormHeader';
 import FormItem from '../../../components/molecules/FormItem';
@@ -20,21 +21,40 @@ type valueObject = {
 };
 
 const UsersRegister = () => {
-  const initialValue: valueObject = {
+  const initialValue = {
     inputId: '',
     inputNickname: '',
     inputEmail: '',
     inputPassword: '',
     inputPasswordConfirm: '',
     inputPhone: '',
+    inputCheckOwner: Boolean(false),
+    inputRegistrationNumber: '',
+    inputCheckAdmin: Boolean(false),
+    inputAdminCode: '',
   };
-  const [formValues, setFormValues] = useState(initialValue);
+  const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
   const [isSubmit, setIsSubmit] = useState(false);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
+  };
+
+  // const changeHandler = (checked: boolean, id: string, e: any) => {
+  //   if (checked) {
+  //     setCheckedButtons([...checkedButtons, id]);
+  //     console.log(체크 반영 완료);
+  //   } else {
+  //     setCheckedButtons(checkedButtons.filter(button => button !== id));
+  //     console.log(체크 해제 반영 완료);
+  //   }
+  // };
+
+  const handleCheck = (e: any) => {
+    const { name } = e.target;
+    console.log(name);
   };
 
   const handleSubmit = (e: any) => {
@@ -208,11 +228,16 @@ const UsersRegister = () => {
 
         <FormItem>
           <FormSwitch>
+            <InputSwitchDescription
+              title={LABELTITLE.ROLE_OWNER}
+              subTitle={LABELTITLE.ROLE_OWNER_SUB_TITLE}
+            />
             <InputSwitch
-              htmlFor={'check'}
-              id={'check'}
-              name={'check'}
-              value={''}
+              htmlFor={'inputCheckOwner'}
+              id={'inputCheckOwner'}
+              name={'inputCheckOwner'}
+              onChange={handleCheck}
+              checked={formValues.inputCheckOwner}
             />
           </FormSwitch>
         </FormItem>
@@ -231,6 +256,21 @@ const UsersRegister = () => {
               placeholder={PLACEHOLDER.OWNER_REGISTRATION_NUMBER}
             />
           </FormInput>
+        </FormItem>
+        <FormItem>
+          <FormSwitch>
+            <InputSwitchDescription
+              title={LABELTITLE.ROLE_ADMIN}
+              subTitle={''}
+            />
+            <InputSwitch
+              htmlFor={'inputCheckAdmin'}
+              id={'inputCheckAdmin'}
+              name={'inputCheckAdmin'}
+              onChange={handleCheck}
+              checked={formValues.inputCheckAdmin}
+            />
+          </FormSwitch>
         </FormItem>
         <FormItem>
           <FormInput

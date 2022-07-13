@@ -5,15 +5,22 @@ interface Props {
   id: string;
   type: string;
   name: string;
-  value: string;
   htmlFor: string;
+  checked: boolean | undefined;
+  onChange: (e: any) => void;
 }
 
-const InputSwitch = ({ id, type, name, value, htmlFor }: Props) => {
+const InputSwitch = ({ id, type, name, htmlFor, checked, onChange }: Props) => {
   return (
     <UI.Container>
       <UI.Label htmlFor={htmlFor}>
-        <UI.Input type={type} id={id} name={name} value={value} />
+        <UI.Input
+          type={type}
+          id={id}
+          name={name}
+          onChange={onChange}
+          checked={checked}
+        />
         <UI.Toggle></UI.Toggle>
       </UI.Label>
     </UI.Container>
@@ -22,6 +29,7 @@ const InputSwitch = ({ id, type, name, value, htmlFor }: Props) => {
 
 InputSwitch.defaultProps = {
   type: 'checkbox',
+  checked: false,
 };
 
 export default InputSwitch;
