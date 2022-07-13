@@ -1,12 +1,12 @@
 import styled, { css } from 'styled-components';
-
+import { Link } from 'react-router-dom';
 interface Props {
   component?: string;
   size?: string;
-  block: boolean;
+  block?: boolean | undefined;
 }
 
-export const Button = styled.button`
+const ButtonStyle = css<Props>`
   position: relative;
   display: ${(props: Props) => (props.block ? 'block' : 'inline-block')};
   width: ${(props: Props) => (props.block ? '100%' : 'auto')};
@@ -66,4 +66,12 @@ export const Button = styled.button`
         `;
     }
   }};
+`;
+
+export const Button = styled.button`
+  ${ButtonStyle}
+`;
+
+export const ButtonLink = styled(Link)`
+  ${ButtonStyle}
 `;

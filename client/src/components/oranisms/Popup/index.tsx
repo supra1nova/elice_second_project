@@ -12,6 +12,7 @@ interface Props {
   foooterType?: string;
   children?: React.ReactElement | string;
   primary?: boolean;
+  onClose: (e: any) => void;
 }
 
 const Popup = ({
@@ -33,9 +34,14 @@ const Popup = ({
         <UI.Container>
           <UI.Content>
             <UI.Section>
-              <Header title={title} subTitle={subTitle} primary={primary!} />
-              {children && <Contents>{children}</Contents>}
-              {footer && <Footer foooterType={foooterType} />}
+              <Header
+                title={title}
+                subTitle={subTitle}
+                primary={primary!}
+                onClose={onClose}
+              />
+              {!!children ? <Contents>{children}</Contents> : null}
+              {!!footer ? <Footer foooterType={foooterType} /> : null}
             </UI.Section>
           </UI.Content>
           <UI.Dimd />

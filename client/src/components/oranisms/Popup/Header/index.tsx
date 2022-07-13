@@ -1,21 +1,24 @@
 import React from 'react';
 import * as UI from './style';
+import ButtonIcon from '../../../atoms/ButtonIcon';
 import Close from '../../../../assets/svg/Close';
 
 export interface Props {
   title?: string;
   subTitle?: string;
   primary?: boolean;
-  onClick?: (e: any) => void;
+  onClose?: (e: any) => void;
 }
 
-const Header = ({ title, subTitle, primary, onClick }: Props) => {
+const Header = ({ title, subTitle, primary, onClose }: Props) => {
   return (
     <UI.Container>
       <UI.Title primary={primary!}>{title}</UI.Title>
       {subTitle && <UI.SubTitle>{subTitle}</UI.SubTitle>}
       <UI.Close>
-        <Close onClick={onClick} />
+        <ButtonIcon onClick={onClose}>
+          <Close />
+        </ButtonIcon>
       </UI.Close>
     </UI.Container>
   );
