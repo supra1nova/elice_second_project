@@ -1,16 +1,16 @@
 import { createGlobalStyle } from 'styled-components';
-import { reset } from 'styled-reset';
+import reset from 'styled-reset';
 
 // root등 global style 작성
 export default createGlobalStyle`
     ${reset}
-    /* html,
+    html,
     body {
       overflow: auto;
     }
 
 
-    html,
+    html,npm
     body {
       font-size: 17px;
       letter-spacing: -0.5px;

@@ -87,11 +87,9 @@ export interface restaurantInfo{
   REGNumber: string, 
   name:string,
   ownerEmail:string,
-  address:{
-    address1:string,
-    address2:string,
-    postalcode:number
-  },
+  address1:string,
+  address2:string,
+  postalcode:number,
   phoneNumber?:string,
   image?:string
   category:string;
@@ -100,11 +98,9 @@ export interface restaurantInfo{
 
 export interface updateRestaurantInfo{
   name?:string,
-  address?:{
-    address1?:string,
-    address2?:string,
-    postalcode?:number
-  },
+  address1?:string,
+  address2?:string,
+  postalcode?:number,
   phoneNumber?:string,
   image?:string
   category?:string;
