@@ -6,3 +6,4 @@ export * from './review-router';
 export * from './time-router';
 export * from './user-router';
 export * from './wish-router';
+export * from './rating-router';

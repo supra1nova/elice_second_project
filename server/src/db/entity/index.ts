@@ -6,6 +6,6 @@ import { Review } from "./Review"
 import { Time } from "./Time"
 import { User } from "./User"
 import { Wish } from "./Wish"
+import { Rating } from "./Rating"
 
-
-export { Category, Menu, Review, Reserve, Restaurant, Time, User,Wish } 
+export { Category, Menu, Review, Reserve, Restaurant, Time, User, Wish, Rating } 

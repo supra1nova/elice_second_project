@@ -23,5 +23,6 @@ export * from './model/Reserve-Model';
 export * from './model/Time-Model';
 export * from './model/Menu-Model';
 export * from './model/Wish-Model';
+export * from './model/Rating-Model';
 
 // export * from './model/Restaurant-Model';
