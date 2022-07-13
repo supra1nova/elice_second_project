@@ -7,14 +7,14 @@ import {Category} from '../entity/Category'
  */
 export class CategoryModel{
   
-  // async findUserbyEmail(email:string) {
-  //   const userRepository= AppDataSource.getRepository(Category);
-  //   // get a post repository to perform operations with post
-  //   const user = await userRepository.findOneBy({
-  //   email: email
-  // })
-  //   return (user);
-  // }
+  async findCategoryByCategory(category:string) {
+    const userRepository= AppDataSource.getRepository(Category);
+    // get a post repository to perform operations with post
+    const user = await userRepository.findOneBy({
+    category: category
+  })
+    return (user);
+  }
 
   async create(categoryInfo:categoryInfo){
     await AppDataSource
@@ -28,12 +28,14 @@ export class CategoryModel{
   }
 
   async deleteCategory(category:string){
-    await AppDataSource
+    const deleted =await AppDataSource
     .createQueryBuilder()
     .delete()
     .from(Category)
     .where('category = :category',{category:category})
     .execute()
+
+    return deleted
   }
 
   async findCategory( ){

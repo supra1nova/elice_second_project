@@ -3,33 +3,9 @@ import { adminRequired } from 'src/middlewares';
 // import { ownerRequired, loginRequired, adminRequired } from '../middlewares';
 import { categoryService} from '../services';
 import { S3Client } from "@aws-sdk/client-s3";
-
+import {upload,s3} from "../config/upload"
 const categoryRouter = Router();
 ////////////////////////////////////
-import multer from 'multer'
-import multerS3 from "multer-s3"
-import aws  from'aws-sdk'
-
-aws.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_KEY,
-  region : 'ap-northeast-2'
-});
-
-const s3= new aws.S3()
-// const s3 = new S3Client({"region":"ap-northeast-2"});//"region":"ap-northeast-2"
-  
-const upload = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: 'matjip',
-        key: function(req:any, file:any, cb:any) {
-          console.log(file);
-          cb(null, file.originalname)
-        },
-    }),
-});
-
 
 ////////////////////////////////////
 
@@ -40,6 +16,7 @@ categoryRouter.post('/', upload.single('image'),async (req: Request, res:Respons
     let categoryInfo:categoryInfo= req.body;
     if(req.file==undefined) throw new Error("file not retrieved");
     categoryInfo.image=(req.file as any).location;
+    categoryInfo.imageKey=(req.file as any).key;
     const newCategory = await categoryService.addCategory(categoryInfo);
     res.status(201).json(newCategory);
   } catch (error) {
@@ -78,7 +55,14 @@ categoryRouter.patch('/:category', async function (req: Request, res:Response, n
 categoryRouter.delete('/', async (req, res, next) => {
   try {
     let {category}= req.body;
+    const retrieved= await categoryService.getCategoryByCategory(category);
+    if(retrieved==undefined) throw new Error("지우려는 값이 존재하지 않습니다.")
     const result = await categoryService.removeCategory(category);
+    s3.deleteObject({
+      Bucket: 'matjip',
+      Key: retrieved.imageKey
+    },function(err,data){});
+
     res.status(200).json(result);
   } catch (error) {
     next(error);
@@ -88,5 +72,6 @@ categoryRouter.delete('/', async (req, res, next) => {
 export interface categoryInfo{
   category?:string,
   image?:string
+  imageKey?:string
 }
 export { categoryRouter };

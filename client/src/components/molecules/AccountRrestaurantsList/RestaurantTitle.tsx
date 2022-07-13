@@ -1,6 +1,65 @@
 import styled from 'styled-components';
 import { ReserveButton } from '../../atoms/ReserveButton/index'
 import * as Icon from '../../../assets/svg';
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
+
+const RestaurantTitle = () => {
+    const [name, setName] = useState<string>("")
+    const [gpa, setGpa] = useState<number>(0)
+
+    useEffect(
+        () => {
+            const REGNumber = window.location.href.split('/')[5];
+
+            axios({
+                url: `/api/restaurants/${REGNumber}`,
+                method: 'GET'
+            }).then((res) => {
+                const datas = res.data
+                setName(cur => cur = datas.name)
+            })
+            axios({
+                url: `/api/reviews/${REGNumber}`,
+                method: 'GET'
+            }).then((res) => {
+                const reviews = res.data.reviews
+                let rating = 0
+                reviews.map((review: any):any => {
+                    rating += review.rating
+                })
+                setGpa(rating / reviews.length)
+            })
+        }, []
+    )
+
+    return (
+      <StyledInfoContainer>
+            <StyledTitleBox>
+                <div>
+                    <StyledRestaurantName>{name}</StyledRestaurantName>
+                    <StyledGPA>{gpa}</StyledGPA>
+                </div>
+                <ReserveButton>예약하기</ReserveButton>
+            </StyledTitleBox>
+            <StyledBottom>
+                <StyledLikeReview>
+                    <Icon.Heart fill={'#A6A8A3'}/>
+                    <div>2,123</div>
+                    <Icon.Review />
+                    <div>123</div>
+                </StyledLikeReview>
+                <StyledLike>
+                    <Icon.Heart fill={'none'} width={'23.69px'} height={'22px'} stroke={'#E5E5E5'}/>
+                    <p>찜하기</p>
+                </StyledLike>
+            </StyledBottom>
+      </StyledInfoContainer>
+    );
+  };
+  
+  export default RestaurantTitle;
+
 
 const StyledInfoContainer = styled.div`
     margin: 0 40px;
@@ -20,13 +79,8 @@ const StyledGPA = styled.span`
     color: ${(props) => props.theme.colors.main1};
     padding-left: 10px;
 `
-const StyledBranch = styled.p`
-    ${(props) => props.theme.font.subtitle1};
-    color: ${(props) => props.theme.colors.font3};
-    padding-top: 12px;
-`
 const StyledBottom = styled.div`
-    padding-top: 10px;
+    padding-top: 15px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -34,47 +88,22 @@ const StyledBottom = styled.div`
 const StyledLikeReview = styled.div`
     display: flex;
     flex-direction: row;
-`
-const StyledLikeReviewText = styled.div`
-    color: ${(props) => props.theme.colors.font3};
-    padding: 0 20px 0 10px;
+    align-items: center;
+
+    div {
+        ${(props) => props.theme.font.caption};
+        color: ${(props) => props.theme.colors.font3};
+        padding: 0 10px 0 5px;
+    }
 `
 const StyledLike = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-`
-const StyledCaption = styled.p`
-    ${(props) => props.theme.font.caption};
-    color: ${(props) => props.theme.colors.font2};
-    padding-top: 5px;
-`
 
-const RestaurantTitle = () => {
-    return (
-      <StyledInfoContainer>
-            <StyledTitleBox>
-                <div>
-                    <StyledRestaurantName>울프강스테이크하우스</StyledRestaurantName>
-                    <StyledGPA>4.3</StyledGPA>
-                    <StyledBranch>청담점</StyledBranch>
-                </div>
-                <ReserveButton>예약하기</ReserveButton>
-            </StyledTitleBox>
-            <StyledBottom>
-                <StyledLikeReview>
-                    <Icon.Heart fill={'#A6A8A3'}/>
-                    <StyledLikeReviewText>2,123</StyledLikeReviewText>
-                    <Icon.Review />
-                    <StyledLikeReviewText>123</StyledLikeReviewText>
-                </StyledLikeReview>
-                <StyledLike>
-                    <Icon.Heart fill={'none'} width={'23.69px'} height={'22px'} />
-                    <StyledCaption>찜하기</StyledCaption>
-                </StyledLike>
-            </StyledBottom>
-      </StyledInfoContainer>
-    );
-  };
-  
-  export default RestaurantTitle;
+    p {
+        ${(props) => props.theme.font.caption};
+        color: ${(props) => props.theme.colors.font2};
+        padding-top: 5px;
+    }
+`

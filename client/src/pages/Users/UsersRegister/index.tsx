@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import InputText from '../../../components/atoms/InputText';
+import InputSwitch from '../../../components/atoms/InputSwitch';
+import InputSwitchDescription from '../../../components/atoms/InputSwitchDescription';
 import Form from '../../../components/atoms/Form';
 import FormHeader from '../../../components/molecules/FormHeader';
 import FormItem from '../../../components/molecules/FormItem';
 import FormInput from '../../../components/molecules/FormInput';
+import FormSwitch from '../../../components/molecules/FormSwitch';
 import FormError from '../../../components/molecules/FromError';
 import FormFooter from '../../../components/molecules/FormFooter';
 import Button from '../../../components/atoms/Button';
@@ -18,21 +21,40 @@ type valueObject = {
 };
 
 const UsersRegister = () => {
-  const initialValue: valueObject = {
+  const initialValue = {
     inputId: '',
     inputNickname: '',
     inputEmail: '',
     inputPassword: '',
     inputPasswordConfirm: '',
     inputPhone: '',
+    inputCheckOwner: Boolean(false),
+    inputRegistrationNumber: '',
+    inputCheckAdmin: Boolean(false),
+    inputAdminCode: '',
   };
-  const [formValues, setFormValues] = useState(initialValue);
+  const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
   const [isSubmit, setIsSubmit] = useState(false);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
+  };
+
+  // const changeHandler = (checked: boolean, id: string, e: any) => {
+  //   if (checked) {
+  //     setCheckedButtons([...checkedButtons, id]);
+  //     console.log(체크 반영 완료);
+  //   } else {
+  //     setCheckedButtons(checkedButtons.filter(button => button !== id));
+  //     console.log(체크 해제 반영 완료);
+  //   }
+  // };
+
+  const handleCheck = (e: any) => {
+    const { name } = e.target;
+    console.log(name);
   };
 
   const handleSubmit = (e: any) => {
@@ -56,26 +78,33 @@ const UsersRegister = () => {
     const isInputPasswordValue = values.inputPassword;
     const isInputPasswordConfirmValue = values.inputPasswordConfirm;
     const isInputPhoneValue = values.inputPhone;
+    const isInputCheckOwnerValue = values.inputCheckOwner;
+    const isInputRegistrationNumberValue = values.inputRegistrationNumber;
+    const isInputCheckAdmin = values.inputCheckAdmin;
+    const isInputAdminCodeValue = values.inputAdminCode;
 
-    const isValidEmail = validateEmail(values.inputId);
+    const isValidIdEmail = validateEmail(values.inputId);
+    const isValidEmail = validateEmail(values.inputEmail);
     const isMinPasswordLength = isInputPasswordValue.length >= 8;
+    const isMinPhoneLength = isInputPasswordValue.length >= 12;
+
+    const isMinRegistrationNumberLength = isInputPasswordValue.length >= 11;
+    const isMinAdminCodeLength = isInputPasswordValue.length >= 4;
 
     if (!isInputIdValue) {
       errors.inputId = ERROR.ID_INPUT;
-    } else if (!isValidEmail) {
+    } else if (!isValidIdEmail) {
       errors.inputId = ERROR.ID_EMAIL_VALID;
     }
 
     if (!isInputNicknameValue) {
-      errors.inputPassword = ERROR.PASSWORD_INPUT;
-    } else if (!isMinPasswordLength) {
-      errors.inputPassword = ERROR.PASSWORD_MIN_LENGTH;
+      errors.inputNickname = ERROR.NICKNAME_INPUT;
     }
 
     if (!isInputEmailValue) {
-      errors.inputPassword = ERROR.PASSWORD_INPUT;
-    } else if (!isMinPasswordLength) {
-      errors.inputPassword = ERROR.PASSWORD_MIN_LENGTH;
+      errors.inputEmail = ERROR.EMAIL_INPUT;
+    } else if (!isValidEmail) {
+      errors.inputEmail = ERROR.EMAIL_VALID;
     }
 
     if (!isInputPasswordValue) {
@@ -85,15 +114,27 @@ const UsersRegister = () => {
     }
 
     if (!isInputPasswordConfirmValue) {
-      errors.inputPassword = ERROR.PASSWORD_INPUT;
+      errors.inputPasswordConfirm = ERROR.PASSWORD_INPUT;
     } else if (!isMinPasswordLength) {
-      errors.inputPassword = ERROR.PASSWORD_MIN_LENGTH;
+      errors.inputPasswordConfirm = ERROR.PASSWORD_SAME;
     }
 
     if (!isInputPhoneValue) {
-      errors.inputPassword = ERROR.PASSWORD_INPUT;
-    } else if (!isMinPasswordLength) {
-      errors.inputPassword = ERROR.PASSWORD_MIN_LENGTH;
+      errors.inputPhone = ERROR.PHONE_INPUT;
+    } else if (!isMinPhoneLength) {
+      errors.inputPhone = ERROR.PHONE_VALID;
+    }
+
+    if (!isInputRegistrationNumberValue) {
+      errors.inputRegistrationNumber = ERROR.OWNER_REGISTRATION_NUMBER_INPUT;
+    } else if (!isMinRegistrationNumberLength) {
+      errors.inputRegistrationNumber = ERROR.OWNER_REGISTRATION_NUMBER_VALID;
+    }
+
+    if (!isInputAdminCodeValue) {
+      errors.inputAdminCode = ERROR.ADMIN_CODE_INPUT;
+    } else if (!isMinAdminCodeLength) {
+      errors.inputAdminCode = ERROR.ADMIN_CODE_INPUT_VALID;
     }
 
     return errors;
@@ -203,6 +244,75 @@ const UsersRegister = () => {
             </FormItem>
           );
         })}
+
+        <FormItem>
+          <FormSwitch>
+            <InputSwitchDescription
+              title={LABELTITLE.ROLE_OWNER}
+              subTitle={LABELTITLE.ROLE_OWNER_SUB_TITLE}
+            />
+            <InputSwitch
+              htmlFor={'inputCheckOwner'}
+              id={'inputCheckOwner'}
+              name={'inputCheckOwner'}
+              onChange={handleCheck}
+              checked={formValues.inputCheckOwner}
+            />
+          </FormSwitch>
+        </FormItem>
+        <FormItem>
+          <FormInput
+            htmlFor={'inputRegistrationNumber'}
+            labelTitle={LABELTITLE.OWNER_REGISTRATION_NUMBER}
+          >
+            <InputText
+              type={'text'}
+              id={'inputRegistrationNumber'}
+              name={'inputRegistrationNumber'}
+              value={formValues.inputRegistrationNumber}
+              maxLength={11}
+              onChange={handleChange}
+              placeholder={PLACEHOLDER.OWNER_REGISTRATION_NUMBER}
+            />
+          </FormInput>
+          {formErrors.inputRegistrationNumber ? (
+            <FormError message={formErrors.inputRegistrationNumber} />
+          ) : null}
+        </FormItem>
+        <FormItem>
+          <FormSwitch>
+            <InputSwitchDescription
+              title={LABELTITLE.ROLE_ADMIN}
+              subTitle={''}
+            />
+            <InputSwitch
+              htmlFor={'inputCheckAdmin'}
+              id={'inputCheckAdmin'}
+              name={'inputCheckAdmin'}
+              onChange={handleCheck}
+              checked={formValues.inputCheckAdmin}
+            />
+          </FormSwitch>
+        </FormItem>
+        <FormItem>
+          <FormInput
+            htmlFor={'inputAdminCode'}
+            labelTitle={LABELTITLE.AMDIN_CODE}
+          >
+            <InputText
+              type={'text'}
+              id={'inputAdminCode'}
+              name={'inputAdminCode'}
+              value={formValues.inputAdminCode}
+              maxLength={11}
+              onChange={handleChange}
+              placeholder={PLACEHOLDER.AMDIN_CODE}
+            />
+          </FormInput>
+          {formErrors.inputAdminCode ? (
+            <FormError message={formErrors.inputAdminCode} />
+          ) : null}
+        </FormItem>
 
         <FormFooter>
           <Button component={'primary'} size={'large'} block>
