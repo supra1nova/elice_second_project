@@ -4,6 +4,7 @@ import Img from '../../../atoms/Img';
 import * as Icon from '../../../../assets/svg';
 import LikeBtn from '../../../atoms/LikeButton/LikeBtn';
 import Grade from '../../../atoms/Grade';
+import { useState } from 'react';
 
 // heart가 interative 하게 만들어야 함
 // // 클릭 > 색이 생기고, 유저의 찜리스트에 해당 shop 추가 (atom/LikeBtn)
@@ -18,26 +19,28 @@ interface MainCardWithoutReviewProps {
   title: String;
   address: String;
   description: String;
-  foodType: String;
+  category: String;
   large: boolean;
-  // Number를 어떻게.... 못받음
-  likeCount?: String;
-  reviewCount?: String;
+  // Number로 받으면 reactNode가 두개라 함..
+  likeCount: any;
+  reviewCount: any;
+  shopImg: string;
 }
 const MainCardWithoutReview = ({
   title,
   address,
-  foodType,
+  category,
   large,
   likeCount,
   reviewCount,
+  shopImg,
 }: MainCardWithoutReviewProps) => {
   return (
-    <div>
-      <Link to=''>
-        <UI.Container large={large}>
+    <>
+      <UI.Container large={large}>
+        <Link to=''>
           <UI.ImgWrapper large={large}>
-            <Img></Img>
+            <Img src={shopImg}></Img>
             <LikeBtn />
           </UI.ImgWrapper>
           <UI.InfoWrapper>
@@ -46,20 +49,18 @@ const MainCardWithoutReview = ({
               {large && <Grade />}
             </UI.Title>
             <UI.SubTitle>
-              {address} - {foodType}
-              {large && (
-                <UI.Caption>
-                  <Icon.Heart fill={'gray'} />
-                  {likeCount}
-                  <Icon.Review />
-                  {reviewCount}
-                </UI.Caption>
-              )}
+              {address} - {category}
+              <UI.Caption>
+                <Icon.Heart fill={'gray'} />
+                {likeCount}
+                <Icon.Review />
+                {reviewCount}
+              </UI.Caption>
             </UI.SubTitle>
           </UI.InfoWrapper>
-        </UI.Container>
-      </Link>
-    </div>
+        </Link>
+      </UI.Container>
+    </>
   );
 };
 

@@ -26,6 +26,7 @@ export const Container = styled.div`
   margin-left: 10px;
   display: flex;
   align-items: center;
+  padding-right: 20px;
 `;
 
 export const Input = styled.input`
@@ -62,4 +63,14 @@ export const BtnTItle = styled.p``;
 
 export const BtnSubTtile = styled.p`
   color: ${(props) => props.theme.colors.font3};
+`;
+
+export const SearchBtn = styled.button`
+  width: 43px;
+  height: 27px;
+  background: #64ad57;
+  border-radius: 50px;
+  ${(props) => props.theme.font.caption}
+  color: white;
+  margin-left: auto;
 `;

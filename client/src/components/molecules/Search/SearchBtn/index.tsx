@@ -1,5 +1,6 @@
 import * as Icon from '../../../../assets/svg';
 import * as UI from './style';
+import { useState } from 'react';
 
 //main 의 검색창 클릭시 filter가 포함된 input으로 전환
 

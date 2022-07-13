@@ -17,18 +17,20 @@ interface MainCardWithReviewProps {
   title: String;
   address: String;
   description: String;
+  shopImg: any;
 }
 const MainCardWithReview = ({
   title,
   address,
   description,
+  shopImg,
 }: MainCardWithReviewProps) => {
   return (
     <div>
       <Link to=''>
         <UI.Container>
           <UI.ImgWrapper>
-            <Img></Img>
+            <img src={shopImg}></img>
           </UI.ImgWrapper>
           <UI.InfoWrapper>
             <UI.Title>

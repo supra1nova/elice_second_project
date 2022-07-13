@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
-  border: 1px solid gray;
   width: 544px;
 `;
 
@@ -16,6 +15,7 @@ export const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 20px;
+  width: 374px;
 `;
 
 export const Title = styled.div`
@@ -52,14 +52,20 @@ export const Description = styled.p`
   ${(props) => props.theme.font.description2};
   color: ${(props) => props.theme.colors.font1};
   line-height: 20px;
-  padding-left: 10px;
+  padding: 0 10px;
+  width: 100%;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;
 
 export const SeeDetails = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 27px;
+  margin-top: auto;
   ${(props) => props.theme.font.caption}
   color: ${(props) => props.theme.colors.font2}
 `;

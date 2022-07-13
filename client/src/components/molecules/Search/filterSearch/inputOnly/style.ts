@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-// 이 컨테이너는 나중에 organism 단위에서 생성할 것
 export const EXContainer = styled.div`
   height: 60px;
   display: flex;
