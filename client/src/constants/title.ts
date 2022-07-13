@@ -1,4 +1,11 @@
-export const TITLE = {
+export const PAGES = {
+  USER_LOGIN: '로그인',
+  USER_REGISTER: '회원가입',
+  USER_SECURITY: '회원정보',
+  USER_SIGNOUT: '회원탈퇴',
+};
+
+export const POPUP = {
   ACCOUNT_SAVE_CONFIRM: '변경사항이 저장되었습니다.',
   ACCOUNT_RESERVATION_CANCLE: '예약을 취소하시겠습니까?',
   ACCOUNT_MENU_DELETE: '메뉴를 삭제하시겠습니까?',
