@@ -13,10 +13,16 @@ class WishService {
     return createdNewReserve;
   }
   
-  // 2. 상호 관련 전체 메뉴 목록 조회
-  async getWishes(email:string){
+  // 2. 특정 상호 관련 찜한 손님 전체 조회 - 이메일 기준
+  async getWishesByEmail(email:string){
     const menus= await wishModel.findWishByEmail(email);
     return menus;
+  }
+
+  // 3. 특정 상호 관련 찜한 손님 전체 조회 - 상호 기준
+  async getWishesByREGNumber(REGNumber:string){
+    const wishes = await wishModel.findWishByREGNumber(REGNumber);
+    return wishes;
   }
   
   // 3. 메뉴 상세 보기
