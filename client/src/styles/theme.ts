@@ -18,6 +18,8 @@ const colors = {
   font2: '#83867E',
   font3: '#A1A39E',
   fontMain: '#66AE58',
+  white: '#fff',
+  black: '#000',
 };
 
 const font = {
