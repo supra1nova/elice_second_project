@@ -32,9 +32,10 @@ restaurantImageRouter.post('/', upload.array('image',6),async (req: Request, res
 
 // // 2. 카테고리 목록 조회 (배열 형태로 반환)
 // restaurantImageRouter.get('/', loginRequired, async (req: Request, res:Response, next:NextFunction) => {
-restaurantImageRouter.get('/', async (req: Request, res:Response, next:NextFunction) => {
+restaurantImageRouter.get('/:REGNumber', async (req: Request, res:Response, next:NextFunction) => {
   try {
-    const categories = await restaurantImageService.getRestaurantImages();
+    const REGNumber = req.params.REGNumber;
+    const categories = await restaurantImageService.getRestaurantImages(REGNumber);
     res.status(200).json(categories);
   } catch (error) {
     next(error);

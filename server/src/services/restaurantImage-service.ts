@@ -16,8 +16,8 @@ class RestaurantImageService {
     
     //Time의 remainder를 우선적으로 줄이되 0보다 작으면 거절함.
 
-  async getRestaurantImages(){
-    const retrievedCategory= await this.restaurantImageModel.findRestaurantImage();
+  async getRestaurantImages(REGNumber:string){
+    const retrievedCategory= await this.restaurantImageModel.findRestaurantImage(REGNumber);
     return retrievedCategory
   }
 

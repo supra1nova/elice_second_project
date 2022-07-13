@@ -38,12 +38,15 @@ export class RestaurantImageModel{
     return deleted
   }
 
-  async findRestaurantImage( ){
+  async findRestaurantImage(REGNumber:string ){
     const categoryRepository= AppDataSource.getRepository(RestaurantImage)
-    const categories= await categoryRepository.find()
-    
-    return categories
+    const categories= await categoryRepository.find({
+      where:{
+      REGNumber:REGNumber
+    }})
+    return categories    
   }
+  
   async updateCategory(current_category:string, restaurantImageInfo:restaurantImageInfo){
     await AppDataSource
       .createQueryBuilder()
