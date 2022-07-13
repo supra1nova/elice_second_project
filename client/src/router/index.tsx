@@ -23,7 +23,7 @@ function Router() {
           ></Route>
           <Route path='/account/reserves' element={<AccountReserves />}></Route>
           <Route
-            path='/account/restaurants/list'
+            path='/account/restaurants/:REGNumber'
             element={<AccountRestaurantsList />}
           ></Route>
         </Route>
