@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-interface TimeProps {
+interface Props {
   active: boolean;
 }
 
@@ -27,53 +27,54 @@ export const Title = styled.div`
     margin-left: auto;
   }
 `;
-
-export const ButtonWrapper = styled.button`
-  width: 24px;
-  height: 24px;
-`;
-
-export const TimeWrapper = styled.div`
+export const LocationWrapper = styled.div`
   width: 763px;
-  margin-top: 10px;
+  height: 80%;
   display: flex;
   align-items: center;
-  button:not(:first-of-type) {
+  overflow: auto;
+  /* button:not(:first-of-type) {
     margin-left: 5px;
   }
 
   button:last-of-type {
     margin-left: auto;
-  }
+  } */
+`;
+
+export const Address1Wrapper = styled.div`
+  width: 100px;
+  display: block;
+  background-color: gray;
+`;
+
+export const ButtonWrapper = styled.button`
+  text-align: center;
+  justify-self: flex-start;
+  width: 100%;
+  height: 37px;
+  ${(props: Props) =>
+    props.active
+      ? 'background-color : #64AD57; color: white; '
+      : 'background-color: white;border: 1px solid #E5E5E5;'}
+`;
+
+export const Address2Wrapper = styled.div`
+  width: 100%;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
 `;
 
 export const TimeSelectButton = styled.button`
   min-width: 92px;
   height: 36px;
   border-radius: 5px;
-  ${(props: TimeProps) =>
-    props.active
-      ? 'background-color : #64AD57; color: white; '
-      : 'background-color: white;border: 1px solid #E5E5E5;'}
-`;
-
-export const CountWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  ${(props) => props.theme.font.description1}
-
-  button:first-of-type {
-    margin-right: 14px;
-  }
-
-  button:last-of-type {
-    margin-left: 14px;
-  }
 `;
 
 export const Divider = styled.div`
   border: 1px solid ${(props) => props.theme.colors.line};
   width: 763px;
-  margin: 20px 0;
+  margin: 10px 0;
 `;
