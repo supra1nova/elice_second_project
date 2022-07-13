@@ -12,6 +12,9 @@ import Arrow from './Arrow';
 import NextArrow from './NextArrow';
 import PrevArrow from './PrevArrow';
 import Check from './Check';
+import ArrowButton from './ArrowButton';
+import PlusButton from './PlusButton';
+import MinusButton from './MinusButton';
 
 export {
   Profile,
@@ -27,5 +30,8 @@ export {
   Arrow,
   NextArrow,
   PrevArrow,
-  Check
+  Check,
+  ArrowButton,
+  PlusButton,
+  MinusButton,
 };

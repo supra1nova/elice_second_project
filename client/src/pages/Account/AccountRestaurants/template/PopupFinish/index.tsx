@@ -1,12 +1,14 @@
 import React from 'react';
-import { Popup } from '../../../../../components/oranisms/Popup';
+import { TITLE } from '../../../../../constants/title';
+import Popup from '../../../../../components/oranisms/Popup';
 
-const PopupFinish = () => {
+const PopupConfirm = () => {
   return (
-    <Popup title={'타이틀입니다.'} subTitle={'서브 타이틀입니다.'}>
-      팝업 피니시 컨텐츠 내용들어갑니다.
-    </Popup>
+    <Popup
+      title={TITLE.ACCOUNT_CATEGORY_DELETE_CONFIRM}
+      foooterType={'closeType'}
+    />
   );
 };
 
-export default PopupFinish;
+export default PopupConfirm;

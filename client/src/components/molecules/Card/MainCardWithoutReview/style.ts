@@ -8,13 +8,14 @@ interface Props {
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: ${(props: Props) => (props.large ? '396px' : '193px')};
+  width: ${(props: Props) => (props.large ? '370px' : '193px')};
   height: ${(props: Props) => (props.large ? '326px' : '245px')};
-  border: 1px solid black;
+  box-shadow: 5px 5px 3px #eaece5;
+  border-radius: 10px;
 `;
 
 export const ImgWrapper = styled.div`
-  width: ${(props: Props) => (props.large ? '396px' : '193px')};
+  width: ${(props: Props) => (props.large ? '370px' : '193px')};
   height: ${(props: Props) => (props.large ? '243px' : '193px')};
   position: relative;
 
@@ -22,6 +23,7 @@ export const ImgWrapper = styled.div`
     position: absolute;
     right: 10px;
     top: 10px;
+    z-index: 10;
   }
 `;
 
@@ -30,6 +32,7 @@ export const ImgWrapper = styled.div`
 export const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 0 10px;
 `;
 
 export const Title = styled.div`
@@ -44,13 +47,13 @@ export const Title = styled.div`
   margin-bottom: ${(props: Props) => (props.large ? '5px' : '0')};
 `;
 
-export const SubTitle = styled.h4`
+export const SubTitle = styled.div`
   ${(props) => props.theme.font.caption};
   color: ${(props) => props.theme.colors.font2};
   line-height: 17.38px;
 `;
 
-export const Caption = styled.h4`
+export const Caption = styled.div`
   ${(props) => props.theme.font.caption};
   color: ${(props) => props.theme.colors.font2};
   display: flex;
