@@ -2,13 +2,13 @@ import React from 'react';
 import * as UI from './style';
 
 interface Props {
-  id?: string;
-  type?: string;
-  placeholder?: string;
-  autoComplete?: string;
+  id: string;
+  type: string;
+  placeholder: string;
+  autoComplete: string;
   maxLength?: number;
-  name?: string;
-  value?: string;
+  name: string;
+  value: string;
   onClick?: (e: any) => void;
   onChange: (e: any) => void;
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import InputText from '../../../components/atoms/InputText';
+import InputSwitch from '../../../components/atoms/InputSwitch';
 import Form from '../../../components/atoms/Form';
 import FormHeader from '../../../components/molecules/FormHeader';
 import FormItem from '../../../components/molecules/FormItem';
@@ -67,15 +68,15 @@ const UsersRegister = () => {
     }
 
     if (!isInputNicknameValue) {
-      errors.inputPassword = ERROR.PASSWORD_INPUT;
+      errors.inputPassword = ERROR.NICKNAME_INPUT;
     } else if (!isMinPasswordLength) {
-      errors.inputPassword = ERROR.PASSWORD_MIN_LENGTH;
+      errors.inputPassword = ERROR.NICKNAME_IS_ALEADY;
     }
 
     if (!isInputEmailValue) {
-      errors.inputPassword = ERROR.PASSWORD_INPUT;
+      errors.inputPassword = ERROR.EMAIL_INPUT;
     } else if (!isMinPasswordLength) {
-      errors.inputPassword = ERROR.PASSWORD_MIN_LENGTH;
+      errors.inputPassword = ERROR.EMAIL_VALID;
     }
 
     if (!isInputPasswordValue) {
@@ -87,13 +88,13 @@ const UsersRegister = () => {
     if (!isInputPasswordConfirmValue) {
       errors.inputPassword = ERROR.PASSWORD_INPUT;
     } else if (!isMinPasswordLength) {
-      errors.inputPassword = ERROR.PASSWORD_MIN_LENGTH;
+      errors.inputPassword = ERROR.PASSWORD_SAME;
     }
 
     if (!isInputPhoneValue) {
-      errors.inputPassword = ERROR.PASSWORD_INPUT;
+      errors.inputPassword = ERROR.PHONE_INPUT;
     } else if (!isMinPasswordLength) {
-      errors.inputPassword = ERROR.PASSWORD_MIN_LENGTH;
+      errors.inputPassword = ERROR.PHONE_VALID;
     }
 
     return errors;
@@ -203,6 +204,8 @@ const UsersRegister = () => {
             </FormItem>
           );
         })}
+
+        <InputSwitch htmlFor={'check'} id={'check'} name={'check'} value={''} />
 
         <FormFooter>
           <Button component={'primary'} size={'large'} block>
