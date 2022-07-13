@@ -5,6 +5,7 @@ import Form from '../../../components/atoms/Form';
 import FormHeader from '../../../components/molecules/FormHeader';
 import FormItem from '../../../components/molecules/FormItem';
 import FormInput from '../../../components/molecules/FormInput';
+import FormSwitch from '../../../components/molecules/FormSwitch';
 import FormError from '../../../components/molecules/FromError';
 import FormFooter from '../../../components/molecules/FormFooter';
 import Button from '../../../components/atoms/Button';
@@ -205,7 +206,48 @@ const UsersRegister = () => {
           );
         })}
 
-        <InputSwitch htmlFor={'check'} id={'check'} name={'check'} value={''} />
+        <FormItem>
+          <FormSwitch>
+            <InputSwitch
+              htmlFor={'check'}
+              id={'check'}
+              name={'check'}
+              value={''}
+            />
+          </FormSwitch>
+        </FormItem>
+        <FormItem>
+          <FormInput
+            htmlFor={'inputRegistrationNumber'}
+            labelTitle={LABELTITLE.OWNER_REGISTRATION_NUMBER}
+          >
+            <InputText
+              type={'text'}
+              id={'inputRegistrationNumber'}
+              name={'inputRegistrationNumber'}
+              value={formValues.inputRegistrationNumber}
+              maxLength={11}
+              onChange={handleChange}
+              placeholder={PLACEHOLDER.OWNER_REGISTRATION_NUMBER}
+            />
+          </FormInput>
+        </FormItem>
+        <FormItem>
+          <FormInput
+            htmlFor={'inputAdminCode'}
+            labelTitle={LABELTITLE.AMDIN_CODE}
+          >
+            <InputText
+              type={'text'}
+              id={'inputAdminCode'}
+              name={'inputAdminCode'}
+              value={formValues.inputAdminCode}
+              maxLength={11}
+              onChange={handleChange}
+              placeholder={PLACEHOLDER.AMDIN_CODE}
+            />
+          </FormInput>
+        </FormItem>
 
         <FormFooter>
           <Button component={'primary'} size={'large'} block>
