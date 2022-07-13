@@ -2,19 +2,32 @@ import styled from 'styled-components';
 import {MapViewButton} from '../../atoms/MapViewButton/index';
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
-import { formatDiagnosticsWithColorAndContext } from 'typescript';
+
+type infoObject = {
+    address: any; 
+    postalCode: number;
+    detailAddress: string;
+    phoneNumber: string;
+    category: string;
+}
+
+type menuObject = {
+    menuName: string; 
+    menuPrice: number;
+}
 
 const RestaurantInfo = () => {
-    const [averagePrice, setAveragePrice] = useState<number>(0);
-    const [infoInputs, setinfoInputs] = useState({
-        address: "주소입니다",
+    const [infoInputs, setInfoInputs] = useState<infoObject>({
+        address: "",
         postalCode: 0,
-        detailAddress: "상세주소입니다",
-        phoneNumber: "전화번호입니다",
-        category: "카테고리입니다",
+        detailAddress: "",
+        phoneNumber: "",
+        category: "",
     })
-
-    let menu: string[] = []
+    const [menuInputs, setMenuInputs] = useState<menuObject>({
+        menuName: "",
+        menuPrice: 0,
+    })
 
     useEffect(
         () => {
@@ -24,22 +37,24 @@ const RestaurantInfo = () => {
                 url: `/api/restaurants/${REGNumber}`,
                 method: 'GET'
             }).then((res) => {
-                console.log(res.data)
+                const datas = res.data
+                setInfoInputs({
+                    address: datas.address1,
+                    postalCode:datas.postalcode,
+                    detailAddress: datas.address2,
+                    phoneNumber: datas.phoneNumber,
+                    category: datas.category,
+                })
             })
             axios({
                 url: `/api/menus/${REGNumber}`,
                 method: 'GET'
             }).then((res) => {
                 const datas = res.data
-                console.log(datas)
-                datas.map((data:string) => {
-                    menu.push(data)
-                })
+                setMenuInputs({menuName: datas[0].name, menuPrice: datas[0].price})
             })
         }, []
     )
-
-    console.log(menu)
     
     return (
       <StyledRestaurantInfo>
@@ -60,25 +75,11 @@ const RestaurantInfo = () => {
             <StyledInfoDescription>{infoInputs.category}</StyledInfoDescription>
         </StyledInfo>
         <StyledInfo>
-            <StyledInfoTitle>가격대</StyledInfoTitle>
-            <StyledInfoDescription>평균 {averagePrice}만 원대</StyledInfoDescription>
-        </StyledInfo>
-        <StyledInfo>
             <StyledInfoTitle>메뉴</StyledInfoTitle>
-            <div>
-                <StyledInfoDescription>
-                    <StyledInfoMenu>포터하우스 스테이크 (1000g)</StyledInfoMenu>
-                    <StyledInfoPrice>253,000원</StyledInfoPrice>
-                </StyledInfoDescription>
-                <StyledInfoDescription>
-                    <StyledInfoMenu>오늘의 생선</StyledInfoMenu>
-                    <StyledInfoPrice>46,000원</StyledInfoPrice>
-                </StyledInfoDescription>
-                <StyledInfoDescription>
-                    <StyledInfoMenu>독일식 포테이토</StyledInfoMenu>
-                    <StyledInfoPrice>16,000원</StyledInfoPrice>
-                </StyledInfoDescription>
-            </div>
+            <StyledInfoDescription>
+                <StyledInfoMenu>{menuInputs.menuName}</StyledInfoMenu>
+                <StyledInfoPrice>{menuInputs.menuPrice}</StyledInfoPrice>
+            </StyledInfoDescription>
         </StyledInfo>
       </StyledRestaurantInfo>
     );
@@ -119,9 +120,8 @@ const StyledInfoCaption = styled.div`
 `
 const StyledInfoPrice = styled.div`
     text-align: right;
-    width: 100px;
+    padding-left: 10px;
 `
 const StyledInfoMenu = styled.div`
-    width: 180px;
     padding-bottom: 5px;
 `
