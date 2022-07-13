@@ -9,6 +9,8 @@ export class Category extends BaseEntity{
   @Column()
   image: string;
 
+  @Column()
+  imageKey: string;
   // @OneToMany(()=> Restaurant, (restaurants)=>restaurants.categoryEntity, { cascade: ['insert', 'update'] })
   // restaurants: Restaurant[]
 }

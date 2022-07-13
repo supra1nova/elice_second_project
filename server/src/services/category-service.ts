@@ -21,6 +21,10 @@ class CateogryService {
     return retrievedCategory
   }
 
+  async getCategoryByCategory(category:string){
+    const retrievedCategory= await this.categoryModel.findCategoryByCategory(category);
+    return retrievedCategory
+  }
 
   // 2. 삭제
   async removeCategory(category:string) {
