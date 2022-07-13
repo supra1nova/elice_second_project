@@ -6,7 +6,7 @@ export interface PopupProps {
   close: () => void;
 }
 
-const AccountRestaurantsTemplate = ({ close: PopupProps }) => {
+const AccountRestaurantsTemplate = ({ close }: PopupProps) => {
   const [openPopupSaveConfirm, setOpenPopupSaveConfirm] = useState(false);
   const handleOpenPopupSaveConfirm = (e: any) => {
     e.preventDefault();
