@@ -78,26 +78,33 @@ const UsersRegister = () => {
     const isInputPasswordValue = values.inputPassword;
     const isInputPasswordConfirmValue = values.inputPasswordConfirm;
     const isInputPhoneValue = values.inputPhone;
+    const isInputCheckOwnerValue = values.inputCheckOwner;
+    const isInputRegistrationNumberValue = values.inputRegistrationNumber;
+    const isInputCheckAdmin = values.inputCheckAdmin;
+    const isInputAdminCodeValue = values.inputAdminCode;
 
-    const isValidEmail = validateEmail(values.inputId);
+    const isValidIdEmail = validateEmail(values.inputId);
+    const isValidEmail = validateEmail(values.inputEmail);
     const isMinPasswordLength = isInputPasswordValue.length >= 8;
+    const isMinPhoneLength = isInputPasswordValue.length >= 12;
+
+    const isMinRegistrationNumberLength = isInputPasswordValue.length >= 11;
+    const isMinAdminCodeLength = isInputPasswordValue.length >= 4;
 
     if (!isInputIdValue) {
       errors.inputId = ERROR.ID_INPUT;
-    } else if (!isValidEmail) {
+    } else if (!isValidIdEmail) {
       errors.inputId = ERROR.ID_EMAIL_VALID;
     }
 
     if (!isInputNicknameValue) {
-      errors.inputPassword = ERROR.NICKNAME_INPUT;
-    } else if (!isMinPasswordLength) {
-      errors.inputPassword = ERROR.NICKNAME_IS_ALEADY;
+      errors.inputNickname = ERROR.NICKNAME_INPUT;
     }
 
     if (!isInputEmailValue) {
-      errors.inputPassword = ERROR.EMAIL_INPUT;
-    } else if (!isMinPasswordLength) {
-      errors.inputPassword = ERROR.EMAIL_VALID;
+      errors.inputEmail = ERROR.EMAIL_INPUT;
+    } else if (!isValidEmail) {
+      errors.inputEmail = ERROR.EMAIL_VALID;
     }
 
     if (!isInputPasswordValue) {
@@ -107,15 +114,27 @@ const UsersRegister = () => {
     }
 
     if (!isInputPasswordConfirmValue) {
-      errors.inputPassword = ERROR.PASSWORD_INPUT;
+      errors.inputPasswordConfirm = ERROR.PASSWORD_INPUT;
     } else if (!isMinPasswordLength) {
-      errors.inputPassword = ERROR.PASSWORD_SAME;
+      errors.inputPasswordConfirm = ERROR.PASSWORD_SAME;
     }
 
     if (!isInputPhoneValue) {
-      errors.inputPassword = ERROR.PHONE_INPUT;
-    } else if (!isMinPasswordLength) {
-      errors.inputPassword = ERROR.PHONE_VALID;
+      errors.inputPhone = ERROR.PHONE_INPUT;
+    } else if (!isMinPhoneLength) {
+      errors.inputPhone = ERROR.PHONE_VALID;
+    }
+
+    if (!isInputRegistrationNumberValue) {
+      errors.inputRegistrationNumber = ERROR.OWNER_REGISTRATION_NUMBER_INPUT;
+    } else if (!isMinRegistrationNumberLength) {
+      errors.inputRegistrationNumber = ERROR.OWNER_REGISTRATION_NUMBER_VALID;
+    }
+
+    if (!isInputAdminCodeValue) {
+      errors.inputAdminCode = ERROR.ADMIN_CODE_INPUT;
+    } else if (!isMinAdminCodeLength) {
+      errors.inputAdminCode = ERROR.ADMIN_CODE_INPUT_VALID;
     }
 
     return errors;
@@ -256,6 +275,9 @@ const UsersRegister = () => {
               placeholder={PLACEHOLDER.OWNER_REGISTRATION_NUMBER}
             />
           </FormInput>
+          {formErrors.inputRegistrationNumber ? (
+            <FormError message={formErrors.inputRegistrationNumber} />
+          ) : null}
         </FormItem>
         <FormItem>
           <FormSwitch>
@@ -287,6 +309,9 @@ const UsersRegister = () => {
               placeholder={PLACEHOLDER.AMDIN_CODE}
             />
           </FormInput>
+          {formErrors.inputAdminCode ? (
+            <FormError message={formErrors.inputAdminCode} />
+          ) : null}
         </FormItem>
 
         <FormFooter>
