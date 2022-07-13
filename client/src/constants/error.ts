@@ -2,6 +2,7 @@ export const ERROR = {
   ID_INPUT: '이메일을 입력해주세요.',
   ID_EMAIL_VALID: '이메일 형식이 아닙니다.',
   NAME_INPUT: '이름을 입력해주세요.',
+  NAME_MIN_LENGTH: '이름은 최소 2글자 입력해주세요.',
   EMAIL_INPUT: '이메일을 입력해주세요.',
   EMAIL_VALID: '이메일 형식이 아닙니다.',
   PASSWORD_INPUT: '비밀번호를 입력해주세요.',

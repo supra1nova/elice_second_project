@@ -4,6 +4,6 @@ export const CODE = {
 
 export const ROLE = {
   ADMIN: 'admin',
-  NORMAL: 'user',
+  USER: 'user',
   OWNER: 'owner',
 };
