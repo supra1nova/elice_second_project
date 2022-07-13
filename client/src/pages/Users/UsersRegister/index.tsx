@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import * as API from '../../../api/api';
 import InputText from '../../../components/atoms/InputText';
 import InputSwitch from '../../../components/atoms/InputSwitch';
 import InputSwitchDescription from '../../../components/atoms/InputSwitchDescription';
@@ -21,46 +23,48 @@ type valueObject = {
 };
 
 const UsersRegister = () => {
+  const navigate = useNavigate();
   const initialValue = {
-    inputId: '',
+    inputName: '',
     inputNickname: '',
     inputEmail: '',
     inputPassword: '',
     inputPasswordConfirm: '',
     inputPhone: '',
-    inputCheckOwner: Boolean(false),
+    inputCheckOwner: Boolean(true),
     inputRegistrationNumber: '',
-    inputCheckAdmin: Boolean(false),
+    inputCheckAdmin: Boolean(true),
     inputAdminCode: '',
   };
+
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
   const [isSubmit, setIsSubmit] = useState(false);
 
   const handleChange = (e: any) => {
-    const { name, value } = e.target;
+    const target = e.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
     setFormValues({ ...formValues, [name]: value });
   };
 
-  // const changeHandler = (checked: boolean, id: string, e: any) => {
-  //   if (checked) {
-  //     setCheckedButtons([...checkedButtons, id]);
-  //     console.log(체크 반영 완료);
-  //   } else {
-  //     setCheckedButtons(checkedButtons.filter(button => button !== id));
-  //     console.log(체크 해제 반영 완료);
-  //   }
-  // };
-
-  const handleCheck = (e: any) => {
-    const { name } = e.target;
-    console.log(name);
-  };
-
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
     setIsSubmit(true);
+    try {
+      const data = {
+        email: formValues.inputEmail,
+        name: formValues.inputName,
+        password: formValues.inputPassword,
+        nickName: formValues.inputNickname,
+        phoneNumber: formValues.inputPhone,
+      };
+      await API.post('/api/users/register', '', data);
+      navigate('/');
+    } catch (err: any) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
@@ -72,7 +76,7 @@ const UsersRegister = () => {
 
   const validate = (values: any) => {
     const errors: valueObject = {};
-    const isInputIdValue = values.inputId;
+    const isinputNameValue = values.inputName;
     const isInputNicknameValue = values.inputNickname;
     const isInputEmailValue = values.inputEmail;
     const isInputPasswordValue = values.inputPassword;
@@ -83,7 +87,6 @@ const UsersRegister = () => {
     const isInputCheckAdmin = values.inputCheckAdmin;
     const isInputAdminCodeValue = values.inputAdminCode;
 
-    const isValidIdEmail = validateEmail(values.inputId);
     const isValidEmail = validateEmail(values.inputEmail);
     const isMinPasswordLength = isInputPasswordValue.length >= 8;
     const isMinPhoneLength = isInputPasswordValue.length >= 12;
@@ -91,10 +94,8 @@ const UsersRegister = () => {
     const isMinRegistrationNumberLength = isInputPasswordValue.length >= 11;
     const isMinAdminCodeLength = isInputPasswordValue.length >= 4;
 
-    if (!isInputIdValue) {
-      errors.inputId = ERROR.ID_INPUT;
-    } else if (!isValidIdEmail) {
-      errors.inputId = ERROR.ID_EMAIL_VALID;
+    if (!isinputNameValue) {
+      errors.inputName = ERROR.NAME_INPUT;
     }
 
     if (!isInputNicknameValue) {
@@ -142,17 +143,17 @@ const UsersRegister = () => {
 
   const inputData = [
     {
-      htmlFor: 'inputId',
-      labelTitle: LABELTITLE.ID,
+      htmlFor: 'inputName',
+      labelTitle: LABELTITLE.NAME,
       type: 'text',
-      id: 'inputId',
-      name: 'inputId',
-      value: formValues.inputId,
+      id: 'inputName',
+      name: 'inputName',
+      value: formValues.inputName,
       maxLength: undefined,
       autoComplete: undefined,
       onChange: handleChange,
-      placeholder: PLACEHOLDER.ID,
-      error: formErrors.inputId,
+      placeholder: PLACEHOLDER.NAME,
+      error: formErrors.inputName,
     },
     {
       htmlFor: 'inputNickname',
@@ -255,7 +256,7 @@ const UsersRegister = () => {
               htmlFor={'inputCheckOwner'}
               id={'inputCheckOwner'}
               name={'inputCheckOwner'}
-              onChange={handleCheck}
+              onChange={handleChange}
               checked={formValues.inputCheckOwner}
             />
           </FormSwitch>
@@ -289,7 +290,7 @@ const UsersRegister = () => {
               htmlFor={'inputCheckAdmin'}
               id={'inputCheckAdmin'}
               name={'inputCheckAdmin'}
-              onChange={handleCheck}
+              onChange={handleChange}
               checked={formValues.inputCheckAdmin}
             />
           </FormSwitch>

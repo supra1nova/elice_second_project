@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import * as API from '../../../api/api';
 import InputText from '../../../components/atoms/InputText';
 import Form from '../../../components/atoms/Form';
@@ -22,6 +22,7 @@ type valueObject = {
 };
 
 const UsersLogin = () => {
+  const navigate = useNavigate();
   const initialValue = { inputId: '', inputPassword: '' };
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
@@ -42,6 +43,12 @@ const UsersLogin = () => {
         password: formValues.inputPassword,
       };
       const result = await API.post('/api/users/login', '', data);
+      const token = result.data.token;
+      console.log(result, token);
+      localStorage.setItem('token', token);
+
+      alert(`정상적으로 로그인되었습니다.`);
+      navigate('/');
     } catch (err: any) {
       console.error(err);
     }
@@ -59,7 +66,7 @@ const UsersLogin = () => {
     const isInputIdValue = values.inputId;
     const isInputPasswordValue = values.inputPassword;
     const isValidIdEmail = validateEmail(values.inputId);
-    const isMinPasswordLength = isInputPasswordValue.length >= 8;
+    const isMinPasswordLength = isInputPasswordValue.length >= 4;
 
     if (!isInputIdValue) {
       errors.inputId = ERROR.ID_INPUT;
