@@ -7,6 +7,7 @@ export const LABELTITLE = {
   EMAIL: '이메일',
   PHONE: '전화번호',
   ROLE_OWNER: '사장님이신가요?',
+  ROLE_OWNER_SUB_TITLE: '사업관리자 계정으로 회원가입하기',
   ROLE_ADMIN: '관리자로 가입하기',
   AMDIN_CODE: 'ADMIN CODE',
   OWNER_REGISTRATION_NUMBER: '사업자 등록번호',
