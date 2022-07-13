@@ -1,22 +1,26 @@
 import ShopListCard from '../../molecules/Card/MainCardWithoutReview';
 import * as UI from './style';
 import { dummy } from './MockData';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import * as API from '../../../api/api';
+
+const postData = {
+  email: '동철Test',
+  name: 'ddd',
+  password: 'asdf',
+  nickName: 'nick',
+  phoneNumber: '12345678',
+  role: 'ADMIN',
+};
 
 const MainShopList = () => {
-  const REGNumber = '12314-1214';
-  // const getData = async () => {
-  //   const res = await axios.get(`http://localhost:3001/api/restaurants`);
-  //   console.log(res);
-  // };
+  const [data, setData] = useState([]);
+  // console.log(data);
+
   useEffect(() => {
-    axios({
-      url: `http://localhost:3001/api/restaurants/${REGNumber}`,
-      method: 'GET',
-    }).then((res) => {
-      console.log(res.data);
-    });
+    // API.get('/api/users').then((res) => setData(res));
+    API.post('/api/users/register', '', postData);
   }, []);
   return (
     <UI.Container>
