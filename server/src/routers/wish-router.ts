@@ -17,18 +17,28 @@ wishRouter.post('/', async (req: Request, res:Response, next:NextFunction) => {
   }
 });
 
-
-// 2. 특정 상호 관련 전체 찜 목록 조회 (배열 형태로 반환)
+// 2. 특정 상호 관련 찜한 손님 전체 조회 - 이메일 기준
 wishRouter.get('/:email', async (req: Request, res:Response, next:NextFunction) => {
   try {
     const email= req.params.email;
-    const restaurants = await wishService.getWishes(email);
+    const restaurants = await wishService.getWishesByEmail(email);
     res.status(200).json(restaurants);
   } catch (error) {
     next(error);
   }
 });
 
+// 3. 특정 상호 관련 찜한 손님 전체 조회 - 상호 기준
+wishRouter.get('/total/:REGNumber', async (req: Request, res:Response, next:NextFunction) => {
+  try {
+    const REGNumber= req.params.REGNumber;
+    const wishes = await wishService.getWishesByREGNumber(REGNumber);
+    const wishNumber = wishes.length;
+    res.status(200).json(wishNumber);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // 5. 찜 정보 삭제
 // wishRouter.delete('/', ownerRequired, async (req, res, next) => {
