@@ -20,7 +20,7 @@ const timeTable = [
   '오후 16:00',
 ];
 
-const CategoryFilter = ({ dateSelect }: Props) => {
+const TimeFilter = ({ dateSelect }: Props) => {
   const [timeSelect, setTimeSelect] = useState('');
   const [count, setCount] = useState(0);
 
@@ -95,8 +95,8 @@ const CategoryFilter = ({ dateSelect }: Props) => {
   );
 };
 
-export default CategoryFilter;
+export default TimeFilter;
 
-CategoryFilter.defaultProps = {
+TimeFilter.defaultProps = {
   dateSelect: '2022년 7월 20일',
 };

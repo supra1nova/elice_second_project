@@ -74,3 +74,13 @@ export const SearchBtn = styled.button`
   color: white;
   margin-left: auto;
 `;
+
+export const TabContainer = styled.div`
+  height: 270px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  background: #f7f7f7;
+  border: 1px solid #e5e5e5;
+  padding: 20px 72px;
+  z-index: 99;
+  position: absolute;
+`;

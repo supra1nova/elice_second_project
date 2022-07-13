@@ -21,7 +21,7 @@ interface MainCardWithoutReviewProps {
   description: String;
   category: String;
   large: boolean;
-  // Number로 받으면 reactNode가 두개라 함..
+  // Number로 받으면 caption에 reactNode가 두개라 함..
   likeCount: any;
   reviewCount: any;
   shopImg: string;
