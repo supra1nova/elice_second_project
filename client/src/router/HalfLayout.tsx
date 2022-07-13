@@ -14,7 +14,7 @@ const HalfContainer = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 10rem 0;
+  padding: 100px 0;
 `;
 
 const HalfContainerOutlet = styled.div`

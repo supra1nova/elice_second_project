@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as API from '../../../api/api';
-import InputText from '../../../components/atoms/InputText';
-import InputSwitch from '../../../components/atoms/InputSwitch';
-import InputSwitchDescription from '../../../components/atoms/InputSwitchDescription';
 import Form from '../../../components/atoms/Form';
 import FormHeader from '../../../components/molecules/FormHeader';
-import FormItem from '../../../components/molecules/FormItem';
-import FormInput from '../../../components/molecules/FormInput';
-import FormSwitch from '../../../components/molecules/FormSwitch';
-import FormError from '../../../components/molecules/FromError';
+import FormInputText from './template/FormInputText';
+import FormInputSwitch from './template/FormInputSwitch';
 import FormFooter from '../../../components/molecules/FormFooter';
 import Button from '../../../components/atoms/Button';
+import { CODE, ROLE } from '../../../constants/member';
 import { PAGES } from '../../../constants/title';
 import { LABELTITLE, PLACEHOLDER } from '../../../constants/input';
 import { ERROR } from '../../../constants/error';
@@ -42,40 +38,50 @@ const UsersRegister = () => {
   const [formErrors, setFormErrors] = useState<valueObject>({});
   const [isSubmit, setIsSubmit] = useState(false);
 
-  console.log(formValues);
-
   const handleChange = (e: any) => {
     const target = e.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
     setFormValues({ ...formValues, [name]: value });
-    console.log(formValues);
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (formValues.inputCheckOwner) {
-      formValues.inputRole = 'owner';
-    }
-    if (formValues.inputCheckAdmin) {
-      formValues.inputRole = 'admin';
-    }
+
+    // if (formValues.inputCheckOwner) {
+    //   formValues.inputRole = ROLE.OWNER;
+    // }
+
+    // if (
+    //   formValues.inputCheckOwner &&
+    //   formValues.inputAdminCode === CODE.ADMIN
+    // ) {
+    //   formValues.inputRole = ROLE.ADMIN;
+    // }
+
     setFormErrors(validate(formValues));
     setIsSubmit(true);
-    try {
-      const data = {
-        email: formValues.inputEmail,
-        name: formValues.inputName,
-        password: formValues.inputPassword,
-        nickName: formValues.inputNickname,
-        phoneNumber: formValues.inputPhone,
-        role: formValues.inputRole,
-      };
-      await API.post('/api/users/register', '', data);
-      navigate('/');
-    } catch (err: any) {
-      console.error(err);
-    }
+
+    // try {
+    //   const data = {
+    //     email: formValues.inputEmail,
+    //     name: formValues.inputName,
+    //     password: formValues.inputPassword,
+    //     nickName: formValues.inputNickname,
+    //     phoneNumber: formValues.inputPhone,
+    //     role: formValues.inputRole,
+    //   };
+
+    //   await API.post('/api/users/register', '', data);
+    //   if (data.role === ROLE.OWNER) {
+    //     navigate('/account');
+    //   } else {
+    //     navigate('/users/login');
+    //   }
+    //   setIsSubmit(true);
+    // } catch (err: any) {
+    //   console.error(err);
+    // }
   };
 
   useEffect(() => {
@@ -87,6 +93,7 @@ const UsersRegister = () => {
 
   const validate = (values: any) => {
     const errors: valueObject = {};
+
     const isinputNameValue = values.inputName;
     const isInputNicknameValue = values.inputNickname;
     const isInputEmailValue = values.inputEmail;
@@ -95,15 +102,17 @@ const UsersRegister = () => {
     const isInputPhoneValue = values.inputPhone;
     const isInputCheckOwnerValue = values.inputCheckOwner;
     const isInputRegistrationNumberValue = values.inputRegistrationNumber;
-    const isInputCheckAdmin = values.inputCheckAdmin;
+    const isInputCheckAdminValue = values.inputCheckAdmin;
+    const isInputCheckAdminChecked = values.inputCheckAdmin;
     const isInputAdminCodeValue = values.inputAdminCode;
 
     const isValidEmail = validateEmail(values.inputEmail);
     const isMinPasswordLength = isInputPasswordValue.length >= 8;
-    const isMinPhoneLength = isInputPasswordValue.length >= 12;
+    const isMinPhoneLength = isInputPhoneValue.length >= 11;
 
-    const isMinRegistrationNumberLength = isInputPasswordValue.length >= 11;
-    const isMinAdminCodeLength = isInputPasswordValue.length >= 4;
+    const isMinRegistrationNumberLength =
+      isInputRegistrationNumberValue.length >= 11;
+    const isMinAdminCodeLength = isInputCheckAdminValue.length === 4;
 
     if (!isinputNameValue) {
       errors.inputName = ERROR.NAME_INPUT;
@@ -137,17 +146,15 @@ const UsersRegister = () => {
       errors.inputPhone = ERROR.PHONE_VALID;
     }
 
-    if (!isInputRegistrationNumberValue) {
-      errors.inputRegistrationNumber = ERROR.OWNER_REGISTRATION_NUMBER_INPUT;
-    } else if (!isMinRegistrationNumberLength) {
-      errors.inputRegistrationNumber = ERROR.OWNER_REGISTRATION_NUMBER_VALID;
-    }
-
-    if (!isInputAdminCodeValue) {
-      errors.inputAdminCode = ERROR.ADMIN_CODE_INPUT;
-    } else if (!isMinAdminCodeLength) {
+    if (isInputCheckAdminChecked && isInputAdminCodeValue !== CODE.ADMIN) {
       errors.inputAdminCode = ERROR.ADMIN_CODE_INPUT_VALID;
     }
+
+    // if (!isInputRegistrationNumberValue) {
+    //   errors.inputRegistrationNumber = ERROR.OWNER_REGISTRATION_NUMBER_INPUT;
+    // } else if (!isMinRegistrationNumberLength) {
+    //   errors.inputRegistrationNumber = ERROR.OWNER_REGISTRATION_NUMBER_VALID;
+    // }
 
     return errors;
   };
@@ -237,11 +244,11 @@ const UsersRegister = () => {
       {
         htmlFor: 'inputAdminCode',
         labelTitle: LABELTITLE.AMDIN_CODE,
-        type: 'text',
+        type: 'password',
         id: 'inputAdminCode',
         name: 'inputAdminCode',
         value: formValues.inputAdminCode,
-        maxLength: 11,
+        maxLength: 4,
         autoComplete: undefined,
         onChange: handleChange,
         placeholder: PLACEHOLDER.AMDIN_CODE,
@@ -290,73 +297,34 @@ const UsersRegister = () => {
     ],
   };
 
-  const inputTextElement = (item: any, index: number) => {
-    return (
-      <FormItem key={`${item.id}-${index}`}>
-        <FormInput htmlFor={item.htmlFor} labelTitle={item.labelTitle}>
-          <InputText
-            type={item.type}
-            id={item.id}
-            name={item.name}
-            value={item.value}
-            maxLength={item.maxLength}
-            autoComplete={item.autoComplete}
-            onChange={item.onChange}
-            placeholder={item.placeholder}
-          />
-        </FormInput>
-        {item.error ? <FormError message={item.error} /> : null}
-      </FormItem>
-    );
-  };
-
-  const inputSwitchElement = (item: any, index: number) => {
-    return (
-      <FormItem key={`${item.id}-${index}`}>
-        <FormSwitch>
-          <InputSwitchDescription title={item.title} subTitle={item.subTitle} />
-          <InputSwitch
-            htmlFor={item.htmlFor}
-            id={item.id}
-            name={item.name}
-            onChange={item.onChange}
-            checked={item.checked}
-          />
-        </FormSwitch>
-      </FormItem>
-    );
-  };
-
   return (
     <UI.Container>
       <Form onSubmit={handleSubmit}>
         <FormHeader title={PAGES.USER_REGISTER} />
 
         {inputTextData.user.map((item, index) => {
-          return inputTextElement(item, index);
+          return FormInputText(item, index);
         })}
 
         {!undefined && !formValues.inputCheckAdmin
           ? inputSwitchData.owner.map((item, index) => {
-              return inputSwitchElement(item, index);
+              return FormInputSwitch(item, index);
             })
           : null}
 
-        {formValues.inputCheckOwner
-          ? inputTextData.owner.map((item, index) => {
-              return inputTextElement(item, index);
-            })
-          : null}
+        {formValues.inputCheckOwner ? (
+          <UI.Notice>레스토랑 설정은 마이페이지에서 가능합니다.</UI.Notice>
+        ) : null}
 
         {!undefined && !formValues.inputCheckOwner
           ? inputSwitchData.admin.map((item, index) => {
-              return inputSwitchElement(item, index);
+              return FormInputSwitch(item, index);
             })
           : null}
 
         {formValues.inputCheckAdmin
           ? inputTextData.admin.map((item, index) => {
-              return inputTextElement(item, index);
+              return FormInputText(item, index);
             })
           : null}
 
