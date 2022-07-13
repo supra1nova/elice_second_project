@@ -25,7 +25,7 @@ export class Review extends BaseEntity{
   REGNumber: string;
   
   @Column(
-    {type: "simple-array"}
+    {type: "simple-array", nullable:true}
     )
   image: string[];
   

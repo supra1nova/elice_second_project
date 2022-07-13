@@ -18,7 +18,7 @@ export class WishModel{
     .execute()
   }
   
-  // 2. 특정 상호 관련 전체 찜 조회
+  // 2. 특정 상호 관련 찜한 손님 전체 조회 - 이메일 기준
   async findWishByEmail(email: string) {
     const reviewRepository= AppDataSource.getRepository(Wish);
     // get a post repository to perform operations with post
@@ -26,6 +26,16 @@ export class WishModel{
       where: {email: email}
     })
     return (review);
+  }
+
+  // 3. 특정 상호 관련 찜한 손님 전체 조회 - 상호 기준
+  async findWishByREGNumber(REGNumber: string) {
+    const wishRepository= AppDataSource.getRepository(Wish);
+    // get a post repository to perform operations with post
+    const wishes = await wishRepository.find({
+      where: {REGNumber: REGNumber}
+    })
+    return (wishes);
   }
 
 
