@@ -4,7 +4,7 @@ import * as UI from './style';
 interface Props {
   id: string;
   type: string;
-  name: string;
+  name: string | undefined;
   htmlFor: string;
   checked: boolean | undefined;
   onChange: (e: any) => void;
