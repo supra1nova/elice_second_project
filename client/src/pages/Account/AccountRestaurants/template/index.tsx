@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-
-import PopupConfirm from './PopupConfirm';
-import PopupFinish from './PopupFinish';
+import Button from '../../../../components/atoms/Button';
 
 const AccountRestaurantsTemplate = () => {
   return (
     <>
-      <PopupConfirm />
-      <PopupFinish />
+      <Button component='primary' size='large' block>
+        변경사항 저장
+      </Button>
     </>
   );
 };
