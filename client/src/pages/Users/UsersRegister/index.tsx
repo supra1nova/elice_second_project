@@ -45,7 +45,7 @@ const UsersRegister = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (formValues.inputCheckOwner) {
       formValues.inputRole = ROLE.OWNER;
@@ -62,13 +62,31 @@ const UsersRegister = () => {
       formValues.inputRole = ROLE.USER;
     }
 
-    console.log(
-      formValues.inputCheckOwner,
-      formValues.inputCheckAdmin,
-      formValues,
-    );
     setFormErrors(validate(formValues));
     setIsSubmit(true);
+
+    try {
+      const errorsLength = Object.keys(formErrors).length;
+      const data = {
+        email: formValues.inputEmail,
+        name: formValues.inputName,
+        password: formValues.inputPassword,
+        nickName: formValues.inputNickname,
+        phoneNumber: formValues.inputPhone,
+        role: formValues.inputRole,
+      };
+
+      await API.post('/api/users/register', '', data);
+      if (errorsLength === 0) {
+        // if (data.role === ROLE.OWNER) {
+        //   navigate('/account');
+        // } else {
+        //   navigate('/users/login');
+        // }
+      }
+    } catch (err: any) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
@@ -95,12 +113,11 @@ const UsersRegister = () => {
     const isPasswordMinLength = isInputPasswordValue.length >= 8;
     const isPhoneMinLength = isInputPhoneValue.length >= 11;
     const isAdminCodeMinLength = isInputPasswordValue.length >= 4;
-
-    const isNameMinLength = isInputNameValue >= 2;
+    const isNameMinLength = isInputNameValue < 2;
 
     if (!isInputNameValue) {
       errors.inputName = ERROR.NAME_INPUT;
-    } else if (!isNameMinLength) {
+    } else if (isNameMinLength) {
       errors.inputName = ERROR.NAME_MIN_LENGTH;
     }
 
@@ -130,12 +147,6 @@ const UsersRegister = () => {
       errors.inputPhone = ERROR.PHONE_INPUT;
     } else if (!isPhoneMinLength) {
       errors.inputPhone = ERROR.PHONE_VALID;
-    }
-
-    if (!isInputAdminCodeValue) {
-      errors.inputAdminCode = ERROR.ADMIN_CODE_INPUT;
-    } else if (!isAdminCodeMinLength) {
-      errors.inputAdminCode = ERROR.ADMIN_CODE_INPUT_VALID;
     }
 
     if (isInputCheckAdminChecked && isInputAdminCodeValue !== CODE.ADMIN) {
