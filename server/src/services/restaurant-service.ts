@@ -57,21 +57,10 @@ class RestaurantService {
   }
 
   // 4. 특정 범위(페이지) 위치한 제품 정보 조회
-  async getRangedRestaurants(page:number,perPage:number) {
-    const rangedProductsInfo = await this.restaurantModel.getInRange(page, perPage);
+  async getRangedRestaurants(criteria: string, page:number,perPage:number) {
+    const rangedProductsInfo = await this.restaurantModel.getInRange(criteria, page, perPage);
     return rangedProductsInfo;
   }
-
-  // async getAllProduct(){
-  //   const allProducts= await this.productModel.findAll();
-  //   return allProducts;
-  // }
-
-  // async deleteByCategory(input){
-  //   const { sex, type } = input;
-  //   const deletedCount= await this.productModel.deleteByCategory(input);
-  //   return deletedCount;
-  // }
 
   async setRestaurant(REGNumber:string,updateRestaurantInfo:updateRestaurantInfo) {
     const updatedRestaurant = await this.restaurantModel.updateRestaurant(REGNumber,updateRestaurantInfo);

@@ -41,9 +41,15 @@ export class Restaurant extends BaseEntity{
 
   @Column()
   category: string;
-
+  
   @Column({nullable:true, length:1000})
   description:string;
+  
+  @Column({
+    default: 0,
+    type: 'double'
+  })
+  average: number;
   
   @CreateDateColumn({
     type: "timestamp",

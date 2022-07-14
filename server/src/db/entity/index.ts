@@ -8,7 +8,8 @@ import { User } from "./User"
 import { Wish } from "./Wish"
 import { ReviewImage } from "./ReviewImage"
 import { RestaurantImage } from "./RestaurantImage"
+import { Rating } from "./Rating"
 
 
 
-export { Category, Menu, Review, Reserve, Restaurant, Time, User,Wish,RestaurantImage,ReviewImage } 
+export { Category, Menu, Review, Reserve, Restaurant, Time, User,Wish,RestaurantImage,ReviewImage, Rating }

@@ -70,17 +70,30 @@ export class RestaurantModel{
   }
 
   // 4. 특정 범위(페이지) 위치한 제품 정보 조회
-  async getInRange(page:number, perPage:number) {
+  async getInRange(criteria: string, page:number, perPage:number) {
     const restaurantRepository= AppDataSource.getRepository(Restaurant);
-
-    const restaurantsInRange = await restaurantRepository.find({
-      order:{
-        createdAt:"ASC"
-      },
-      skip:perPage*(page-1),
-      take:perPage
-    });
-    return restaurantsInRange;
+    
+    if (criteria === 'default') {
+      const restaurantsInRange = await restaurantRepository.find({
+        order:{
+          createdAt:"ASC"
+        },
+        skip:perPage*(page-1),
+        take:perPage
+      });
+      return restaurantsInRange;
+    } 
+    else {
+      const restaurantsInRange = await restaurantRepository.find({
+        order:{
+          average: 'DESC',
+          createdAt: "ASC"
+        },
+        skip:perPage*(page-1),
+        take:perPage
+      });
+      return restaurantsInRange;
+    }
   }
   
   async updateRestaurant(REGNumber:string, updateRestaurantInfo:updateRestaurantInfo){

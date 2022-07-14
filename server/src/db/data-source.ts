@@ -8,8 +8,8 @@ export const AppDataSource = new DataSource({
   username: "admin",
   password: '0000',
   database: 'matjip',
-  // synchronize: false,
-  synchronize: true,
+  synchronize: false,
+  // synchronize: true,
   logging: true,
   entities: [  User, Category, Menu, Reserve, Restaurant, Review, Time,Wish,ReviewImage,RestaurantImage],
   migrations: [],
@@ -24,5 +24,6 @@ export * from './model/Time-Model';
 export * from './model/Menu-Model';
 export * from './model/Wish-Model';
 export * from './model/RestaurantImage-Model';
+export * from './model/Rating-Model';
 
 // export * from './model/Restaurant-Model';

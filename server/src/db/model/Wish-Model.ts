@@ -38,7 +38,6 @@ export class WishModel{
     return (wishes);
   }
 
-
   // 5. 찜 삭제
   async deleteWish(wishId:number){
     await AppDataSource

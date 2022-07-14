@@ -23,11 +23,12 @@ restaurantRouter.post('/', async (req: Request, res:Response, next:NextFunction)
 restaurantRouter.get('/', async (req: Request, res:Response, next:NextFunction) => {
   try {
     const page= Number(req.query.page) ||1;
-    const perPage= Number(req.query.perPage) ||12;
-
+    const perPage = Number(req.query.perPage) || 12;
+    const criteria = String(req.query.criteria) || 'default';
+    
     const [total, restaurants] = await Promise.all([
       await restaurantService.countRestaurants(),
-      await restaurantService.getRangedRestaurants(page, perPage)
+      await restaurantService.getRangedRestaurants(criteria, page, perPage)
     ]);
     
     const totalPage = Math.ceil(total / perPage);
@@ -93,7 +94,8 @@ export interface restaurantInfo{
   phoneNumber?:string,
   image?:string
   category:string;
-  description?:string;
+  description?: string;
+  average?: number;
 }
 
 export interface updateRestaurantInfo{
@@ -104,6 +106,7 @@ export interface updateRestaurantInfo{
   phoneNumber?:string,
   image?:string
   category?:string;
-  description?:string;
+  description?: string;
+  average?: number;
 }
 export { restaurantRouter };
