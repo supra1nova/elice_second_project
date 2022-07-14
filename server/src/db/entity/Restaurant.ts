@@ -43,7 +43,12 @@ export class Restaurant extends BaseEntity{
   category: string;
   
   @Column({nullable:true, length:1000})
-  description:string;
+  description: string;
+  
+  @Column({
+    default: 0
+  })
+  wishers: number;
   
   @Column({
     default: 0,
