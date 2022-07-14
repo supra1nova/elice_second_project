@@ -101,6 +101,22 @@ export class RestaurantModel{
     const updated= await restaurantRepository.update(REGNumber, updateRestaurantInfo)
     return updated.affected
   }
+
+
+  // 4. 평점 추가
+  async updateWisherNumber(isAddition:boolean, REGNumber: string) {
+    const restaurantRepository = AppDataSource.getRepository(Restaurant);
+    const restaurant = await restaurantRepository.find({
+      where: { REGNumber: REGNumber },
+    });
+    if (isAddition) {
+      restaurant[0].wishers += 1;
+    } else {
+      restaurant[0].wishers -= 1;
+    }
+    const ratingUpdatedRestaurant = await restaurantRepository.update(REGNumber, restaurant[0]);
+    return ratingUpdatedRestaurant;
+  }
 }
 
 

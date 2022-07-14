@@ -6,12 +6,12 @@ import { adminRequired } from '../middlewares/admin-required';
 
 const wishRouter = Router();
 
-// 1. 찜 생성
-wishRouter.post('/', async (req: Request, res:Response, next:NextFunction) => {
+  // 1. 찜 생성 - 사용자 찜 추가(return 값으로 찜한 전체 인원수 반환)
+  wishRouter.post('/', async (req: Request, res:Response, next:NextFunction) => {
   try {
     const {email, REGNumber}= req.body;
-    const newMenu = await wishService.addWish(email,REGNumber);
-    res.status(201).json(newMenu);
+    const result = await wishService.addWish(email,REGNumber);
+    res.status(201).json(result);
   } catch (error) {
     next(error);
   }
@@ -40,14 +40,15 @@ wishRouter.get('/total/:REGNumber', async (req: Request, res:Response, next:Next
   }
 });
 
-// 5. 찜 정보 삭제
+// 4. 찜 삭제 - 사용자 찜 삭제(return 값으로 찜한 전체 인원수 반환)
 // wishRouter.delete('/', ownerRequired, async (req, res, next) => {
 wishRouter.delete('/', async (req, res, next) => {
   try {
     //req.email이 나중에는 input이 되어야 한다.
-    const wishId  = Number(req.body.wishId); 
-    const result = await wishService.removeWish(wishId);
-    res.status(200).json(result);
+    const wishId = Number(req.body.wishId); 
+    const REGNumber = req.body.REGNumber;
+    const wishersNumber = await wishService.removeWish(wishId, REGNumber);
+    res.status(200).json(wishersNumber);
   } catch (error) {
     next(error);
   }

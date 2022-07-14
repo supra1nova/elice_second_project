@@ -7,10 +7,13 @@ class WishService {
     this.wishModel = wishModel;
   }
 
-  // 1. 메뉴 생성
+  // 1. 찜 생성 - 사용자 찜 추가(return 값으로 찜한 전체 인원수 반환)
   async addWish(email:string, REGNumber:string) {
-    const createdNewReserve = await this.wishModel.create(email,REGNumber);
-    return createdNewReserve;
+    await this.wishModel.create(email, REGNumber);
+    await restaurantModel.updateWisherNumber(true, REGNumber);
+    const restaurant = await restaurantModel.findRestaurantByREGNumber(REGNumber);
+    const wishersNumber = restaurant?.wishers;
+    return wishersNumber;
   }
   
   // 2. 특정 상호 관련 찜한 손님 전체 조회 - 이메일 기준
@@ -24,20 +27,16 @@ class WishService {
     const wishes = await wishModel.findWishByREGNumber(REGNumber);
     return wishes;
   }
-  
-  // 3. 메뉴 상세 보기
-
-  
-
-  
-  // 5. 메뉴 삭제
-  async removeWish(wishId:number) {
-
-        const deletedMenu = await this.wishModel.deleteWish(wishId);
-        return deletedMenu;
-        }
-      
     
+  // 4. 찜 삭제 - 사용자 찜 삭제(return 값으로 찜한 전체 인원수 반환)
+  async removeWish(wishId:number, REGNumber:string) {
+    await this.wishModel.deleteWish(wishId);
+    await restaurantModel.updateWisherNumber(false, REGNumber);
+    const restaurant = await restaurantModel.findRestaurantByREGNumber(REGNumber);
+    const wishersNumber = restaurant?.wishers;
+    console.log(wishersNumber);
+    return wishersNumber;
+  }
   
 }
 

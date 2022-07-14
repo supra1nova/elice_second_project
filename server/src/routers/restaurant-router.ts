@@ -105,10 +105,11 @@ export interface restaurantInfo{
   address2:string,
   postalcode:number,
   phoneNumber?:string,
-  image?:string
-  category:string;
-  description?: string;
-  average?: number;
+  image?:string,
+  category: string,
+  wishers?: number,
+  description?: string,
+  average?: number,
 }
 
 export interface updateRestaurantInfo{
@@ -117,9 +118,10 @@ export interface updateRestaurantInfo{
   address2?:string,
   postalcode?:number,
   phoneNumber?:string,
-  image?:string
-  category?:string;
-  description?: string;
-  average?: number;
+  image?: string;
+  category?: string,
+  wishers?: number,
+  description?: string,
+  average?: number
 }
 export { restaurantRouter };
