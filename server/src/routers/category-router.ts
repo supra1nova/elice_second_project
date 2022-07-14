@@ -2,7 +2,6 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { adminRequired } from 'src/middlewares';
 // import { ownerRequired, loginRequired, adminRequired } from '../middlewares';
 import { categoryService} from '../services';
-import { S3Client } from "@aws-sdk/client-s3";
 import {upload,s3} from "../config/upload"
 const categoryRouter = Router();
 ////////////////////////////////////

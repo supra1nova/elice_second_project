@@ -3,6 +3,8 @@ import * as UI from './style';
 import { useState } from 'react';
 
 //main 의 검색창 클릭시 filter가 포함된 input으로 전환
+//검색 클릭 시 검색페이지 경로 하나 추가해야 할듯 (필터링 정보들 스토리지에 담아서 요청 혹은 state?)
+//main 은 그냥 추천 리스트
 
 const Search = () => {
   return (

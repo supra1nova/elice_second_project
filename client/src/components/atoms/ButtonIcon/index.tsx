@@ -3,11 +3,11 @@ import * as UI from './style';
 
 interface Props {
   children: JSX.Element | JSX.Element[];
-  to: string | null;
+  to?: string | null;
   onClick: (e: any) => void;
 }
 
-const ButtonText = ({ children, to, onClick }: Props) => {
+const ButtonIcon = ({ children, to, onClick }: Props) => {
   if (to) {
     return (
       <UI.ButtonLink to={to} onClick={onClick}>
@@ -23,10 +23,10 @@ const ButtonText = ({ children, to, onClick }: Props) => {
   }
 };
 
-ButtonText.defulatProps = {
+ButtonIcon.defulatProps = {
   children: null,
   to: null,
   onClick: () => null,
 };
 
-export default ButtonText;
+export default ButtonIcon;

@@ -6,41 +6,47 @@ import axios from 'axios';
 import * as API from '../../../api/api';
 
 const postData = {
-  email: '동철Test',
-  name: 'ddd',
-  password: 'asdf',
-  nickName: 'nick',
-  phoneNumber: '12345678',
-  role: 'ADMIN',
+  email: 'dcTest000',
+  name: 'kdc',
+  password: '93939393',
+  nickName: 'adsfadsfcv',
+  phoneNumber: '1292',
+  role: 'OWNER',
 };
 
 const MainShopList = () => {
-  const [data, setData] = useState([]);
-  // console.log(data);
-
+  const [shop, setShop] = useState([
+    {
+      name: '',
+      address1: '',
+      category: '',
+      image: '',
+    },
+  ]);
   useEffect(() => {
-    // API.get('/api/users').then((res) => setData(res));
-    API.post('/api/users/register', '', postData);
+    API.get('/api/restaurants').then((res) => {
+      setShop(res.restaurants);
+    });
   }, []);
+  console.log(shop);
   return (
     <UI.Container>
       <UI.Title>추천 맛집 List!</UI.Title>
       <UI.SubTitle>알 수 없는 알고리즘에 의한 추천</UI.SubTitle>
       <UI.GridContainer>
-        {dummy.map((item, idx) => {
+        {shop.map((item, idx) => {
           return (
-            <>
+            <div key={`${item}-${idx}`}>
               <ShopListCard
-                key={`${item.shopName}-${idx}`}
-                title={item.shopName}
-                address={item.shopAddress}
-                category={item.shopCategory}
-                likeCount={item.shopLikeCount.toLocaleString()}
-                reviewCount={item.shopReviewCount}
-                shopImg={item.shopImg}
+                title={item.name}
+                address={item.address1}
+                category={item.category}
+                likeCount={5}
+                reviewCount={10}
+                shopImg={item.image}
                 large={true}
               />
-            </>
+            </div>
           );
         })}
       </UI.GridContainer>

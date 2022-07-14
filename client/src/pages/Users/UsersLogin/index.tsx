@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import * as API from '../../../api/api';
 import InputText from '../../../components/atoms/InputText';
 import Form from '../../../components/atoms/Form';
 import FormHeader from '../../../components/molecules/FormHeader';
@@ -20,8 +22,9 @@ type valueObject = {
 };
 
 const UsersLogin = () => {
-  const initialValue: valueObject = { inputId: '', inputPassword: '' };
-  const [formValues, setFormValues] = useState(initialValue);
+  const navigate = useNavigate();
+  const initialValue = { inputId: '', inputPassword: '' };
+  const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
   const [isSubmit, setIsSubmit] = useState(false);
 
@@ -30,10 +33,25 @@ const UsersLogin = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
     setIsSubmit(true);
+    try {
+      const data = {
+        email: formValues.inputId,
+        password: formValues.inputPassword,
+      };
+      const result = await API.post('/api/users/login', '', data);
+      const token = result.data.token;
+      console.log(result, token);
+      localStorage.setItem('token', token);
+
+      alert(`정상적으로 로그인되었습니다.`);
+      navigate('/');
+    } catch (err: any) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
@@ -47,12 +65,12 @@ const UsersLogin = () => {
     const errors: valueObject = {};
     const isInputIdValue = values.inputId;
     const isInputPasswordValue = values.inputPassword;
-    const isValidEmail = validateEmail(values.inputId);
-    const isMinPasswordLength = isInputPasswordValue.length >= 8;
+    const isValidIdEmail = validateEmail(values.inputId);
+    const isMinPasswordLength = isInputPasswordValue.length >= 4;
 
     if (!isInputIdValue) {
       errors.inputId = ERROR.ID_INPUT;
-    } else if (!isValidEmail) {
+    } else if (!isValidIdEmail) {
       errors.inputId = ERROR.ID_EMAIL_VALID;
     }
 
@@ -100,7 +118,7 @@ const UsersLogin = () => {
         <FormHeader title={PAGES.USER_LOGIN} />
         {inputData.map((item, index) => {
           return (
-            <FormItem key={index}>
+            <FormItem key={`${item.id}-${index}`}>
               <FormInput htmlFor={item.htmlFor} labelTitle={item.labelTitle}>
                 <InputText
                   type={item.type}
