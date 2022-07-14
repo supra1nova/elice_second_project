@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 interface Props {
   open: boolean;
+  // width: string;
 }
 
 export const Container = styled.div`
@@ -44,6 +45,8 @@ export const Section = styled.section`
   border-radius: 5px;
   background: #fff;
 `;
+
+// width: ${(props: Props) => (props.width ? `${props.width}px` : 'auto')};
 
 export const Dimd = styled.div`
   position: absolute;
