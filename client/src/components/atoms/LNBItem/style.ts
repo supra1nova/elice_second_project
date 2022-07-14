@@ -1,15 +1,10 @@
 import styled, { css } from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
-interface Props {
-  active: boolean;
-}
-
-export const Container = styled.button`
+export const Container = styled(NavLink)`
   position: relative;
   ${(props) => props.theme.font.title1}
-  ${(props: Props) => {
-    if (props.active) {
-      return css``;
-    }
-  }}
+  &.active {
+    color: red;
+  }
 `;

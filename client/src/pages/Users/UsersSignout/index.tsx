@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import LNBLayout from '../../../components/molecules/LNBLayout';
 import PopupSignoutConfirm from './template/PopupSignoutConfirm';
 import Button from '../../../components/atoms/Button';
+import { USERS } from '../../../constants/lnb';
 import { BUTTON } from '../../../constants/input';
 import * as UI from './style';
 
@@ -18,20 +20,22 @@ const UsersSignout = () => {
   };
 
   return (
-    <UI.Container>
-      <Button
-        component='disable'
-        size='large'
-        block
-        onClick={handleOpenPopupSignoutConfirm}
-      >
-        {BUTTON.USER_MEMBER_DELETE}
-      </Button>
-      <PopupSignoutConfirm
-        open={openPopupSignoutConfirm}
-        onClose={handleClosePopupSignoutConfirm}
-      />
-    </UI.Container>
+    <LNBLayout items={USERS}>
+      <UI.Container>
+        <Button
+          component='disable'
+          size='large'
+          block
+          onClick={handleOpenPopupSignoutConfirm}
+        >
+          {BUTTON.USER_MEMBER_DELETE}
+        </Button>
+        <PopupSignoutConfirm
+          open={openPopupSignoutConfirm}
+          onClose={handleClosePopupSignoutConfirm}
+        />
+      </UI.Container>
+    </LNBLayout>
   );
 };
 

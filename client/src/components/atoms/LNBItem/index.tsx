@@ -2,25 +2,16 @@ import React, { useState } from 'react';
 import * as UI from './style';
 
 interface Props {
-  children: string | React.ReactElement;
-  active?: boolean;
-  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  menu: any;
+  to: any;
 }
 
-const LNBItem = ({ children, active = false, onClick }: Props) => {
-  const [isActive, setIsActive] = useState(active);
-  return (
-    <UI.Container
-      active={isActive}
-      onClick={(event: any) => {
-        onClick && onClick(event);
-        !isActive && setIsActive(true);
-      }}
-      data-testid={'lnb-item'}
-    >
-      {children}
-    </UI.Container>
-  );
+const style = {
+  color: 'red',
+};
+
+const LNBItem = ({ menu, to }: Props) => {
+  return <UI.Container to={to}>{menu}</UI.Container>;
 };
 
 export default LNBItem;

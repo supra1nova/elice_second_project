@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import LNBLayout from '../../../components/molecules/LNBLayout';
 import PopupCurrentPassword from './template/PopupCurrentPassword';
 import Button from '../../../components/atoms/Button';
-import LNB from '../../../components/molecules/LNB';
+import { USERS } from '../../../constants/lnb';
 import { BUTTON } from '../../../constants/input';
 import * as UI from './style';
 
@@ -20,22 +21,22 @@ const UsersSignout = () => {
   };
 
   return (
-    <UI.Container>
-      <LNB items={['menu1', 'menu2']} />
-
-      <Button
-        component='primary'
-        size='large'
-        block
-        onClick={handleOpenPopupCurrentPassword}
-      >
-        {BUTTON.USER_SECURITY_MODIFY}
-      </Button>
-      <PopupCurrentPassword
-        open={openPopupCurrentPassword}
-        onClose={handleClosePopupCurrentPassword}
-      />
-    </UI.Container>
+    <LNBLayout items={USERS}>
+      <UI.Container>
+        <Button
+          component='primary'
+          size='large'
+          block
+          onClick={handleOpenPopupCurrentPassword}
+        >
+          {BUTTON.USER_SECURITY_MODIFY}
+        </Button>
+        <PopupCurrentPassword
+          open={openPopupCurrentPassword}
+          onClose={handleClosePopupCurrentPassword}
+        />
+      </UI.Container>
+    </LNBLayout>
   );
 };
 
