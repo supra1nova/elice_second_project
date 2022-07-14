@@ -1,5 +1,5 @@
 import { ReviewImageModel, reviewImageModel} from "../db/data-source"
-import { restaurantImageInfo } from "../routers";
+import { reviewImageInfo } from "../routers";
 
 class ReviewImageService {
   reviewImageModel: ReviewImageModel
@@ -9,35 +9,30 @@ class ReviewImageService {
   }
 
   // 1. 생성
-  async addRestaurantImage(restaurantImageInfo:restaurantImageInfo) {
-        const createdNewCategory = await this.reviewImageModel.create(restaurantImageInfo);
+  async addReviewImage(reviewImageInfo:reviewImageInfo) {
+        const createdNewCategory = await this.reviewImageModel.create(reviewImageInfo);
         return createdNewCategory;
       }
     
     //Time의 remainder를 우선적으로 줄이되 0보다 작으면 거절함.
 
-  async getRestaurantImages(REGNumber:string){
-    const retrievedCategory= await this.reviewImageModel.findRestaurantImage(REGNumber);
+  async getReviewImages(reserveId:number){
+    const retrievedCategory= await this.reviewImageModel.findReviewImage(reserveId);
     return retrievedCategory
   }
 
-  async getRestaurantImageByresImgID(imageKey:string){
-    const retrievedCategory= await this.reviewImageModel.findRestaruantImagebyId(imageKey);
+  async getReviewImagebyId(imageKey:string){
+    const retrievedCategory= await this.reviewImageModel.findReviewImagebyId(imageKey);
     return retrievedCategory
   }
 
   // 2. 삭제
-  async removeRestaurantImage(imageKey:string) {
+  async removeReviewImage(imageKey:string) {
 
-        const deletedCategory = await this.reviewImageModel.deleteRestaurantImage(imageKey);
+        const deletedCategory = await this.reviewImageModel.deleteReviewImage(imageKey);
         return deletedCategory;
   }
 
-  async setCategory(current_category:string, restaurantImageInfo:restaurantImageInfo) {
-
-    const deletedCategory = await this.reviewImageModel.updateCategory(current_category,restaurantImageInfo);
-    return deletedCategory;
-}
 }
 
 const reviewImageService = new ReviewImageService(reviewImageModel);

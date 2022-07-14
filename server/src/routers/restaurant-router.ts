@@ -1,7 +1,9 @@
 // import is from '@sindresorhus/is';
 import { Router, Request, Response, NextFunction } from 'express';
-import { restaurantService } from '../services';
+import { restaurantService,restaurantImageService } from '../services';
 import { ownerRequired, loginRequired } from '../middlewares';
+import {upload,s3} from "../config/upload"
+
 // // import { adminRequired } from '../middlewares/admin-required';
 
 const restaurantRouter = Router();
@@ -78,6 +80,17 @@ restaurantRouter.delete('/', async (req, res, next) => {
 
     const { REGNumber,email } = req.body;
     const result = await restaurantService.removeRestaurant(REGNumber,email);
+
+    const categories = await restaurantImageService.getRestaurantImages(REGNumber);
+    for (let value of categories){
+      const result = await restaurantImageService.removeRestaurantImage(value.imageKey);
+      s3.deleteObject({
+        Bucket: 'matjip',
+        Key: value.imageKey
+      },function(err,data){});
+      
+    }
+
     res.status(200).json(result);
   } catch (error) {
     next(error);

@@ -44,20 +44,20 @@ restaurantImageRouter.get('/:REGNumber', async (req: Request, res:Response, next
 
 //3. 카테고리 수정
 // restaurantImageRouter.patch('/', adminRequired, async function (req: Request, res:Response, next:NextFunction) {
-restaurantImageRouter.patch('/:category', async function (req: Request, res:Response, next:NextFunction) {
-  try {
+// restaurantImageRouter.patch('/:category', async function (req: Request, res:Response, next:NextFunction) {
+//   try {
 
-    const current_category = req.params.category;
-    const restaurantImageInfo=req.body;
+//     const current_category = req.params.category;
+//     const restaurantImageInfo=req.body;
 
-    // 사용자 정보를 업데이트.
-    const updatedCategory= await restaurantImageService.setCategory(current_category,restaurantImageInfo
-       );
-    res.status(200).json(updatedCategory);
-  } catch (error) {
-    next(error);
-  }
-});
+//     // 사용자 정보를 업데이트.
+//     const updatedCategory= await restaurantImageService.setCategory(current_category,restaurantImageInfo
+//        );
+//     res.status(200).json(updatedCategory);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 // // 4. 카테고리 정보 삭제
 restaurantImageRouter.delete('/', async (req, res, next) => {
