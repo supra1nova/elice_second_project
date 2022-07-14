@@ -1,43 +1,38 @@
-import {BaseEntity, Entity, Column} from "typeorm"
+import {BaseEntity, Entity, Column, PrimaryColumn} from "typeorm"
 
 @Entity('Rating')
 export class Rating extends BaseEntity{
-  @Column()
+  @PrimaryColumn()
   REGNumber: string;
 
   @Column({
-    type: 'number',
     default: 0
   })
   Five: number;
 
   @Column({
-    type: 'number',
     default: 0
   })
   Four: number;
 
   @Column({
-    type: 'number',
     default: 0
   })
   Three: number;
 
   @Column({
-    type: 'number',
     default: 0
   })
   Two: number;
 
   @Column({
-    type: 'number',
     default: 0
   })
   One: number;
 
   @Column({
-    type: 'number',
-    default: 0
+    default: 0,
+    type: 'double'
   })
   Average: number;
 }

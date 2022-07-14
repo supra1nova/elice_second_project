@@ -6,6 +6,7 @@ export * from './time-service';
 export * from './user-service';
 export * from './menu-service';
 export * from './wish-service';
+export * from './rating-service';
 
 export * from './category-service';
 // export * from './upload-image';

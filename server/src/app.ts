@@ -1,6 +1,6 @@
 import cors from 'cors';
 import express, {Request, Response} from 'express';
-import { userRouter,restaurantRouter, reviewRouter, reserveRouter,timeRouter,menuRouter, categoryRouter,wishRouter} from './routers';
+import { userRouter,restaurantRouter, reviewRouter, reserveRouter,timeRouter,menuRouter, categoryRouter,wishRouter, ratingRouter} from './routers';
 import { } from './middlewares';
 import { AppDataSource } from "./db/data-source"
 
@@ -43,6 +43,7 @@ app.get('/api/customers', (req, res) => {
 // app.use('/api/likes', likeRouter);
 app.use('/api/menus', menuRouter);
 app.use('/api/categories', categoryRouter);
+app.use('/api/ratings', ratingRouter);
 app.use('/api/reserves', reserveRouter);
 app.use('/api/restaurants', restaurantRouter);
 app.use('/api/reviews', reviewRouter);
