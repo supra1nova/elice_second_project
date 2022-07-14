@@ -1,14 +1,14 @@
-import { restaurantImageInfo } from "../../routers";
+import { reviewImageInfo } from "../../routers";
 import {AppDataSource} from "../data-source"
-import {RestaurantImage} from '../entity/RestaurantImage'
+import {ReviewImage} from '../entity/ReviewImage'
 
 /**
  * Loads all posts from the database.
  */
 export class ReviewImageModel{
   
-  async findRestaruantImagebyId(imageKey:string) {
-    const userRepository= AppDataSource.getRepository(RestaurantImage);
+  async findReviewImagebyId(imageKey:string) {
+    const userRepository= AppDataSource.getRepository(ReviewImage);
     // get a post repository to perform operations with post
     const user = await userRepository.findOneBy({
       imageKey: imageKey
@@ -16,45 +16,37 @@ export class ReviewImageModel{
     return (user);
   }
 
-  async create(restaurantImageInfo:restaurantImageInfo){
+  async create(reviewImageInfo:reviewImageInfo){
     await AppDataSource
     .createQueryBuilder()
     .insert()
-    .into(RestaurantImage)
+    .into(ReviewImage)
     .values([
-      restaurantImageInfo
+      reviewImageInfo
     ])
     .execute()
   }
 
-  async deleteRestaurantImage(imageKey:string){
+  async deleteReviewImage(imageKey:string){
     const deleted =await AppDataSource
     .createQueryBuilder()
     .delete()
-    .from(RestaurantImage)
+    .from(ReviewImage)
     .where('imageKey = :imageKey',{imageKey:imageKey})
     .execute()
 
     return deleted
   }
 
-  async findRestaurantImage(REGNumber:string ){
-    const categoryRepository= AppDataSource.getRepository(RestaurantImage)
+  async findReviewImage(reserveId:number ){
+    const categoryRepository= AppDataSource.getRepository(ReviewImage)
     const categories= await categoryRepository.find({
       where:{
-      REGNumber:REGNumber
+        reserveId:reserveId
     }})
     return categories    
   }
 
-  async updateCategory(current_category:string, restaurantImageInfo:restaurantImageInfo){
-    await AppDataSource
-      .createQueryBuilder()
-      .update(RestaurantImage)
-      .set(restaurantImageInfo)
-      .where("category = :category", { category: current_category })
-      .execute()
-  }
 }
 
 const reviewImageModel= new ReviewImageModel();
