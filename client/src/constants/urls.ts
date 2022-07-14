@@ -16,14 +16,3 @@ export const URL = {
   PAGE_404: '/404',
   PAGE_401: '/401',
 };
-
-// export const URL = {
-
-//   ACCOUNT_LIKES: '/account/likes',
-
-//   ACCOUNT_USERS_LIST: '/account/users/list',
-//   ACCOUNT_MENUS: '/account/menus',
-//   ACCOUNT_CATEGORIES: '/account/categories',
-//   PAGE_404: '/404',
-//   PAGE_401: '/401',
-// };

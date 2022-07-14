@@ -12,6 +12,7 @@ export default createGlobalStyle`
 
     html,npm
     body {
+      
       font-size: 17px;
       letter-spacing: -0.5px;
       font-family: 'Noto Sans CJK KR', sans-serif;
