@@ -1,6 +1,6 @@
 import cors from 'cors';
 import express, {Request, Response} from 'express';
-import { userRouter,restaurantRouter, reviewRouter, reserveRouter,timeRouter,menuRouter, categoryRouter,wishRouter, restaurantImageRouter, ratingRouter} from './routers';
+import { userRouter,restaurantRouter, reviewRouter, reserveRouter,timeRouter,menuRouter, categoryRouter,wishRouter, restaurantImageRouter, ratingRouter,reviewImageRouter} from './routers';
 import { } from './middlewares';
 import { AppDataSource } from "./db/data-source"
 
@@ -51,6 +51,7 @@ app.use('/api/times', timeRouter);
 app.use('/api/users', userRouter);
 app.use('/api/wishes', wishRouter);
 app.use('/api/restaurantImages', restaurantImageRouter);
+app.use('/api/reviewImages', reviewImageRouter);
 
 
 // 순서 중요 (errorHandler은 다른 일반 라우팅보다 나중에 있어야 함)

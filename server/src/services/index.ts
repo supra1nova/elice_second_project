@@ -10,5 +10,6 @@ export * from './rating-service';
 
 export * from './category-service';
 export * from './restaurantImage-service';
+export * from './reviewImage-service';
 
 // export * from './upload-image';

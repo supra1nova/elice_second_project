@@ -8,4 +8,6 @@ export * from './time-router';
 export * from './user-router';
 export * from './wish-router';
 export * from './restaurantImage-router';
+export * from './reviewImage-router';
+
 export * from './rating-Router';
