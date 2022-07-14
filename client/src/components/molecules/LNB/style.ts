@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
-  position: absolute;
-  left: 0;
+  position: fixed;
+  left: 234px;
   top: 0;
   width: 234px;
   height: 100%;

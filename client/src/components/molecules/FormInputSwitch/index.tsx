@@ -1,8 +1,8 @@
 import React from 'react';
-import FormItem from '../../../../components/molecules/FormItem';
-import FormSwitch from '../../../../components/molecules/FormSwitch';
-import InputSwitchDescription from '../../../../components/atoms/InputSwitchDescription';
-import InputSwitch from '../../../../components/atoms/InputSwitch';
+import FormSwitch from '../FormSwitch';
+import FormItem from '../FormItem';
+import InputSwitchDescription from '../../atoms/InputSwitchDescription';
+import InputSwitch from '../../atoms/InputSwitch';
 
 const FormInputSwitch = (item: any, index: number) => {
   return (

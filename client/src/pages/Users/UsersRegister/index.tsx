@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import * as API from '../../../api/api';
 import Form from '../../../components/atoms/Form';
 import FormHeader from '../../../components/molecules/FormHeader';
-import FormInputText from './template/FormInputText';
-import FormInputSwitch from './template/FormInputSwitch';
+import FormInputText from '../../../components/molecules/FormInputText';
+import FormInputSwitch from '../../../components/molecules/FormInputSwitch';
 import FormFooter from '../../../components/molecules/FormFooter';
 import Button from '../../../components/atoms/Button';
+import { BUTTON } from '../../../constants/input';
 import { CODE, ROLE } from '../../../constants/member';
 import { PAGES } from '../../../constants/title';
 import { LABELTITLE, PLACEHOLDER } from '../../../constants/input';
@@ -327,7 +328,7 @@ const UsersRegister = () => {
 
         <FormFooter>
           <Button component={'primary'} size={'large'} block>
-            회원가입
+            {BUTTON.USER_RESIGNTER}
           </Button>
         </FormFooter>
       </Form>

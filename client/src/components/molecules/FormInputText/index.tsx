@@ -1,8 +1,8 @@
 import React from 'react';
-import FormInput from '../../../../components/molecules/FormInput';
-import FormItem from '../../../../components/molecules/FormItem';
-import FormError from '../../../../components/molecules/FromError';
-import InputText from '../../../../components/atoms/InputText';
+import FormInput from '../FormInput';
+import FormItem from '../FormItem';
+import FormError from '../FromError';
+import InputText from '../../atoms/InputText';
 
 const FormInputText = (item: any, index: number) => {
   return (
