@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PopupCurrentPassword from './template/PopupCurrentPassword';
 import Button from '../../../components/atoms/Button';
+import LNB from '../../../components/molecules/LNB';
 import { BUTTON } from '../../../constants/input';
 import * as UI from './style';
 
@@ -20,6 +21,8 @@ const UsersSignout = () => {
 
   return (
     <UI.Container>
+      <LNB items={['menu1', 'menu2']} />
+
       <Button
         component='primary'
         size='large'
