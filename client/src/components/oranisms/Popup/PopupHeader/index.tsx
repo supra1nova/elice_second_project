@@ -11,6 +11,7 @@ export interface Props {
 }
 
 const PopupHeader = ({ title, subTitle, primary, onClose }: Props) => {
+  console.log(title);
   return (
     <UI.Container>
       <UI.Title primary={primary!}>{title}</UI.Title>

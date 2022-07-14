@@ -2,6 +2,7 @@ export const LABELTITLE = {
   ID: '아이디',
   PASSWORD: '비밀번호',
   PASSWORD_CONFIRM: '비밀번호 확인',
+  PASSWORD_CURRENT: '현재 비밀번호',
   NAME: '이름',
   NICKNAME: '닉네임',
   EMAIL: '이메일',
@@ -26,6 +27,8 @@ export const PLACEHOLDER = {
 };
 
 export const BUTTON = {
+  USER_LOGIN: '로그인',
+  USER_RESIGNTER: '회원가입',
   USER_SECURITY_MODIFY: '회원정보 수정',
   USER_MEMBER_DELETE: '회원정보 안전하게 삭제하기',
 };

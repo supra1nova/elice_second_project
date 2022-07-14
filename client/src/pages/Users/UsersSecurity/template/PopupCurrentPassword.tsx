@@ -3,12 +3,9 @@ import PopupContainer from '../../../../components/oranisms/Popup/PopupContainer
 import PopupHeader from '../../../../components/oranisms/Popup/PopupHeader';
 import PopupContents from '../../../../components/oranisms/Popup/PopupContents';
 import PopupFooter from '../../../../components/oranisms/Popup/PopupFooter';
-import FormItem from '../../../../components/molecules/FormItem';
-import FormInput from '../../../../components/molecules/FormInput';
-import FormError from '../../../../components/molecules/FromError';
-import InputText from '../../../../components/atoms/InputText';
+import FormInputText from '../../../../components/molecules/FormInputText';
 import { POPUP } from '../../../../constants/title';
-import { LABELTITLE, PLACEHOLDER } from '../../../../constants/input';
+import { PLACEHOLDER } from '../../../../constants/input';
 import { ERROR } from '../../../../constants/error';
 
 interface Props {
@@ -72,23 +69,7 @@ const PopupCurrentPassword = ({ open, onClose, onClick }: Props) => {
       ></PopupHeader>
       <PopupContents>
         {inputTextData.map((item, index) => {
-          return (
-            <FormItem key={`${item.id}-${index}`}>
-              <FormInput htmlFor={item.htmlFor} labelTitle={item.labelTitle}>
-                <InputText
-                  type={item.type}
-                  id={item.id}
-                  name={item.name}
-                  value={item.value}
-                  maxLength={item.maxLength}
-                  autoComplete={item.autoComplete}
-                  onChange={item.onChange}
-                  placeholder={item.placeholder}
-                />
-              </FormInput>
-              {item.error ? <FormError message={item.error} /> : null}
-            </FormItem>
-          );
+          return FormInputText(item, index);
         })}
       </PopupContents>
       <PopupFooter

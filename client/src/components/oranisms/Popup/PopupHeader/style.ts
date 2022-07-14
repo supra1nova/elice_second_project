@@ -11,8 +11,10 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.div`
+  line-height: 1.43;
   ${(props) => props.theme.font.subtitle1};
   color: ${(props) => props.theme.colors.font1};
+  white-space: pre-wrap;
   ${(props: Props) =>
     props.primary &&
     css`

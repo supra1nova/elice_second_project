@@ -1,12 +1,12 @@
 import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  position: relative;
+  min-height: calc(100vh - 60px);
 `;
 
 export const Content = styled.div`
-  max-width: 420px;
-  width: 100%;
+  position: relative;
+  padding: 40px;
+  margin-left: 234px;
 `;
