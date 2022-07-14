@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GlobalLayout from './GlobalLayout';
 import HalfLayout from './HalfLayout';
-import { Home } from '../pages/Home';
+import Home from '../pages/Home';
 import RestaurantHome from '../pages/Restaurant/RestaurantHome';
 import SearchHome from '../pages/Search/SearchHome';
 import AccountHome from '../pages/Account/AccountHome';

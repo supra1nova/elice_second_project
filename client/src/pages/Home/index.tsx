@@ -1,14 +1,14 @@
-import ToSearch from '../components/molecules/Search/SearchBtn';
-import Category from '../components/molecules/Category';
-import MainShopList from '../components/oranisms/MainShopList';
+import ToSearch from '../../components/molecules/Search/SearchBtn';
+import Category from '../../components/molecules/Category';
+import MainShopList from '../../components/oranisms/MainShopList';
 import { useState } from 'react';
-import SearchBar from '../components/oranisms/SearchBar';
+import SearchBar from '../../components/oranisms/SearchBar';
 
 // import LocationFilter from '../components/molecules/Search/filterSearch/LocationFilter';
 // import PriceFilter from '../components/molecules/Search/filterSearch/PriceFilter';
 // import TimeFilter from '../components/molecules/Search/filterSearch/TimeFilter';
 
-export const Home = () => {
+const Home = () => {
   return (
     <>
       <SearchBar />
@@ -25,3 +25,5 @@ export const Home = () => {
     </>
   );
 };
+
+export default Home;
