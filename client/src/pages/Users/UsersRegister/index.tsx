@@ -37,6 +37,7 @@ const UsersRegister = () => {
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const errors: valueObject = {};
 
   const handleChange = (e: any) => {
     const target = e.target;
@@ -66,7 +67,6 @@ const UsersRegister = () => {
     setIsSubmit(true);
 
     try {
-      const errorsLength = Object.keys(formErrors).length;
       const data = {
         email: formValues.inputEmail,
         name: formValues.inputName,
@@ -77,12 +77,13 @@ const UsersRegister = () => {
       };
 
       await API.post('/api/users/register', '', data);
-      if (errorsLength === 0) {
-        // if (data.role === ROLE.OWNER) {
-        //   navigate('/account');
-        // } else {
-        //   navigate('/users/login');
-        // }
+      const isError = !!formErrors;
+      if (isError) {
+        if (data.role === ROLE.OWNER) {
+          navigate('/account');
+        } else {
+          navigate('/users/login');
+        }
       }
     } catch (err: any) {
       console.error(err);
@@ -97,7 +98,6 @@ const UsersRegister = () => {
   }, [formErrors]);
 
   const validate = (values: any) => {
-    const errors: valueObject = {};
     const isInputNameValue = values.inputName;
     const isInputNicknameValue = values.inputNickname;
     const isInputEmailValue = values.inputEmail;
