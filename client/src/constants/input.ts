@@ -24,3 +24,8 @@ export const PLACEHOLDER = {
   AMDIN_CODE: '',
   OWNER_REGISTRATION_NUMBER: '000-00-00000',
 };
+
+export const BUTTON = {
+  USER_SECURITY_MODIFY: '회원정보 수정',
+  USER_MEMBER_DELETE: '회원정보 안전하게 삭제하기',
+};
