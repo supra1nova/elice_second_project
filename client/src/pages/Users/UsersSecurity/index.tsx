@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as API from '../../../api/api';
 import LNBLayout from '../../../components/molecules/LNBLayout';
+import Avatar from '../../../components/molecules/Avatar';
 import Form from '../../../components/atoms/Form';
 import FormInputText from '../../../components/molecules/FormInputText';
 import FormFooter from '../../../components/molecules/FormFooter';
@@ -13,6 +14,7 @@ import { LABELTITLE, PLACEHOLDER } from '../../../constants/input';
 import { ERROR } from '../../../constants/error';
 import { validateEmail } from '../../../functions';
 import * as UI from './style';
+import InputFileButton from '../../../components/atoms/InputFileButton';
 
 type valueObject = {
   [key: string]: any;
@@ -149,19 +151,6 @@ const UsersSignout = () => {
         error: formErrors.inputName,
       },
       {
-        htmlFor: 'inputNickname',
-        labelTitle: LABELTITLE.NICKNAME,
-        type: 'text',
-        id: 'inputNickname',
-        name: 'inputNickname',
-        value: formValues.inputNickname,
-        maxLength: 10,
-        autoComplete: undefined,
-        onChange: handleChange,
-        placeholder: PLACEHOLDER.NICKNAME,
-        error: formErrors.inputNickname,
-      },
-      {
         htmlFor: 'inputEmail',
         labelTitle: LABELTITLE.EMAIL,
         type: 'text',
@@ -220,6 +209,14 @@ const UsersSignout = () => {
     <LNBLayout items={USERS}>
       <UI.Container>
         <UI.Content>
+          <Avatar userId='userIDDDD' image={''} />
+          <div>
+            <InputFileButton />
+            <Button component='disable' size={'small'}>
+              삭제
+            </Button>
+          </div>
+
           <Form onSubmit={handleOpenPopupCurrentPassword}>
             {inputTextData.user.map((item, index) => {
               return FormInputText(item, index);
