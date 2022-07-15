@@ -1,9 +1,10 @@
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { images } from './Images'
 import * as Icon from '../../../../assets/svg';
 import styled from 'styled-components';
+import React, { useState, useEffect } from 'react';
+import * as API from '../../../../api/api'
 
 const StyledImg = styled.img`
     padding: 40px 20px 20px;
@@ -59,6 +60,21 @@ function PrevArrow({ onClick }: NextArrowProps) {
 }
 
 const SliderImg = () => {
+    const [images, setImages] = useState<any[]>([])
+
+    useEffect(
+        () => {
+            const REGNumber = window.location.href.split('/')[5];
+            API.get(`/api/restaurantImages/${REGNumber}`).then((res) => {
+                let imgs:any[] = []
+                for(let i = 0; i < res.length; i++) {
+                    imgs.push(res[i].image)
+                }
+                setImages(imgs)
+              })
+        }, []
+    )
+
 	//옵션
 	const setting = {
         infinite: true,
