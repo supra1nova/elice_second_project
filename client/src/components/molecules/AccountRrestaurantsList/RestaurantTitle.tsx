@@ -1,34 +1,45 @@
 import styled from 'styled-components';
 import { ReserveButton } from '../../atoms/ReserveButton/index'
 import * as Icon from '../../../assets/svg';
-import React, { useState, useEffect } from 'react';
-import axios from "axios";
+import { useState, useEffect } from 'react';
+import * as API from '../../../api/api'
 
 const RestaurantTitle = () => {
     const [name, setName] = useState<string>("")
-    const [gpa, setGpa] = useState<number>(0)
+    const [gpa, setGpa] = useState<string | null>(null) //toFixed를 하면 string으로 됨
+    const [likeNum, setLikeNum] = useState<number>(0)
+    const [reviewNum, setReviewNum] = useState<number>(0)
 
     useEffect(
         () => {
             const REGNumber = window.location.href.split('/')[5];
 
-            axios({
-                url: `/api/restaurants/${REGNumber}`,
-                method: 'GET'
-            }).then((res) => {
-                const datas = res.data
-                setName(cur => cur = datas.name)
+            // 레스토랑명
+            API.get(`/api/restaurants/${REGNumber}`).then((res) => {
+                setName(cur => cur = res.name)
             })
-            axios({
-                url: `/api/reviews/${REGNumber}`,
-                method: 'GET'
-            }).then((res) => {
-                const reviews = res.data.reviews
-                let rating = 0
-                reviews.map((review: any):any => {
-                    rating += review.rating
-                })
-                setGpa(rating / reviews.length)
+
+            // 리뷰개수
+            API.get(`/api/reviews/${REGNumber}`).then((res) => {
+                const reviews = res.reviews
+
+                if(reviews.length > 0) {
+                    let rating = 0
+
+                    reviews.map((review: any):any => {
+                        rating += review.rating
+                    })
+
+                    const averageRating = (rating / reviews.length).toFixed(1)
+                    setGpa(averageRating)
+
+                    setReviewNum(reviews.length)
+                }
+            })
+
+            // 찜 개수
+            API.get(`/api/wishes/total/${REGNumber}`).then((res) => {
+                setLikeNum(res)
             })
         }, []
     )
@@ -45,9 +56,9 @@ const RestaurantTitle = () => {
             <StyledBottom>
                 <StyledLikeReview>
                     <Icon.Heart fill={'#A6A8A3'}/>
-                    <div>2,123</div>
+                    <div>{likeNum}</div>
                     <Icon.Review />
-                    <div>123</div>
+                    <div>{reviewNum}</div>
                 </StyledLikeReview>
                 <StyledLike>
                     <Icon.Heart fill={'none'} width={'23.69px'} height={'22px'} stroke={'#E5E5E5'}/>
