@@ -5,7 +5,7 @@ import * as API from '../../../api/api'
 
 type infoObject = {
     address1: any; 
-    postalcode: number | null;
+    postalcode: number;
     address2: string;
     phoneNumber: string;
     category: string;
@@ -19,7 +19,7 @@ type menuObject = {
 const RestaurantInfo = () => {
     const [infoInputs, setInfoInputs] = useState<infoObject>({
         address1: "",
-        postalcode: null,
+        postalcode: 0,
         address2: "",
         phoneNumber: "",
         category: "",
@@ -38,8 +38,10 @@ const RestaurantInfo = () => {
                 setInfoInputs(res)
             })
             API.get(`/api/menus/${REGNumber}`).then((res) => {
-                const data = res[0]
-                setMenuInputs(data)
+                if(res.length > 0) {
+                    const data = res[0]
+                    setMenuInputs(data)
+                }
             })
 
         }, []

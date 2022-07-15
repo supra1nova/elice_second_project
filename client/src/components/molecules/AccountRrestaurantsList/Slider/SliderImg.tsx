@@ -7,11 +7,11 @@ import React, { useState, useEffect } from 'react';
 import * as API from '../../../../api/api'
 
 const StyledImg = styled.img`
-    padding: 40px 20px 20px;
+    padding: 0 20px 20px;
 `
 const StyledCarousel = styled.div`
     position: relative;
-    padding: 0 20px;
+    padding: 40px 20px 0;
 `
 const StyledNextArrow = styled.div`
     position: absolute;

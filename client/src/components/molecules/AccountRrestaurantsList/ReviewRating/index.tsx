@@ -24,39 +24,38 @@ const Rating = () => {
     useEffect(
         () => {
             const REGNumber = window.location.href.split('/')[5];
-            // API.get(`/api/reviews/:${REGNumber}`).then((res) => {
-            //     const reviews = res.data.reviews
-            //     console.log(res)
+            API.get(`/api/reviews/${REGNumber}`).then((res) => {
+                const reviews = res.reviews
                 
-            //     let ratingFive = 0;
-            //     let ratingFour = 0;
-            //     let ratingThree = 0;
-            //     let ratingTwo = 0;
-            //     let ratingOne = 0;
+                let ratingFive = 0;
+                let ratingFour = 0;
+                let ratingThree = 0;
+                let ratingTwo = 0;
+                let ratingOne = 0;
 
-            //     reviews.map((el:any) => {
-            //         if(el.rating >= 5) {
-            //             ratingFive++
-            //         } else if(el.rating >= 4) {
-            //             ratingFour++
-            //         } else if(el.rating >= 3) {
-            //             ratingThree++
-            //         } else if(el.rating >= 2) {
-            //             ratingTwo++
-            //         } else {
-            //             ratingOne++
-            //         }
-            //   });
+                reviews.map((el:any) => {
+                    if(el.rating >= 5) {
+                        ratingFive++
+                    } else if(el.rating >= 4) {
+                        ratingFour++
+                    } else if(el.rating >= 3) {
+                        ratingThree++
+                    } else if(el.rating >= 2) {
+                        ratingTwo++
+                    } else {
+                        ratingOne++
+                    }
+              });
 
-            //     setReviewLength({
-            //         total: reviews.length,
-            //         ratingFive: ratingFive,
-            //         ratingFour: ratingFour,
-            //         ratingThree: ratingThree,
-            //         ratingTwo: ratingTwo,
-            //         ratingOne: ratingOne,
-            //     })
-            // })
+                setReviewLength({
+                    total: reviews.length,
+                    ratingFive: ratingFive,
+                    ratingFour: ratingFour,
+                    ratingThree: ratingThree,
+                    ratingTwo: ratingTwo,
+                    ratingOne: ratingOne,
+                })
+            })
         }, []
     )
 
