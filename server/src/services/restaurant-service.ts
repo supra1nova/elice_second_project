@@ -21,18 +21,6 @@ class RestaurantService {
     return product;
   }
 
-  // async getItems(req_input){
-  //   const {sex,type}= req_input;
-  //   const category= {sex,type};
-  //   const products= await this.productModel.findByCategory(category);
-  //   if(!products){
-  //     throw new Error(
-  //       '해당 제품이 존재하지 않습니다. 다시 한 번 확인해 주세요.'
-  //     );
-  //   }
-  //   return products
-  // }
-
   async addRestaurant (restaurantInfo:restaurantInfo){
     const createdproduct = await this.restaurantModel.create(restaurantInfo);
     return createdproduct;
