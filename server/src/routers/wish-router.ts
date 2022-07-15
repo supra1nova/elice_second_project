@@ -20,8 +20,10 @@ const wishRouter = Router();
 // 2. 특정 상호 관련 찜한 손님 전체 조회 - 이메일 기준
 wishRouter.get('/:email', async (req: Request, res:Response, next:NextFunction) => {
   try {
-    const email= req.params.email;
+    const email = req.params.email;
+    // const criteria = String(req.query.criteria) || 'default';
     const restaurants = await wishService.getWishesByEmail(email);
+    // const restaurants = await wishService.getWishesByEmail(criteria, email);
     res.status(200).json(restaurants);
   } catch (error) {
     next(error);

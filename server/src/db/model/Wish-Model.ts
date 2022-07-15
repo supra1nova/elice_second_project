@@ -20,12 +20,27 @@ export class WishModel{
   
   // 2. 특정 상호 관련 찜한 손님 전체 조회 - 이메일 기준
   async findWishByEmail(email: string) {
-    const reviewRepository= AppDataSource.getRepository(Wish);
+  // async findWishByEmail(criteria:string, email: string) {
+    const wishRepository= AppDataSource.getRepository(Wish);
     // get a post repository to perform operations with post
-    const review = await reviewRepository.find({
-      where: {email: email}
-    })
-    return (review);
+    // if (criteria === 'default') {
+      const wishers = await wishRepository.find({
+        where: {email: email},
+        order: {
+          createdAt: "DESC"
+        }
+      });
+      return (wishers);
+    // } 
+    // else {
+    //   const wishers = await wishRepository.find({
+    //     where: {email: email},
+    //     order:{
+    //       createdAt: "ASC"
+    //     },
+    //   });
+    //   return (wishers);
+    // }
   }
 
   // 3. 특정 상호 관련 찜한 손님 전체 조회 - 상호 기준

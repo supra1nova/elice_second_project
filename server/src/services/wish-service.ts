@@ -18,7 +18,9 @@ class WishService {
   
   // 2. 특정 상호 관련 찜한 손님 전체 조회 - 이메일 기준
   async getWishesByEmail(email:string){
+  // async getWishesByEmail(criteria: string, email:string){
     const menus= await wishModel.findWishByEmail(email);
+    // const menus= await wishModel.findWishByEmail(criteria, email);
     return menus;
   }
 
