@@ -60,7 +60,7 @@ const RestaurantInfo = () => {
                 <StyledInfoDescription>{infoInputs.address1}</StyledInfoDescription>
                 <StyledInfoCaption>({infoInputs.postalcode}) {infoInputs.address2}</StyledInfoCaption>
             </div>
-            <MapViewButton style={{marginLeft: '30px'}}>지도로 보기</MapViewButton>
+            {/* <MapViewButton style={{marginLeft: '30px'}}>지도로 보기</MapViewButton> */}
         </StyledInfo>
         <StyledInfo>
             <StyledInfoTitle>전화번호</StyledInfoTitle>
