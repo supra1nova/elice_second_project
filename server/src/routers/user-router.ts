@@ -52,6 +52,17 @@ userRouter.post('/login', async function (req: Request, res:Response, next:NextF
   }
 });
 
+userRouter.get('/', loginRequired, async (req, res, next) => {
+  try {
+    const email = req.email;
+    if(email==undefined) throw new Error("email doesn't exist");
+    const getUserInfo = await userService.getUserByEmail(email);
+    res.status(200).json(getUserInfo);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // 2. 페이지네이션 된 유저 리스트 조회 - 페이지네이션 적용
 userRouter.get('/', async function (req, res, next) {
   try {

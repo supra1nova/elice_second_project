@@ -82,10 +82,10 @@ class UserService {
   //   return users;
   // }
   
-  // async getUserByEmail(email){
-  //   const user= await this.userModel.findByEmail(email);
-  //   return user
-  // }
+  async getUserByEmail(email:string){
+    const user= await this.userModel.findUserbyEmail(email);
+    return user
+  }
 
   // // 유저정보 수정, 현재 비밀번호가 있어야 수정 가능함.
   async setUser(currentPassword:string, userInfo:userInfo) {
