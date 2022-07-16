@@ -10,20 +10,27 @@ export class Time extends BaseEntity{
   @Column()
   REGNumber: string;
 
-  @Column({type: "simple-json"})
-  startAt: {
-    year: string,
-    month: string,
-    date: string,
-    hour: string
-  } 
+  @Column()
+  year: number;
 
+  @Column()
+  month: number;
+
+  @Column()
+  date: number;
+
+  @Column()
+  hour: number;
+  
   @Column()
   remainder: number;
 
-  @ManyToOne(()=>Restaurant, restaurant=> restaurant.times, {onDelete:'CASCADE'})
-  restaurant:Restaurant
+  @Column()
+  initialRemainder:number;
 
-  @OneToMany(()=>Reserve, reserve=>reserve.time)
-  reserves: Reserve[]
+  // @ManyToOne(()=>Restaurant, restaurant=> restaurant.times, {onDelete:'CASCADE'})
+  // restaurant:Restaurant
+
+  // @OneToMany(()=>Reserve, reserve=>reserve.time,{ cascade: ['insert', 'update'] })
+  // reserves: Reserve[]
 }

@@ -1,8 +1,13 @@
-export * from './like-router';
-export * from './menu-router';
-export * from './ownerReview-router';
-export * from './restaurant-router';
+export * from './menu-Router';
+
+export * from './category-Router';
+export * from './restaurant-Router';
 export * from './reserve-router';
 export * from './review-router';
-export * from './time-router';
-export * from './user-router';
+export * from './time-Router';
+export * from './user-Router';
+export * from './wish-Router';
+export * from './restaurantImage-Router';
+export * from './reviewImage-Router';
+
+export * from './rating-Router';

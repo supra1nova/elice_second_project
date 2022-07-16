@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import { isPropertyAssignment } from 'typescript';
-import { Button } from '../atoms/Button';
-import { Description } from '../atoms/Description';
 
-const BtnMenu = styled(Button)<{ name: String }>`
+const BtnMenu = styled.button`
   padding: 10px 24px;
   background-color: ${(props) =>
     props.name === 'register' ? '#64AD57' : 'white'};
@@ -12,6 +10,8 @@ const BtnMenu = styled(Button)<{ name: String }>`
   border-radius: 5px;
   margin-top: ${(props) => (props.name === 'register' ? '20px' : '10px')};
 `;
+
+const Description = styled.p``;
 
 export const GnbForNotUser = () => {
   return (

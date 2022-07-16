@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { GnbForNotUser } from '../molecules/GnbBtn';
-import { Description } from '../atoms/Description';
-import { Title } from '../atoms/Title';
 
 const Container = styled.section`
   width: 233px;
@@ -11,6 +9,10 @@ const Container = styled.section`
   position: fixed;
   background-color: #f4f6f3;
 `;
+
+const Title = styled.h3``;
+
+const Description = styled.p``;
 
 export const Gnb = () => {
   return (

@@ -1,9 +1,18 @@
 import React from 'react';
+import { ThemeProvider } from 'styled-components';
+import theme from './styles/theme';
+import GlobalStyle from './styles/globalStyle';
+import GlobalFonts from './styles/fonts/fonts';
 import Router from './router';
 
-//fetch test
 function App() {
-  return <Router />;
+  return (
+    <ThemeProvider theme={theme}>
+      <GlobalFonts />
+      <GlobalStyle />
+      <Router />
+    </ThemeProvider>
+  );
 }
 
 export default App;

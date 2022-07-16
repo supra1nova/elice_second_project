@@ -1,7 +1,6 @@
-import {BaseEntity, Entity, Column, PrimaryColumn, OneToOne, JoinColumn, OneToMany} from "typeorm"
+import {BaseEntity, Entity, Column, PrimaryColumn, CreateDateColumn,OneToOne, JoinColumn, OneToMany} from "typeorm"
 import { Reserve } from "./Reserve";
 import { Restaurant } from "./Restaurant";
-import { Wish } from "./Wish";
 
 @Entity('User')
 export class User extends BaseEntity{
@@ -14,30 +13,31 @@ export class User extends BaseEntity{
   @Column()
   password: string;
 
-  @Column()
+  @Column({nullable:true})
   nickName: string;
 
-  @Column({
+  @Column({nullable:true
   })
   phoneNumber: string;
 
   @Column({nullable:true})
   role: string;
 
-  @Column({ nullable: true })
-  REGNumber: string;
-
   @Column({ nullable:true
   })
   image: string
+  
+  @Column({ nullable:true})
+  imageKey: string
 
-  @OneToOne(()=>Restaurant, (restaurant)=>restaurant.user, {nullable: true})
-  @JoinColumn()
-  restaurant: Restaurant
+  @Column({type:'simple-array', nullable:true})
+  wishList:string[];
 
-  @OneToMany(()=>Wish, wish=>wish.user)
-  wishes:Wish[];
+  @CreateDateColumn({type:"timestamp"})
+  createdAt: Date;
+  // @OneToOne(()=>Restaurant,restaurant=>restaurant.user,{ cascade: ['insert', 'update'] })
+  // restaurant:Restaurant;
 
-  @OneToMany(()=>Reserve,reserve=>reserve.user)
-  reserves:Reserve[];
+  // @OneToMany(()=>Reserve,reserve=>reserve.user,{ cascade: ['insert', 'update'] })
+  // reserves:Reserve[];
 }

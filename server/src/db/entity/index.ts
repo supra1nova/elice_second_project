@@ -1,11 +1,15 @@
 import { Category } from "./Category"
-import { Wish } from "./Wish"
 import { Menu } from "./Menu"
-import { OwnerReview } from "./OwnerReview"
 import { Reserve } from "./Reserve"
 import { Restaurant } from "./Restaurant"
 import { Review } from "./Review"
 import { Time } from "./Time"
 import { User } from "./User"
+import { Wish } from "./Wish"
+import { ReviewImage } from "./ReviewImage"
+import { RestaurantImage } from "./RestaurantImage"
+import { Rating } from "./Rating"
 
-export { Wish, Category, Menu, Review, OwnerReview, Reserve, Restaurant, Time, User } 
+
+
+export { Category, Menu, Review, Reserve, Restaurant, Time, User,Wish,RestaurantImage,ReviewImage, Rating }
