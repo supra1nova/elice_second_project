@@ -83,6 +83,7 @@ const UsersSignout = () => {
         nickName: formValues.inputNickname,
         phoneNumber: formValues.inputPhone,
         image: formValues.inputFileAvatarImage,
+        email: formValues.inputEmail,
       };
       console.log(data);
 
