@@ -75,7 +75,7 @@ const PopupCurrentPassword = ({ open, onClose, onClick }: Props) => {
       <PopupFooter
         footerType={'checkType'}
         onClose={onClose}
-        onClick={handleSignoutConfirm}
+        onClick={onClick}
       />
     </PopupContainer>
   );

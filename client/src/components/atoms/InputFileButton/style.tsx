@@ -2,21 +2,18 @@ import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
-  width: 100%;
 `;
 
 export const Label = styled.label`
   display: inline-block;
-  padding: 0.5em 0.75em;
-  color: #999;
-  font-size: inherit;
-  line-height: normal;
-  vertical-align: middle;
-  background-color: #fdfdfd;
+  height: 33px;
+  padding: 9px 16px;
+  border-radius: 23px;
+  box-sizing: border-box;
+  ${(props) => props.theme.font.subtitle2};
+  background-color: ${(props) => props.theme.colors.white};
   cursor: pointer;
-  border: 1px solid #ebebeb;
-  border-bottom-color: #e2e2e2;
-  border-radius: 0.25em;
+  border: 1px solid ${(props) => props.theme.colors.main1};
 `;
 export const Input = styled.input`
   position: absolute;
