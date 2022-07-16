@@ -130,6 +130,7 @@ userRouter.patch('/', loginRequired, async function (req: Request, res:Response,
 userRouter.delete('/', loginRequired, async function (req: Request, res:Response, next:NextFunction) {
   try {
     const userInfo:userInfo= req.body;
+    userInfo.email=req.email
     const {email}= userInfo;
     if(email==undefined) throw new Error("user not found");
     const user = await userService.findUser(email);
