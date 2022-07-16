@@ -29,7 +29,6 @@ const MainShopList = ({ inputValue }: any) => {
   useEffect(() => {
     if (inputValue === '') {
       API.get('/api/restaurants').then((res) => {
-        console.log(res.restaurants);
         setShop(res.restaurants);
       });
     } else {

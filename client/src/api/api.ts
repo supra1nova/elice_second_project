@@ -22,6 +22,21 @@ const get = async (
   return res.data;
 };
 
+const userGet = async (
+  endpoint: String,
+  params: String | null = '',
+): Promise<any> => {
+  const apiUrl = `${endpoint}/${params}`;
+  const token = localStorage.getItem('token');
+  console.log(token);
+  const res = await axios.get(apiUrl, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+};
+
 /*
 const postData = {
   email: 'dcTest',
@@ -69,4 +84,4 @@ export const del = async (
   return res;
 };
 
-export { get, post, patch, del as delete };
+export { userGet, get, post, patch, del as delete };
