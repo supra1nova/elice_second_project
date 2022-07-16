@@ -11,7 +11,6 @@ import {
   ReviewImage,
   RestaurantImage,
 } from './entity/index';
-console.log(process.env.user);
 export const AppDataSource = new DataSource({
   type: 'mysql',
   host: process.env.host,
