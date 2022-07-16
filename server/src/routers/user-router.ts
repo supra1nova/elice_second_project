@@ -5,13 +5,14 @@ import { loginRequired } from '../middlewares';
 // import { updateLanguageServiceSourceFile } from 'typescript';
 import { userService } from '../services/user-service';
 import {upload,s3} from "../config/upload"
+import { SimpleConsoleLogger } from 'typeorm';
 
 // import { adminRequired } from '../middlewares/admin-required';
 
 const userRouter = Router();
 
 // 1-2. 일반 사용자 등록
-userRouter.post('/register', upload.single('image'),async (req:Request, res:Response, next:NextFunction) => {
+userRouter.post('/register',async (req:Request, res:Response, next:NextFunction) => {
   try {
     // if (is.emptyObject(req.body)) {
     //   throw new Error(
@@ -20,9 +21,7 @@ userRouter.post('/register', upload.single('image'),async (req:Request, res:Resp
     // }
 
       let userInfo:userInfo= req.body
-      if(req.file==undefined) throw new Error("file not retrieved");
-      userInfo.image=(req.file as any).location;
-      userInfo.imageKey=(req.file as any).key;
+      
 
       const newUser = await userService.addUser(userInfo);
       res.status(201).json(newUser);
@@ -104,17 +103,15 @@ userRouter.patch('/', async function (req: Request, res:Response, next:NextFunct
   try {
 
     const updateUserInfo:updateUserInfo=req.body;
-    const {currentPassword, userInfo} =updateUserInfo;
-    const {email}= userInfo;
+
+    const {currentPassword, userInfo} =updateUserInfo; //email 필수
 
     // currentPassword 없을 시, 진행 불가
     if (!currentPassword) {
       throw new Error('정보를 변경하려면, 현재의 비밀번호가 필요합니다.');
     }
-    
-
+  
     // 사용자 정보를 업데이트.
-    if(email==undefined) throw new Error("Email was not given");
 
     const updatedUser = await userService.setUser(currentPassword, userInfo );
     res.status(200).json(updatedUser);
@@ -124,10 +121,40 @@ userRouter.patch('/', async function (req: Request, res:Response, next:NextFunct
   }
 });
 
+userRouter.patch('/image',loginRequired, upload.single('image'), async function (req: Request, res:Response, next:NextFunction) {
+  try {
+
+    
+    const {currentPassword}=req.body;
+    // if(req.email==undefined) throw new Error("error")
+    // const email= req.email;
+    // updateUserInfo.userInfo.email= email;
+
+    if(req.file==undefined) throw new Error("file not retrieved");
+    const userInfo:userInfo= {
+      email:req.email,
+      image: (req.file as any).location,
+      imageKey:(req.file as any).key
+    };
+
+    // currentPassword 없을 시, 진행 불가
+    if (!currentPassword) {
+      throw new Error('정보를 변경하려면, 현재의 비밀번호가 필요합니다.');
+    }
+    
+    // 사용자 정보를 업데이트.
+    const updatedUser = await userService.setUser(currentPassword, userInfo );
+    res.status(200).json(updatedUser);
+    }
+  catch (error) {
+    next(error);
+  }
+});
 // 5. 사용자 삭제
 userRouter.delete('/', loginRequired, async function (req: Request, res:Response, next:NextFunction) {
   try {
     const userInfo:userInfo= req.body;
+    userInfo.email=req.email
     const {email}= userInfo;
     if(email==undefined) throw new Error("user not found");
     const user = await userService.findUser(email);
