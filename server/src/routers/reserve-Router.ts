@@ -105,6 +105,6 @@ export interface reserveInfo{
   menuList: number[],
   quantityList:number[],
   totalPrice: number,
-  REGNumber: string
+  REGNumber: string,
 }
 export { reserveRouter };
