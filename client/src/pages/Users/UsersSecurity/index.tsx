@@ -86,7 +86,7 @@ const UsersSignout = () => {
       };
       console.log(data);
 
-      await API.patch('/api/users/user', '', data);
+      await API.patch('/api/users', '', data);
     } catch (err: any) {
       console.error(err);
     }

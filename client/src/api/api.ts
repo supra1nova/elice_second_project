@@ -35,9 +35,13 @@ const userGet = async (
       },
     });
 
+    if (!res) {
+      throw new Error('ERROR');
+    }
+
     return res.data;
   } catch (err: any) {
-    console.log('Error >>', err);
+    console.error(err);
   }
 };
 
@@ -72,9 +76,17 @@ const patch = async (
   params: String | null = '',
   data: object,
 ): Promise<any> => {
-  const apiUrl = `${endpoint}/${params}`;
-  const res = await axios.patch(apiUrl, data);
-  return res;
+  try {
+    const apiUrl = `${endpoint}/${params}`;
+    const res = await axios.patch(apiUrl, data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return res;
+  } catch (err: any) {
+    console.error(err);
+  }
 };
 
 // del 은 delete로 export 했으니 API.delete 로 사용
@@ -82,10 +94,13 @@ const patch = async (
 export const del = async (
   endpoint: String,
   params: String | null = '',
-  data: object,
 ): Promise<any> => {
   const apiUrl = `${endpoint}/${params}`;
-  const res = await axios.delete(apiUrl, data);
+  const res = await axios.delete(apiUrl, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
   return res;
 };
 

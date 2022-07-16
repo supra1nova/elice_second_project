@@ -47,11 +47,8 @@ const UsersSignout = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const currentPassword = formValues.inputPassword;
-    const data = { currentPassword };
-    console.log(data);
     try {
-      await API.delete('/api/users/user', '', data);
+      await API.delete('/api/users');
     } catch (err: any) {
       console.error(err);
     }
