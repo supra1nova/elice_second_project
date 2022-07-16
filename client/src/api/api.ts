@@ -22,6 +22,30 @@ const get = async (
   return res.data;
 };
 
+const userGet = async (
+  endpoint: String,
+  params: String | null = '',
+): Promise<any> => {
+  const apiUrl = `${endpoint}/${params}`;
+  const res = await fetch(apiUrl, {
+    // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+
+  if (!res.ok) {
+    const errorContent = await res.json();
+    const { reason } = errorContent;
+
+    throw new Error(reason);
+  }
+
+  const result = await res.json();
+
+  return result;
+};
+
 /*
 const postData = {
   email: 'dcTest',
@@ -69,4 +93,4 @@ export const del = async (
   return res;
 };
 
-export { get, post, patch, del as delete };
+export { get, userGet, post, patch, del as delete };

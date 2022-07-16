@@ -23,10 +23,6 @@ const PopupCurrentPassword = ({ open, onClose, onClick }: Props) => {
     inputPassword: '',
   };
 
-  const handleSignoutConfirm = () => {
-    console.log('aaaaaa');
-  };
-
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
   const [isSubmit, setIsSubmit] = useState(false);

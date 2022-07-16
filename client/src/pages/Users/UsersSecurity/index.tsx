@@ -43,8 +43,7 @@ const UsersSignout = () => {
   const errors: valueObject = {};
 
   useEffect(() => {
-    const UserId = window.location.href.split('/')[5];
-    API.get(`/api/users/user/${UserId}`).then((res) => {
+    API.userGet('/api/users/user').then((res) => {
       const data = {
         inputFileAvatarImage: res.image,
         inputName: res.name,

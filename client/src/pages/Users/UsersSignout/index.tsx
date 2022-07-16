@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import * as API from '../../../api/api';
 import LNBLayout from '../../../components/molecules/LNBLayout';
 import FormInputText from '../../../components/molecules/FormInputText';
 import PopupSignoutConfirm from './template/PopupSignoutConfirm';
@@ -42,6 +43,18 @@ const UsersSignout = () => {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
     setFormValues({ ...formValues, [name]: value });
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const currentPassword = formValues.inputPassword;
+    const data = { currentPassword };
+    console.log(data);
+    // try {
+    //   await API.del('/api/users/user', '', data);
+    // } catch (err: any) {
+    //   console.error(err);
+    // }
   };
 
   useEffect(() => {
@@ -91,6 +104,7 @@ const UsersSignout = () => {
       <PopupSignoutConfirm
         open={openPopupSignoutConfirm}
         onClose={handleClosePopupSignoutConfirm}
+        onClick={handleSubmit}
       />
     </>
   );
