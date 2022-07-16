@@ -2,14 +2,14 @@ import { DataSource } from "typeorm"
 import {  User, Category, Menu, Reserve, Restaurant, Review, Time,Wish ,ReviewImage,RestaurantImage} from "./entity/index"
 
 export const AppDataSource = new DataSource({
-  type: "mysql",
-  host: "34.64.150.160",
+  type: 'mysql',
+  host: process.env.host,
   port: 3306,
-  username: "admin",
-  password: '0000',
-  database: 'matjip',
+  username: process.env.username,
+  password: process.env.password,
+  database: process.env.database,
   // synchronize: false,
-  synchronize: true,
+  synchronize: false,
   logging: true,
   entities: [  User, Category, Menu, Reserve, Restaurant, Review, Time,Wish,ReviewImage,RestaurantImage],
   migrations: [],
