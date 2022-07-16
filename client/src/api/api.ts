@@ -27,14 +27,23 @@ const userGet = async (
   params: String | null = '',
 ): Promise<any> => {
   const apiUrl = `${endpoint}/${params}`;
-  const token = localStorage.getItem('token');
-  console.log(token);
-  const res = await axios.get(apiUrl, {
+  const res = await fetch(apiUrl, {
+    // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   });
-  return res.data;
+
+  if (!res.ok) {
+    const errorContent = await res.json();
+    const { reason } = errorContent;
+
+    throw new Error(reason);
+  }
+
+  const result = await res.json();
+
+  return result;
 };
 
 /*
@@ -84,4 +93,8 @@ export const del = async (
   return res;
 };
 
+<<<<<<< HEAD
 export { userGet, get, post, patch, del as delete };
+=======
+export { get, userGet, post, patch, del as delete };
+>>>>>>> 2a73b94037c2b5ac5eb2be16323de4964a55a493

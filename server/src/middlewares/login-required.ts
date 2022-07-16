@@ -21,10 +21,12 @@ function loginRequired(req: Request, res:Response, next:NextFunction) {
   try {
     const secretKey = process.env.JWT_SECRET_KEY || 'secret-key';
     const jwtDecoded = jwt.verify(userToken, secretKey);
-    const { email, role } = <any>jwtDecoded;
+    console.log(jwtDecoded)
+    const { userEmail, role } = <any>jwtDecoded;
     //아니면 특정 타입은 throw error해야할수도 있음.
     // 라우터에서 req.currentUserId를 통해 유저의 id에 접근 가능하게 됨
-    req.email = email;
+    // console.log(email, role )
+    req.email = userEmail;
     req.role = role;
 
     next();
