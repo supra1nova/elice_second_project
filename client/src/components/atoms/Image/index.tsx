@@ -6,7 +6,6 @@ interface Props {
 }
 
 const Image = ({ image }: Props) => {
-  console.log(image);
   return <UI.Image src={image} />;
 };
 
