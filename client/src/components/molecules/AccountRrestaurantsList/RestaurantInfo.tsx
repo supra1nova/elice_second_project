@@ -1,68 +1,64 @@
 import styled from 'styled-components';
 import {MapViewButton} from '../../atoms/MapViewButton/index';
 import React, { useState, useEffect } from 'react';
-import axios from "axios";
+import * as API from '../../../api/api'
 
 type infoObject = {
-    address: any; 
-    postalCode: number;
-    detailAddress: string;
+    address1: any; 
+    postalcode: number;
+    address2: string;
     phoneNumber: string;
     category: string;
 }
 
 type menuObject = {
-    menuName: string; 
-    menuPrice: number;
+    name: string; 
+    price: number;
 }
 
 const RestaurantInfo = () => {
     const [infoInputs, setInfoInputs] = useState<infoObject>({
-        address: "",
-        postalCode: 0,
-        detailAddress: "",
+        address1: "",
+        postalcode: 0,
+        address2: "",
         phoneNumber: "",
         category: "",
     })
     const [menuInputs, setMenuInputs] = useState<menuObject>({
-        menuName: "",
-        menuPrice: 0,
+        name: "",
+        price: 0,
     })
+
+    const [menuPrice, setMenuPrice] = useState<any>('')
 
     useEffect(
         () => {
             const REGNumber = window.location.href.split('/')[5];
+            API.get(`/api/restaurants/${REGNumber}`).then((res) => {
+                setInfoInputs(res)
+            })
+            API.get(`/api/menus/${REGNumber}`).then((res) => {
+                if(res.length > 0) {
+                    const data = res[0]
+                    setMenuInputs(data)
+                }
+            })
 
-            axios({
-                url: `/api/restaurants/${REGNumber}`,
-                method: 'GET'
-            }).then((res) => {
-                const datas = res.data
-                setInfoInputs({
-                    address: datas.address1,
-                    postalCode:datas.postalcode,
-                    detailAddress: datas.address2,
-                    phoneNumber: datas.phoneNumber,
-                    category: datas.category,
-                })
-            })
-            axios({
-                url: `/api/menus/${REGNumber}`,
-                method: 'GET'
-            }).then((res) => {
-                const datas = res.data
-                setMenuInputs({menuName: datas[0].name, menuPrice: datas[0].price})
-            })
         }, []
     )
+    
+    // 메뉴 가격 천단위 콤마
+    useEffect(() => {
+        setMenuPrice(menuInputs.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
+    }, [menuInputs])
     
     return (
       <StyledRestaurantInfo>
         <StyledInfo>
             <StyledInfoTitle>주소</StyledInfoTitle>
             <div>
-                <StyledInfoDescription>{infoInputs.address}</StyledInfoDescription>
-                <StyledInfoCaption>({infoInputs.postalCode}) {infoInputs.detailAddress}</StyledInfoCaption>
+                <StyledInfoDescription>{infoInputs.address1}</StyledInfoDescription>
+                <StyledInfoCaption>({infoInputs.postalcode}) {infoInputs.address2}</StyledInfoCaption>
             </div>
             <MapViewButton style={{marginLeft: '30px'}}>지도로 보기</MapViewButton>
         </StyledInfo>
@@ -77,8 +73,8 @@ const RestaurantInfo = () => {
         <StyledInfo>
             <StyledInfoTitle>메뉴</StyledInfoTitle>
             <StyledInfoDescription>
-                <StyledInfoMenu>{menuInputs.menuName}</StyledInfoMenu>
-                <StyledInfoPrice>{menuInputs.menuPrice}</StyledInfoPrice>
+                <StyledInfoMenu>{menuInputs.name}</StyledInfoMenu>
+                <StyledInfoPrice>{menuPrice}원</StyledInfoPrice>
             </StyledInfoDescription>
         </StyledInfo>
       </StyledRestaurantInfo>
@@ -120,7 +116,7 @@ const StyledInfoCaption = styled.div`
 `
 const StyledInfoPrice = styled.div`
     text-align: right;
-    padding-left: 10px;
+    padding-left: 20px;
 `
 const StyledInfoMenu = styled.div`
     padding-bottom: 5px;
