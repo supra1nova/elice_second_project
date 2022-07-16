@@ -50,11 +50,11 @@ const UsersSignout = () => {
     const currentPassword = formValues.inputPassword;
     const data = { currentPassword };
     console.log(data);
-    // try {
-    //   await API.del('/api/users/user', '', data);
-    // } catch (err: any) {
-    //   console.error(err);
-    // }
+    try {
+      await API.delete('/api/users/user', '', data);
+    } catch (err: any) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {

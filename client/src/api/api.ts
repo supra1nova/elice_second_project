@@ -26,24 +26,19 @@ const userGet = async (
   endpoint: String,
   params: String | null = '',
 ): Promise<any> => {
-  const apiUrl = `${endpoint}/${params}`;
-  const res = await fetch(apiUrl, {
-    // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
+  try {
+    const apiUrl = `${endpoint}/${params}`;
+    const token = localStorage.getItem('token');
+    const res = await axios.get(apiUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  if (!res.ok) {
-    const errorContent = await res.json();
-    const { reason } = errorContent;
-
-    throw new Error(reason);
+    return res.data;
+  } catch (err: any) {
+    console.log('Error >>', err);
   }
-
-  const result = await res.json();
-
-  return result;
 };
 
 /*
@@ -87,9 +82,10 @@ const patch = async (
 export const del = async (
   endpoint: String,
   params: String | null = '',
+  data: object,
 ): Promise<any> => {
   const apiUrl = `${endpoint}/${params}`;
-  const res = await axios.delete(apiUrl);
+  const res = await axios.delete(apiUrl, data);
   return res;
 };
 
