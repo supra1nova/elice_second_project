@@ -11,7 +11,7 @@ import {upload,s3} from "../config/upload"
 const userRouter = Router();
 
 // 1-2. 일반 사용자 등록
-userRouter.post('/register', upload.single('image'),async (req:Request, res:Response, next:NextFunction) => {
+userRouter.post('/register',async (req:Request, res:Response, next:NextFunction) => {
   try {
     // if (is.emptyObject(req.body)) {
     //   throw new Error(
@@ -20,9 +20,7 @@ userRouter.post('/register', upload.single('image'),async (req:Request, res:Resp
     // }
 
       let userInfo:userInfo= req.body
-      if(req.file==undefined) throw new Error("file not retrieved");
-      userInfo.image=(req.file as any).location;
-      userInfo.imageKey=(req.file as any).key;
+      
 
       const newUser = await userService.addUser(userInfo);
       res.status(201).json(newUser);
@@ -104,10 +102,43 @@ userRouter.patch('/', loginRequired, async function (req: Request, res:Response,
   try {
 
     const updateUserInfo:updateUserInfo=req.body;
-    const {currentPassword, userInfo} =updateUserInfo;
+
     if(req.email==undefined) throw new Error("error")
     const email= req.email;
     updateUserInfo.userInfo.email= email;
+
+    const {currentPassword, userInfo} =updateUserInfo;
+
+    // currentPassword 없을 시, 진행 불가
+    if (!currentPassword) {
+      throw new Error('정보를 변경하려면, 현재의 비밀번호가 필요합니다.');
+    }
+  
+    // 사용자 정보를 업데이트.
+    if(email==undefined) throw new Error("Email was not given");
+
+    const updatedUser = await userService.setUser(currentPassword, userInfo );
+    res.status(200).json(updatedUser);
+    }
+  catch (error) {
+    next(error);
+  }
+});
+
+userRouter.patch('/image', loginRequired,upload.single('image'), async function (req: Request, res:Response, next:NextFunction) {
+  try {
+
+    
+    const updateUserInfo:updateUserInfo=req.body;
+    if(req.email==undefined) throw new Error("error")
+    const email= req.email;
+    updateUserInfo.userInfo.email= email;
+
+    if(req.file==undefined) throw new Error("file not retrieved");
+    updateUserInfo.userInfo.image=(req.file as any).location;
+    updateUserInfo.userInfo.imageKey=(req.file as any).key;
+
+    const {currentPassword, userInfo} =updateUserInfo;
 
     // currentPassword 없을 시, 진행 불가
     if (!currentPassword) {
@@ -125,7 +156,6 @@ userRouter.patch('/', loginRequired, async function (req: Request, res:Response,
     next(error);
   }
 });
-
 // 5. 사용자 삭제
 userRouter.delete('/', loginRequired, async function (req: Request, res:Response, next:NextFunction) {
   try {

@@ -14,6 +14,7 @@ class UserService {
   async addUser(userInfo:userInfo) {
     const { email, name, password,nickName,phoneNumber } = userInfo;
     // 이메일 중복 확인
+    console.log(email)
     if(email==undefined) throw new Error("Email was not given");
     const user = await this.userModel.findUserbyEmail(email);
     if (user) {
