@@ -1,19 +1,41 @@
-import { DataSource } from "typeorm"
-import {  User, Category, Menu, Reserve, Restaurant, Review, Time,Wish ,ReviewImage,RestaurantImage} from "./entity/index"
-
+import { DataSource } from 'typeorm';
+import {
+  User,
+  Category,
+  Menu,
+  Reserve,
+  Restaurant,
+  Review,
+  Time,
+  Wish,
+  ReviewImage,
+  RestaurantImage,
+} from './entity/index';
+console.log(process.env.user);
 export const AppDataSource = new DataSource({
   type: 'mysql',
   host: process.env.host,
   port: 3306,
-  username: process.env.username,
+  username: process.env.user,
   password: process.env.password,
   database: process.env.database,
   // synchronize: false,
   synchronize: false,
   logging: true,
-  entities: [  User, Category, Menu, Reserve, Restaurant, Review, Time,Wish,ReviewImage,RestaurantImage],
+  entities: [
+    User,
+    Category,
+    Menu,
+    Reserve,
+    Restaurant,
+    Review,
+    Time,
+    Wish,
+    ReviewImage,
+    RestaurantImage,
+  ],
   migrations: [],
-})
+});
 
 export * from './model/Category-Model';
 export * from './model/User-Model';

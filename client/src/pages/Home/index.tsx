@@ -11,9 +11,7 @@ import * as API from '../../api/api';
 
 const Home = () => {
   const [inputValue, setInputValue] = useState('');
-  useEffect(() => {
-    API.userGet('/api/users/user').then((res) => console.log(res));
-  });
+
   return (
     <>
       <SearchBar setInputvalue={setInputValue} />

@@ -93,8 +93,4 @@ export const del = async (
   return res;
 };
 
-<<<<<<< HEAD
-export { userGet, get, post, patch, del as delete };
-=======
 export { get, userGet, post, patch, del as delete };
->>>>>>> 2a73b94037c2b5ac5eb2be16323de4964a55a493
