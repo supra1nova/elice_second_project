@@ -100,12 +100,14 @@ userRouter.get('/user/:email', async function (req: Request, res:Response, next:
 // // 4. 사용자 정보 수정
 // userRouter.patch('/', loginRequired, async function (req: Request, res:Response, next:NextFunction) {
 // userRouter.patch('/', loginRequired, async function (req: Request, res:Response, next:NextFunction) {
-userRouter.patch('/', async function (req: Request, res:Response, next:NextFunction) {
+userRouter.patch('/', loginRequired, async function (req: Request, res:Response, next:NextFunction) {
   try {
 
     const updateUserInfo:updateUserInfo=req.body;
     const {currentPassword, userInfo} =updateUserInfo;
-    const {email}= userInfo;
+    if(req.email==undefined) throw new Error("error")
+    const email= req.email;
+    updateUserInfo.userInfo.email= email;
 
     // currentPassword 없을 시, 진행 불가
     if (!currentPassword) {
