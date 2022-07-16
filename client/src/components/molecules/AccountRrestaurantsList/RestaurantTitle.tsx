@@ -3,6 +3,7 @@ import { ReserveButton } from '../../atoms/ReserveButton/index'
 import * as Icon from '../../../assets/svg';
 import { useState, useEffect } from 'react';
 import * as API from '../../../api/api'
+import LikeReviewNum from '../../atoms/LikeReviewNum/index'
 
 const RestaurantTitle = () => {
     const [name, setName] = useState<string>("")
@@ -17,6 +18,7 @@ const RestaurantTitle = () => {
             // 레스토랑명
             API.get(`/api/restaurants/${REGNumber}`).then((res) => {
                 setName(cur => cur = res.name)
+                console.log(res)
             })
 
             // 리뷰개수
@@ -54,12 +56,10 @@ const RestaurantTitle = () => {
                 <ReserveButton>예약하기</ReserveButton>
             </StyledTitleBox>
             <StyledBottom>
-                <StyledLikeReview>
-                    <Icon.Heart fill={'#A6A8A3'}/>
-                    <div>{likeNum}</div>
-                    <Icon.Review />
-                    <div>{reviewNum}</div>
-                </StyledLikeReview>
+                <LikeReviewNum
+                    likeNum={likeNum}
+                    reviewNum={reviewNum}
+                />
                 <StyledLike>
                     <Icon.Heart fill={'none'} width={'23.69px'} height={'22px'} stroke={'#E5E5E5'}/>
                     <p>찜하기</p>
@@ -95,17 +95,6 @@ const StyledBottom = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-`
-const StyledLikeReview = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    div {
-        ${(props) => props.theme.font.caption};
-        color: ${(props) => props.theme.colors.font3};
-        padding: 0 10px 0 5px;
-    }
 `
 const StyledLike = styled.div`
     display: flex;
