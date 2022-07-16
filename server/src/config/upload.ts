@@ -16,7 +16,7 @@ const upload = multer({
         s3: s3,
         bucket: 'matjip',
         key: function(req:any, file:any, cb:any) {
-          console.log(file);
+          // console.log(file);
           cb(null, Date.now()+file.originalname)
         },
     }),
