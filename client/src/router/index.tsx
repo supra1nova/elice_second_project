@@ -49,7 +49,7 @@ function Router() {
           <Route path={URL.ACCOUNT_USERS} element={<AccountUsers />}></Route>
           <Route path={URL.ACCOUNT_MENUS} element={<AccountMenus />}></Route>
           <Route
-            path={`${URL.USERS_SECURITY}/:email`}
+            path={`${URL.USERS_SECURITY}`}
             element={<UsersSecurity />}
           ></Route>
           <Route path={URL.USERS_SIGNOUT} element={<UsersSignout />}></Route>

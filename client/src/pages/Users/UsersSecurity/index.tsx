@@ -44,9 +44,7 @@ const UsersSignout = () => {
 
   useEffect(() => {
     const UserId = window.location.href.split('/')[5];
-    console.log(UserId);
     API.get(`/api/users/user/${UserId}`).then((res) => {
-      console.log(res);
       const data = {
         inputFileAvatarImage: res.image,
         inputName: res.name,
@@ -77,9 +75,10 @@ const UsersSignout = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    console.log('aaaa');
 
     // setFormErrors(validate(formValues));
-    setIsSubmit(true);
+    // setIsSubmit(true);
 
     try {
       const data = {
@@ -163,7 +162,7 @@ const UsersSignout = () => {
         type: 'text',
         id: 'inputName',
         name: 'inputName',
-        value: formValues.inputName,
+        value: formValues.inputName || '',
         maxLength: undefined,
         autoComplete: undefined,
         onChange: handleChange,
@@ -176,7 +175,7 @@ const UsersSignout = () => {
         type: 'text',
         id: 'inputEmail',
         name: 'inputEmail',
-        value: formValues.inputEmail,
+        value: formValues.inputEmail || '',
         maxLength: undefined,
         autoComplete: undefined,
         onChange: handleChange,
@@ -189,7 +188,7 @@ const UsersSignout = () => {
         type: 'password',
         id: 'inputPassword',
         name: 'inputPassword',
-        value: formValues.inputPassword,
+        value: formValues.inputPassword || '',
         maxLength: 20,
         autoComplete: 'current-password',
         onChange: handleChange,
@@ -202,7 +201,7 @@ const UsersSignout = () => {
         type: 'password',
         id: 'inputPasswordConfirm',
         name: 'inputPasswordConfirm',
-        value: formValues.inputPasswordConfirm,
+        value: formValues.inputPasswordConfirm || '',
         maxLength: undefined,
         autoComplete: undefined,
         onChange: handleChange,
@@ -215,7 +214,7 @@ const UsersSignout = () => {
         type: 'text',
         id: 'inputPhone',
         name: 'inputPhone',
-        value: formValues.inputPhone,
+        value: formValues.inputPhone || '',
         maxLength: 11,
         autoComplete: undefined,
         onChange: handleChange,
@@ -260,7 +259,7 @@ const UsersSignout = () => {
             </UI.AvatarInput>
           </UI.AvatarContainer>
 
-          <Form onSubmit={handleOpenPopupCurrentPassword}>
+          <Form onSubmit={handleSubmit}>
             {inputTextData.user.map((item, index) => {
               return FormInputText(item, index);
             })}
@@ -276,6 +275,7 @@ const UsersSignout = () => {
         <PopupCurrentPassword
           open={openPopupCurrentPassword}
           onClose={handleClosePopupCurrentPassword}
+          onClick={handleOpenPopupCurrentPassword}
         />
       </UI.Container>
     </LNBLayout>
