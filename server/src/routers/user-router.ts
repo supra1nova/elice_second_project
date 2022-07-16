@@ -52,7 +52,7 @@ userRouter.post('/login', async function (req: Request, res:Response, next:NextF
   }
 });
 
-userRouter.get('/', loginRequired, async (req, res, next) => {
+userRouter.get('/user', loginRequired, async (req, res, next) => {
   try {
     const email = req.email;
     if(email==undefined) throw new Error("email doesn't exist");
