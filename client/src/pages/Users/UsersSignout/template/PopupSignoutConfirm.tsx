@@ -12,9 +12,6 @@ interface Props {
 }
 
 const PopupSignoutConfirm = ({ open, onClose, onClick }: Props) => {
-  const handleSignoutConfirm = () => {
-    console.log('aaaaaa');
-  };
   return (
     <PopupContainer open={open}>
       <PopupHeader
@@ -24,7 +21,7 @@ const PopupSignoutConfirm = ({ open, onClose, onClick }: Props) => {
       <PopupFooter
         footerType={'checkType'}
         onClose={onClose}
-        onClick={handleSignoutConfirm}
+        onClick={onClick}
       />
     </PopupContainer>
   );
