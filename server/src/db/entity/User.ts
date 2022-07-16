@@ -26,6 +26,9 @@ export class User extends BaseEntity{
   @Column({ nullable:true
   })
   image: string
+  @Column({ nullable:true
+  })
+  imageKey: string
 
   @Column({type:'simple-array', nullable:true})
   wishList:string[];

@@ -4,19 +4,26 @@ import { loginRequired } from '../middlewares';
 // import { loginRequired } from 'src/middlewares';
 // import { updateLanguageServiceSourceFile } from 'typescript';
 import { userService } from '../services/user-service';
+import {upload,s3} from "../config/upload"
+
 // import { adminRequired } from '../middlewares/admin-required';
 
 const userRouter = Router();
 
 // 1-2. 일반 사용자 등록
-userRouter.post('/register', async (req:Request, res:Response, next:NextFunction) => {
+userRouter.post('/register', upload.single('image'),async (req:Request, res:Response, next:NextFunction) => {
   try {
     // if (is.emptyObject(req.body)) {
     //   throw new Error(
     //     'headers의 Content-Type을 application/json으로 설정해주세요'
     //   );
     // }
+
       let userInfo:userInfo= req.body
+      if(req.file==undefined) throw new Error("file not retrieved");
+      userInfo.image=(req.file as any).location;
+      userInfo.imageKey=(req.file as any).key;
+
       const newUser = await userService.addUser(userInfo);
       res.status(201).json(newUser);
     }
@@ -110,6 +117,16 @@ userRouter.patch('/', async function (req: Request, res:Response, next:NextFunct
 userRouter.delete('/', loginRequired, async function (req: Request, res:Response, next:NextFunction) {
   try {
     const userInfo:userInfo= req.body;
+    const {email}= userInfo;
+    if(email==undefined) throw new Error("user not found");
+    const user = await userService.findUser(email);
+    if(user==undefined) throw new Error("user not found");
+    
+    s3.deleteObject({
+      Bucket: 'matjip',
+      Key: user.imageKey
+    },function(err,data){});
+
     const result = await userService.removeUser(userInfo);
     res.status(200).json(result);
   } catch (error) {
@@ -126,6 +143,7 @@ export interface userInfo{
   phoneNumber?:string,
   role?:string,
   image?:string,
+  imageKey?:string,
   wishList?:string[],
 }
 export interface updateUserInfo {
