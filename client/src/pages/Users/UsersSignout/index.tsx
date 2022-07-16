@@ -47,14 +47,11 @@ const UsersSignout = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const currentPassword = formValues.inputPassword;
-    const data = { currentPassword };
-    console.log(data);
-    // try {
-    //   await API.del('/api/users/user', '', data);
-    // } catch (err: any) {
-    //   console.error(err);
-    // }
+    try {
+      await API.delete('/api/users');
+    } catch (err: any) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {

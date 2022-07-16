@@ -26,24 +26,23 @@ const userGet = async (
   endpoint: String,
   params: String | null = '',
 ): Promise<any> => {
-  const apiUrl = `${endpoint}/${params}`;
-  const res = await fetch(apiUrl, {
-    // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
+  try {
+    const apiUrl = `${endpoint}/${params}`;
+    const token = localStorage.getItem('token');
+    const res = await axios.get(apiUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-  if (!res.ok) {
-    const errorContent = await res.json();
-    const { reason } = errorContent;
+    if (!res) {
+      throw new Error('ERROR');
+    }
 
-    throw new Error(reason);
+    return res.data;
+  } catch (err: any) {
+    console.error(err);
   }
-
-  const result = await res.json();
-
-  return result;
 };
 
 /*
@@ -77,9 +76,17 @@ const patch = async (
   params: String | null = '',
   data: object,
 ): Promise<any> => {
-  const apiUrl = `${endpoint}/${params}`;
-  const res = await axios.patch(apiUrl, data);
-  return res;
+  try {
+    const apiUrl = `${endpoint}/${params}`;
+    const res = await axios.patch(apiUrl, data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return res;
+  } catch (err: any) {
+    console.error(err);
+  }
 };
 
 // del 은 delete로 export 했으니 API.delete 로 사용
@@ -89,7 +96,11 @@ export const del = async (
   params: String | null = '',
 ): Promise<any> => {
   const apiUrl = `${endpoint}/${params}`;
-  const res = await axios.delete(apiUrl);
+  const res = await axios.delete(apiUrl, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
   return res;
 };
 
