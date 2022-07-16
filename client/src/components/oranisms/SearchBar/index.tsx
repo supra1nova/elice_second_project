@@ -3,10 +3,10 @@ import * as UI from './style';
 import Search from '../../molecules/Search/filterSearch/inputOnly';
 // import FilterSearch from '../../molecules/Search/filterSearch';
 
-const SearchBar = () => {
+const SearchBar = ({ setInputvalue }: any) => {
   return (
     <UI.Container>
-      <Search />
+      <Search setInputValue={setInputvalue} />
     </UI.Container>
   );
 };

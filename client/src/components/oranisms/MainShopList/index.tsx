@@ -2,6 +2,7 @@ import ShopListCard from '../../molecules/Card/MainCardWithoutReview';
 import * as UI from './style';
 import { dummy } from './MockData';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import * as API from '../../../api/api';
 
@@ -14,21 +15,35 @@ const postData = {
   role: 'OWNER',
 };
 
-const MainShopList = () => {
+const MainShopList = ({ inputValue }: any) => {
   const [shop, setShop] = useState([
     {
       name: '',
       address1: '',
       category: '',
       image: '',
+      REGNumber: '',
+      wishers: 0,
     },
   ]);
   useEffect(() => {
-    API.get('/api/restaurants').then((res) => {
-      setShop(res.restaurants);
-    });
-  }, []);
-  console.log(shop);
+    if (inputValue === '') {
+      API.get('/api/restaurants').then((res) => {
+        console.log(res.restaurants);
+        setShop(res.restaurants);
+      });
+    } else {
+      API.get('/api/restaurants').then((res) => {
+        const data = res.restaurants;
+        const filtered = data.filter(
+          (e: any) =>
+            e.name.includes(inputValue) || e.category.includes(inputValue),
+        );
+        setShop(filtered);
+      });
+    }
+  }, [inputValue]);
+
   return (
     <UI.Container>
       <UI.Title>추천 맛집 List!</UI.Title>
@@ -36,17 +51,20 @@ const MainShopList = () => {
       <UI.GridContainer>
         {shop.map((item, idx) => {
           return (
-            <div key={`${item}-${idx}`}>
+            <Link
+              to={`/account/restaurants/${item.REGNumber}`}
+              key={`${item}-${idx}`}
+            >
               <ShopListCard
                 title={item.name}
                 address={item.address1}
                 category={item.category}
-                likeCount={5}
+                likeCount={item.wishers}
                 reviewCount={10}
                 shopImg={item.image}
                 large={true}
               />
-            </div>
+            </Link>
           );
         })}
       </UI.GridContainer>
