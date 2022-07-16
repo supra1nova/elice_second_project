@@ -1,28 +1,50 @@
 import styled from 'styled-components';
 import * as Icon from '../../../../../assets/svg';
+import { useState, useEffect } from 'react';
+import * as API from '../../../../../api/api'
 
 interface CommentListsProps {
+    key: number,
     email: string,
     createdAt: string,
     comment: string,
     rating: number,
-    ownerComment: null | string
-  }
-  const CommentLists = ({
+    ownerComment: null | string,
+    reserveId: number
+}
+const UserReviewDetail = ({
+    key,
     email,
     createdAt,
     comment,
     rating,
-    ownerComment
-  }: CommentListsProps) => {
+    ownerComment,
+    reserveId
+}: CommentListsProps) => {
+    const [reviewImgs, setReviewImgs] = useState<any>([
+        {
+            image: ''
+        }
+    ])
+
+    useEffect(() => {
+        // 리뷰 이미지 가져오기
+        API.get(`/api/reviewImages/${reserveId}`).then((res: any) => {
+            let copy:any = [...reviewImgs]
+            copy = []
+            copy = res
+            setReviewImgs(copy)
+        })
+    }, [])
+
     return (
-      <>
+        <>
         <StyledReviewBox>
                 <StyledReviwerProfile>
                     <Icon.Profile fill={'#64AD57'} width={'50px'} height={'50px'}/>
                     <StyledNameDate>
-                        <StyledReviewerProfileName>{email}</StyledReviewerProfileName>
-                        <StyledReviewDate>{createdAt}</StyledReviewDate>
+                        <StyledReviewerProfileName>{email.split(/[@]/)[0]}</StyledReviewerProfileName>
+                        <StyledReviewDate>{createdAt.substring(0, 10)}</StyledReviewDate>
                     </StyledNameDate>
                 </StyledReviwerProfile>
                 <StyledReviewRight>
@@ -36,7 +58,12 @@ interface CommentListsProps {
                     {comment}
                 </StyledDescription>
                 <div>
-                    {/* 리뷰 이미지 들어가는 곳 */}
+                    {
+                        reviewImgs.map((item:any, index:number) => {
+                            return <img src={item.image} alt={`리뷰이미지${index + 1}`} />
+                        })
+                    }
+                    
                 </div>
             </StyledReviewInner>
             <StyledOwnerReview>
@@ -48,13 +75,13 @@ interface CommentListsProps {
                 {ownerComment}
                 </StyledOwnerDescription>
             </StyledOwnerReview>
-      </>
+        </>
     );
-  };
-  
-  export default CommentLists;
+};
 
-  const StyledTitle = styled.div`
+export default UserReviewDetail;
+
+const StyledTitle = styled.div`
     display: flex;
     justify-content: space-between;
     ${(props) => props.theme.font.subtitle1};
