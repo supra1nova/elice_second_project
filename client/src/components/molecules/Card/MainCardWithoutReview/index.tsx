@@ -38,27 +38,25 @@ const MainCardWithoutReview = ({
   return (
     <>
       <UI.Container large={large}>
-        <Link to=''>
-          <UI.ImgWrapper large={large}>
-            <Img src={shopImg}></Img>
-            <LikeBtn />
-          </UI.ImgWrapper>
-          <UI.InfoWrapper>
-            <UI.Title large={large}>
-              {title}
-              {large && <Grade />}
-            </UI.Title>
-            <UI.SubTitle>
-              {address} - {category}
-              <UI.Caption>
-                <Icon.Heart fill={'gray'} />
-                {likeCount}
-                <Icon.Review />
-                {reviewCount}
-              </UI.Caption>
-            </UI.SubTitle>
-          </UI.InfoWrapper>
-        </Link>
+        <UI.ImgWrapper large={large}>
+          <Img src={shopImg}></Img>
+          <LikeBtn />
+        </UI.ImgWrapper>
+        <UI.InfoWrapper>
+          <UI.Title large={large}>
+            {title}
+            {large && <Grade />}
+          </UI.Title>
+          <UI.SubTitle>
+            {address} - {category}
+            <UI.Caption>
+              <Icon.Heart fill={'gray'} />
+              {likeCount}
+              <Icon.Review />
+              {reviewCount}
+            </UI.Caption>
+          </UI.SubTitle>
+        </UI.InfoWrapper>
       </UI.Container>
     </>
   );

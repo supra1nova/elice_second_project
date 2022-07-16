@@ -9,11 +9,13 @@ import SearchBar from '../../components/oranisms/SearchBar';
 // import TimeFilter from '../components/molecules/Search/filterSearch/TimeFilter';
 
 const Home = () => {
+  const [inputValue, setInputValue] = useState('');
+  console.log(inputValue);
   return (
     <>
-      <SearchBar />
+      <SearchBar setInputvalue={setInputValue} />
       <Category />
-      <MainShopList />
+      <MainShopList inputValue={inputValue} />
       {/* <SearchInputOnly />
       <FilterSearch />
       <TimeFilter /> */}

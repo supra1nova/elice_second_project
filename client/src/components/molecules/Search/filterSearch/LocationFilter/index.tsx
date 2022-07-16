@@ -43,7 +43,6 @@ const mockData: { [key: string]: Array<string> } = {
 };
 
 const address1 = Object.keys(mockData);
-console.log(address1);
 
 const LocationFilter = () => {
   const [currAddress1, setCurrAddress1] = useState('제주');
