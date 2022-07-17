@@ -30,7 +30,7 @@ const PopupContainer = ({ open, width, children }: Props) => {
 };
 
 PopupContainer.defaultProps = {
-  width: 'auto',
+  width: '350',
 };
 
 export default PopupContainer;

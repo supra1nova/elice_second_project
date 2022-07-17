@@ -41,8 +41,7 @@ export const Content = styled.div`
 export const Section = styled.section<any>`
   position: relative;
   min-width: ${(props) => 
-    props.width ? `${props.width}px` : '350px'
-  };
+    props.width ? `${props.width}px` : '350px'};
   padding: 40px 20px;
   border-radius: 5px;
   background: #fff;

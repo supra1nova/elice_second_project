@@ -93,6 +93,8 @@ const RestaurantTitle = () => {
                 onClose={handleClosePopupReserve}
                 onClick={handleSubmit}
                 width={'427'}
+                titleColor={true}
+                title={name}
             />
         </>
     );
