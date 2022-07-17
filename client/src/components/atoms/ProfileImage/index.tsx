@@ -14,8 +14,10 @@ const ProfileImage = ({
 
     useEffect(() => {
         API.get(`/api/users/user/${email}`).then((res) => {
-            const data = res.image
-            setImageUrl(data)
+            if(res){
+                const data = res.image
+                setImageUrl(data)
+            }
         })
     }, [])
     

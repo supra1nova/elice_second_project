@@ -4,7 +4,7 @@ import * as UI from './style';
 
 interface Props {
   open: boolean;
-  width: string;
+  width?: string;
   children: React.ReactNode;
 }
 
@@ -14,14 +14,13 @@ const PopupContainer = ({ open, width, children }: Props) => {
 
   useEffect(() => {
     setDomReady(true);
-  });
-
+  }, []);
   return domReady
     ? createPortal(
         <UI.Container open={open}>
           <UI.Content>
-            {/* <UI.Section width={width}>{children}</UI.Section> */}
-            <UI.Section>{children}</UI.Section>
+            <UI.Section width={width}>{children}</UI.Section>
+            {/* <UI.Section>{children}</UI.Section> */}
           </UI.Content>
           <UI.Dimd />
         </UI.Container>,
@@ -31,7 +30,7 @@ const PopupContainer = ({ open, width, children }: Props) => {
 };
 
 PopupContainer.defaultProps = {
-  width: 'auto',
+  width: '350',
 };
 
 export default PopupContainer;
