@@ -10,6 +10,7 @@ import { BUTTON } from '../../../constants/input';
 import { ROLE } from '../../../constants/member';
 import { LABELTITLE, PLACEHOLDER } from '../../../constants/input';
 import * as UI from './style';
+import Select from '../../../components/atoms/Select';
 
 type valueObject = {
   [key: string]: any;
@@ -17,13 +18,10 @@ type valueObject = {
 
 const AccountRestaurants = () => {
   const initialValue = {
-    inputFileAvatarImage: '',
-    inputName: '',
-    inputNickname: '',
-    inputPassword: '',
-    inputPasswordConfirm: '',
-    inputPhone: '',
-    inputRole: ROLE.USER,
+    inputRestaurantName: '',
+    inputRestaurantOffice: '',
+    inputRestauranPhone: '',
+    inputRegistrationNumber: '',
   };
 
   const [openPopupSaveConfirm, setOpenPopupSaveConfirm] = useState(false);
@@ -90,8 +88,29 @@ const AccountRestaurants = () => {
         placeholder: PLACEHOLDER.RESTAURANT_PHONE,
         error: formErrors.inputRestauranPhone,
       },
+      {
+        htmlFor: 'inputRegistrationNumber',
+        labelTitle: LABELTITLE.OWNER_REGISTRATION_NUMBER,
+        type: 'text',
+        id: 'inputRegistrationNumber',
+        name: 'inputRegistrationNumber',
+        value: formValues.inputRestaurantOffice || '',
+        maxLength: 12,
+        autoComplete: undefined,
+        onChange: handleChange,
+        placeholder: PLACEHOLDER.OWNER_REGISTRATION_NUMBER,
+        error: formErrors.inputRegistrationNumber,
+      },
     ],
   };
+
+  const CATEGORY_OPTIONS = [
+    { value: 'test1', name: '테스트1' },
+    {
+      value: 'test2',
+      name: '테스트2',
+    },
+  ];
 
   const handleSubmit = () => {};
   return (
@@ -102,6 +121,7 @@ const AccountRestaurants = () => {
             {inputTextData.owner.map((item, index) => {
               return FormInputTextHorizontal(item, index);
             })}
+            <Select name='selectName' options={CATEGORY_OPTIONS} />
             <FormFooter>
               <Button
                 component='primary'
