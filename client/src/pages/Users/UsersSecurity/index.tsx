@@ -71,86 +71,6 @@ const UsersSignout = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    setFormErrors(validate(formValues));
-    setIsSubmit(true);
-
-    try {
-      const data = {
-        name: formValues.inputName,
-        password: formValues.inputPassword,
-        nickName: formValues.inputNickname,
-        phoneNumber: formValues.inputPhone,
-        image: formValues.inputFileAvatarImage,
-        email: formValues.inputEmail,
-      };
-      console.log(data);
-
-      await API.patch('/api/users', '', data);
-    } catch (err: any) {
-      console.error(err);
-    }
-  };
-
-  useEffect(() => {
-    console.log(formErrors);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
-    }
-  }, [formErrors]);
-
-  const validate = (values: any) => {
-    // const isInputNameValue = values.inputName;
-    // const isInputNicknameValue = values.inputNickname;
-    // const isInputEmailValue = values.inputEmail;
-    // const isInputPasswordValue = values.inputPassword;
-    // const isInputPasswordConfirmValue = values.inputPasswordConfirm;
-    // const isInputPhoneValue = values.inputPhone;
-
-    // const isValidEmail = validateEmail(values.inputEmail);
-
-    // const isPasswordMinLength = isInputPasswordValue.length >= 8;
-    // const isPhoneMinLength = isInputPhoneValue.length >= 11;
-    // const isNameMinLength = isInputNameValue < 2;
-
-    // if (!isInputNameValue) {
-    //   errors.inputName = ERROR.NAME_INPUT;
-    // } else if (isNameMinLength) {
-    //   errors.inputName = ERROR.NAME_MIN_LENGTH;
-    // }
-
-    // if (!isInputNicknameValue) {
-    //   errors.inputNickname = ERROR.NICKNAME_INPUT;
-    // }
-
-    // if (!isInputEmailValue) {
-    //   errors.inputEmail = ERROR.EMAIL_INPUT;
-    // } else if (!isValidEmail) {
-    //   errors.inputEmail = ERROR.EMAIL_VALID;
-    // }
-
-    // if (!isInputPasswordValue) {
-    //   errors.inputPassword = ERROR.PASSWORD_INPUT;
-    // } else if (!isPasswordMinLength) {
-    //   errors.inputPassword = ERROR.PASSWORD_MIN_LENGTH;
-    // }
-
-    // if (!isInputPasswordConfirmValue) {
-    //   errors.inputPasswordConfirm = ERROR.PASSWORD_INPUT;
-    // } else if (!isPasswordMinLength) {
-    //   errors.inputPasswordConfirm = ERROR.PASSWORD_SAME;
-    // }
-
-    // if (!isInputPhoneValue) {
-    //   errors.inputPhone = ERROR.PHONE_INPUT;
-    // } else if (!isPhoneMinLength) {
-    //   errors.inputPhone = ERROR.PHONE_VALID;
-    // }
-
-    return errors;
-  };
-
   const inputTextData = {
     user: [
       {
@@ -256,7 +176,7 @@ const UsersSignout = () => {
             </UI.AvatarInput>
           </UI.AvatarContainer>
 
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleOpenPopupCurrentPassword}>
             {inputTextData.user.map((item, index) => {
               return FormInputText(item, index);
             })}
@@ -272,7 +192,6 @@ const UsersSignout = () => {
         <PopupCurrentPassword
           open={openPopupCurrentPassword}
           onClose={handleClosePopupCurrentPassword}
-          onClick={handleOpenPopupCurrentPassword}
         />
       </UI.Container>
     </LNBLayout>
