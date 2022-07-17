@@ -1,8 +1,9 @@
-import styled from 'styled-components';
 import { ReserveButton } from '../../atoms/ReserveButton/index'
 import * as Icon from '../../../assets/svg';
 import { useState, useEffect } from 'react';
 import * as API from '../../../api/api'
+import LikeReviewNum from '../../atoms/LikeReviewNum/index'
+import * as UI from './style';
 
 const RestaurantTitle = () => {
     const [name, setName] = useState<string>("")
@@ -45,76 +46,26 @@ const RestaurantTitle = () => {
     )
 
     return (
-      <StyledInfoContainer>
-            <StyledTitleBox>
+      <UI.StyledInfoContainer>
+            <UI.StyledTitleBox>
                 <div>
-                    <StyledRestaurantName>{name}</StyledRestaurantName>
-                    <StyledGPA>{gpa}</StyledGPA>
+                    <UI.StyledRestaurantName>{name}</UI.StyledRestaurantName>
+                    <UI.StyledGPA>{gpa}</UI.StyledGPA>
                 </div>
                 <ReserveButton>예약하기</ReserveButton>
-            </StyledTitleBox>
-            <StyledBottom>
-                <StyledLikeReview>
-                    <Icon.Heart fill={'#A6A8A3'}/>
-                    <div>{likeNum}</div>
-                    <Icon.Review />
-                    <div>{reviewNum}</div>
-                </StyledLikeReview>
-                <StyledLike>
+            </UI.StyledTitleBox>
+            <UI.StyledBottom>
+                <LikeReviewNum
+                    likeNum={likeNum}
+                    reviewNum={reviewNum}
+                />
+                <UI.StyledLike>
                     <Icon.Heart fill={'none'} width={'23.69px'} height={'22px'} stroke={'#E5E5E5'}/>
                     <p>찜하기</p>
-                </StyledLike>
-            </StyledBottom>
-      </StyledInfoContainer>
+                </UI.StyledLike>
+            </UI.StyledBottom>
+      </UI.StyledInfoContainer>
     );
-  };
-  
-  export default RestaurantTitle;
+};
 
-
-const StyledInfoContainer = styled.div`
-    margin: 0 40px;
-`
-const StyledRestaurantName = styled.h1`
-    ${(props) => props.theme.font.title1};
-    color: ${(props) => props.theme.colors.font1};
-    display: inline-block;
-`
-const StyledTitleBox = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`
-const StyledGPA = styled.span`
-    ${(props) => props.theme.font.title1};
-    color: ${(props) => props.theme.colors.main1};
-    padding-left: 10px;
-`
-const StyledBottom = styled.div`
-    padding-top: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-`
-const StyledLikeReview = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    div {
-        ${(props) => props.theme.font.caption};
-        color: ${(props) => props.theme.colors.font3};
-        padding: 0 10px 0 5px;
-    }
-`
-const StyledLike = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    p {
-        ${(props) => props.theme.font.caption};
-        color: ${(props) => props.theme.colors.font2};
-        padding-top: 5px;
-    }
-`
+export default RestaurantTitle;

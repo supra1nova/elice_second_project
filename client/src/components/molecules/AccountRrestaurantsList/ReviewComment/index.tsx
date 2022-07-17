@@ -1,7 +1,7 @@
-import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import * as API from '../../../../api/api';
 import UserReviewDetail from './ReviewDetail/UserReviewDetail';
+import * as UI from './style';
 
 const ReviewComment = () => {
   const [comments, setComment] = useState<any>([
@@ -26,7 +26,7 @@ const ReviewComment = () => {
   }, []);
 
   return (
-    <StyledContent>
+    <UI.StyledContent>
       {comments.map((item: any, index: any) => {
         return (
           <UserReviewDetail
@@ -40,12 +40,8 @@ const ReviewComment = () => {
           />
         );
       })}
-    </StyledContent>
+    </UI.StyledContent>
   );
 };
 
 export default ReviewComment;
-
-const StyledContent = styled.div`
-  border-bottom: 1px solid #e5e5e5;
-`;

@@ -1,7 +1,7 @@
-import styled from 'styled-components';
 import {MapViewButton} from '../../atoms/MapViewButton/index';
 import React, { useState, useEffect } from 'react';
 import * as API from '../../../api/api'
+import * as UI from './style';
 
 type infoObject = {
     address1: any; 
@@ -53,71 +53,32 @@ const RestaurantInfo = () => {
     }, [menuInputs])
     
     return (
-      <StyledRestaurantInfo>
-        <StyledInfo>
-            <StyledInfoTitle>주소</StyledInfoTitle>
+      <UI.StyledRestaurantInfo>
+        <UI.StyledInfo>
+            <UI.StyledInfoTitle>주소</UI.StyledInfoTitle>
             <div>
-                <StyledInfoDescription>{infoInputs.address1}</StyledInfoDescription>
-                <StyledInfoCaption>({infoInputs.postalcode}) {infoInputs.address2}</StyledInfoCaption>
+                <UI.StyledInfoDescription>{infoInputs.address1}</UI.StyledInfoDescription>
+                <UI.StyledInfoCaption>({infoInputs.postalcode}) {infoInputs.address2}</UI.StyledInfoCaption>
             </div>
             {/* <MapViewButton style={{marginLeft: '30px'}}>지도로 보기</MapViewButton> */}
-        </StyledInfo>
-        <StyledInfo>
-            <StyledInfoTitle>전화번호</StyledInfoTitle>
-            <StyledInfoDescription>{infoInputs.phoneNumber}</StyledInfoDescription>
-        </StyledInfo>
-        <StyledInfo>
-            <StyledInfoTitle>음식 종류</StyledInfoTitle>
-            <StyledInfoDescription>{infoInputs.category}</StyledInfoDescription>
-        </StyledInfo>
-        <StyledInfo>
-            <StyledInfoTitle>메뉴</StyledInfoTitle>
-            <StyledInfoDescription>
-                <StyledInfoMenu>{menuInputs.name}</StyledInfoMenu>
-                <StyledInfoPrice>{menuPrice}원</StyledInfoPrice>
-            </StyledInfoDescription>
-        </StyledInfo>
-      </StyledRestaurantInfo>
+        </UI.StyledInfo>
+        <UI.StyledInfo>
+            <UI.StyledInfoTitle>전화번호</UI.StyledInfoTitle>
+            <UI.StyledInfoDescription>{infoInputs.phoneNumber}</UI.StyledInfoDescription>
+        </UI.StyledInfo>
+        <UI.StyledInfo>
+            <UI.StyledInfoTitle>음식 종류</UI.StyledInfoTitle>
+            <UI.StyledInfoDescription>{infoInputs.category}</UI.StyledInfoDescription>
+        </UI.StyledInfo>
+        <UI.StyledInfo>
+            <UI.StyledInfoTitle>메뉴</UI.StyledInfoTitle>
+            <UI.StyledInfoDescription>
+                <UI.StyledInfoMenu>{menuInputs.name}</UI.StyledInfoMenu>
+                <UI.StyledInfoPrice>{menuPrice}원</UI.StyledInfoPrice>
+            </UI.StyledInfoDescription>
+        </UI.StyledInfo>
+      </UI.StyledRestaurantInfo>
     );
-  };
-  
-  export default RestaurantInfo;
+};
 
-
-const StyledRestaurantInfo = styled.div`
-border-top: 1px solid #E5E5E5;
-border-bottom: 1px solid #E5E5E5;
-margin: 20px 40px;
-padding: 20px 0;
-`
-const StyledInfo = styled.div`
-display: flex;
-align-items: flex-start;
-padding-bottom: 14px;
-
-&:last-child {
-    padding-bottom: 0;
-}
-`
-const StyledInfoTitle = styled.div`
-    ${(props) => props.theme.font.description2};
-    color: ${(props) => props.theme.colors.font3};
-    width: 125px;
-`
-const StyledInfoDescription = styled.div`
-    ${(props) => props.theme.font.description2};
-    color: ${(props) => props.theme.colors.font1};
-    display: flex;
-`
-const StyledInfoCaption = styled.div`
-    ${(props) => props.theme.font.caption};
-    color: ${(props) => props.theme.colors.font3};
-    padding-top: 5px;
-`
-const StyledInfoPrice = styled.div`
-    text-align: right;
-    padding-left: 20px;
-`
-const StyledInfoMenu = styled.div`
-    padding-bottom: 5px;
-`
+export default RestaurantInfo;
