@@ -38,9 +38,11 @@ export const Content = styled.div`
   z-index: 10;
 `;
 
-export const Section = styled.section`
+export const Section = styled.section<any>`
   position: relative;
-  min-width: 350px;
+  min-width: ${(props) => 
+    props.width ? `${props.width}px` : '350px'
+  };
   padding: 40px 20px;
   border-radius: 5px;
   background: #fff;
