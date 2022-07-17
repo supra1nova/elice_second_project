@@ -1,6 +1,6 @@
-import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import * as API from '../../../../api/api'
+import * as UI from './style';
 
 type reviewLengthObject = {
     total: number; 
@@ -60,7 +60,7 @@ const Rating = () => {
     )
 
     return (
-        <StyledTitle>
+        <UI.StyledTitle>
             <div>리뷰 ({reviewLength.total})</div>
             <div>
                 <span>전체({reviewLength.total})</span>
@@ -70,21 +70,8 @@ const Rating = () => {
                 <span>2점({reviewLength.ratingTwo})</span>
                 <span>1점({reviewLength.ratingOne})</span>
             </div>
-        </StyledTitle>
+        </UI.StyledTitle>
     );
 };
   
 export default Rating;
-
-const StyledTitle = styled.div`
-    display: flex;
-    justify-content: space-between;
-    ${(props) => props.theme.font.subtitle1};
-    margin-bottom: 10px;
-
-    div > span {
-        ${(props) => props.theme.font.caption};
-        color: ${(props) => props.theme.colors.font3};
-        margin-left: 10px;
-    }
-`

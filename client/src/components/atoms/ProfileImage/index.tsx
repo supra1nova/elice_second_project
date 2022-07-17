@@ -1,7 +1,7 @@
 import * as Icon from '../../../assets/svg';
-import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import * as API from '../../../api/api'
+import * as UI from './style';
 
 interface CommentListsProps {
     email: string,
@@ -23,7 +23,7 @@ const ProfileImage = ({
         <>
             {
                 imageUrl !== '' ?
-                <StyledProfileImage src={imageUrl} alt={imageUrl}/> :
+                <UI.StyledProfileImage src={imageUrl} alt={imageUrl}/> :
                 <Icon.Profile fill={'#64AD57'} width={'50px'} height={'50px'}/>
             }
         </>
@@ -31,9 +31,3 @@ const ProfileImage = ({
 }
 
 export default ProfileImage;
-
-const StyledProfileImage = styled.img`
-    width: 50px;
-    height: 50px;
-    border-radius: 50px;
-`

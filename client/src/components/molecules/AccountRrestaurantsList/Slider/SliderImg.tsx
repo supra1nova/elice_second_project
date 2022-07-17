@@ -2,46 +2,9 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import * as Icon from '../../../../assets/svg';
-import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import * as API from '../../../../api/api'
-
-const StyledImg = styled.img`
-    padding: 0 20px 20px;
-`
-const StyledCarousel = styled.div`
-    position: relative;
-    padding: 40px 20px 0;
-`
-const StyledNextArrow = styled.div`
-    position: absolute;
-    top: 50%;
-    right: 30px;
-    transform: translate(0, -50%);
-    cursor: pointer;
-    z-index: 10;
-    opacity: 50%;
-    transition: 200ms ease-in-out;
-
-    &:hover {
-        opacity: 100%;
-    }
-`
-const StyledPrevArrow = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 30px;
-    transform: translate(0, -50%);
-    cursor: pointer;
-    z-index: 10;
-    opacity: 50%;
-    transition: 200ms ease-in-out;
-
-    &:hover {
-        opacity: 100%;
-    }
-`
-
+import * as UI from './style';
 interface NextArrowProps {
     onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
@@ -49,14 +12,14 @@ interface NextArrowProps {
 // className을 받아줄 수 도 있다. 그리고 부모 컴포넌트에서 설정해 줘도 된다.
 
 function NextArrow({ onClick }: NextArrowProps) {
-    return <StyledNextArrow onClick={onClick}>
+    return <UI.StyledNextArrow onClick={onClick}>
         <Icon.NextArrow />
-    </StyledNextArrow>;
+    </UI.StyledNextArrow>;
 }
 function PrevArrow({ onClick }: NextArrowProps) {
-    return <StyledPrevArrow onClick={onClick}>
+    return <UI.StyledPrevArrow onClick={onClick}>
         <Icon.PrevArrow />
-    </StyledPrevArrow>;
+    </UI.StyledPrevArrow>;
 }
 
 const SliderImg = () => {
@@ -86,13 +49,13 @@ const SliderImg = () => {
 	}
 	
 	return (
-		<StyledCarousel className="carouse1">
+		<UI.StyledCarousel className="carouse1">
 			<Slider { ...setting }>
                 {images.map((item) => (
-                <StyledImg src={item} />
+                <UI.StyledImg src={item} />
             ))}
 			</Slider>
-		</StyledCarousel>
+		</UI.StyledCarousel>
 	);
 }
 
