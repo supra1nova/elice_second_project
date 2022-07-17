@@ -11,5 +11,12 @@ export const USERS = [
 export const ACCOUNT = {
   USER: [{ menu: '', to: '' }],
   ADMIN: [{ menu: '', to: '' }],
-  OWNER: [{ menu: '', to: '' }],
+  OWNER: [
+    { menu: PAGES.ACCOUNT_RESTAURANTS_HOME, to: URL.ACCOUNT_RESTAURANTS_HOME },
+    { menu: PAGES.ACCOUNT_RESTAURANTS, to: URL.ACCOUNT_RESTAURANTS },
+    { menu: PAGES.ACCOUNT_RESERVES, to: URL.ACCOUNT_RESERVES },
+    { menu: PAGES.ACCOUNT_MENUS, to: URL.ACCOUNT_MENUS },
+    { menu: PAGES.USER_SECURITY, to: URL.USERS_SECURITY },
+    { menu: PAGES.USER_SIGNOUT, to: URL.USERS_SIGNOUT },
+  ],
 };

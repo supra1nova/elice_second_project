@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import LNBLayout from '../../../components/molecules/LNBLayout';
 import Button from '../../../components/atoms/Button';
 import PopupSaveConfirm from './template/PopupSaveConfirm';
+import { ACCOUNT } from '../../../constants/lnb';
 import * as UI from './style';
 
 const AccountRestaurants = () => {
@@ -17,21 +19,23 @@ const AccountRestaurants = () => {
   };
 
   return (
-    <UI.Container>
-      <Button
-        component='primary'
-        size='large'
-        block
-        onClick={handleOpenPopupSaveConfirm}
-      >
-        변경사항 저장
-      </Button>
+    <LNBLayout items={ACCOUNT.OWNER}>
+      <UI.Container>
+        <Button
+          component='primary'
+          size='large'
+          block
+          onClick={handleOpenPopupSaveConfirm}
+        >
+          변경사항 저장
+        </Button>
 
-      <PopupSaveConfirm
-        open={openPopupSaveConfirm}
-        onClose={handleClosePopupSaveConfirm}
-      />
-    </UI.Container>
+        <PopupSaveConfirm
+          open={openPopupSaveConfirm}
+          onClose={handleClosePopupSaveConfirm}
+        />
+      </UI.Container>
+    </LNBLayout>
   );
 };
 

@@ -3,6 +3,15 @@ export const PAGES = {
   USER_REGISTER: '회원가입',
   USER_SECURITY: '회원정보',
   USER_SIGNOUT: '회원탈퇴',
+  ACCOUNT_HOME: '계정관리',
+  ACCOUNT_RESERVES: '예약조회',
+  ACCOUNT_RESTAURANTS: '레스토랑 관리',
+  ACCOUNT_RESTAURANTS_HOME: 'MY 레스토랑',
+  ACCOUNT_LIKES: '찜',
+  ACCOUNT_MENUS: '메뉴 등록 및 관라',
+  ACCOUNT_CATEGORIES: '카테고리',
+  ACCOUNT_RESTAURANS_LIST: '레스토랑 조회',
+  ACCOUNT_USERS: '회원 조회',
 };
 
 export const POPUP = {

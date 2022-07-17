@@ -27,7 +27,7 @@ function Router() {
           <Route path={URL.HOME} element={<Home />}></Route>
           <Route path={URL.RESTAURANT} element={<RestaurantHome />}></Route>
           <Route path={URL.SEARCH} element={<SearchHome />}></Route>
-          <Route path={URL.ACCOUNT_HOME} element={<AccountHome />}></Route>
+          {/* <Route path={URL.ACCOUNT_HOME} element={<AccountHome />}></Route> */}
           <Route
             path={URL.ACCOUNT_RESTAURANTS}
             element={<AccountRestaurants />}
@@ -37,7 +37,6 @@ function Router() {
             element={<AccountReserves />}
           ></Route>
           <Route
-            // path='/account/restaurants/:REGNumber'
             path={`${URL.ACCOUNT_RESTAURANTS}/:REGNumber`}
             element={<AccountRestaurantsList />}
           ></Route>

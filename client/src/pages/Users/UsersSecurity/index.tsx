@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import * as API from '../../../api/api';
 import LNBLayout from '../../../components/molecules/LNBLayout';
 import Avatar from '../../../components/molecules/Avatar';
+import InputFileButton from '../../../components/atoms/InputFileButton';
+import Typography from '../../../components/atoms/Typography';
 import Form from '../../../components/atoms/Form';
 import FormInputText from '../../../components/molecules/FormInputText';
 import FormFooter from '../../../components/molecules/FormFooter';
@@ -14,8 +16,6 @@ import { LABELTITLE, PLACEHOLDER } from '../../../constants/input';
 import { ERROR } from '../../../constants/error';
 import { validateEmail } from '../../../functions';
 import * as UI from './style';
-import InputFileButton from '../../../components/atoms/InputFileButton';
-import Typography from '../../../components/atoms/Typography';
 
 type valueObject = {
   [key: string]: any;

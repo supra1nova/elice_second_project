@@ -6,7 +6,7 @@ export const URL = {
   USERS_REGISTER: '/users/register',
   USERS_SECURITY: '/users/security',
   USERS_SIGNOUT: '/users/signout',
-  ACCOUNT_HOME: '/account',
+  ACCOUNT_RESTAURANTS_HOME: '/account/myrestaurants',
   ACCOUNT_RESTAURANTS: '/account/restaurants',
   ACCOUNT_RESERVES: '/account/reserves',
   ACCOUNT_LIKES: '/account/likes',
