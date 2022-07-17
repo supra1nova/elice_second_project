@@ -18,4 +18,5 @@ export const POPUP = {
   ACCOUNT_MEMBER_DELETE: '회원을 삭제하시겠습니까?',
   USER_MEMBER_DELETE: `회원정보 삭제 시 복구할 수 없습니다.\n정말로 삭제하시겠습니까?`,
   USER_MEMBER_CURRENT_PASSWORD: '현재 비밀번호를 입력해 주세요.',
+  REVIEW_DELETE: '리뷰를 삭제하시겠습니까?',
 };

@@ -18,7 +18,6 @@ const RestaurantTitle = () => {
             // 레스토랑명
             API.get(`/api/restaurants/${REGNumber}`).then((res) => {
                 setName(cur => cur = res.name)
-                console.log(res)
             })
 
             // 리뷰개수
