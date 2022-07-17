@@ -1,8 +1,8 @@
-import { ReserveButton } from '../../atoms/ReserveButton/index'
-import * as Icon from '../../../assets/svg';
+import { ReserveButton } from '../../../atoms/ReserveButton'
+import * as Icon from '../../../../assets/svg';
 import { useState, useEffect } from 'react';
-import * as API from '../../../api/api'
-import LikeReviewNum from '../../atoms/LikeReviewNum/index'
+import * as API from '../../../../api/api'
+import LikeReviewNum from '../../../atoms/LikeReviewNum'
 import * as UI from './style';
 
 const RestaurantTitle = () => {
@@ -46,25 +46,25 @@ const RestaurantTitle = () => {
     )
 
     return (
-      <UI.StyledInfoContainer>
-            <UI.StyledTitleBox>
+      <UI.InfoContainer>
+            <UI.TitleBox>
                 <div>
-                    <UI.StyledRestaurantName>{name}</UI.StyledRestaurantName>
-                    <UI.StyledGPA>{gpa}</UI.StyledGPA>
+                    <UI.RestaurantName>{name}</UI.RestaurantName>
+                    <UI.GPA>{gpa}</UI.GPA>
                 </div>
                 <ReserveButton>예약하기</ReserveButton>
-            </UI.StyledTitleBox>
-            <UI.StyledBottom>
+            </UI.TitleBox>
+            <UI.Bottom>
                 <LikeReviewNum
                     likeNum={likeNum}
                     reviewNum={reviewNum}
                 />
-                <UI.StyledLike>
+                <UI.Like>
                     <Icon.Heart fill={'none'} width={'23.69px'} height={'22px'} stroke={'#E5E5E5'}/>
                     <p>찜하기</p>
-                </UI.StyledLike>
-            </UI.StyledBottom>
-      </UI.StyledInfoContainer>
+                </UI.Like>
+            </UI.Bottom>
+      </UI.InfoContainer>
     );
 };
 

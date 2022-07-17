@@ -1,6 +1,6 @@
-import {MapViewButton} from '../../atoms/MapViewButton/index';
+import {MapViewButton} from '../../../atoms/MapViewButton/index';
 import React, { useState, useEffect } from 'react';
-import * as API from '../../../api/api'
+import * as API from '../../../../api/api'
 import * as UI from './style';
 
 type infoObject = {
@@ -53,31 +53,31 @@ const RestaurantInfo = () => {
     }, [menuInputs])
     
     return (
-      <UI.StyledRestaurantInfo>
-        <UI.StyledInfo>
-            <UI.StyledInfoTitle>주소</UI.StyledInfoTitle>
+      <UI.RestaurantInfo>
+        <UI.Info>
+            <UI.InfoTitle>주소</UI.InfoTitle>
             <div>
-                <UI.StyledInfoDescription>{infoInputs.address1}</UI.StyledInfoDescription>
-                <UI.StyledInfoCaption>({infoInputs.postalcode}) {infoInputs.address2}</UI.StyledInfoCaption>
+                <UI.InfoDescription>{infoInputs.address1}</UI.InfoDescription>
+                <UI.InfoCaption>({infoInputs.postalcode}) {infoInputs.address2}</UI.InfoCaption>
             </div>
             {/* <MapViewButton style={{marginLeft: '30px'}}>지도로 보기</MapViewButton> */}
-        </UI.StyledInfo>
-        <UI.StyledInfo>
-            <UI.StyledInfoTitle>전화번호</UI.StyledInfoTitle>
-            <UI.StyledInfoDescription>{infoInputs.phoneNumber}</UI.StyledInfoDescription>
-        </UI.StyledInfo>
-        <UI.StyledInfo>
-            <UI.StyledInfoTitle>음식 종류</UI.StyledInfoTitle>
-            <UI.StyledInfoDescription>{infoInputs.category}</UI.StyledInfoDescription>
-        </UI.StyledInfo>
-        <UI.StyledInfo>
-            <UI.StyledInfoTitle>메뉴</UI.StyledInfoTitle>
-            <UI.StyledInfoDescription>
-                <UI.StyledInfoMenu>{menuInputs.name}</UI.StyledInfoMenu>
-                <UI.StyledInfoPrice>{menuPrice}원</UI.StyledInfoPrice>
-            </UI.StyledInfoDescription>
-        </UI.StyledInfo>
-      </UI.StyledRestaurantInfo>
+        </UI.Info>
+        <UI.Info>
+            <UI.InfoTitle>전화번호</UI.InfoTitle>
+            <UI.InfoDescription>{infoInputs.phoneNumber}</UI.InfoDescription>
+        </UI.Info>
+        <UI.Info>
+            <UI.InfoTitle>음식 종류</UI.InfoTitle>
+            <UI.InfoDescription>{infoInputs.category}</UI.InfoDescription>
+        </UI.Info>
+        <UI.Info>
+            <UI.InfoTitle>메뉴</UI.InfoTitle>
+            <UI.InfoDescription>
+                <UI.InfoMenu>{menuInputs.name}</UI.InfoMenu>
+                <UI.InfoPrice>{menuPrice}원</UI.InfoPrice>
+            </UI.InfoDescription>
+        </UI.Info>
+      </UI.RestaurantInfo>
     );
 };
 
