@@ -3,7 +3,7 @@ import { menuService} from "../services"
 import { ownerRequired } from 'src/middlewares';
 import { loginRequired } from '../middlewares';
 import { adminRequired } from '../middlewares/admin-required';
-
+import {upload, s3} from '../config/upload'
 const menuRouter = Router();
 
 // 1. 메뉴 생성
@@ -55,13 +55,34 @@ menuRouter.patch('/:menuId', async (req: Request, res:Response, next:NextFunctio
     next(error);
   }
 });
-
-// 5. 메뉴 정보 삭제
+//사진 업데이트
+menuRouter.patch('/image/:menuId',upload.single('image'), async (req: Request, res:Response, next:NextFunction) => {
+  try {
+    //REGNuber가 request에 있어서는 안된다. REGNumber은 수정가능한 값이 아니기떄문에 
+    const menuId = Number(req.params.menuId);
+    if (req.file==undefined) throw new Error("file not given");
+    const menuInfo:menuInfo= {
+      image:(req.file as any).location,
+      imageKey:(req.file as any).key
+  }
+    const updatedRestaurantInfo = await menuService.setMenu(menuId, menuInfo);
+    res.status(200).json(updatedRestaurantInfo);    // 업데이트된 데이터를 프론트에 json 형태로 전달
+  } catch (error) {
+    next(error);
+  }
+});// 5. 메뉴 정보 삭제
 // menuRouter.delete('/', ownerRequired, async (req, res, next) => {
 menuRouter.delete('/', async (req, res, next) => {
   try {
     //req.email이 나중에는 input이 되어야 한다.
     const { menuId, email } = req.body; 
+    const menu= await menuService.getMenu(menuId)
+    
+    s3.deleteObject({
+      Bucket: 'matjip',
+      Key: menu.imageKey
+    },function(err,data){});
+    
     const result = await menuService.removeMenu(menuId,email);
     res.status(200).json(result);
   } catch (error) {
@@ -75,6 +96,7 @@ export interface menuInfo{
   name?: string,
   price?: number,
   description?: string,
-  image?:string
+  image?:string,
+  imageKey?:string
 }
 export { menuRouter };

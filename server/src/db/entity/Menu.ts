@@ -23,6 +23,8 @@ export class Menu extends BaseEntity{
   @Column({nullable:true})
   image: string;
 
+  @Column({nullable:true})
+  imageKey: string;
   // @ManyToOne(()=> Restaurant, restaurant=>restaurant.menus, {onDelete: 'CASCADE'})// 식당 삭제시 메뉴 삭제
   // restaurant: Restaurant;
 }
