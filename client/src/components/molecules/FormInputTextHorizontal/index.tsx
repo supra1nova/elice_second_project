@@ -3,12 +3,15 @@ import FormInput from '../FormInput';
 import FormItem from '../FormItem';
 import FormError from '../FromError';
 import InputText from '../../atoms/InputText';
-import * as UI from './style';
 
-const FormInputText = (item: any, index: number) => {
+const FormInputTextHorizontal = (item: any, index: number) => {
   return (
     <FormItem key={`${item.id}-${index}`}>
-      <FormInput htmlFor={item.htmlFor} labelTitle={item.labelTitle}>
+      <FormInput
+        htmlFor={item.htmlFor}
+        labelTitle={item.labelTitle}
+        direction='horizontal'
+      >
         <InputText
           type={item.type}
           id={item.id}
@@ -25,4 +28,4 @@ const FormInputText = (item: any, index: number) => {
   );
 };
 
-export default FormInputText;
+export default FormInputTextHorizontal;

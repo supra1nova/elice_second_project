@@ -18,7 +18,7 @@ const PopupSaveConfirm = ({ open, onClose, onClick }: Props) => {
         title={POPUP.ACCOUNT_SAVE_CONFIRM}
         onClose={onClose}
       ></PopupHeader>
-      {/* <PopupContents>children~~</PopupContents> */}
+
       <PopupFooter
         footerType={'closeType'}
         onClose={onClose}

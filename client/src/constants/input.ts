@@ -12,6 +12,13 @@ export const LABELTITLE = {
   ROLE_ADMIN: '관리자로 가입하기',
   AMDIN_CODE: 'ADMIN CODE',
   OWNER_REGISTRATION_NUMBER: '사업자 등록번호',
+  RESTAURANT_NAME: '업체명',
+  RESTAURANT_OFFICE: '지점',
+  RESTAURANT_PHONE: '대표번호',
+  RESTAURANT_CATEGORY: '카테고리',
+  RESTAURANT_PARKING: '주차 여부',
+  RESTAURANT_ADDRESS: '주소',
+  RESTAURANT_IMAGE: '레스토랑 이미지',
 };
 
 export const PLACEHOLDER = {
@@ -24,6 +31,11 @@ export const PLACEHOLDER = {
   PHONE: '01012345678',
   AMDIN_CODE: '',
   OWNER_REGISTRATION_NUMBER: '000-00-00000',
+  RESTAURANT_NAME: '업체명',
+  RESTAURANT_OFFICE: '강남역점',
+  RESTAURANT_PHONE: '02-1234-5678',
+  RESTAURANT_CATEGORY: '카테고리 선택',
+  RESTAURANT_ADDRESS: '주소',
 };
 
 export const BUTTON = {
@@ -31,4 +43,5 @@ export const BUTTON = {
   USER_RESIGNTER: '회원가입',
   USER_SECURITY_MODIFY: '회원정보 수정',
   USER_MEMBER_DELETE: '회원정보 안전하게 삭제하기',
+  SAVE_MODIFY_DATA: '변경사항 저장',
 };

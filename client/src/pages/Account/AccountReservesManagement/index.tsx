@@ -5,18 +5,18 @@ import { ACCOUNT } from '../../../constants/lnb';
 import { SECTION } from '../../../constants/title';
 import * as UI from './style';
 
-const AccountMenus = () => {
+const AccountReservesManagement = () => {
   return (
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
         <UI.Content>
-          <AccountHeader title={SECTION.MENU_REGISTER} />
+          <AccountHeader title={SECTION.RESERVATION_REGISTER} />
 
-          <AccountHeader title={SECTION.MENU_MANAGEMENT} />
+          <AccountHeader title={SECTION.RESERVATION_MANAGEMENT} />
         </UI.Content>
       </UI.Container>
     </LNBLayout>
   );
 };
 
-export default AccountMenus;
+export default AccountReservesManagement;
