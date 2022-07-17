@@ -54,12 +54,13 @@ export class WishModel{
   }
 
   // 5. 찜 삭제
-  async deleteWish(wishId:number){
+  async deleteWish(email:string ,REGNumber:string){
     await AppDataSource
     .createQueryBuilder()
     .delete()
     .from(Wish)
-    .where('wishId = :wishId',{wishId:wishId})
+    .where('email = :email', { email: email })
+    .andWhere('REGNumber = :REGNumber',{REGNumber:REGNumber})
     .execute()
   }
 }

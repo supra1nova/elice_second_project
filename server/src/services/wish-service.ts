@@ -31,8 +31,8 @@ class WishService {
   }
     
   // 4. 찜 삭제 - 사용자 찜 삭제(return 값으로 찜한 전체 인원수 반환)
-  async removeWish(wishId:number, REGNumber:string) {
-    await this.wishModel.deleteWish(wishId);
+  async removeWish(email: string, REGNumber:string) {
+    await this.wishModel.deleteWish(email, REGNumber);
     await restaurantModel.updateWisherNumber(false, REGNumber);
     const restaurant = await restaurantModel.findRestaurantByREGNumber(REGNumber);
     const wishersNumber = restaurant?.wishers;
