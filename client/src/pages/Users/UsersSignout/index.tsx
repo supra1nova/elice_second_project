@@ -50,7 +50,7 @@ const UsersSignout = () => {
     const currentPassword = formValues.inputPassword;
     const data = { currentPassword };
     try {
-      await API.delete('/api/users', '', data);
+      await API.delete('/api/users');
       localStorage.removeItem('token');
     } catch (err: any) {
       console.error(err);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import * as API from '../../../../api/api';
 import PopupContainer from '../../../../components/oranisms/Popup/PopupContainer';
 import PopupHeader from '../../../../components/oranisms/Popup/PopupHeader';
 import PopupContents from '../../../../components/oranisms/Popup/PopupContents';
@@ -34,13 +35,6 @@ const PopupCurrentPassword = ({ open, onClose, onClick }: Props) => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  useEffect(() => {
-    console.log(formErrors);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
-    }
-  }, [formErrors]);
-
   const inputTextData = [
     {
       htmlFor: 'inputPassword',
@@ -57,6 +51,23 @@ const PopupCurrentPassword = ({ open, onClose, onClick }: Props) => {
     },
   ];
 
+  const handleSubmit = async () => {
+    try {
+      const data = {
+        email: formValues.inputEmail,
+        name: formValues.inputName,
+        password: formValues.inputPassword,
+        nickName: formValues.inputNickname,
+        phoneNumber: formValues.inputPhone,
+        image: formValues.inputFileAvatarImage,
+      };
+
+      await API.patch('/api/users/user', '', data);
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+
   return (
     <PopupContainer open={open} width={'600'}>
       <PopupHeader
@@ -71,7 +82,7 @@ const PopupCurrentPassword = ({ open, onClose, onClick }: Props) => {
       <PopupFooter
         footerType={'checkType'}
         onClose={onClose}
-        onClick={onClick}
+        onClick={handleSubmit}
       />
     </PopupContainer>
   );

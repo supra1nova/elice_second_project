@@ -94,16 +94,18 @@ const patch = async (
 export const del = async (
   endpoint: String,
   params: String | null = '',
-  data: object,
 ): Promise<any> => {
-  const apiUrl = `${endpoint}/${params}`;
-  const res = await axios.delete(apiUrl, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
-  console.log(res);
-  return res;
+  try {
+    const apiUrl = `${endpoint}/${params}`;
+    const res = await axios.delete(apiUrl, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return res;
+  } catch (err: any) {
+    console.error(err);
+  }
 };
 
 export { get, userGet, post, patch, del as delete };

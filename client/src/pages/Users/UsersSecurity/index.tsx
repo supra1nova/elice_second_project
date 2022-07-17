@@ -54,9 +54,19 @@ const UsersSignout = () => {
     });
   }, []);
 
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues);
+    }
+  }, [formErrors]);
+
   const handleOpenPopupCurrentPassword = (e: any) => {
     e.preventDefault();
     setOpenPopupCurrentPassword(true);
+
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
   };
 
   const handleClosePopupCurrentPassword = (e: any) => {
@@ -69,6 +79,10 @@ const UsersSignout = () => {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
     setFormValues({ ...formValues, [name]: value });
+  };
+
+  const validate = (values: any) => {
+    return errors;
   };
 
   const inputTextData = {
