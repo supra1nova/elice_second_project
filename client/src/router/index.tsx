@@ -9,6 +9,7 @@ import AccountHome from '../pages/Account/AccountHome';
 import AccountRestaurants from '../pages/Account/AccountRestaurants';
 import AccountRestaurantsList from '../pages/Account/AccountRestaurantsList';
 import AccountReserves from '../pages/Account/AccountReserves';
+import AccountReservesManagement from '../pages/Account/AccountReservesManagement';
 import AccountCategories from '../pages/Account/AccountCategories';
 import AccountLikes from '../pages/Account/AccountLikes';
 import AccountMenus from '../pages/Account/AccountMenus';
@@ -35,6 +36,10 @@ function Router() {
           <Route
             path={URL.ACCOUNT_RESERVES}
             element={<AccountReserves />}
+          ></Route>
+          <Route
+            path={URL.ACCOUNT_RESERVES_MANAGEMENT}
+            element={<AccountReservesManagement />}
           ></Route>
           <Route
             path={`${URL.ACCOUNT_RESTAURANTS}/:REGNumber`}
