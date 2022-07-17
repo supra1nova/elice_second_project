@@ -58,7 +58,7 @@ export class ReviewModel {
     const reviewsInRange = await reviewRepository.find({
       where: { REGNumber: REGNumber },
       order: {
-        createdAt: 'ASC',
+        createdAt: 'DESC',
       },
       skip: perPage * (page - 1),
       take: perPage,
@@ -72,7 +72,7 @@ export class ReviewModel {
 
     const reviewsInRange = await reviewRepository.find({
       order: {
-        createdAt: 'ASC',
+        createdAt: 'DESC',
       },
       skip: perPage * (page - 1),
       take: perPage,

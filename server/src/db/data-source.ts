@@ -10,6 +10,7 @@ import {
   Wish,
   ReviewImage,
   RestaurantImage,
+  Rating,
 } from './entity/index';
 export const AppDataSource = new DataSource({
   type: 'mysql',
@@ -18,8 +19,8 @@ export const AppDataSource = new DataSource({
   username: process.env.user,
   password: process.env.password,
   database: process.env.database,
-  // synchronize: false,
   synchronize: false,
+  // synchronize: true,
   logging: true,
   entities: [
     User,
@@ -32,6 +33,7 @@ export const AppDataSource = new DataSource({
     Wish,
     ReviewImage,
     RestaurantImage,
+    Rating
   ],
   migrations: [],
 });
