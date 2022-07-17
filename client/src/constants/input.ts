@@ -31,4 +31,5 @@ export const BUTTON = {
   USER_RESIGNTER: '회원가입',
   USER_SECURITY_MODIFY: '회원정보 수정',
   USER_MEMBER_DELETE: '회원정보 안전하게 삭제하기',
+  SAVE_MODIFY_DATA: '변경사항 저장',
 };
