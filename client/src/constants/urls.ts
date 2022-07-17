@@ -9,6 +9,7 @@ export const URL = {
   ACCOUNT_RESTAURANTS_HOME: '/account/myrestaurants',
   ACCOUNT_RESTAURANTS: '/account/restaurants',
   ACCOUNT_RESERVES: '/account/reserves',
+  ACCOUNT_RESERVES_MANAGEMENT: '/account/reservesmanagement',
   ACCOUNT_LIKES: '/account/likes',
   ACCOUNT_USERS: '/account/users',
   ACCOUNT_MENUS: '/account/menus',

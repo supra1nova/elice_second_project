@@ -1,11 +1,10 @@
 import React from 'react';
-import { PaginationTable } from '../../../components/molecules/Table/PaginationTable'
+import AccountReservesOwner from './template/AccountReservesOwner';
 
 const AccountRestaurantsTemplate = () => {
   return (
-    <>
-        <PaginationTable />
-    </>
+    // 사장님일 경우 => role 체크 필요 페이지
+    <AccountReservesOwner />
   );
 };
 
