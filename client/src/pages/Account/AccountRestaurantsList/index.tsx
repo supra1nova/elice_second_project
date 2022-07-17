@@ -1,7 +1,7 @@
 import SliderImg from '../../../components/molecules/AccountRrestaurantsList/Slider/SliderImg'
-import RestaurantTitle from '../../../components/oranisms/AccountRestaurantsList/RestaurantTitle/RestaurantTitle'
-import RestaurantInfo from '../../../components/oranisms/AccountRestaurantsList/RestaurantInfo/RestaurantInfo'
-import RestaurantReview from '../../../components/oranisms/AccountRestaurantsList/RestaurantReview/RestaurantReview'
+import RestaurantTitle from '../../../components/oranisms/AccountRestaurantsList/RestaurantTitle'
+import RestaurantInfo from '../../../components/oranisms/AccountRestaurantsList/RestaurantInfo'
+import RestaurantReview from '../../../components/oranisms/AccountRestaurantsList/RestaurantReview'
 
 const AccountRestaurantsList = () => {
   return (
