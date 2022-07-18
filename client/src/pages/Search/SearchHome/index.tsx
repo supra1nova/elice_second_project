@@ -7,16 +7,12 @@ import * as API from '../../../api/api';
 
 const SearchHome = () => {
   const [inputValue, setInputValue] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  useEffect(() => {
-    API.userGet('/api/users/user').then((res) => setUserEmail(res.email));
-  }, []);
 
   return (
     <UI.Container>
       <SearchBar setInputvalue={setInputValue} />
       <Category />
-      <SearchShopList userEmail={userEmail} inputValue={inputValue} />
+      <SearchShopList inputValue={inputValue} />
     </UI.Container>
   );
 };

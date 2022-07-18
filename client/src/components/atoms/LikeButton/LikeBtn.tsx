@@ -10,14 +10,21 @@ const ButtonWrapper = styled.div`
   z-index: 95;
 `;
 
-const LikeBtn = ({ regNumber, email }: any) => {
+const LikeBtn = ({ regNumber, email, isWished }: any) => {
   const [liked, setLiked] = useState(false);
   const [likedColor, setLikedColor] = useState('#A6A8A3');
   const postData = { email, REGNumber: regNumber };
 
+  useEffect(() => {
+    if (isWished) {
+      setLiked(true);
+      setLikedColor('#FB5E64');
+    }
+  }, [isWished]);
+
   function handleClick() {
     liked === false ? setLiked(true) : setLiked(false);
-    if (!liked) {
+    if (liked) {
       API.delete('/api/wishes', '', postData).then((res) => console.log(res));
       setLikedColor('#A6A8A3');
     } else {

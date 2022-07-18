@@ -16,7 +16,10 @@ const postData = {
   role: 'OWNER',
 };
 
-const MainShopList = ({ inputValue, userEmail }: any) => {
+const MainShopList = ({ inputValue }: any) => {
+  const [wishes, setWishes] = useState([]);
+  const [userEmail, setUserEmail] = useState('');
+
   const [shop, setShop] = useState([
     {
       name: '',
@@ -27,6 +30,19 @@ const MainShopList = ({ inputValue, userEmail }: any) => {
       wishers: 0,
     },
   ]);
+
+  const getWished = async () => {
+    const email = await API.userGet('/api/users/user').then((res) => {
+      setUserEmail(res.email);
+      return res.email;
+    });
+    await API.get(`/api/wishes/${email}`).then((res) => setWishes(res));
+  };
+
+  useEffect(() => {
+    getWished();
+  }, []);
+
   useEffect(() => {
     if (inputValue === '') {
       API.get('/api/restaurants').then((res) => {
@@ -50,12 +66,19 @@ const MainShopList = ({ inputValue, userEmail }: any) => {
       <UI.SubTitle>알 수 없는 알고리즘에 의한 추천</UI.SubTitle>
       <UI.GridContainer>
         {shop.map((item, idx) => {
+          const isWished = wishes
+            .map((e: any) => e.REGNumber)
+            .includes(item.REGNumber);
           return (
             <div
               key={`${item}-${idx}`}
               style={{ position: 'relative', width: 370 }}
             >
-              <LikeBtn regNumber={item.REGNumber} email={userEmail} />
+              <LikeBtn
+                regNumber={item.REGNumber}
+                email={userEmail}
+                isWished={isWished}
+              />
               <Link to={`/account/restaurants/${item.REGNumber}`}>
                 <ShopListCard
                   title={item.name}
