@@ -7,13 +7,18 @@ import ButtonText from '../../atoms/ButtonText';
 import * as UI from './style';
 
 interface Props {
-  postNum: any;
+  postalCode: any;
   address1: any;
   address2: any;
   onChange: (e: any) => void;
 }
 
-const FormInputAddress = ({ postNum, address1, address2, onChange }: Props) => {
+const FormInputAddress = ({
+  postalCode,
+  address1,
+  address2,
+  onChange,
+}: Props) => {
   return (
     <UI.Container>
       <FormItem>
@@ -22,7 +27,7 @@ const FormInputAddress = ({ postNum, address1, address2, onChange }: Props) => {
             type='text'
             id='inputPostNumber'
             name='inputPostNumber'
-            value={postNum}
+            value={postalCode}
             readOnly
           />
         </FormInput>

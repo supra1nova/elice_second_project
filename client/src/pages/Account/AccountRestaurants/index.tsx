@@ -6,6 +6,7 @@ import FormItem from '../../../components/molecules/FormItem';
 import FormInputTextHorizontal from '../../../components/molecules/FormInputTextHorizontal';
 import FormInputAddress from '../../../components/molecules/FormInputAddress';
 import FormFooter from '../../../components/molecules/FormFooter';
+import InputRadio from '../../../components/atoms/InputRadio';
 import PopupSaveConfirm from './template/PopupSaveConfirm';
 import { ACCOUNT } from '../../../constants/lnb';
 import { BUTTON } from '../../../constants/input';
@@ -31,6 +32,7 @@ const AccountRestaurants = () => {
     inputRestaurantOffice: '',
     inputRestauranPhone: '',
     inputRegistrationNumber: '',
+    inputCategorySelect: '',
     inputPostNumber: '',
     inputAddres1: '',
     inputAddres2: '',
@@ -56,7 +58,10 @@ const AccountRestaurants = () => {
 
   const handleChange = (e: any) => {
     const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const value =
+      target.type === 'checkbox' || target.type === 'radio'
+        ? target.checked
+        : target.value;
     const name = target.name;
     setFormValues({ ...formValues, [name]: value });
   };
@@ -128,6 +133,8 @@ const AccountRestaurants = () => {
     ],
   };
 
+  console.log(formValues);
+
   const handleSubmit = () => {};
   return (
     <LNBLayout items={ACCOUNT.OWNER}>
@@ -137,10 +144,15 @@ const AccountRestaurants = () => {
             {inputTextData.owner.map((item, index) => {
               return FormInputTextHorizontal(item, index);
             })}
-            <Select name='selectName' options={SELECT_CATEGORY_OPTIONS} />
+
+            <Select
+              name='inputCategorySelect'
+              options={SELECT_CATEGORY_OPTIONS}
+              onChange={handleChange}
+            />
 
             <FormInputAddress
-              postNum={formValues.inputPostNumber}
+              postalCode={formValues.inputPostNumber}
               address1={formValues.inputAddres1}
               address2={formValues.inputAddres2}
               onChange={handleChange}

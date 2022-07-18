@@ -5,7 +5,8 @@ import AccountReservesOwner from './template/AccountReservesOwner';
 const AccountRestaurantsTemplate = () => {
   useEffect(() => {
     API.userGet('/api/users/user').then((res) => {
-      console.log(res.role);
+      const { role } = res;
+      console.log(role);
     });
   }, []);
 
