@@ -149,6 +149,9 @@ const AccountRestaurants = () => {
               name='inputCategorySelect'
               options={SELECT_CATEGORY_OPTIONS}
               onChange={handleChange}
+              id='inputCategorySelect'
+              htmlFor='inputCategorySelect'
+              label='카테고리'
             />
 
             <FormInputAddress

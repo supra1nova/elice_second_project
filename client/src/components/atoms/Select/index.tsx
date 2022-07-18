@@ -4,13 +4,16 @@ import * as UI from './style';
 interface Props {
   name: string;
   options: any;
+  label: string;
+  id: string;
+  htmlFor: string;
   onChange: (e: any) => void;
 }
-const Select = ({ name, options, onChange }: Props) => {
-  console.log(options);
+const Select = ({ name, options, label, id, htmlFor, onChange }: Props) => {
   return (
     <UI.Container>
-      <UI.Select name={name} onChange={onChange}>
+      <UI.Label htmlFor={htmlFor}>{label}</UI.Label>
+      <UI.Select id={id} name={name} onChange={onChange}>
         {options.map((option: any, index: number) => {
           return (
             <UI.Option key={`${option.value}-${index}`} value={option.value}>

@@ -7,7 +7,7 @@ interface Props {
   name: string | undefined;
   htmlFor: string;
   checked: boolean | undefined;
-  labelText: string;
+  label: string;
   onChange: (e: any) => void;
 }
 
@@ -17,13 +17,13 @@ const InputRadio = ({
   name,
   htmlFor,
   checked,
-  labelText,
+  label,
   onChange,
 }: Props) => {
   return (
     <UI.Container>
       <UI.Label htmlFor={htmlFor}>
-        <UI.LabelText>{labelText}</UI.LabelText>
+        <UI.LabelText>{label}</UI.LabelText>
         <UI.Input
           type={type}
           id={id}
