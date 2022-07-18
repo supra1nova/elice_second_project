@@ -30,8 +30,8 @@ export class User extends BaseEntity{
   @Column({ nullable:true})
   imageKey: string
 
-  @Column({type:'simple-array', nullable:true})
-  wishList:string[];
+  // @Column({type:'simple-array', nullable:true})
+  // wishList:string[];
 
   @CreateDateColumn({type:"timestamp"})
   createdAt: Date;

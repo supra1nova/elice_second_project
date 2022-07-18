@@ -23,11 +23,7 @@ export class Review extends BaseEntity{
 
   @Column()
   REGNumber: string;
-  
-  @Column(
-    {type: "simple-array", nullable:true}
-    )
-  image: string[];
+
   
   @CreateDateColumn({type:"timestamp"})
   createdAt: Date;

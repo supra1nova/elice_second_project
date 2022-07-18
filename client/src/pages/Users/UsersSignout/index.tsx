@@ -47,8 +47,11 @@ const UsersSignout = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    const currentPassword = formValues.inputPassword;
+    const data = { currentPassword };
     try {
       await API.delete('/api/users');
+      localStorage.removeItem('token');
     } catch (err: any) {
       console.error(err);
     }

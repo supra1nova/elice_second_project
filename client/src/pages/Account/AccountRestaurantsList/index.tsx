@@ -1,10 +1,15 @@
-import React from 'react';
-import AccountRestaurantsListTemplate from '../../../components/oranisms/AccountRestaurantsList/AccountRestaurantsList'
+import SliderImg from '../../../components/molecules/AccountRrestaurantsList/Slider/SliderImg'
+import RestaurantTitle from '../../../components/oranisms/AccountRestaurantsList/RestaurantTitle'
+import RestaurantInfo from '../../../components/oranisms/AccountRestaurantsList/RestaurantInfo'
+import RestaurantReview from '../../../components/oranisms/AccountRestaurantsList/RestaurantReview'
 
 const AccountRestaurantsList = () => {
   return (
     <>
-        <AccountRestaurantsListTemplate />
+        <SliderImg />
+        <RestaurantTitle />
+        <RestaurantInfo />
+        <RestaurantReview />
     </>
   );
 };

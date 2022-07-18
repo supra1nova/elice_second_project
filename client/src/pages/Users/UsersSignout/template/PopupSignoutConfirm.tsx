@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import * as API from '../../../../api/api';
 import PopupContainer from '../../../../components/oranisms/Popup/PopupContainer';
 import PopupHeader from '../../../../components/oranisms/Popup/PopupHeader';
 import PopupContents from '../../../../components/oranisms/Popup/PopupContents';
 import PopupFooter from '../../../../components/oranisms/Popup/PopupFooter';
 import { POPUP } from '../../../../constants/title';
+import { ROLE } from '../../../../constants/member';
 
 interface Props {
   open: boolean;

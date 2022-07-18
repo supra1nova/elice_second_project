@@ -36,9 +36,6 @@ export class Restaurant extends BaseEntity{
   })
   phoneNumber: string;
 
-  @Column({nullable:true})
-  image: string;
-
   @Column()
   category: string;
   
