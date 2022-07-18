@@ -1,8 +1,9 @@
-import ShopListCard from '../../molecules/Card/MainCardWithoutReview';
+import ShopListCard from '../../molecules/Card/SearchShopList';
 import * as UI from './style';
 import { dummy } from './MockData';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import LikeBtn from '../../atoms/LikeButton/LikeBtn';
 import axios from 'axios';
 import * as API from '../../../api/api';
 
@@ -15,7 +16,7 @@ const postData = {
   role: 'OWNER',
 };
 
-const MainShopList = ({ inputValue }: any) => {
+const MainShopList = ({ inputValue, userEmail }: any) => {
   const [shop, setShop] = useState([
     {
       name: '',
@@ -50,20 +51,23 @@ const MainShopList = ({ inputValue }: any) => {
       <UI.GridContainer>
         {shop.map((item, idx) => {
           return (
-            <Link
-              to={`/account/restaurants/${item.REGNumber}`}
+            <div
               key={`${item}-${idx}`}
+              style={{ position: 'relative', width: 370 }}
             >
-              <ShopListCard
-                title={item.name}
-                address={item.address1}
-                category={item.category}
-                likeCount={item.wishers}
-                reviewCount={10}
-                shopImg={item.image}
-                large={true}
-              />
-            </Link>
+              <LikeBtn regNumber={item.REGNumber} email={userEmail} />
+              <Link to={`/account/restaurants/${item.REGNumber}`}>
+                <ShopListCard
+                  title={item.name}
+                  address={item.address1}
+                  category={item.category}
+                  likeCount={item.wishers}
+                  reviewCount={10}
+                  shopImg={item.image}
+                  large={true}
+                />
+              </Link>
+            </div>
           );
         })}
       </UI.GridContainer>

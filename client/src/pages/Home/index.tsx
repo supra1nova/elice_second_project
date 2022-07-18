@@ -1,6 +1,6 @@
 import ToSearch from '../../components/molecules/Search/SearchBtn';
 import Category from '../../components/molecules/Category';
-import MainShopList from '../../components/oranisms/MainShopList';
+import MainShopList from '../../components/oranisms/SearchList';
 import { useEffect, useState } from 'react';
 import SearchBar from '../../components/oranisms/SearchBar';
 import * as API from '../../api/api';
@@ -15,8 +15,7 @@ const Home = () => {
   return (
     <>
       <SearchBar setInputvalue={setInputValue} />
-      <Category />
-      <MainShopList inputValue={inputValue} />
+
       {/* <SearchInputOnly />
       <FilterSearch />
       <TimeFilter /> */}

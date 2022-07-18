@@ -40,7 +40,6 @@ const MainCardWithoutReview = ({
       <UI.Container large={large}>
         <UI.ImgWrapper large={large}>
           <Img src={shopImg}></Img>
-          <LikeBtn />
         </UI.ImgWrapper>
         <UI.InfoWrapper>
           <UI.Title large={large}>
