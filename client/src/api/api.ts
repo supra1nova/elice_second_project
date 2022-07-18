@@ -94,10 +94,12 @@ const patch = async (
 export const del = async (
   endpoint: String,
   params: String | null = '',
+  data: object | null = {},
 ): Promise<any> => {
   try {
     const apiUrl = `${endpoint}/${params}`;
     const res = await axios.delete(apiUrl, {
+      data,
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
