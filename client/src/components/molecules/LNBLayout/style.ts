@@ -7,6 +7,6 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   position: relative;
-  padding: 40px;
+  padding: 40px 40px 100px;
   margin-left: 234px;
 `;
