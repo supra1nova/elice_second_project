@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import * as API from '../../../api/api';
 import LNBLayout from '../../../components/molecules/LNBLayout';
 import Button from '../../../components/atoms/Button';
 import Form from '../../../components/atoms/Form';
@@ -7,7 +8,10 @@ import FormItem from '../../../components/molecules/FormItem';
 import FormInputTextHorizontal from '../../../components/molecules/FormInputTextHorizontal';
 import FormInputAddress from '../../../components/molecules/FormInputAddress';
 import FormFooter from '../../../components/molecules/FormFooter';
-import InputRadio from '../../../components/atoms/InputRadio';
+import Select from '../../../components/atoms/Select';
+import InputFileThumbnail from '../../../components/atoms/InputFileThumbnail';
+import Textarea from '../../../components/atoms/Textarea';
+import Typography from '../../../components/atoms/Typography';
 import PopupSaveConfirm from './template/PopupSaveConfirm';
 import { ACCOUNT } from '../../../constants/lnb';
 import { BUTTON } from '../../../constants/input';
@@ -18,12 +22,6 @@ import {
   SELECT_CATEGORY_OPTIONS,
 } from '../../../constants/input';
 import * as UI from './style';
-import Select from '../../../components/atoms/Select';
-import InputFileThumbnail from '../../../components/atoms/InputFileThumbnail';
-import InputText from '../../../components/atoms/InputText';
-import ButtonText from '../../../components/atoms/ButtonText';
-import Textarea from '../../../components/atoms/Textarea';
-import Typography from '../../../components/atoms/Typography';
 
 type valueObject = {
   [key: string]: any;
@@ -41,13 +39,13 @@ const AccountRestaurants = () => {
     inputRestaurantOffice: '',
     inputRestauranPhone: '',
     inputRegistrationNumber: '',
-    inputCategorySelect: '',
-    inputPostNumber: '',
-    inputAddres1: '',
-    inputAddres2: '',
-    inputCategory: '',
+    inputSelectCategory: '',
+    inputPostNumber: '1234',
+    inputAddres1: '1234',
+    inputAddres2: '12345',
     inputRestaurantImage: [],
     inputDescription: '',
+    inputOwnerEmail: '',
   };
 
   const [openPopupSaveConfirm, setOpenPopupSaveConfirm] = useState(false);
@@ -55,6 +53,14 @@ const AccountRestaurants = () => {
   const [formErrors, setFormErrors] = useState<valueObject>({});
   const [fileImage, setFileImage] = useState('');
   const [isSubmit, setIsSubmit] = useState(false);
+
+  useEffect(() => {
+    API.userGet('/api/users/user').then((res) => {
+      const email = res.email;
+      const ownerEmail = email;
+      formValues.inputOwnerEmail = ownerEmail || null;
+    });
+  }, []);
 
   const handleOpenPopupSaveConfirm = (e: any) => {
     e.preventDefault();
@@ -75,6 +81,23 @@ const AccountRestaurants = () => {
     const name = target.name;
     setFormValues({ ...formValues, [name]: value });
   };
+
+  const handleSubmit = async () => {
+    const data = {
+      REGNumber: formValues.inputRegistrationNumber,
+      name: formValues.inputRestaurantName,
+      address1: formValues.inputAddres1,
+      address2: formValues.inputAddres2,
+      postalcode: formValues.inputPostNumber,
+      phoneNumber: formValues.inputRestauranPhone,
+      category: formValues.inputSelectCategory,
+      description: formValues.inputDescription,
+      ownerEmail: formValues.inputOwnerEmail,
+    };
+    await API.post('/api/restaurants/', '', data);
+  };
+
+  console.log(formValues.inputSelectCategory);
 
   const inputTextData = {
     owner: [
@@ -110,7 +133,7 @@ const AccountRestaurants = () => {
         type: 'text',
         id: 'inputRestauranPhone',
         name: 'inputRestauranPhone',
-        value: formValues.inputRestaurantOffice || '',
+        value: formValues.inputRestauranPhone || '',
         maxLength: 12,
         autoComplete: undefined,
         onChange: handleChange,
@@ -123,7 +146,7 @@ const AccountRestaurants = () => {
         type: 'text',
         id: 'inputRegistrationNumber',
         name: 'inputRegistrationNumber',
-        value: formValues.inputRestaurantOffice || '',
+        value: formValues.inputRegistrationNumber || '',
         maxLength: 12,
         autoComplete: undefined,
         onChange: handleChange,
@@ -143,8 +166,6 @@ const AccountRestaurants = () => {
     ],
   };
 
-  const handleSubmit = () => {};
-  console.log(LABELTITLE.RESTAURANT_CATEGORY);
   return (
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
@@ -155,11 +176,11 @@ const AccountRestaurants = () => {
             })}
 
             <Select
-              name='inputCategorySelect'
+              name='inputSelectCategory'
               options={SELECT_CATEGORY_OPTIONS}
               onChange={handleChange}
-              id='inputCategorySelect'
-              htmlFor='inputCategorySelect'
+              id='inputSelectCategory'
+              htmlFor='inputSelectCategory'
               labelTitle={LABELTITLE.RESTAURANT_CATEGORY}
             />
 
@@ -196,12 +217,7 @@ const AccountRestaurants = () => {
             />
 
             <FormFooter>
-              <Button
-                component='primary'
-                size='large'
-                block
-                onClick={handleOpenPopupSaveConfirm}
-              >
+              <Button component='primary' size='large' block>
                 {BUTTON.SAVE_MODIFY_DATA}
               </Button>
             </FormFooter>
