@@ -82,22 +82,28 @@ const AccountRestaurants = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleSubmit = async () => {
-    const data = {
-      REGNumber: formValues.inputRegistrationNumber,
-      name: formValues.inputRestaurantName,
-      address1: formValues.inputAddres1,
-      address2: formValues.inputAddres2,
-      postalcode: formValues.inputPostNumber,
-      phoneNumber: formValues.inputRestauranPhone,
-      category: formValues.inputSelectCategory,
-      description: formValues.inputDescription,
-      ownerEmail: formValues.inputOwnerEmail,
-    };
-    await API.post('/api/restaurants/', '', data);
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      const data = {
+        REGNumber: formValues.inputRegistrationNumber,
+        name: formValues.inputRestaurantName,
+        address1: formValues.inputAddres1,
+        address2: formValues.inputAddres2,
+        postalcode: formValues.inputPostNumber,
+        phoneNumber: formValues.inputRestauranPhone,
+        category: formValues.inputSelectCategory,
+        description: formValues.inputDescription,
+        ownerEmail: formValues.inputOwnerEmail,
+      };
+      await API.post('/api/restaurants/', '', data);
+      setOpenPopupSaveConfirm(true);
+    } catch (err: any) {
+      if (err.message === 'Request failed with status code 500') {
+        alert('해당 정보를 입력해주세요');
+      }
+    }
   };
-
-  console.log(formValues.inputSelectCategory);
 
   const inputTextData = {
     owner: [
@@ -166,6 +172,10 @@ const AccountRestaurants = () => {
     ],
   };
 
+  const propsFunction = (x: any) => {
+    console.log(x.name1, x.name2);
+  };
+
   return (
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
@@ -189,6 +199,7 @@ const AccountRestaurants = () => {
               address1={formValues.inputAddres1}
               address2={formValues.inputAddres2}
               onChange={handleChange}
+              propsFunction={propsFunction}
             />
 
             <FormItem>
