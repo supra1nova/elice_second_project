@@ -15,7 +15,7 @@ interface Props {
 
 const FormInputAddress = ({ postNum, address1, address2, onChange }: Props) => {
   return (
-    <div>
+    <UI.Container>
       <FormItem>
         <FormInput htmlFor='inputPostNumber' labelTitle='주소'>
           <InputText
@@ -48,7 +48,7 @@ const FormInputAddress = ({ postNum, address1, address2, onChange }: Props) => {
           onChange={onChange}
         />
       </FormItem>
-    </div>
+    </UI.Container>
   );
 };
 

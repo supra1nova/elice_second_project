@@ -10,7 +10,6 @@ interface Props {
   name: string;
   value: string;
   readOnly: boolean;
-  onClick?: (e: any) => void;
   onChange?: (e: any) => void;
 }
 const InputText = ({
@@ -22,7 +21,6 @@ const InputText = ({
   name,
   value,
   readOnly,
-  onClick,
   onChange,
 }: Props) => {
   return (
@@ -30,7 +28,6 @@ const InputText = ({
       <UI.Input
         type={type}
         id={id}
-        onClick={onClick}
         onChange={onChange}
         placeholder={placeholder}
         autoComplete={autoComplete}

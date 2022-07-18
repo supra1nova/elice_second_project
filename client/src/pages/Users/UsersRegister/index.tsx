@@ -29,7 +29,6 @@ const UsersRegister = () => {
     inputPasswordConfirm: '',
     inputPhone: '',
     inputCheckOwner: undefined,
-    inputRegistrationNumber: '',
     inputCheckAdmin: undefined,
     inputAdminCode: '',
     inputRole: ROLE.USER,
@@ -51,11 +50,7 @@ const UsersRegister = () => {
     e.preventDefault();
     if (formValues.inputCheckOwner) {
       formValues.inputRole = ROLE.OWNER;
-    } else {
-      formValues.inputRole = ROLE.USER;
-    }
-
-    if (
+    } else if (
       formValues.inputCheckAdmin &&
       formValues.inputAdminCode === CODE.ADMIN
     ) {
@@ -66,7 +61,7 @@ const UsersRegister = () => {
 
     setFormErrors(validate(formValues));
     setIsSubmit(true);
-
+    console.log(formValues);
     try {
       const data = {
         email: formValues.inputEmail,
@@ -251,21 +246,6 @@ const UsersRegister = () => {
         onChange: handleChange,
         placeholder: PLACEHOLDER.AMDIN_CODE,
         error: formErrors.inputAdminCode,
-      },
-    ],
-    owner: [
-      {
-        htmlFor: 'inputRegistrationNumber',
-        labelTitle: LABELTITLE.OWNER_REGISTRATION_NUMBER,
-        type: 'text',
-        id: 'inputRegistrationNumber',
-        name: 'inputRegistrationNumber',
-        value: formValues.inputRegistrationNumber,
-        maxLength: 11,
-        autoComplete: undefined,
-        onChange: handleChange,
-        placeholder: PLACEHOLDER.OWNER_REGISTRATION_NUMBER,
-        error: formErrors.inputRegistrationNumber,
       },
     ],
   };
