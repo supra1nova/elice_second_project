@@ -2,48 +2,36 @@ import React from 'react';
 import * as UI from './style';
 
 interface Props {
+  label: string;
+  htmlFor: string;
   id: string;
-  type: string;
   placeholder: string;
-  autoComplete: string;
-  maxLength?: number;
-  name: string;
   value: string;
-  readOnly: boolean;
   onChange?: (e: any) => void;
 }
-const InputText = ({
+const Textarea = ({
+  label,
+  htmlFor,
   id,
-  type,
   placeholder,
-  autoComplete,
-  maxLength,
-  name,
   value,
-  readOnly,
   onChange,
 }: Props) => {
   return (
     <UI.Container>
-      <UI.Input
-        type={type}
-        id={id}
-        onChange={onChange}
-        placeholder={placeholder}
-        autoComplete={autoComplete}
-        name={name}
-        value={value}
-        maxLength={maxLength}
-        readOnly={readOnly}
-      />
+      <UI.Label htmlFor={htmlFor}>{label}</UI.Label>
+      <UI.Text>
+        <UI.Textarea
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+        />
+      </UI.Text>
     </UI.Container>
   );
 };
-InputText.defaultProps = {
-  type: 'text',
-  autoComplete: 'off',
+Textarea.defaultProps = {
   placeholder: '',
-  readOnly: false,
 };
 
-export default InputText;
+export default Textarea;

@@ -21,6 +21,7 @@ import Select from '../../../components/atoms/Select';
 import InputFileThumbnail from '../../../components/atoms/InputFileThumbnail';
 import InputText from '../../../components/atoms/InputText';
 import ButtonText from '../../../components/atoms/ButtonText';
+import Textarea from '../../../components/atoms/Textarea';
 
 type valueObject = {
   [key: string]: any;
@@ -38,6 +39,7 @@ const AccountRestaurants = () => {
     inputAddres2: '',
     inputCategory: '',
     inputRestaurantImage: [],
+    inputDescription: '',
   };
 
   const [openPopupSaveConfirm, setOpenPopupSaveConfirm] = useState(false);
@@ -172,6 +174,15 @@ const AccountRestaurants = () => {
                 />
               );
             })}
+
+            <Textarea
+              label='설명'
+              htmlFor='inputDescription'
+              id='inputDescription'
+              placeholder=''
+              value={formValues.inputDescription}
+              onChange={handleChange}
+            />
 
             <FormFooter>
               <Button

@@ -1,10 +1,12 @@
 import React from 'react';
+import styled from 'styled-components';
 import FormInput from '../FormInput';
 import FormItem from '../FormItem';
 import FormError from '../FromError';
 import InputText from '../../atoms/InputText';
 import ButtonText from '../../atoms/ButtonText';
 import * as UI from './style';
+import FormInputTextHorizontal from '../FormInputTextHorizontal';
 
 interface Props {
   postalCode: any;
@@ -22,7 +24,7 @@ const FormInputAddress = ({
   return (
     <UI.Container>
       <FormItem>
-        <FormInput htmlFor='inputPostNumber' labelTitle='주소'>
+        <FormInputTextHorizontal htmlFor='inputPostNumber' labelTitle='주소'>
           <InputText
             type='text'
             id='inputPostNumber'
@@ -30,7 +32,7 @@ const FormInputAddress = ({
             value={postalCode}
             readOnly
           />
-        </FormInput>
+        </FormInputTextHorizontal>
         <ButtonText>우편번호 검색</ButtonText>
       </FormItem>
       <FormItem>
