@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import LNBLayout from '../../../components/molecules/LNBLayout';
 import Button from '../../../components/atoms/Button';
 import Form from '../../../components/atoms/Form';
@@ -22,10 +23,17 @@ import InputFileThumbnail from '../../../components/atoms/InputFileThumbnail';
 import InputText from '../../../components/atoms/InputText';
 import ButtonText from '../../../components/atoms/ButtonText';
 import Textarea from '../../../components/atoms/Textarea';
+import Typography from '../../../components/atoms/Typography';
 
 type valueObject = {
   [key: string]: any;
 };
+
+const StyleTypography = styled(Typography)`
+  margin-bottom: 10px;
+  ${(props) => props.theme.font.subtitle1};
+  color: ${(props) => props.theme.colors.black};
+`;
 
 const AccountRestaurants = () => {
   const initialValue = {
@@ -135,9 +143,8 @@ const AccountRestaurants = () => {
     ],
   };
 
-  console.log(formValues);
-
   const handleSubmit = () => {};
+  console.log(LABELTITLE.RESTAURANT_CATEGORY);
   return (
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
@@ -153,7 +160,7 @@ const AccountRestaurants = () => {
               onChange={handleChange}
               id='inputCategorySelect'
               htmlFor='inputCategorySelect'
-              label='카테고리'
+              labelTitle={LABELTITLE.RESTAURANT_CATEGORY}
             />
 
             <FormInputAddress
@@ -163,22 +170,26 @@ const AccountRestaurants = () => {
               onChange={handleChange}
             />
 
-            {inputImageData.owner.map((item, index) => {
-              return (
-                <InputFileThumbnail
-                  key={`${item.id}-${index}`}
-                  id={item.id}
-                  htmlFor={item.htmlFor}
-                  name={item.name}
-                  accept='image/*'
-                />
-              );
-            })}
+            <FormItem>
+              <StyleTypography>{LABELTITLE.RESTAURANT_IMAGE}</StyleTypography>
+              {inputImageData.owner.map((item, index) => {
+                return (
+                  <InputFileThumbnail
+                    key={`${item.id}-${index}`}
+                    id={item.id}
+                    htmlFor={item.htmlFor}
+                    name={item.name}
+                    accept='image/*'
+                  />
+                );
+              })}
+            </FormItem>
 
             <Textarea
-              label='설명'
+              label={LABELTITLE.DESCRIPTION}
               htmlFor='inputDescription'
               id='inputDescription'
+              name='inputDescription'
               placeholder=''
               value={formValues.inputDescription}
               onChange={handleChange}

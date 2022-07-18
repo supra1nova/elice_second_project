@@ -7,8 +7,8 @@ export const Container = styled.div`
 
 export const Label = styled.label`
   display: inline-block;
-  width: 100px;
-  height: 100px;
+  width: 100px !important;
+  height: 100px !important;
   border-radius: 5px;
   box-sizing: border-box;
   background-color: ${(props) => props.theme.colors.main4};

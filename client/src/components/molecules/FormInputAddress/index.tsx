@@ -15,6 +15,20 @@ interface Props {
   onChange: (e: any) => void;
 }
 
+const StyleFormItem = styled(FormItem)`
+  padding-bottom: 0;
+`;
+
+const StyleFormItemHorizontal = styled(StyleFormItem)`
+  display: flex;
+  align-items: center;
+  & > div {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    margin-right: 20px;
+  }
+`;
+
 const FormInputAddress = ({
   postalCode,
   address1,
@@ -23,7 +37,7 @@ const FormInputAddress = ({
 }: Props) => {
   return (
     <UI.Container>
-      <FormItem>
+      <StyleFormItemHorizontal>
         <FormInputTextHorizontal htmlFor='inputPostNumber' labelTitle='주소'>
           <InputText
             type='text'
@@ -34,8 +48,8 @@ const FormInputAddress = ({
           />
         </FormInputTextHorizontal>
         <ButtonText>우편번호 검색</ButtonText>
-      </FormItem>
-      <FormItem>
+      </StyleFormItemHorizontal>
+      <StyleFormItem>
         <InputText
           type='text'
           id='inputAddres1'
@@ -44,8 +58,8 @@ const FormInputAddress = ({
           placeholder=''
           onChange={onChange}
         />
-      </FormItem>
-      <FormItem>
+      </StyleFormItem>
+      <StyleFormItem>
         <InputText
           type='text'
           id='inputAddres2'
@@ -54,7 +68,7 @@ const FormInputAddress = ({
           placeholder=''
           onChange={onChange}
         />
-      </FormItem>
+      </StyleFormItem>
     </UI.Container>
   );
 };

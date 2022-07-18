@@ -23,6 +23,4 @@ export const Select = styled.select`
 
 export const Option = styled.option``;
 
-export const Label = styled.label`
-  width: 150px;
-`;
+export const Label = styled.label``;

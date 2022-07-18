@@ -5,6 +5,7 @@ interface Props {
   label: string;
   htmlFor: string;
   id: string;
+  name: string;
   placeholder: string;
   value: string;
   onChange?: (e: any) => void;
@@ -15,6 +16,7 @@ const Textarea = ({
   id,
   placeholder,
   value,
+  name,
   onChange,
 }: Props) => {
   return (
@@ -23,7 +25,9 @@ const Textarea = ({
       <UI.Text>
         <UI.Textarea
           placeholder={placeholder}
+          id={id}
           value={value}
+          name={name}
           onChange={onChange}
         />
       </UI.Text>

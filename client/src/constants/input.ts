@@ -39,6 +39,7 @@ export const LABELTITLE = {
   RESTAURANT_CATEGORY: '카테고리',
   RESTAURANT_PARKING: '주차 여부',
   RESTAURANT_IMAGE: '레스토랑 이미지',
+  DESCRIPTION: '설명',
 };
 
 export const PLACEHOLDER = {

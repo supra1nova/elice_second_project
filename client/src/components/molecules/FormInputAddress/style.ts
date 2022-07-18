@@ -2,5 +2,5 @@ import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
-  margin-top: 26px;
+  margin: 26px 0 26px;
 `;
