@@ -1,10 +1,7 @@
-import {BaseEntity, Entity, Column, PrimaryColumn,CreateDateColumn, OneToOne,JoinColumn, OneToMany, ManyToMany, ManyToOne, Like, Timestamp} from "typeorm"
-import {User} from "./User"
-import {Menu} from "./Menu"
-import { Category } from "./Category";
-import { Time } from "./Time";
+import { BaseEntity, Entity, Column, PrimaryColumn, CreateDateColumn } from 'typeorm';
+
 @Entity('Restaurant')
-export class Restaurant extends BaseEntity{
+export class Restaurant extends BaseEntity {
   @PrimaryColumn()
   REGNumber: string;
 
@@ -14,63 +11,37 @@ export class Restaurant extends BaseEntity{
   @Column()
   ownerEmail: string;
 
-  // @Column({
-  //   type: "simple-json",
-  // })
-  // address: {
-  //   address1: string,
-  //   address2: string,
-  //   postalcode: number
-  // } 
-
   @Column()
   address1: string;
-  
+
   @Column()
   address2: string;
-    
+
   @Column()
   postalcode: number;
 
-  @Column({nullable:true
-  })
+  @Column({ nullable: true })
   phoneNumber: string;
 
   @Column()
   category: string;
-  
-  @Column({nullable:true, length:1000})
+
+  @Column({ nullable: true, length: 1000 })
   description: string;
-  
-  @Column({
-    default: 0
-  })
-  wishers: number;
-  
+
   @Column({
     default: 0,
-    type: 'double'
+  })
+  wishers: number;
+
+  @Column({
+    default: 0,
+    type: 'double',
   })
   average: number;
-  
+
   @CreateDateColumn({
-    type: "timestamp",
-    // default: () => "CURRENT_TIMESTAMP(6)"
+    type: 'timestamp',
   })
   createdAt: Date;
-
-  // @OneToOne( ()=>User, (user)=> user.restaurant, {onDelete:'CASCADE'})//회원 삭제시 식당 삭제
-  // @JoinColumn()
-  // user: User;
-
-  // @OneToMany(()=> Menu, menu=>menu.restaurant,{ cascade: ['insert', 'update'] })
-  // menus: Menu[];
-
-  // @ManyToOne(()=> Category, categoryEntity=>categoryEntity.restaurants ,{onDelete:'SET NULL'})
-  // categoryEntity:Category 
-
-  // @OneToMany(()=>Time, time=>time.restaurant, { cascade: ['insert', 'update'] })
-  // times: Time[];
-
-
 }
