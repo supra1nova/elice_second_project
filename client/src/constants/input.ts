@@ -1,3 +1,20 @@
+export const SELECT_CATEGORY_OPTIONS = [
+  { value: 'selectKorea', name: '한정식' },
+  { value: 'selectMeat', name: '육류,고기요리' },
+  { value: 'selectSeafood', name: '해물,생선요리' },
+  { value: 'selectSeafood', name: '다이닝바' },
+  { value: 'selectSeafood', name: '닭,오리요리' },
+  { value: 'selectSeafood', name: '뷔페' },
+  { value: 'selectCos', name: '코스요리' },
+  { value: 'selectFamilyRestaurant', name: '패밀리레스토랑' },
+  { value: 'selectCafe', name: '카페,디저트' },
+  { value: 'selectVegan', name: '베지테리안/비건' },
+  { value: 'selectBrunch', name: '브런치' },
+  { value: 'selectNoodle', name: '국수,냉면' },
+  { value: 'selectPizza', name: '피자' },
+  { value: 'selectPasta', name: '파스타' },
+];
+
 export const LABELTITLE = {
   ID: '아이디',
   PASSWORD: '비밀번호',
@@ -11,13 +28,16 @@ export const LABELTITLE = {
   ROLE_OWNER_SUB_TITLE: '사업관리자 계정으로 회원가입하기',
   ROLE_ADMIN: '관리자로 가입하기',
   AMDIN_CODE: 'ADMIN CODE',
+  ADDRESS: '주소',
+  ADDRESS_POSTNUMBER: '우편 번호',
+  ADDRESS_ADDRESS1: '기본 주소',
+  ADDRESS_ADDRESS2: '나머지 주소',
   OWNER_REGISTRATION_NUMBER: '사업자 등록번호',
   RESTAURANT_NAME: '업체명',
   RESTAURANT_OFFICE: '지점',
   RESTAURANT_PHONE: '대표번호',
   RESTAURANT_CATEGORY: '카테고리',
   RESTAURANT_PARKING: '주차 여부',
-  RESTAURANT_ADDRESS: '주소',
   RESTAURANT_IMAGE: '레스토랑 이미지',
 };
 
@@ -30,12 +50,15 @@ export const PLACEHOLDER = {
   EMAIL: 'elice@gmail.com',
   PHONE: '01012345678',
   AMDIN_CODE: '',
+  ADDRESS: '주소',
+  ADDRESS_POSTNUMBER: '우편 번호',
+  ADDRESS_ADDRESS1: '기본 주소',
+  ADDRESS_ADDRESS2: '나머지 주소',
   OWNER_REGISTRATION_NUMBER: '000-00-00000',
   RESTAURANT_NAME: '업체명',
   RESTAURANT_OFFICE: '강남역점',
   RESTAURANT_PHONE: '02-1234-5678',
   RESTAURANT_CATEGORY: '카테고리 선택',
-  RESTAURANT_ADDRESS: '주소',
 };
 
 export const BUTTON = {

@@ -2,15 +2,24 @@ import React, { useState } from 'react';
 import LNBLayout from '../../../components/molecules/LNBLayout';
 import Button from '../../../components/atoms/Button';
 import Form from '../../../components/atoms/Form';
+import FormItem from '../../../components/molecules/FormItem';
 import FormInputTextHorizontal from '../../../components/molecules/FormInputTextHorizontal';
+import FormInputAddress from '../../../components/molecules/FormInputAddress';
 import FormFooter from '../../../components/molecules/FormFooter';
 import PopupSaveConfirm from './template/PopupSaveConfirm';
 import { ACCOUNT } from '../../../constants/lnb';
 import { BUTTON } from '../../../constants/input';
 import { ROLE } from '../../../constants/member';
-import { LABELTITLE, PLACEHOLDER } from '../../../constants/input';
+import {
+  LABELTITLE,
+  PLACEHOLDER,
+  SELECT_CATEGORY_OPTIONS,
+} from '../../../constants/input';
 import * as UI from './style';
 import Select from '../../../components/atoms/Select';
+import InputFileThumbnail from '../../../components/atoms/InputFileThumbnail';
+import InputText from '../../../components/atoms/InputText';
+import ButtonText from '../../../components/atoms/ButtonText';
 
 type valueObject = {
   [key: string]: any;
@@ -22,6 +31,11 @@ const AccountRestaurants = () => {
     inputRestaurantOffice: '',
     inputRestauranPhone: '',
     inputRegistrationNumber: '',
+    inputPostNumber: '',
+    inputAddres1: '',
+    inputAddres2: '',
+    inputCategory: '',
+    inputRestaurantImage: [],
   };
 
   const [openPopupSaveConfirm, setOpenPopupSaveConfirm] = useState(false);
@@ -104,13 +118,15 @@ const AccountRestaurants = () => {
     ],
   };
 
-  const CATEGORY_OPTIONS = [
-    { value: 'test1', name: '테스트1' },
-    {
-      value: 'test2',
-      name: '테스트2',
-    },
-  ];
+  const inputImageData = {
+    owner: [
+      {
+        id: 'inputFileAvatarImage',
+        htmlFor: 'inputFileAvatarImage',
+        name: 'inputFileAvatarImage',
+      },
+    ],
+  };
 
   const handleSubmit = () => {};
   return (
@@ -121,7 +137,27 @@ const AccountRestaurants = () => {
             {inputTextData.owner.map((item, index) => {
               return FormInputTextHorizontal(item, index);
             })}
-            <Select name='selectName' options={CATEGORY_OPTIONS} />
+            <Select name='selectName' options={SELECT_CATEGORY_OPTIONS} />
+
+            <FormInputAddress
+              postNum={formValues.inputPostNumber}
+              address1={formValues.inputAddres1}
+              address2={formValues.inputAddres2}
+              onChange={handleChange}
+            />
+
+            {inputImageData.owner.map((item, index) => {
+              return (
+                <InputFileThumbnail
+                  key={`${item.id}-${index}`}
+                  id={item.id}
+                  htmlFor={item.htmlFor}
+                  name={item.name}
+                  accept='image/*'
+                />
+              );
+            })}
+
             <FormFooter>
               <Button
                 component='primary'

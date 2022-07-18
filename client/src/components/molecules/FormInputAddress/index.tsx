@@ -1,21 +1,55 @@
 import React from 'react';
+import FormInput from '../FormInput';
+import FormItem from '../FormItem';
+import FormError from '../FromError';
+import InputText from '../../atoms/InputText';
+import ButtonText from '../../atoms/ButtonText';
 import * as UI from './style';
-import Label from '../../atoms/Label';
 
 interface Props {
-  htmlFor: string;
-  labelTitle: string;
-  direction?: string;
-  children: React.ReactNode | string;
+  postNum: any;
+  address1: any;
+  address2: any;
+  onChange: (e: any) => void;
 }
 
-const FormInput = ({ htmlFor, labelTitle, direction, children }: Props) => {
+const FormInputAddress = ({ postNum, address1, address2, onChange }: Props) => {
   return (
-    <UI.Container direction={direction}>
-      <Label htmlFor={htmlFor} labelTitle={labelTitle} />
-      {children}
-    </UI.Container>
+    <div>
+      <FormItem>
+        <FormInput htmlFor='inputPostNumber' labelTitle='주소'>
+          <InputText
+            type='text'
+            id='inputPostNumber'
+            name='inputPostNumber'
+            value={postNum}
+            readOnly
+          />
+        </FormInput>
+        <ButtonText>우편번호 검색</ButtonText>
+      </FormItem>
+      <FormItem>
+        <InputText
+          type='text'
+          id='inputAddres1'
+          name='inputAddres1'
+          value={address1}
+          placeholder=''
+          onChange={onChange}
+        />
+      </FormItem>
+      <FormItem>
+        <InputText
+          type='text'
+          id='inputAddres2'
+          name='inputAddres2'
+          value={address2}
+          placeholder=''
+          onChange={onChange}
+        />
+      </FormItem>
+    </div>
   );
 };
 
-export default FormInput;
+export default FormInputAddress;
