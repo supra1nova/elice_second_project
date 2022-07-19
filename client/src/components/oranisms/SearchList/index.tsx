@@ -54,6 +54,7 @@ const SearchShopList = ({ inputValue, categorySelect }: any) => {
             e.category.includes(categorySelect),
         );
         setShop(filtered);
+        setTotal(filtered.length);
       });
     }
   }, [inputValue, categorySelect, page]);
