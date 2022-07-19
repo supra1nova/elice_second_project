@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import * as API from '../../../../api/api';
+import ReviewDetail from './ReviewDetail/ReviewDetail';
 import UserReviewDetail from './ReviewDetail/UserReviewDetail';
+import OwnerReviewDetail from './ReviewDetail/OwnerReviewDetail';
+import AdminReviewDetail from './ReviewDetail/AdminReviewDetail';
 import * as UI from './style';
 
 const ReviewComment = () => {
@@ -32,7 +35,7 @@ const ReviewComment = () => {
           // role을 체크해서 유저일경우 -> UserReviewDetail
           // role을 체크해서 사장님일경우 -> OwnerReviewDetail
           // role을 체크해서 관리자일경우 -> AdminReviewDetail
-          <UserReviewDetail
+          <ReviewDetail
             key={index}
             email={item.email}
             createdAt={item.createdAt}

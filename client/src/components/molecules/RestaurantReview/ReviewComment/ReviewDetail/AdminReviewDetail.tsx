@@ -14,7 +14,7 @@ interface CommentListsProps {
     ownerComment: null | string,
     reserveId: number
 }
-const UserReviewDetail = ({
+const AdminReviewDetail = ({
     key,
     email,
     createdAt,
@@ -123,4 +123,4 @@ const UserReviewDetail = ({
     );
 };
 
-export default UserReviewDetail;
+export default AdminReviewDetail;
