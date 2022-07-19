@@ -27,7 +27,7 @@ const ReserveDate = () => {
       }, []);
     
     return (
-        <div>
+        <div style={{marginLeft: 10}}>
             <DatePicker 
                 selected={startDate} 
                 onChange={(date:Date) => setStartDate(date)} 
