@@ -14,15 +14,8 @@ const userRouter = Router();
 // 1-2. 일반 사용자 등록
 userRouter.post('/register',async (req:Request, res:Response, next:NextFunction) => {
   try {
-    // if (is.emptyObject(req.body)) {
-    //   throw new Error(
-    //     'headers의 Content-Type을 application/json으로 설정해주세요'
-    //   );
-    // }
-
       let userInfo:userInfo= req.body
       
-
       const newUser = await userService.addUser(userInfo);
       res.status(201).json(newUser);
     }
@@ -103,8 +96,8 @@ userRouter.patch('/', async function (req: Request, res:Response, next:NextFunct
   try {
 
     const updateUserInfo:updateUserInfo=req.body;
-
-    const {currentPassword, userInfo} =updateUserInfo; //email 필수
+    const email = req.email;
+    const {currentPassword} =updateUserInfo; //email 필수
 
     // currentPassword 없을 시, 진행 불가
     if (!currentPassword) {
@@ -113,7 +106,7 @@ userRouter.patch('/', async function (req: Request, res:Response, next:NextFunct
   
     // 사용자 정보를 업데이트.
 
-    const updatedUser = await userService.setUser(currentPassword, userInfo );
+    const updatedUser = await userService.setUser(updateUserInfo, email );
     res.status(200).json(updatedUser);
     }
   catch (error) {
@@ -123,18 +116,19 @@ userRouter.patch('/', async function (req: Request, res:Response, next:NextFunct
 
 userRouter.patch('/image',loginRequired, upload.single('image'), async function (req: Request, res:Response, next:NextFunction) {
   try {
-
     
     const {currentPassword}=req.body;
     // if(req.email==undefined) throw new Error("error")
     // const email= req.email;
     // updateUserInfo.userInfo.email= email;
 
+    const email = req.email;
     if(req.file==undefined) throw new Error("file not retrieved");
-    const userInfo:userInfo= {
-      email:req.email,
+    const updateUserInfo:updateUserInfo= {
+      email,
       image: (req.file as any).location,
-      imageKey:(req.file as any).key
+      imageKey: (req.file as any).key,
+      currentPassword
     };
 
     // currentPassword 없을 시, 진행 불가
@@ -143,15 +137,17 @@ userRouter.patch('/image',loginRequired, upload.single('image'), async function 
     }
     
     // 사용자 정보를 업데이트.
-    const updatedUser = await userService.setUser(currentPassword, userInfo );
+    const updatedUser = await userService.setUser(updateUserInfo, email);
     res.status(200).json(updatedUser);
     }
   catch (error) {
     next(error);
   }
 });
+
 // 5. 사용자 삭제
-userRouter.delete('/', loginRequired, async function (req: Request, res:Response, next:NextFunction) {
+userRouter.delete('/', loginRequired, async function (req: Request, res: Response, next: NextFunction) {
+  
   try {
     const userInfo:userInfo= req.body;
     userInfo.email=req.email
@@ -174,8 +170,18 @@ userRouter.delete('/', loginRequired, async function (req: Request, res:Response
 
 
 export interface userInfo{
+  email: string, 
+  name:string,
+  password:string,
+  nickName:string,
+  phoneNumber:string,
+  role?:string,
+  image?:string,
+  imageKey?:string,
+  wishList?:string[],
+}
+export interface updateUserInfo {
   email?: string, 
-  name?:string,
   password?:string,
   nickName?:string,
   phoneNumber?:string,
@@ -183,9 +189,6 @@ export interface userInfo{
   image?:string,
   imageKey?:string,
   wishList?:string[],
-}
-export interface updateUserInfo {
-  userInfo:userInfo,
   currentPassword:string
 }
 
