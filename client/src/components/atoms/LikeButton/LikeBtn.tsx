@@ -3,7 +3,7 @@ import Heart from '../../../assets/svg/Heart';
 import * as API from '../../../api/api';
 import * as UI from './style';
 
-const LikeBtn = ({ regNumber, email, isWished }: any) => {
+const LikeBtn = ({ regNumber, email, isWished, position }: any) => {
   const [liked, setLiked] = useState(false);
   const [likedColor, setLikedColor] = useState('#A6A8A3');
   const postData = { email, REGNumber: regNumber };
@@ -25,9 +25,10 @@ const LikeBtn = ({ regNumber, email, isWished }: any) => {
       setLikedColor('#FB5E64');
     }
   }
+  console.log(position)
 
   return (
-    <UI.ButtonWrapper>
+    <UI.ButtonWrapper position={position}>
       <button
         onClick={() => {
           if (localStorage.getItem('token')) {

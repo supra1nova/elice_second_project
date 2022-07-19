@@ -102,6 +102,7 @@ const RestaurantTitle = () => {
                             regNumber={REGNumber}
                             email={userEmail}
                             isWished={isWished}
+                            position={'static'}
                         />
                         {/* <Icon.Heart fill={'none'} width={'23.69px'} height={'22px'} stroke={'#E5E5E5'}/> */}
                         <p>찜하기</p>
