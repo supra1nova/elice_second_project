@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import DaumPostcode from 'react-daum-postcode';
+import PostCodeContainer from '../../oranisms/PostCode/PostCodeContainer';
+import PostCodeDom from '../../oranisms/PostCode/PostCodeDom';
 import FormInputTextHorizontal from '../FormInputTextHorizontal';
 import FormItem from '../FormItem';
 import FormError from '../FromError';
@@ -40,43 +41,18 @@ const FormInputAddress = ({
   const [data, setData] = useState({ name1: 'name1', name2: 'name2' });
   propsFunction(data);
 
-  // const [address, setAddress] = useState(''); // 주소
-  // const [addressDetail, setAddressDetail] = useState(''); // 상세주소
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-  // const [isOpenPost, setIsOpenPost] = useState(false);
+  // 팝업창 열기
+  const openPostCode = (e: any) => {
+    e.preventDefault();
+    setIsPopupOpen(true);
+  };
 
-  // const onChangeOpenPost = () => {
-  //   setIsOpenPost(!isOpenPost);
-  // };
-
-  // const onCompletePost = (data: any) => {
-  //   let fullAddr = data.address;
-  //   let extraAddr = '';
-
-  //   if (data.addressType === 'R') {
-  //     if (data.bname !== '') {
-  //       extraAddr += data.bname;
-  //     }
-  //     if (data.buildingName !== '') {
-  //       extraAddr +=
-  //         extraAddr !== '' ? `, ${data.buildingName}` : data.buildingName;
-  //     }
-  //     fullAddr += extraAddr !== '' ? ` (${extraAddr})` : '';
-  //   }
-
-  //   setAddress(data.zonecode);
-  //   setAddressDetail(fullAddress);
-  //   setIsOpenPost(false);
-  // };
-
-  // const postCodeStyle = {
-  //   display: 'block',
-  //   position: 'relative',
-  //   top: '0%',
-  //   width: '400px',
-  //   height: '400px',
-  //   padding: '7px',
-  // };
+  // 팝업창 닫기
+  const closePostCode = () => {
+    setIsPopupOpen(false);
+  };
 
   return (
     <>
@@ -91,7 +67,7 @@ const FormInputAddress = ({
               readOnly
             />
           </FormInputTextHorizontal>
-          <ButtonText>우편번호 검색</ButtonText>
+          <ButtonText onClick={openPostCode}>우편번호 검색</ButtonText>
         </StyleFormItemHorizontal>
         <StyleFormItem>
           <InputText
@@ -114,6 +90,13 @@ const FormInputAddress = ({
           />
         </StyleFormItem>
       </UI.Container>
+      <div id='popupDom'>
+        {isPopupOpen && (
+          <PostCodeDom>
+            <PostCodeContainer />
+          </PostCodeDom>
+        )}
+      </div>
       {/* {isOpenPost ? (
         <DaumPostcode
           style={postCodeStyle}
