@@ -22,7 +22,7 @@ const ReserveDate = () => {
         const REGNumber = window.location.href.split('/')[5];
 
         API.userGet(`/api/times/`).then((res) => {
-            console.log(res)
+            // console.log(res)
         });
       }, []);
     
