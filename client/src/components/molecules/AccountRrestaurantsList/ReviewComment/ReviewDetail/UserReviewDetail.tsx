@@ -80,7 +80,6 @@ const UserReviewDetail = ({
                 </UI.StyledReviwerProfile>
                 <UI.StyledReviewRight>
                     <UI.StyledGPA>평점 {rating}</UI.StyledGPA>
-                    <button>수정</button>
                     <button onClick={handleOpenPopupDeleteConfirm}>삭제</button>
                 </UI.StyledReviewRight>
             </UI.StyledReviewBox>
