@@ -25,7 +25,6 @@ const LikeBtn = ({ regNumber, email, isWished, position }: any) => {
       setLikedColor('#FB5E64');
     }
   }
-  console.log(position)
 
   return (
     <UI.ButtonWrapper position={position}>
