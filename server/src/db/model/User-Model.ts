@@ -66,9 +66,10 @@ export class UserModel{
     return usersInRange;
   }
 
-  async updateUser(email:string,userInfo:updateUserInfo){
-    const userRepository=AppDataSource.getRepository(User)
-    const updated= await userRepository.update(email, userInfo)
+  async updateUser(userEmail: string, updateUserInfo: updateUserInfo) {
+    const userRepository = AppDataSource.getRepository(User)
+    const { currentPassword, ...others } = updateUserInfo;
+    const updated = await userRepository.update(userEmail, others);
     return updated.affected
   }
 }
