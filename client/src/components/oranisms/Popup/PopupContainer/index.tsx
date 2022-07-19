@@ -5,10 +5,11 @@ import * as UI from './style';
 interface Props {
   open: boolean;
   width?: string;
+  paddingBottom? : string;
   children: React.ReactNode;
 }
 
-const PopupContainer = ({ open, width, children }: Props) => {
+const PopupContainer = ({ open, width, children, paddingBottom }: Props) => {
   const modalDiv = document.getElementById('modal')!;
   const [domReady, setDomReady] = useState(false);
 
@@ -19,7 +20,7 @@ const PopupContainer = ({ open, width, children }: Props) => {
     ? createPortal(
         <UI.Container open={open}>
           <UI.Content>
-            <UI.Section width={width}>{children}</UI.Section>
+            <UI.Section width={width} paddingBottom={paddingBottom}>{children}</UI.Section>
             {/* <UI.Section>{children}</UI.Section> */}
           </UI.Content>
           <UI.Dimd />
@@ -31,6 +32,7 @@ const PopupContainer = ({ open, width, children }: Props) => {
 
 PopupContainer.defaultProps = {
   width: '350',
+  paddingBottom: '40'
 };
 
 export default PopupContainer;
