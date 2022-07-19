@@ -21,6 +21,7 @@ const FormInputTextHorizontal = (item: any, index: number) => {
           autoComplete={item.autoComplete}
           onChange={item.onChange}
           placeholder={item.placeholder}
+          readOnly={item.readOnly}
         />
       </FormInput>
       {item.error ? <FormError message={item.error} /> : null}

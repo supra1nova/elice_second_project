@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
 import * as API from '../../../api/api';
 import LNBLayout from '../../../components/molecules/LNBLayout';
@@ -8,6 +9,9 @@ import FormItem from '../../../components/molecules/FormItem';
 import FormInputTextHorizontal from '../../../components/molecules/FormInputTextHorizontal';
 import FormInputAddress from '../../../components/molecules/FormInputAddress';
 import FormFooter from '../../../components/molecules/FormFooter';
+import InputText from '../../../components/atoms/InputText';
+import ButtonText from '../../../components/atoms/ButtonText';
+import PostCodePopup from '../../../components/oranisms/PostCode/PostCodePopup';
 import Select from '../../../components/atoms/Select';
 import InputFileThumbnail from '../../../components/atoms/InputFileThumbnail';
 import Textarea from '../../../components/atoms/Textarea';
@@ -33,6 +37,25 @@ const StyleTypography = styled(Typography)`
   color: ${(props) => props.theme.colors.black};
 `;
 
+const StyleAddressContainer = styled.div`
+  position: relative;
+  margin: 26px 0 26px;
+`;
+
+const StyleFormItem = styled(FormItem)`
+  padding-bottom: 0;
+`;
+
+const StyleFormItemHorizontal = styled(StyleFormItem)`
+  display: flex;
+  align-items: center;
+  & > div {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    margin-right: 20px;
+  }
+`;
+
 const AccountRestaurants = () => {
   const initialValue = {
     inputRestaurantName: '',
@@ -49,6 +72,7 @@ const AccountRestaurants = () => {
   };
 
   const [openPopupSaveConfirm, setOpenPopupSaveConfirm] = useState(false);
+  const [openPostCodePopup, setOpenPostCodePopup] = useState(false);
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
   const [fileImage, setFileImage] = useState('');
@@ -70,6 +94,11 @@ const AccountRestaurants = () => {
   const handleClosePopupSaveConfirm = (e: any) => {
     e.preventDefault();
     setOpenPopupSaveConfirm(!openPopupSaveConfirm);
+  };
+
+  const handleOpenPostCodePopup = (e: any) => {
+    e.preventDefault();
+    setOpenPostCodePopup(true);
   };
 
   const handleChange = (e: any) => {
@@ -103,6 +132,27 @@ const AccountRestaurants = () => {
         alert('해당 정보를 입력해주세요');
       }
     }
+  };
+
+  const handlePostCode = (data: any) => {
+    let fullAddress = data.address;
+    let extraAddress = '';
+
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddress +=
+          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+    }
+
+    console.log(data.zonecode);
+    formValues.inputPostNumber = data.zonecode;
+    formValues.inputAddres1 = data.address;
+    setOpenPostCodePopup(openPostCodePopup);
   };
 
   const inputTextData = {
@@ -162,6 +212,25 @@ const AccountRestaurants = () => {
     ],
   };
 
+  const inputAddressData = {
+    owner: [
+      {
+        htmlFor: 'inputPostNumber',
+        labelTitle: LABELTITLE.ADDRESS_POSTNUMBER,
+        type: 'text',
+        id: 'inputPostNumber',
+        name: 'inputPostNumber',
+        value: formValues.inputPostNumber || '',
+        maxLength: 5,
+        autoComplete: undefined,
+        onChange: handleChange,
+        placeholder: PLACEHOLDER.ADDRESS_POSTNUMBER,
+        error: formErrors.inputPostNumber,
+        readOnly: true,
+      },
+    ],
+  };
+
   const inputImageData = {
     owner: [
       {
@@ -171,13 +240,6 @@ const AccountRestaurants = () => {
       },
     ],
   };
-
-  const [result, setResult] = useState({});
-  const propsFunction = (data: any) => {
-    setResult(data);
-  };
-
-  console.log(result);
 
   return (
     <LNBLayout items={ACCOUNT.OWNER}>
@@ -197,12 +259,43 @@ const AccountRestaurants = () => {
               labelTitle={LABELTITLE.RESTAURANT_CATEGORY}
             />
 
-            <FormInputAddress
+            {/* <FormInputAddress
               postalCode={formValues.inputPostNumber}
               address1={formValues.inputAddres1}
               address2={formValues.inputAddres2}
               propsFunction={propsFunction}
-            />
+            /> */}
+
+            <StyleAddressContainer>
+              <StyleFormItemHorizontal>
+                {inputAddressData.owner.map((item, index) => {
+                  return FormInputTextHorizontal(item, index);
+                })}
+                <ButtonText onClick={handleOpenPostCodePopup}>
+                  우편번호 검색
+                </ButtonText>
+              </StyleFormItemHorizontal>
+              <StyleFormItem>
+                <InputText
+                  type='text'
+                  id='inputAddres1'
+                  name='inputAddres1'
+                  value={formValues.inputAddres1}
+                  placeholder=''
+                  onChange={handleChange}
+                />
+              </StyleFormItem>
+              <StyleFormItem>
+                <InputText
+                  type='text'
+                  id='inputAddres2'
+                  name='inputAddres2'
+                  value={formValues.inputAddres2}
+                  placeholder=''
+                  onChange={handleChange}
+                />
+              </StyleFormItem>
+            </StyleAddressContainer>
 
             <FormItem>
               <StyleTypography>{LABELTITLE.RESTAURANT_IMAGE}</StyleTypography>
@@ -241,6 +334,9 @@ const AccountRestaurants = () => {
           open={openPopupSaveConfirm}
           onClose={handleClosePopupSaveConfirm}
         />
+        <PostCodePopup open={openPostCodePopup}>
+          <DaumPostcode onComplete={handlePostCode} />
+        </PostCodePopup>
       </UI.Container>
     </LNBLayout>
   );

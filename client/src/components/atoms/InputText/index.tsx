@@ -35,7 +35,7 @@ const InputText = ({
         name={name}
         value={value}
         maxLength={maxLength}
-        readOnly={false}
+        readOnly={readOnly}
       />
     </UI.Container>
   );
