@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import Heart from '../../../assets/svg/Heart';
 import * as API from '../../../api/api';
-
-const ButtonWrapper = styled.div`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 95;
-`;
+import * as UI from './style';
 
 const LikeBtn = ({ regNumber, email, isWished }: any) => {
   const [liked, setLiked] = useState(false);
@@ -34,7 +27,7 @@ const LikeBtn = ({ regNumber, email, isWished }: any) => {
   }
 
   return (
-    <ButtonWrapper>
+    <UI.ButtonWrapper>
       <button
         onClick={() => {
           if (localStorage.getItem('token')) {
@@ -44,7 +37,7 @@ const LikeBtn = ({ regNumber, email, isWished }: any) => {
       >
         <Heart width={23.69} height={22} fill={likedColor} />
       </button>
-    </ButtonWrapper>
+    </UI.ButtonWrapper>
   );
 };
 
