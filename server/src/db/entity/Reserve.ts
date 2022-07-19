@@ -14,15 +14,20 @@ export class Reserve extends BaseEntity {
   @Column()
   number: number;
 
-  @Column({ type: 'simple-array' })
-  menuList: number[];
+  // @Column({ type: 'simple-array' })
+  // menuList: number[];
 
-  @Column({ type: 'simple-array' })
-  quantityList: number[];
+  // @Column({ type: 'simple-array' })
+  // quantityList: number[];
 
+  // @Column()
+  // totalPrice: number;
   @Column()
-  totalPrice: number;
-
+  comment: string;
+  @Column()
+  phoneNumber: string;
+  @Column()
+  name:string;
   @Column()
   REGNumber: string;
 
