@@ -1,9 +1,9 @@
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import * as Icon from '../../../../assets/svg';
+import * as Icon from '../../../assets/svg';
 import React, { useState, useEffect } from 'react';
-import * as API from '../../../../api/api'
+import * as API from '../../../api/api'
 import * as UI from './style';
 interface NextArrowProps {
     onClick?: React.MouseEventHandler<HTMLDivElement>;

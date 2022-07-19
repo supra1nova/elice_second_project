@@ -32,6 +32,12 @@ class ReviewService {
     return createdNewReview;
   }
 
+  async deleteOwnerReview(reserveId:number) {
+    const createdNewReview = await this.reviewModel.replyDelete(reserveId);
+    return createdNewReview;
+  }
+
+
   // 전체 리뷰 숫자 카운트
   async countReviews() {
     const reviewsNumber = await this.reviewModel.countAll();

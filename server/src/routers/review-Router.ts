@@ -32,6 +32,18 @@ reviewRouter.post('/owner', async (req: Request, res: Response, next: NextFuncti
   }
 });
 
+reviewRouter.delete('/owner', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // let reviewInfo:reviewInfo= req.body
+    const { reserveId}= req.body
+    const newReview = await reviewService.deleteOwnerReview(reserveId);
+    res.status(201).json(newReview);
+  }
+  catch (error) {
+    next(error);
+  }
+});
+
 // 2-1. 사업자번호별 리뷰 목록 조회 (배열 형태로 반환)
   reviewRouter.get('/:REGNumber', async (req: Request, res:Response, next:NextFunction) => {
     try {

@@ -49,9 +49,10 @@ export class TimeModel{
     .execute()
   }
   async findTimeByQuery(REGNumber:string, year:number,month:number,date:number){
- 
+    let times;
     const timeRepository= AppDataSource.getRepository(Time)
-    const times= await timeRepository
+    if(date){
+    times= await timeRepository
     .find({
       where:{
         REGNumber:REGNumber,
@@ -60,6 +61,17 @@ export class TimeModel{
           date:date,
         }
       })
+    }
+    else{
+      times= await timeRepository
+      .find({
+        where:{
+          REGNumber:REGNumber,
+            year:year,
+            month:month,
+          }
+        })
+    }
     return times;
   }
   async updateTime( timeId:number, year:number, month:number, date:number, hour:number){
