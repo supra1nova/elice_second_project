@@ -1,5 +1,4 @@
 import { ReserveButton } from '../../../atoms/ReserveButton'
-import * as Icon from '../../../../assets/svg';
 import { useState, useEffect } from 'react';
 import * as API from '../../../../api/api'
 import LikeReviewNum from '../../../atoms/LikeReviewNum'
@@ -33,6 +32,7 @@ const RestaurantTitle = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
+            //이게 뭐지..? 예약하기 폼인가??
             await API.delete('/api/reviews/users');
             console.log('예약완료')
         } catch (err: any) {
@@ -42,8 +42,10 @@ const RestaurantTitle = () => {
 
     const getWished = async () => {
         const email = await API.userGet('/api/users/user').then((res) => {
-          setUserEmail(res.email);
-          return res.email;
+            if(res) {
+                setUserEmail(res.email);
+                return res.email;
+            }
         });
         await API.get(`/api/wishes/${email}`).then((res) => setWishes(res));
       };
@@ -104,7 +106,6 @@ const RestaurantTitle = () => {
                             isWished={isWished}
                             position={'static'}
                         />
-                        {/* <Icon.Heart fill={'none'} width={'23.69px'} height={'22px'} stroke={'#E5E5E5'}/> */}
                         <p>찜하기</p>
                     </UI.Like>
                 </UI.Bottom>

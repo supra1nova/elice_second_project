@@ -14,7 +14,7 @@ interface CommentListsProps {
     ownerComment: null | string,
     reserveId: number
 }
-const UserReviewDetail = ({
+const ReviewDetail = ({
     key,
     email,
     createdAt,
@@ -31,30 +31,6 @@ const UserReviewDetail = ({
         }
     ])
     const [ownerName, setOwnerName] = useState<string>('')
-    const [myReview, setMyReview] = useState<boolean>(false)
-    const [openPopupDeleteConfirm, setOpenPopupDeleteConfirm] = useState(false);
-    const reverIdData = {reserveId: reserveId }
-
-    const handleOpenPopupDeleteConfirm = (e: any) => {
-        e.preventDefault();
-        setOpenPopupDeleteConfirm(true);
-      };
-    
-      const handleClosePopupDeleteConfirm = (e: any) => {
-        e.preventDefault();
-        setOpenPopupDeleteConfirm(!openPopupDeleteConfirm);
-      };
-
-    const handleSubmit = () => {
-        try {
-            API.delete('/api/reviews', '', reverIdData);
-            console.log('삭제완료')
-            setOpenPopupDeleteConfirm(false);
-            window.location.replace(`/account/restaurants/${REGNumber}`);
-        } catch (err: any) {
-            console.error(err);
-        }
-    };
 
     useEffect(() => {
         API.get(`/api/restaurants/${REGNumber}`).then((res) => {
@@ -89,7 +65,6 @@ const UserReviewDetail = ({
                 </UI.StyledReviwerProfile>
                 <UI.StyledReviewRight>
                     <UI.StyledGPA>평점 {rating}</UI.StyledGPA>
-                    <button onClick={handleOpenPopupDeleteConfirm}>삭제</button>
                 </UI.StyledReviewRight>
             </UI.StyledReviewBox>
             <UI.StyledReviewInner>
@@ -118,13 +93,8 @@ const UserReviewDetail = ({
                     </UI.StyledOwnerDescription>
                 </UI.StyledOwnerReview>
             }
-            <PopupDeleteConfirm
-                open={openPopupDeleteConfirm}
-                onClose={handleClosePopupDeleteConfirm}
-                onClick={handleSubmit}
-            />
         </>
     );
 };
 
-export default UserReviewDetail;
+export default ReviewDetail;

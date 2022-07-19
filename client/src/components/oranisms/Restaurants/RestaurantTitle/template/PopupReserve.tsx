@@ -90,7 +90,9 @@ const PopupReserve = ({ open, onClose, width, titleColor, title }: Props) => {
 
   useEffect(() => {
     API.userGet('/api/users/user').then((res) => {
-      setBooker(res);
+      if(res) {
+        setBooker(res);
+      }
     });
   }, []);
 
