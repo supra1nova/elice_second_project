@@ -13,20 +13,23 @@ interface Props {
   open: boolean;
   onClose: any;
   onClick?: any;
+  propsData: any;
 }
 
 type valueObject = {
   [key: string]: any;
 };
 
-const PopupCurrentPassword = ({ open, onClose, onClick }: Props) => {
+const PopupCurrentPassword = ({ open, onClose, onClick, propsData }: Props) => {
   const initialValue = {
     inputPassword: '',
   };
 
-  const [formValues, setFormValues] = useState<valueObject>(initialValue);
+  const [formValues, setFormValues] = useState<valueObject>(propsData);
   const [formErrors, setFormErrors] = useState<valueObject>({});
   const [isSubmit, setIsSubmit] = useState(false);
+
+  console.log(formValues);
 
   const handleChange = (e: any) => {
     const target = e.target;

@@ -3,18 +3,14 @@ import * as API from '../../../api/api';
 import LNBLayout from '../../../components/molecules/LNBLayout';
 import Avatar from '../../../components/molecules/Avatar';
 import InputFileButton from '../../../components/atoms/InputFileButton';
-import Typography from '../../../components/atoms/Typography';
 import Form from '../../../components/atoms/Form';
 import FormInputText from '../../../components/molecules/FormInputText';
 import FormFooter from '../../../components/molecules/FormFooter';
-import PopupCurrentPassword from './template/PopupCurrentPassword';
 import Button from '../../../components/atoms/Button';
 import { USERS } from '../../../constants/lnb';
 import { BUTTON } from '../../../constants/input';
-import { ROLE } from '../../../constants/member';
 import { LABELTITLE, PLACEHOLDER } from '../../../constants/input';
 import { ERROR } from '../../../constants/error';
-import { validateEmail } from '../../../functions';
 import * as UI from './style';
 
 type valueObject = {
@@ -26,14 +22,12 @@ const UsersSignout = () => {
     inputFileAvatarImage: '',
     inputName: '',
     inputNickname: '',
+    inputEmail: '',
     inputPassword: '',
     inputPasswordConfirm: '',
     inputPhone: '',
-    inputRole: ROLE.USER,
   };
 
-  const [openPopupCurrentPassword, setOpenPopupCurrentPassword] =
-    useState(false);
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
   const [fileImage, setFileImage] = useState('');
@@ -44,11 +38,12 @@ const UsersSignout = () => {
   useEffect(() => {
     API.userGet('/api/users/user').then((res) => {
       const data = {
-        inputFileAvatarImage: res.image,
         inputName: res.name,
         inputNickname: res.nickName,
         inputEmail: res.email,
         inputPhone: res.phoneNumber,
+        inputPassword: '',
+        inputPasswordConfirm: '',
       };
       setFormValues(data);
     });
@@ -61,19 +56,6 @@ const UsersSignout = () => {
     }
   }, [formErrors]);
 
-  const handleOpenPopupCurrentPassword = (e: any) => {
-    e.preventDefault();
-    setOpenPopupCurrentPassword(true);
-
-    setFormErrors(validate(formValues));
-    setIsSubmit(true);
-  };
-
-  const handleClosePopupCurrentPassword = (e: any) => {
-    e.preventDefault();
-    setOpenPopupCurrentPassword(!openPopupCurrentPassword);
-  };
-
   const handleChange = (e: any) => {
     const target = e.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -81,7 +63,77 @@ const UsersSignout = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
+
+    try {
+      const data = {
+        userInfo: {
+          email: formValues.inputEmail,
+          name: formValues.inputName,
+          password: formValues.inputPassword,
+          nickName: formValues.inputNickname,
+          phoneNumber: formValues.inputPhone,
+          inputPassword: formValues.inputPassword,
+          inputPasswordConfirm: formValues.inputPasswordConfirm,
+        },
+        currentPassword: formValues.inputPasswordCurrent,
+      };
+      const image = {
+        image: fileImage,
+        currentPassword: formValues.inputPasswordCurrent,
+      };
+      await API.patch('/api/users', '', data);
+      // if (fileImage) {
+      //   await API.patch('/api/users/image', '', image);
+      // }
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+
   const validate = (values: any) => {
+    const inputNameValue = values.inputName;
+    const inputNicknameValue = values.inputNickname;
+    const inputPhoneValue = values.inputPhone;
+    const inputPasswordValue = values.inputPassword;
+    const inputPasswordConfirmValue = values.inputPasswordConfirm;
+    const inputPasswordCurrentValue = values.inputPasswordCurrent;
+
+    const isPasswordMinLength = inputPasswordValue.length >= 8;
+    const isPasswordConfirmMinLength = inputPasswordConfirmValue.length >= 8;
+    const isPhoneMinLength = inputPhoneValue.length >= 11;
+    const isNameMinLength = inputNameValue < 2;
+    const isNickNameMinLength = inputNameValue < 2;
+
+    if (inputNameValue && isNameMinLength) {
+      errors.inputName = ERROR.NAME_MIN_LENGTH;
+    }
+
+    if (inputNicknameValue && isNickNameMinLength) {
+      errors.inputNickname = ERROR.NICKNAME_MIN_LENGTH;
+    }
+
+    if (inputPasswordValue && !isPasswordMinLength) {
+      errors.inputPassword = ERROR.PASSWORD_MIN_LENGTH;
+    }
+
+    if (inputPhoneValue && !isPhoneMinLength) {
+      errors.inputPhone = ERROR.PHONE_VALID;
+    }
+
+    if (inputPasswordConfirmValue && !isPasswordConfirmMinLength) {
+      errors.inputPasswordConfirm = ERROR.PASSWORD_MIN_LENGTH;
+    } else if (inputPasswordConfirmValue !== inputPasswordValue) {
+      errors.inputPasswordConfirm = ERROR.PASSWORD_SAME;
+    }
+
+    if (!inputPasswordCurrentValue) {
+      errors.inputPasswordCurrent = ERROR.PASSWORD_CURRENT;
+    }
+
     return errors;
   };
 
@@ -114,6 +166,19 @@ const UsersSignout = () => {
         error: formErrors.inputNickname,
       },
       {
+        htmlFor: 'inputPhone',
+        labelTitle: LABELTITLE.PHONE,
+        type: 'text',
+        id: 'inputPhone',
+        name: 'inputPhone',
+        value: formValues.inputPhone || '',
+        maxLength: 11,
+        autoComplete: undefined,
+        onChange: handleChange,
+        placeholder: PLACEHOLDER.PHONE,
+        error: formErrors.inputPhone,
+      },
+      {
         htmlFor: 'inputPassword',
         labelTitle: LABELTITLE.PASSWORD,
         type: 'password',
@@ -140,17 +205,17 @@ const UsersSignout = () => {
         error: formErrors.inputPasswordConfirm,
       },
       {
-        htmlFor: 'inputPhone',
-        labelTitle: LABELTITLE.PHONE,
-        type: 'text',
-        id: 'inputPhone',
-        name: 'inputPhone',
-        value: formValues.inputPhone || '',
-        maxLength: 11,
+        htmlFor: 'inputPasswordCurrent',
+        labelTitle: LABELTITLE.PASSWORD_CURRENT,
+        type: 'password',
+        id: 'inputPasswordCurrent',
+        name: 'inputPasswordCurrent',
+        value: formValues.inputPasswordCurrent || '',
+        maxLength: undefined,
         autoComplete: undefined,
         onChange: handleChange,
-        placeholder: PLACEHOLDER.PHONE,
-        error: formErrors.inputPhone,
+        placeholder: PLACEHOLDER.PASSWORD_CURRENT,
+        error: formErrors.inputPasswordCurrent,
       },
     ],
   };
@@ -190,7 +255,7 @@ const UsersSignout = () => {
             </UI.AvatarInput>
           </UI.AvatarContainer>
 
-          <Form onSubmit={handleOpenPopupCurrentPassword}>
+          <Form onSubmit={handleSubmit}>
             {inputTextData.user.map((item, index) => {
               return FormInputText(item, index);
             })}
@@ -202,11 +267,6 @@ const UsersSignout = () => {
             </FormFooter>
           </Form>
         </UI.Content>
-
-        <PopupCurrentPassword
-          open={openPopupCurrentPassword}
-          onClose={handleClosePopupCurrentPassword}
-        />
       </UI.Container>
     </LNBLayout>
   );

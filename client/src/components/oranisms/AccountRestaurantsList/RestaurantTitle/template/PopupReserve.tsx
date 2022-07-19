@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PopupContainer from '../../../Popup/PopupContainer';
 import PopupHeader from '../../../Popup/PopupHeader';
 import PopupContents from '../../../Popup/PopupContents';
@@ -6,6 +7,11 @@ import PopupFooter from '../../../Popup/PopupFooter';
 import { POPUP } from '../../../../../constants/title';
 import * as UI from './style';
 import * as Icon from '../../../../../assets/svg';
+import './App.css'
+import * as API from '../../../../../api/api';
+import Button from '../../../../atoms/Button'
+import { ERROR } from '../../../../../constants/error';
+import ReserveDate from '../../../../molecules/ReserveDate'
 
 interface Props {
   open: boolean;
@@ -26,17 +32,34 @@ const timeTable = [
   '오후 16:00',
 ];
 
-const PopupReserve = ({ open, onClose, onClick, width, titleColor, title }: Props) => {
+type valueObject = {
+  [key: string]: any;
+};
+
+const PopupReserve = ({ open, onClose, width, titleColor, title }: Props) => {
+  const navigate = useNavigate();
+  const initialValue = { 
+    timeId: 0,
+    email: '',
+    number: 0,
+    REGNumber: '',
+    comment: '',
+    phoneNumber: '',
+    name: ''
+  };
+
+  const [formErrors, setFormErrors] = useState<valueObject>({});
+  const [formValues, setFormValues] = useState<valueObject>(initialValue);
+  const [isSubmit, setIsSubmit] = useState(false);
   const [timeSelect, setTimeSelect] = useState('');
   const [count, setCount] = useState(0);
+  const [booker, setBooker] = useState({
+    name: '',
+    phoneNumber: ''
+  });
 
   function handleClickTime(time: any) {
     setTimeSelect(time);
-  }
-
-  function handleSeeMore(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    e.preventDefault();
-    // 달력
   }
 
   function onIncrease() {
@@ -50,10 +73,55 @@ const PopupReserve = ({ open, onClose, onClick, width, titleColor, title }: Prop
     setCount((prev) => prev - 1);
   }
 
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
+    try {
+      const data = {
+      };
+      await API.post('/api/reserves/', '', data);
+
+      navigate('/');
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    API.userGet('/api/users/user').then((res) => {
+      setBooker(res);
+    });
+  }, []);
+
+  const validate = (values: any) => {
+    const errors: valueObject = {};
+    const isInputIdValue = values.inputTime;
+    const isInputNumberValue = values.inputNumber === 0;
+    const isInputBookerNameValue = values.inputBookerName;
+    const isInputBookerPhoneNumberValue = values.inputBookerPhoneNumber;
+
+    if (!isInputIdValue) {
+      errors.inputTime = ERROR.TIME_INPUT;
+    }
+    if (!isInputNumberValue) {
+      errors.inputNumber = ERROR.NUMBER_INPUT;
+    }
+    if (!isInputBookerNameValue) {
+      errors.inputBookerName = ERROR.RESERVE_PHONE_INPUT;
+    }
+    if (!isInputBookerPhoneNumberValue) {
+      errors.inputBookerPhoneNumber = ERROR.RESERVE_NAME_INPUT;
+    }
+
+    return errors;
+  };
+
   return (
     <PopupContainer 
       open={open}
       width={width}
+      paddingBottom={'20'}
     >
       <PopupHeader
         title={title}
@@ -61,17 +129,21 @@ const PopupReserve = ({ open, onClose, onClick, width, titleColor, title }: Prop
         titleColor={titleColor}
       />
 
-      <UI.FormContainer>
+      <UI.FormContainer onSubmit={handleSubmit}>
         <label>
-          <Icon.Calender width={16} height={17.6} fill={'black'} />
-          <input type="date" name="name" />
+          <UI.FormCategory>
+            <Icon.Calender width={16} height={17.6} fill={'black'} />
+            <ReserveDate />
+          </UI.FormCategory>
         </label>
 
         <UI.Divider />
 
         <label>
-          <Icon.Clock width={16} height={16} fill={'black'} />
-          시간 선택
+          <UI.FormCategory>
+            <Icon.Clock width={16} height={16} fill={'black'} />
+            <UI.FormName>시간 선택</UI.FormName>
+          </UI.FormCategory>
           <UI.TimeWrapper>
             {timeTable.map((time, idx) => {
               return (
@@ -79,31 +151,34 @@ const PopupReserve = ({ open, onClose, onClick, width, titleColor, title }: Prop
                   key={`${time}-${idx}`}
                   active={timeSelect === time}
                   onClick={() => handleClickTime(time)}
+                  type="button"
                 >
                   {time}
                 </UI.TimeSelectButton>
               );
             })}
           </UI.TimeWrapper>
-          <div>
-            <div></div>
+          <UI.TimeLegend>
+            <UI.SelectBox></UI.SelectBox>
             <span>선택</span>
-            <div></div>
+            <UI.NoneBox></UI.NoneBox>
             <span>불가</span>
-          </div>
+          </UI.TimeLegend>
         </label>
 
         <UI.Divider />
 
         <label>
-          <Icon.Person width={16} height={16} fill={'black'} />
-          인원 선택
+          <UI.FormCategory>
+            <Icon.Person width={16} height={16} fill={'black'} />
+            <UI.FormName>인원 선택</UI.FormName>
+          </UI.FormCategory>
           <UI.CountWrapper>
-            <UI.ButtonWrapper onClick={onDecrease}>
+            <UI.ButtonWrapper onClick={onDecrease} type="button">
               <Icon.PlusButton width={28} height={28}></Icon.PlusButton>
             </UI.ButtonWrapper>
             {count}
-            <UI.ButtonWrapper onClick={onIncrease}>
+            <UI.ButtonWrapper onClick={onIncrease} type="button">
               <Icon.MinusButton width={28} height={28}></Icon.MinusButton>
             </UI.ButtonWrapper>
           </UI.CountWrapper>
@@ -113,18 +188,28 @@ const PopupReserve = ({ open, onClose, onClick, width, titleColor, title }: Prop
 
         <label>
           <div>예약자 정보</div>
-          예약자
-          <input type="text" name="name" />
-          연락처
-          <input type="text" name="name" />
-          요청사항
-          <textarea placeholder='식당에 요청하실 내용을 적어주세요'>
-          </textarea>
+          <UI.BookerInfo>
+            <div>
+              <span>예약자</span>
+              <input type="text" name="name" value={booker.name} />
+            </div>
+            <div>
+              <span>연락처</span>
+              <input type="text" name="name" value={booker.phoneNumber} />
+            </div>
+            <div>
+              <span>요청사항</span>
+              <textarea placeholder='식당에 요청하실 내용을 적어주세요' rows={2}>
+              </textarea>
+            </div>
+          </UI.BookerInfo>
         </label>
 
         <UI.Divider />
 
-        <input type="submit" value="Submit" />
+        <Button component={'primary'} size={'large'} block>
+            예약하기
+        </Button>
       </UI.FormContainer>
     </PopupContainer>
   );

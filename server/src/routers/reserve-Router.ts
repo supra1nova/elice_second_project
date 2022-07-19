@@ -100,11 +100,14 @@ reserveRouter.delete('/', async (req, res, next) => {
 export interface reserveInfo{
   reserveId?:number,
   timeId: number,
-  email: string,
+  email?: string,
   number: number,
-  menuList: number[],
-  quantityList:number[],
-  totalPrice: number,
+  comment?:string,
+  phoneNumber?:string,
+  name:string,
+  // menuList: number[],
+  // quantityList:number[],
+  // totalPrice: number,
   REGNumber: string,
 }
 export { reserveRouter };

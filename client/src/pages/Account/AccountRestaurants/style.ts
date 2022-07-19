@@ -9,4 +9,7 @@ export const Container = styled.div`
 export const Content = styled.div`
   max-width: 650px;
   width: 100%;
+  label {
+    width: 150px;
+  }
 `;

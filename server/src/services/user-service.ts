@@ -1,5 +1,5 @@
 import { UserModel, userModel} from "../db/data-source"
-import { userInfo } from "src/routers";
+import { updateUserInfo, userInfo } from "src/routers";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -12,9 +12,8 @@ class UserService {
 
   // 회원가입
   async addUser(userInfo:userInfo) {
-    const { email, name, password,nickName,phoneNumber } = userInfo;
+    const { email, name, password, nickName, phoneNumber } = userInfo;
     // 이메일 중복 확인
-    console.log(email)
     if(email==undefined) throw new Error("Email was not given");
     const user = await this.userModel.findUserbyEmail(email);
     if (user) {
@@ -24,10 +23,11 @@ class UserService {
     }
     // 이메일 중복은 이제 아니므로, 회원가입을 진행함
     // 우선 비밀번호 해쉬화(암호화)
-    if(password==undefined) throw new Error("Password was not given");
+    if(!email || !name || !password || !nickName || !phoneNumber) throw new Error("data is not given");
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUserInfo:userInfo = userInfo;
-    newUserInfo.password= hashedPassword;
+    newUserInfo.password = hashedPassword;
+
     // db에 저장
     const createdNewUser = await this.userModel.create(newUserInfo);
     return createdNewUser;
@@ -87,17 +87,19 @@ class UserService {
     const user= await this.userModel.findUserbyEmail(email);
     return user
   }
-
+  
   // // 유저정보 수정, 현재 비밀번호가 있어야 수정 가능함.
-  async setUser(currentPassword:string, userInfo:userInfo) {
-    const {email} = userInfo;
-    if(email==undefined) throw new Error("email not provided");
+  async setUser(updateUserInfo: updateUserInfo, email: string) {
+    console.log(1);
+    const { currentPassword } = updateUserInfo;
+    if(!email) throw new Error("email not provided");
     const user = await this.userModel.findUserbyEmail(email);
     if (!user) {
       throw new Error(
         '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.'
       );
     }
+    console.log(2);
     const correctPasswordHash = user.password; // db에 저장되어 있는 암호화된 비밀번호
 
     // 매개변수의 순서 중요 (1번째는 프론트가 보내온 비밀번호, 2번쨰는 db에 있떤 암호화된 비밀번호)
@@ -114,21 +116,22 @@ class UserService {
 
     // 이제 드디어 업데이트 시작
 
+    console.log(3);
     // 비밀번호도 변경하는 경우에는, 회원가입 때처럼 해쉬화 해주어야 함.
-    const { password } = userInfo;
+    const { password } = updateUserInfo;
 
     if (password) {
       const newPasswordHash = await bcrypt.hash(password, 10);
-      userInfo.password = newPasswordHash;
+      updateUserInfo.password = newPasswordHash;
     }
 
+    console.log(4);
     // 업데이트 진행
     // console.log("============",email);
     // console.log("============",userInfo);
-    delete userInfo.email;
-    console.log("===============", userInfo);
-    console.log("============", email)
-    const updateduser = await this.userModel.updateUser(email,userInfo);
+    delete updateUserInfo.email;
+    const updateduser = await this.userModel.updateUser(email, updateUserInfo);
+    console.log(5);
     return updateduser;
   }
     // 3. 전체 제품 품목 수(SKU) 조회

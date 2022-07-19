@@ -12,9 +12,6 @@ export const Container = styled.div`
         return css`
           display: flex;
           align-items: center;
-          label {
-            width: 150px;
-          }
           label + div {
             margin-top: 0;
           }

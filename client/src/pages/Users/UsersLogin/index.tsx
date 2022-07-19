@@ -44,7 +44,6 @@ const UsersLogin = () => {
       };
       const result = await API.post('/api/users/login', '', data);
       const token = result.data.token;
-      console.log(result, token);
       localStorage.setItem('token', token);
 
       alert(`정상적으로 로그인되었습니다.`);

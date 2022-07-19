@@ -14,7 +14,10 @@ class ReviewService {
   async addReview(reviewInfo: reviewInfo) {
     const { rating, REGNumber } = reviewInfo 
     const createdNewReview = await this.reviewModel.create(reviewInfo);
-    
+    const restaurantChecking = await ratingModel.findRatingsByREGNumber(REGNumber);
+    if (!restaurantChecking[0]) {
+      await ratingModel.create({ REGNumber });
+    } 
     const updatedRating = await ratingModel.updateRating(true, rating, REGNumber);
     const ratingResult = await ratingModel.findRatingsByREGNumber(REGNumber);
     const average = ratingResult[0].Average;
