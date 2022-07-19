@@ -26,10 +26,10 @@ const UsersSignout = () => {
     inputFileAvatarImage: '',
     inputName: '',
     inputNickname: '',
+    inputEmail: '',
     inputPassword: '',
     inputPasswordConfirm: '',
     inputPhone: '',
-    inputRole: ROLE.USER,
   };
 
   const [openPopupCurrentPassword, setOpenPopupCurrentPassword] =
@@ -44,13 +44,13 @@ const UsersSignout = () => {
   useEffect(() => {
     API.userGet('/api/users/user').then((res) => {
       const data = {
-        inputFileAvatarImage: res.image,
         inputName: res.name,
         inputNickname: res.nickName,
         inputEmail: res.email,
         inputPhone: res.phoneNumber,
       };
       setFormValues(data);
+      console.log(res);
     });
   }, []);
 
@@ -81,7 +81,40 @@ const UsersSignout = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
+
+    try {
+      const data = {
+        userInfo: {
+          email: formValues.inputEmail,
+          name: formValues.inputName,
+          password: formValues.inputPassword,
+          nickName: formValues.inputNickname,
+          phoneNumber: formValues.inputPhone,
+        },
+        currentPassword: formValues.inputPasswordCurrent,
+      };
+      await API.patch('/api/users/', '', data);
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+
   const validate = (values: any) => {
+    const inputPasswordValue = values.inputPassword;
+    const inputPasswordConfirmValue = values.inputPasswordConfirm;
+    const inputPasswordCurrentValue = values.inputPasswordCurrent;
+
+    if (inputPasswordConfirmValue !== inputPasswordValue) {
+      errors.inputPasswordConfirm = ERROR.PASSWORD_SAME;
+    }
+    if (!inputPasswordCurrentValue) {
+      errors.inputPasswordCurrent = ERROR.PASSWORD_CURRENT;
+    }
+
     return errors;
   };
 
@@ -114,6 +147,19 @@ const UsersSignout = () => {
         error: formErrors.inputNickname,
       },
       {
+        htmlFor: 'inputPhone',
+        labelTitle: LABELTITLE.PHONE,
+        type: 'text',
+        id: 'inputPhone',
+        name: 'inputPhone',
+        value: formValues.inputPhone || '',
+        maxLength: 11,
+        autoComplete: undefined,
+        onChange: handleChange,
+        placeholder: PLACEHOLDER.PHONE,
+        error: formErrors.inputPhone,
+      },
+      {
         htmlFor: 'inputPassword',
         labelTitle: LABELTITLE.PASSWORD,
         type: 'password',
@@ -140,17 +186,17 @@ const UsersSignout = () => {
         error: formErrors.inputPasswordConfirm,
       },
       {
-        htmlFor: 'inputPhone',
-        labelTitle: LABELTITLE.PHONE,
-        type: 'text',
-        id: 'inputPhone',
-        name: 'inputPhone',
-        value: formValues.inputPhone || '',
-        maxLength: 11,
+        htmlFor: 'inputPasswordCurrent',
+        labelTitle: LABELTITLE.PASSWORD_CURRENT,
+        type: 'password',
+        id: 'inputPasswordCurrent',
+        name: 'inputPasswordCurrent',
+        value: formValues.inputPasswordCurrent || '',
+        maxLength: undefined,
         autoComplete: undefined,
         onChange: handleChange,
-        placeholder: PLACEHOLDER.PHONE,
-        error: formErrors.inputPhone,
+        placeholder: PLACEHOLDER.PASSWORD_CURRENT,
+        error: formErrors.inputPasswordCurrent,
       },
     ],
   };
@@ -190,7 +236,7 @@ const UsersSignout = () => {
             </UI.AvatarInput>
           </UI.AvatarContainer>
 
-          <Form onSubmit={handleOpenPopupCurrentPassword}>
+          <Form onSubmit={handleSubmit}>
             {inputTextData.user.map((item, index) => {
               return FormInputText(item, index);
             })}
@@ -203,10 +249,11 @@ const UsersSignout = () => {
           </Form>
         </UI.Content>
 
-        <PopupCurrentPassword
+        {/* <PopupCurrentPassword
           open={openPopupCurrentPassword}
           onClose={handleClosePopupCurrentPassword}
-        />
+          propsData={formValues}
+        /> */}
       </UI.Container>
     </LNBLayout>
   );

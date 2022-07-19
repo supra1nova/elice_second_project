@@ -46,6 +46,7 @@ export const PLACEHOLDER = {
   ID: 'elice@gmail.com',
   PASSWORD: '최소 8자 이상의 비밀번호를 입력해 주세요',
   PASSWORD_CONFIRM: '',
+  PASSWORD_CURRENT: '현재 비밀번호를 입력해 주세요.',
   NAME: '2글자 이상의 이름을 입력해 주세요',
   NICKNAME: '닉네임',
   EMAIL: 'elice@gmail.com',

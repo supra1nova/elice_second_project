@@ -61,7 +61,7 @@ const UsersRegister = () => {
 
     setFormErrors(validate(formValues));
     setIsSubmit(true);
-    console.log(formValues);
+
     try {
       const data = {
         email: formValues.inputEmail,
@@ -73,14 +73,7 @@ const UsersRegister = () => {
       };
 
       await API.post('/api/users/register', '', data);
-      const isError = !!formErrors;
-      if (isError) {
-        if (data.role === ROLE.OWNER) {
-          navigate('/account');
-        } else {
-          navigate('/users/login');
-        }
-      }
+      navigate('/users/login');
     } catch (err: any) {
       console.error(err);
     }
@@ -94,60 +87,60 @@ const UsersRegister = () => {
   }, [formErrors]);
 
   const validate = (values: any) => {
-    const isInputNameValue = values.inputName;
-    const isInputNicknameValue = values.inputNickname;
-    const isInputEmailValue = values.inputEmail;
-    const isInputPasswordValue = values.inputPassword;
-    const isInputPasswordConfirmValue = values.inputPasswordConfirm;
-    const isInputPhoneValue = values.inputPhone;
-    const isInputCheckOwnerValue = values.inputCheckOwner;
-    const isInputCheckAdminChecked = values.inputCheckAdmin;
-    const isInputAdminCodeValue = values.inputAdminCode;
+    // const isInputNameValue = values.inputName;
+    // const isInputNicknameValue = values.inputNickname;
+    // const isInputEmailValue = values.inputEmail;
+    // const isInputPasswordValue = values.inputPassword;
+    // const isInputPasswordConfirmValue = values.inputPasswordConfirm;
+    // const isInputPhoneValue = values.inputPhone;
+    // const isInputCheckOwnerValue = values.inputCheckOwner;
+    // const isInputCheckAdminChecked = values.inputCheckAdmin;
+    // const isInputAdminCodeValue = values.inputAdminCode;
 
-    const isValidEmail = validateEmail(values.inputEmail);
+    // const isValidEmail = validateEmail(values.inputEmail);
 
-    const isPasswordMinLength = isInputPasswordValue.length >= 8;
-    const isPhoneMinLength = isInputPhoneValue.length >= 11;
-    const isAdminCodeMinLength = isInputPasswordValue.length >= 4;
-    const isNameMinLength = isInputNameValue < 2;
+    // const isPasswordMinLength = isInputPasswordValue.length >= 8;
+    // const isPhoneMinLength = isInputPhoneValue.length >= 11;
+    // const isAdminCodeMinLength = isInputPasswordValue.length >= 4;
+    // const isNameMinLength = isInputNameValue < 2;
 
-    if (!isInputNameValue) {
-      errors.inputName = ERROR.NAME_INPUT;
-    } else if (isNameMinLength) {
-      errors.inputName = ERROR.NAME_MIN_LENGTH;
-    }
+    // if (!isInputNameValue) {
+    //   errors.inputName = ERROR.NAME_INPUT;
+    // } else if (isNameMinLength) {
+    //   errors.inputName = ERROR.NAME_MIN_LENGTH;
+    // }
 
-    if (!isInputNicknameValue) {
-      errors.inputNickname = ERROR.NICKNAME_INPUT;
-    }
+    // if (!isInputNicknameValue) {
+    //   errors.inputNickname = ERROR.NICKNAME_INPUT;
+    // }
 
-    if (!isInputEmailValue) {
-      errors.inputEmail = ERROR.EMAIL_INPUT;
-    } else if (!isValidEmail) {
-      errors.inputEmail = ERROR.EMAIL_VALID;
-    }
+    // if (!isInputEmailValue) {
+    //   errors.inputEmail = ERROR.EMAIL_INPUT;
+    // } else if (!isValidEmail) {
+    //   errors.inputEmail = ERROR.EMAIL_VALID;
+    // }
 
-    if (!isInputPasswordValue) {
-      errors.inputPassword = ERROR.PASSWORD_INPUT;
-    } else if (!isPasswordMinLength) {
-      errors.inputPassword = ERROR.PASSWORD_MIN_LENGTH;
-    }
+    // if (!isInputPasswordValue) {
+    //   errors.inputPassword = ERROR.PASSWORD_INPUT;
+    // } else if (!isPasswordMinLength) {
+    //   errors.inputPassword = ERROR.PASSWORD_MIN_LENGTH;
+    // }
 
-    if (!isInputPasswordConfirmValue) {
-      errors.inputPasswordConfirm = ERROR.PASSWORD_INPUT;
-    } else if (!isPasswordMinLength) {
-      errors.inputPasswordConfirm = ERROR.PASSWORD_SAME;
-    }
+    // if (!isInputPasswordConfirmValue) {
+    //   errors.inputPasswordConfirm = ERROR.PASSWORD_INPUT;
+    // } else if (!isPasswordMinLength) {
+    //   errors.inputPasswordConfirm = ERROR.PASSWORD_SAME;
+    // }
 
-    if (!isInputPhoneValue) {
-      errors.inputPhone = ERROR.PHONE_INPUT;
-    } else if (!isPhoneMinLength) {
-      errors.inputPhone = ERROR.PHONE_VALID;
-    }
+    // if (!isInputPhoneValue) {
+    //   errors.inputPhone = ERROR.PHONE_INPUT;
+    // } else if (!isPhoneMinLength) {
+    //   errors.inputPhone = ERROR.PHONE_VALID;
+    // }
 
-    if (isInputCheckAdminChecked && isInputAdminCodeValue !== CODE.ADMIN) {
-      errors.inputAdminCode = ERROR.ADMIN_CODE_INPUT_VALID;
-    }
+    // if (isInputCheckAdminChecked && isInputAdminCodeValue !== CODE.ADMIN) {
+    //   errors.inputAdminCode = ERROR.ADMIN_CODE_INPUT_VALID;
+    // }
 
     return errors;
   };

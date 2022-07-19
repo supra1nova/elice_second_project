@@ -8,6 +8,7 @@ export const ERROR = {
   PASSWORD_INPUT: '비밀번호를 입력해주세요.',
   PASSWORD_MIN_LENGTH: '비밀번호는 최소 8자 입니다.',
   PASSWORD_SAME: '작성된 비밀번호와 일치하지 않습니다.',
+  PASSWORD_CURRENT: '정보를 변경하려면, 현재의 비밀번호가 필요합니다.',
   NICKNAME_INPUT: '닉네임을 입력해주세요.',
   NICKNAME_IS_ALEADY: '이미 사용중인 닉네임입니다.',
   PHONE_INPUT: '전화번호를 입력해주세요.',
