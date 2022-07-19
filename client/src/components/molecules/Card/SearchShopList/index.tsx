@@ -1,19 +1,9 @@
 import * as UI from './style';
-import { Link } from 'react-router-dom';
 import Img from '../../../atoms/Img';
 import * as Icon from '../../../../assets/svg';
-import LikeBtn from '../../../atoms/LikeButton/LikeBtn';
 import Grade from '../../../atoms/Grade';
-import { useState } from 'react';
-
-// heart가 interative 하게 만들어야 함
-// // 클릭 > 색이 생기고, 유저의 찜리스트에 해당 shop 추가 (atom/LikeBtn)
-// 링크는 각 리스트 아이템의 shop detail로 갈 수 있도록
-// grade는 계산된 shop의 데이터 가져오기 (atoms/grade)
-// likeCount, reviewCount 도 atoms로 빼는게 좋겠음 (shop detail에서도 사용)
-// util에 toLocaleString 추가?
-
-// large props를 이용 (large(true) => searchList , large(false) => main2card)
+import { useState, useEffect } from 'react';
+import * as API from '../../../../api/api';
 
 interface MainCardWithoutReviewProps {
   title: String;
@@ -23,8 +13,8 @@ interface MainCardWithoutReviewProps {
   large: boolean;
   // Number로 받으면 caption에 reactNode가 두개라 함..
   likeCount: any;
-  reviewCount: any;
   shopImg: string;
+  regNumber: string;
 }
 const MainCardWithoutReview = ({
   title,
@@ -32,9 +22,21 @@ const MainCardWithoutReview = ({
   category,
   large,
   likeCount,
-  reviewCount,
   shopImg,
+  regNumber,
 }: MainCardWithoutReviewProps) => {
+  const [reviewCount, setReviewCount] = useState(0);
+  const getReviewData = async () => {
+    const result = await API.get(`/api/reviews/${regNumber}`).then((res) => {
+      const count = res.reviews.length;
+      console.log(count);
+      setReviewCount(count);
+    });
+  };
+
+  useEffect(() => {
+    getReviewData();
+  }, []);
   return (
     <>
       <UI.Container large={large}>
@@ -44,11 +46,11 @@ const MainCardWithoutReview = ({
         <UI.InfoWrapper>
           <UI.Title large={large}>
             {title}
-            {large && <Grade />}
+            {large && <Grade regNumber={regNumber} />}
           </UI.Title>
           <UI.SubTitle>
             {address} - {category}
-            <UI.Caption>
+            <UI.Caption large={large}>
               <Icon.Heart fill={'gray'} />
               {likeCount}
               <Icon.Review />

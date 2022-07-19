@@ -20,15 +20,15 @@ const LikeBtn = ({ regNumber, email, isWished }: any) => {
       setLiked(true);
       setLikedColor('#FB5E64');
     }
-  }, [isWished]);
+  }, [isWished, liked]);
 
   function handleClick() {
     liked === false ? setLiked(true) : setLiked(false);
     if (liked) {
-      API.delete('/api/wishes', '', postData).then((res) => console.log(res));
+      API.delete('/api/wishes', '', postData).then((res) => res);
       setLikedColor('#A6A8A3');
     } else {
-      API.post('/api/wishes', '', postData).then((res) => console.log(res));
+      API.post('/api/wishes', '', postData).then((res) => res);
       setLikedColor('#FB5E64');
     }
   }

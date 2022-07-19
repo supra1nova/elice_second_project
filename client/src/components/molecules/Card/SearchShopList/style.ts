@@ -37,12 +37,18 @@ export const InfoWrapper = styled.div`
 
 export const Title = styled.div`
   ${(props) => props.theme.font.subtitle1}
-  margin-top: 10px;
+  margin-top: ${(props: Props) => (props.large ? '10px' : '5px')};
   line-height: 23px;
   display: flex;
   align-items: center;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   span {
-    margin-left: auto;
+    position: absolute;
+    right: 10px;
   }
   margin-bottom: ${(props: Props) => (props.large ? '5px' : '0')};
 `;
@@ -56,8 +62,8 @@ export const SubTitle = styled.div`
 export const Caption = styled.div`
   ${(props) => props.theme.font.caption};
   color: ${(props) => props.theme.colors.font2};
-  display: flex;
   align-items: center;
+  display: ${(props: Props) => (props.large ? 'flex' : 'none')};
 
   svg:nth-child(1) {
     margin-right: 5px;

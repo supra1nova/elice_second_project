@@ -17,6 +17,7 @@ export const GridContainer = styled.div`
 export const Title = styled.p`
   font-size: 24px;
   font-weight: 700;
+  margin-top: 20px;
 `;
 
 export const SubTitle = styled.p`

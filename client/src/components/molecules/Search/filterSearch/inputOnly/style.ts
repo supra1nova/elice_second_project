@@ -9,7 +9,7 @@ export const EXContainer = styled.div`
 `;
 
 export const Container = styled.div`
-  width: 329px;
+  width: 280px;
   height: 40px;
   background: #f7f7f7;
   border: 1px solid #e5e5e5;
@@ -17,18 +17,14 @@ export const Container = styled.div`
   margin-left: 10px;
   display: flex;
   align-items: center;
-
-  > button {
-    margin-left: 7px;
-  }
 `;
 
 export const Input = styled.input`
   border: none;
   border-radius: 50px;
   background-color: white;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-  width: 200px;
+  /* box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); */
+  width: 100%;
   height: 40px;
   padding: 0 20px;
 
@@ -54,4 +50,6 @@ export const SearchBtn = styled.button`
   border-radius: 50px;
   ${(props) => props.theme.font.caption}
   color: white;
+  margin-left: auto;
+  margin-right: 8px;
 `;

@@ -4,7 +4,7 @@ import GlobalLayout from './GlobalLayout';
 import HalfLayout from './HalfLayout';
 import Home from '../pages/Home';
 import RestaurantHome from '../pages/Restaurant/RestaurantHome';
-import SearchHome from '../pages/Search/SearchHome';
+import SearchHome from '../pages/Search';
 import AccountHome from '../pages/Account/AccountHome';
 import AccountRestaurants from '../pages/Account/AccountRestaurants';
 import AccountRestaurantsList from '../pages/Account/AccountRestaurantsList';

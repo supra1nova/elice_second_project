@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as UI from './style';
+import * as API from '../../../api/api';
 
 // ???? 왜 Number로 하면 에러??
 export interface Props {
-  grade?: String;
+  regNumber: String;
 }
 
-const Grade = ({ grade }: Props) => {
+const Grade = ({ regNumber }: Props) => {
+  const [grade, setGrade] = useState(0);
+  useEffect(() => {
+    API.get(`/api/restaurants/${regNumber}`).then((res) => {
+      setGrade(res.average.toFixed(1));
+    });
+  }, []);
   return (
     <>
       <UI.Text>{grade}</UI.Text>

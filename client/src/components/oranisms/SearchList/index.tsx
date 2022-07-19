@@ -1,22 +1,11 @@
 import ShopListCard from '../../molecules/Card/SearchShopList';
 import * as UI from './style';
-import { dummy } from './MockData';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import LikeBtn from '../../atoms/LikeButton/LikeBtn';
-import axios from 'axios';
 import * as API from '../../../api/api';
 
-const postData = {
-  email: 'dcTest000',
-  name: 'kdc',
-  password: '93939393',
-  nickName: 'adsfadsfcv',
-  phoneNumber: '1292',
-  role: 'OWNER',
-};
-
-const MainShopList = ({ inputValue }: any) => {
+const SearchShopList = ({ inputValue, categorySelect }: any) => {
   const [wishes, setWishes] = useState([]);
   const [userEmail, setUserEmail] = useState('');
 
@@ -44,7 +33,7 @@ const MainShopList = ({ inputValue }: any) => {
   }, []);
 
   useEffect(() => {
-    if (inputValue === '') {
+    if (inputValue === '' || categorySelect === '') {
       API.get('/api/restaurants').then((res) => {
         setShop(res.restaurants);
       });
@@ -53,17 +42,18 @@ const MainShopList = ({ inputValue }: any) => {
         const data = res.restaurants;
         const filtered = data.filter(
           (e: any) =>
-            e.name.includes(inputValue) || e.category.includes(inputValue),
+            e.name.includes(inputValue) ||
+            e.category.includes(inputValue) ||
+            e.category.includes(categorySelect),
         );
         setShop(filtered);
       });
     }
-  }, [inputValue]);
+  }, [inputValue, categorySelect]);
 
   return (
     <UI.Container>
-      <UI.Title>추천 맛집 List!</UI.Title>
-      <UI.SubTitle>알 수 없는 알고리즘에 의한 추천</UI.SubTitle>
+      <UI.Title>검색결과</UI.Title>
       <UI.GridContainer>
         {shop.map((item, idx) => {
           const isWished = wishes
@@ -81,6 +71,7 @@ const MainShopList = ({ inputValue }: any) => {
               />
               <Link to={`/account/restaurants/${item.REGNumber}`}>
                 <ShopListCard
+                  regNumber={item.REGNumber}
                   title={item.name}
                   address={item.address1}
                   category={item.category}
@@ -98,4 +89,4 @@ const MainShopList = ({ inputValue }: any) => {
   );
 };
 
-export default MainShopList;
+export default SearchShopList;

@@ -1,38 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as UI from './style';
 import * as Icon from '../../../../../assets/svg';
-import FilterSearch from '../../filterSearch';
 
-const FilterSearchInputOnly = ({ setInputValue }: any) => {
-  const [filterFold, setFilterFold] = useState(false);
+const SearchInput = ({ setInputValue }: any) => {
   let timer: any;
 
-  if (!filterFold) {
-    return (
-      <UI.EXContainer>
-        <Icon.Search width={22} height={22} />
-        <UI.Container>
-          <UI.Input
-            onChange={(e) => {
-              if (timer) {
-                clearTimeout(timer);
-              }
-              timer = setTimeout(function () {
-                setInputValue(e.target.value);
-              }, 300);
-            }}
-            type='text'
-          />
-          <UI.FilterBtn onClick={() => setFilterFold(true)}>
-            검색필터
-          </UI.FilterBtn>
-          <UI.SearchBtn>검색</UI.SearchBtn>
-        </UI.Container>
-      </UI.EXContainer>
-    );
-  } else {
-    return <FilterSearch></FilterSearch>;
-  }
+  return (
+    <UI.EXContainer>
+      <Icon.Search width={22} height={22} />
+      {/* <UI.Container> */}
+      <UI.Input
+        placeholder='찾으시는 가게, 음식종류 등의 키워드로 검색해보세요.'
+        onChange={(e) => {
+          if (timer) {
+            clearTimeout(timer);
+          }
+          timer = setTimeout(function () {
+            setInputValue(e.target.value);
+          }, 300);
+        }}
+        type='text'
+      />
+      {/* </UI.Container> */}
+    </UI.EXContainer>
+  );
 };
 
-export default FilterSearchInputOnly;
+export default SearchInput;

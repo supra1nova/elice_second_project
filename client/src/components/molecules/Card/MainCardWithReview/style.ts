@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
-  width: 544px;
+  width: 100%;
 `;
 
 export const ImgWrapper = styled.div`
@@ -15,7 +15,7 @@ export const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding-left: 20px;
-  width: 374px;
+  width: 100%;
 `;
 
 export const Title = styled.div`
@@ -66,6 +66,8 @@ export const SeeDetails = styled.div`
   justify-content: flex-end;
   align-items: center;
   margin-top: auto;
+  margin-bottom: 5px;
+  margin-right: 5px;
   ${(props) => props.theme.font.caption}
   color: ${(props) => props.theme.colors.font2}
 `;
