@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
 import PostCodePopup from '../../oranisms/PostCode/PostCodePopup';
@@ -42,11 +42,14 @@ const FormInputAddress = ({
     inputAddres2: '',
   };
   const [addressValue, setAddressValue] = useState(initialValue);
-  propsFunction(addressValue);
 
   const [openPostCodePopup, setOpenPostCodePopup] = useState(false);
 
+  useEffect(() => {
+    propsFunction(addressValue);
+  }, [addressValue]);
   // 팝업창 열기
+
   const handleOpenPostCodePopup = (e: any) => {
     e.preventDefault();
     setOpenPostCodePopup(true);
@@ -78,8 +81,9 @@ const FormInputAddress = ({
     }
     addressValue.inputPostNumber = data.zonecode;
     addressValue.inputAddres1 = data.address;
-    setOpenPostCodePopup(!openPostCodePopup);
+    setOpenPostCodePopup(openPostCodePopup);
   };
+
   return (
     <>
       <UI.Container>

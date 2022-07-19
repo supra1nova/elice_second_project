@@ -177,6 +177,8 @@ const AccountRestaurants = () => {
     setResult(data);
   };
 
+  console.log(result);
+
   return (
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
