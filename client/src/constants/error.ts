@@ -19,4 +19,7 @@ export const ERROR = {
   ADMIN_CODE_INPUT: '관리자 코드를 입력해주세요.',
   ADMIN_CODE_INPUT_VALID: 'ADMIN CODE가 일치하지 않습니다.',
   RESTAURANT_NAME: '업체명을 입력해주세요.',
+  RESTAURANT_OFFICE: '지점명을 입력해주세요.',
+  ADDRESS_INPUT: '주소를 입력해주세요.',
+  DESCRIPTION_INPUT: '설명을 입력해주세요.',
 };
