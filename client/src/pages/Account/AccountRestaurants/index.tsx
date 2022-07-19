@@ -40,9 +40,9 @@ const AccountRestaurants = () => {
     inputRestauranPhone: '',
     inputRegistrationNumber: '',
     inputSelectCategory: '',
-    inputPostNumber: '1234',
-    inputAddres1: '1234',
-    inputAddres2: '12345',
+    inputPostNumber: '',
+    inputAddres1: '',
+    inputAddres2: '',
     inputRestaurantImage: [],
     inputDescription: '',
     inputOwnerEmail: '',
@@ -172,8 +172,9 @@ const AccountRestaurants = () => {
     ],
   };
 
-  const propsFunction = (x: any) => {
-    console.log(x.name1, x.name2);
+  const [result, setResult] = useState({});
+  const propsFunction = (data: any) => {
+    setResult(data);
   };
 
   return (
@@ -198,7 +199,6 @@ const AccountRestaurants = () => {
               postalCode={formValues.inputPostNumber}
               address1={formValues.inputAddres1}
               address2={formValues.inputAddres2}
-              onChange={handleChange}
               propsFunction={propsFunction}
             />
 

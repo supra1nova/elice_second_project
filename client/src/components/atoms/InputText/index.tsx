@@ -10,6 +10,7 @@ interface Props {
   name: string;
   value: string;
   readOnly?: boolean | undefined;
+  disable?: boolean | undefined;
   onChange?: (e: any) => void;
 }
 const InputText = ({
@@ -23,7 +24,6 @@ const InputText = ({
   readOnly,
   onChange,
 }: Props) => {
-  console.log(readOnly);
   return (
     <UI.Container>
       <UI.Input
@@ -35,6 +35,7 @@ const InputText = ({
         name={name}
         value={value}
         maxLength={maxLength}
+        readOnly={false}
       />
     </UI.Container>
   );
@@ -43,6 +44,7 @@ InputText.defaultProps = {
   type: 'text',
   autoComplete: 'off',
   placeholder: '',
+  readOnly: false,
 };
 
 export default InputText;
