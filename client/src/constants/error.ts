@@ -11,6 +11,7 @@ export const ERROR = {
   PASSWORD_CURRENT: '정보를 변경하려면, 현재의 비밀번호가 필요합니다.',
   NICKNAME_INPUT: '닉네임을 입력해주세요.',
   NICKNAME_IS_ALEADY: '이미 사용중인 닉네임입니다.',
+  NICKNAME_MIN_LENGTH: '이름은 최소 2글자 입력해주세요.',
   PHONE_INPUT: '전화번호를 입력해주세요.',
   PHONE_VALID: '전화번호 형식이 아닙니다.',
   OWNER_REGISTRATION_NUMBER_INPUT: '사업자 등록번호를 입력해주세요.',
