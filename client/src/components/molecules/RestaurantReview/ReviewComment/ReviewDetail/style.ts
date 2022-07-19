@@ -11,6 +11,21 @@ export const StyledReviwerProfile = styled.div`
     display: flex;
     align-items: center;
 `
+export const StyledOwnerReviwerProfile = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    div {
+        display: flex;
+        align-items: center;
+    }
+
+    button {
+        ${(props) => props.theme.font.description2};
+        color: ${(props) => props.theme.colors.font3};
+    }
+`
 export const StyledReviewerProfileName = styled.div`
     ${(props) => props.theme.font.subtitle2};
 `
