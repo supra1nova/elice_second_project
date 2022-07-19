@@ -12,7 +12,7 @@ export class User extends BaseEntity {
   password: string;
 
   // @Column({ nullable: true })
-  @Column()
+  @Column({nullable: false})
   nickName: string;
 
   // @Column({ nullable: true })
