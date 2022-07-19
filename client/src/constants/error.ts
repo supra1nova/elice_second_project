@@ -18,4 +18,5 @@ export const ERROR = {
   OWNER_REGISTRATION_NUMBER_VALID: '사업자 등록번호 형식이 아닙니다.',
   ADMIN_CODE_INPUT: '관리자 코드를 입력해주세요.',
   ADMIN_CODE_INPUT_VALID: 'ADMIN CODE가 일치하지 않습니다.',
+  RESTAURANT_NAME: '업체명을 입력해주세요.',
 };

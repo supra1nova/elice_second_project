@@ -7,7 +7,6 @@ import Button from '../../../components/atoms/Button';
 import Form from '../../../components/atoms/Form';
 import FormItem from '../../../components/molecules/FormItem';
 import FormInputTextHorizontal from '../../../components/molecules/FormInputTextHorizontal';
-import FormInputAddress from '../../../components/molecules/FormInputAddress';
 import FormFooter from '../../../components/molecules/FormFooter';
 import InputText from '../../../components/atoms/InputText';
 import ButtonText from '../../../components/atoms/ButtonText';
@@ -20,16 +19,13 @@ import PopupSaveConfirm from './template/PopupSaveConfirm';
 import { ACCOUNT } from '../../../constants/lnb';
 import { BUTTON } from '../../../constants/input';
 import { ROLE } from '../../../constants/member';
+import { ERROR } from '../../../constants/error';
 import {
   LABELTITLE,
   PLACEHOLDER,
   SELECT_CATEGORY_OPTIONS,
 } from '../../../constants/input';
 import * as UI from './style';
-
-type valueObject = {
-  [key: string]: any;
-};
 
 const StyleTypography = styled(Typography)`
   margin-bottom: 10px;
@@ -56,6 +52,10 @@ const StyleFormItemHorizontal = styled(StyleFormItem)`
   }
 `;
 
+type valueObject = {
+  [key: string]: any;
+};
+
 const AccountRestaurants = () => {
   const initialValue = {
     inputRestaurantName: '',
@@ -77,14 +77,23 @@ const AccountRestaurants = () => {
   const [formErrors, setFormErrors] = useState<valueObject>({});
   const [fileImage, setFileImage] = useState('');
   const [isSubmit, setIsSubmit] = useState(false);
+  const errors: valueObject = {};
 
   useEffect(() => {
     API.userGet('/api/users/user').then((res) => {
       const email = res.email;
       const ownerEmail = email;
       formValues.inputOwnerEmail = ownerEmail || null;
+      console.log(res);
     });
   }, []);
+
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues);
+    }
+  }, [formErrors]);
 
   const handleOpenPopupSaveConfirm = (e: any) => {
     e.preventDefault();
@@ -113,6 +122,10 @@ const AccountRestaurants = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
+
     try {
       const data = {
         REGNumber: formValues.inputRegistrationNumber,
@@ -128,9 +141,10 @@ const AccountRestaurants = () => {
       await API.post('/api/restaurants/', '', data);
       setOpenPopupSaveConfirm(true);
     } catch (err: any) {
-      if (err.message === 'Request failed with status code 500') {
-        alert('해당 정보를 입력해주세요');
-      }
+      console.error(err);
+      // if (err.message === 'Request failed with status code 500') {
+      //   alert('해당 정보를 입력해주세요');
+      // }
     }
   };
 
@@ -148,11 +162,31 @@ const AccountRestaurants = () => {
       }
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
-
-    console.log(data.zonecode);
     formValues.inputPostNumber = data.zonecode;
     formValues.inputAddres1 = data.address;
     setOpenPostCodePopup(openPostCodePopup);
+  };
+
+  const validate = (values: any) => {
+    const inputRestaurantNameValue = values.inputRestaurantName;
+    const inputRestaurantOfficeValue = values.inputRestaurantOffice;
+    const inputRestauranPhoneValue = values.inputRestauranPhone;
+    const inputRegistrationNumberValue = values.inputRegistrationNumber;
+    const inputSelectCategoryValue = values.inputSelectCategory;
+    const inputPostNumberValue = values.inputPostNumber;
+    const inputAddres1Value = values.inputAddres1;
+    const inputAddres2Value = values.inputAddres2;
+    const inputDescriptionValue = values.inputDescription;
+
+    if (!inputRestaurantNameValue) {
+      errors.inputRestaurantName = ERROR.RESTAURANT_NAME;
+    }
+
+    if (!inputRestaurantOfficeValue) {
+      errors.inputRestaurantOffice = ERROR.RESTAURANT_NAME;
+    }
+
+    return errors;
   };
 
   const inputTextData = {

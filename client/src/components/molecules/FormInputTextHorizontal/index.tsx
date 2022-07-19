@@ -1,8 +1,13 @@
 import React from 'react';
+import styled from 'styled-components';
 import FormInput from '../FormInput';
 import FormItem from '../FormItem';
 import FormError from '../FromError';
 import InputText from '../../atoms/InputText';
+
+const StyledFormError = styled(FormError)`
+  margin-left: 150px;
+`;
 
 const FormInputTextHorizontal = (item: any, index: number) => {
   return (
@@ -24,7 +29,7 @@ const FormInputTextHorizontal = (item: any, index: number) => {
           readOnly={item.readOnly}
         />
       </FormInput>
-      {item.error ? <FormError message={item.error} /> : null}
+      {item.error ? <StyledFormError message={item.error} /> : null}
     </FormItem>
   );
 };
