@@ -32,6 +32,14 @@ export class ReviewModel {
       .execute();
   }
 
+  async replyDelete(reserveId: number) {
+    await AppDataSource.createQueryBuilder()
+      .update(Review)
+      .set({ ownerComment: "" })
+      .where('reserveId = :reserveId', { reserveId: reserveId })
+      .execute();
+  }
+
   //
   async countAll() {
     const reviewRepository = AppDataSource.getRepository(Review);
