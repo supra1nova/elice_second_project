@@ -8,17 +8,6 @@ export const EXContainer = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.colors.line};
 `;
 
-export const Container = styled.div`
-  width: 280px;
-  height: 40px;
-  background: #f7f7f7;
-  border: 1px solid #e5e5e5;
-  border-radius: 50px;
-  margin-left: 10px;
-  display: flex;
-  align-items: center;
-`;
-
 export const Input = styled.input`
   border: none;
   border-radius: 50px;
@@ -31,25 +20,4 @@ export const Input = styled.input`
   :focus {
     outline: none;
   }
-`;
-
-export const FilterBtn = styled.button`
-  width: 65px;
-  height: 27px;
-  background: #ffffff;
-  border: 1px solid #e5e5e5;
-  border-radius: 50px;
-  ${(props) => props.theme.font.caption}
-  color: ${(props) => props.theme.colors.font3}
-`;
-
-export const SearchBtn = styled.button`
-  width: 43px;
-  height: 27px;
-  background: #64ad57;
-  border-radius: 50px;
-  ${(props) => props.theme.font.caption}
-  color: white;
-  margin-left: auto;
-  margin-right: 8px;
 `;

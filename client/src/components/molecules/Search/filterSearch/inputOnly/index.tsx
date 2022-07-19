@@ -8,7 +8,6 @@ const SearchInput = ({ setInputValue }: any) => {
   return (
     <UI.EXContainer>
       <Icon.Search width={22} height={22} />
-      {/* <UI.Container> */}
       <UI.Input
         placeholder='찾으시는 가게, 음식종류 등의 키워드로 검색해보세요.'
         onChange={(e) => {
@@ -19,9 +18,7 @@ const SearchInput = ({ setInputValue }: any) => {
             setInputValue(e.target.value);
           }, 300);
         }}
-        type='text'
       />
-      {/* </UI.Container> */}
     </UI.EXContainer>
   );
 };
