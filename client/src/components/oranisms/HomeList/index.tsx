@@ -131,15 +131,17 @@ const HomeList = () => {
                 email={userEmail}
                 isWished={checkWished}
               />
-              <MainCardWithoutReview
-                regNumber={item.REGNumber}
-                large={false}
-                title={item.name}
-                address={item.address1}
-                likeCount={item.wishers}
-                shopImg={item.image}
-                category={item.category}
-              />
+              <Link to={`/account/restaurants/${item.REGNumber}`}>
+                <MainCardWithoutReview
+                  regNumber={item.REGNumber}
+                  large={false}
+                  title={item.name}
+                  address={item.address1}
+                  likeCount={item.wishers}
+                  shopImg={item.image}
+                  category={item.category}
+                />
+              </Link>
             </div>
           );
         })}
@@ -165,15 +167,17 @@ const HomeList = () => {
                 email={userEmail}
                 isWished={checkWished}
               />
-              <MainCardWithoutReview
-                regNumber={item.REGNumber}
-                large={false}
-                title={item.name}
-                address={item.address1}
-                likeCount={item.wishers}
-                shopImg={item.image}
-                category={item.category}
-              />
+              <Link to={`/account/restaurants/${item.REGNumber}`}>
+                <MainCardWithoutReview
+                  regNumber={item.REGNumber}
+                  large={false}
+                  title={item.name}
+                  address={item.address1}
+                  likeCount={item.wishers}
+                  shopImg={item.image}
+                  category={item.category}
+                />
+              </Link>
             </div>
           );
         })}
