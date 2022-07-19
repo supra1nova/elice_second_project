@@ -22,12 +22,12 @@ const ReserveDate = () => {
         const REGNumber = window.location.href.split('/')[5];
 
         API.userGet(`/api/times/`).then((res) => {
-            console.log(res)
+            // console.log(res)
         });
       }, []);
     
     return (
-        <div>
+        <div style={{marginLeft: 10}}>
             <DatePicker 
                 selected={startDate} 
                 onChange={(date:Date) => setStartDate(date)} 
