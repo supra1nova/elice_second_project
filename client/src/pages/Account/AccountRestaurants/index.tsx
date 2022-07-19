@@ -4,17 +4,18 @@ import styled from 'styled-components';
 import * as API from '../../../api/api';
 import LNBLayout from '../../../components/molecules/LNBLayout';
 import Button from '../../../components/atoms/Button';
-import Form from '../../../components/atoms/Form';
-import FormItem from '../../../components/molecules/FormItem';
-import FormInputTextHorizontal from '../../../components/molecules/FormInputTextHorizontal';
-import FormFooter from '../../../components/molecules/FormFooter';
-import InputText from '../../../components/atoms/InputText';
 import ButtonText from '../../../components/atoms/ButtonText';
-import PostCodePopup from '../../../components/oranisms/PostCode/PostCodePopup';
+import InputText from '../../../components/atoms/InputText';
 import Select from '../../../components/atoms/Select';
 import InputFileThumbnail from '../../../components/atoms/InputFileThumbnail';
 import Textarea from '../../../components/atoms/Textarea';
 import Typography from '../../../components/atoms/Typography';
+import Form from '../../../components/atoms/Form';
+import FormItem from '../../../components/molecules/FormItem';
+import FormInputTextHorizontal from '../../../components/molecules/FormInputTextHorizontal';
+import FormFooter from '../../../components/molecules/FormFooter';
+import FormError from '../../../components/molecules/FromError';
+import PostCodePopup from '../../../components/oranisms/PostCode/PostCodePopup';
 import PopupSaveConfirm from './template/PopupSaveConfirm';
 import { ACCOUNT } from '../../../constants/lnb';
 import { BUTTON } from '../../../constants/input';
@@ -38,8 +39,18 @@ const StyleAddressContainer = styled.div`
   margin: 26px 0 26px;
 `;
 
+const StyleInputFileContainer = styled.div``;
+
+const StyleTextareaContainer = styled.div`
+  position: relative;
+  margin: 26px 0 26px;
+`;
+
 const StyleFormItem = styled(FormItem)`
   padding-bottom: 0;
+  &:nth-child(3) {
+    padding-bottom: 16px;
+  }
 `;
 
 const StyleFormItemHorizontal = styled(StyleFormItem)`
@@ -80,10 +91,10 @@ const AccountRestaurants = () => {
   const errors: valueObject = {};
 
   useEffect(() => {
-    API.userGet('/api/users/user').then((res) => {
-      const email = res.email;
-      const ownerEmail = email;
-      formValues.inputOwnerEmail = ownerEmail || null;
+    API.get('/api/restaurants/:REGNumber').then((res) => {
+      // const email = res.email;
+      // const ownerEmail = email;
+      // formValues.inputOwnerEmail = ownerEmail || null;
       console.log(res);
     });
   }, []);
@@ -183,7 +194,23 @@ const AccountRestaurants = () => {
     }
 
     if (!inputRestaurantOfficeValue) {
-      errors.inputRestaurantOffice = ERROR.RESTAURANT_NAME;
+      errors.inputRestaurantOffice = ERROR.RESTAURANT_OFFICE;
+    }
+
+    if (!inputRestauranPhoneValue) {
+      errors.inputRestauranPhone = ERROR.PHONE_INPUT;
+    }
+
+    if (!inputRegistrationNumberValue) {
+      errors.inputRegistrationNumber = ERROR.OWNER_REGISTRATION_NUMBER_INPUT;
+    }
+
+    if (!inputPostNumberValue || !inputAddres1Value || inputAddres2Value) {
+      errors.address = ERROR.ADDRESS_INPUT;
+    }
+
+    if (!inputDescriptionValue) {
+      errors.inputDescription = ERROR.DESCRIPTION_INPUT;
     }
 
     return errors;
@@ -275,6 +302,8 @@ const AccountRestaurants = () => {
     ],
   };
 
+  console.log(formValues);
+
   return (
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
@@ -293,13 +322,6 @@ const AccountRestaurants = () => {
               labelTitle={LABELTITLE.RESTAURANT_CATEGORY}
             />
 
-            {/* <FormInputAddress
-              postalCode={formValues.inputPostNumber}
-              address1={formValues.inputAddres1}
-              address2={formValues.inputAddres2}
-              propsFunction={propsFunction}
-            /> */}
-
             <StyleAddressContainer>
               <StyleFormItemHorizontal>
                 {inputAddressData.owner.map((item, index) => {
@@ -316,6 +338,7 @@ const AccountRestaurants = () => {
                   name='inputAddres1'
                   value={formValues.inputAddres1}
                   placeholder=''
+                  readOnly
                   onChange={handleChange}
                 />
               </StyleFormItem>
@@ -329,9 +352,10 @@ const AccountRestaurants = () => {
                   onChange={handleChange}
                 />
               </StyleFormItem>
+              <FormError message={formErrors.address}></FormError>
             </StyleAddressContainer>
 
-            <FormItem>
+            <StyleInputFileContainer>
               <StyleTypography>{LABELTITLE.RESTAURANT_IMAGE}</StyleTypography>
               {inputImageData.owner.map((item, index) => {
                 return (
@@ -344,17 +368,20 @@ const AccountRestaurants = () => {
                   />
                 );
               })}
-            </FormItem>
+            </StyleInputFileContainer>
 
-            <Textarea
-              label={LABELTITLE.DESCRIPTION}
-              htmlFor='inputDescription'
-              id='inputDescription'
-              name='inputDescription'
-              placeholder=''
-              value={formValues.inputDescription}
-              onChange={handleChange}
-            />
+            <StyleTextareaContainer>
+              <Textarea
+                label={LABELTITLE.DESCRIPTION}
+                htmlFor='inputDescription'
+                id='inputDescription'
+                name='inputDescription'
+                placeholder=''
+                value={formValues.inputDescription}
+                onChange={handleChange}
+              />
+              <FormError message={formErrors.inputDescription}></FormError>
+            </StyleTextareaContainer>
 
             <FormFooter>
               <Button component='primary' size='large' block>
