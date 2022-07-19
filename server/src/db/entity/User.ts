@@ -11,10 +11,12 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
-  @Column({ nullable: true })
+  // @Column({ nullable: true })
+  @Column()
   nickName: string;
 
-  @Column({ nullable: true })
+  // @Column({ nullable: true })
+  @Column()
   phoneNumber: string;
 
   @Column({ nullable: true })
