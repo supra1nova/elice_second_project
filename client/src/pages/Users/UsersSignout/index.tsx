@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as API from '../../../api/api';
 import LNBLayout from '../../../components/molecules/LNBLayout';
 import FormInputText from '../../../components/molecules/FormInputText';
@@ -20,6 +21,7 @@ type valueObject = {
 };
 
 const UsersSignout = () => {
+  const navigate = useNavigate();
   const initialValue = {
     inputPassword: '',
   };
@@ -49,9 +51,11 @@ const UsersSignout = () => {
     e.preventDefault();
     const currentPassword = formValues.inputPassword;
     const data = { currentPassword };
+    console.log(data);
     try {
-      await API.delete('/api/users');
+      await API.delete('/api/users', '', data);
       localStorage.removeItem('token');
+      navigate('/');
     } catch (err: any) {
       console.error(err);
     }

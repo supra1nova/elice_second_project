@@ -85,7 +85,9 @@ const patch = async (
     });
     return res;
   } catch (err: any) {
-    console.error(err);
+    if (err.response) {
+      console.log(err.response.data);
+    }
   }
 };
 
