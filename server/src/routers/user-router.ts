@@ -90,11 +90,8 @@ userRouter.get('/user/:email', async function (req: Request, res:Response, next:
 });
 
 // // 4. 사용자 정보 수정
-// userRouter.patch('/', loginRequired, async function (req: Request, res:Response, next:NextFunction) {
-// userRouter.patch('/', loginRequired, async function (req: Request, res:Response, next:NextFunction) {
-userRouter.patch('/', async function (req: Request, res:Response, next:NextFunction) {
+userRouter.patch('/', loginRequired, async function (req: Request, res:Response, next:NextFunction) {
   try {
-
     const updateUserInfo:updateUserInfo=req.body;
     const email = req.email;
     const {currentPassword} =updateUserInfo; //email 필수
@@ -105,8 +102,7 @@ userRouter.patch('/', async function (req: Request, res:Response, next:NextFunct
     }
   
     // 사용자 정보를 업데이트.
-
-    const updatedUser = await userService.setUser(updateUserInfo, email );
+    const updatedUser = await userService.setUser(updateUserInfo, email);
     res.status(200).json(updatedUser);
     }
   catch (error) {
