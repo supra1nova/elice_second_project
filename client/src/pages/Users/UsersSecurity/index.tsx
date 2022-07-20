@@ -117,8 +117,8 @@ const UsersSignout = () => {
         formData.append('currentPassword', formValues.inputPasswordCurrent);
         await API.file('/api/users/image', '', formData);
       }
-
       navigate('/users/security');
+      formValues.inputPasswordCurrent = '';
     } catch (err: any) {
       console.error(err);
     }

@@ -27,6 +27,8 @@ import {
   SELECT_CATEGORY_OPTIONS,
 } from '../../../constants/input';
 import * as UI from './style';
+import InputFileButton from '../../../components/atoms/InputFileButton';
+import FileTumbnail from '../../../components/atoms/FileTumbnail';
 
 const StyleTypography = styled(Typography)`
   margin-bottom: 10px;
@@ -86,18 +88,18 @@ const AccountRestaurants = () => {
   const [openPostCodePopup, setOpenPostCodePopup] = useState(false);
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
-  const [fileImage, setFileImage] = useState('');
   const [isSubmit, setIsSubmit] = useState(false);
+
   const errors: valueObject = {};
 
-  useEffect(() => {
-    API.get('/api/restaurants/:REGNumber').then((res) => {
-      // const email = res.email;
-      // const ownerEmail = email;
-      // formValues.inputOwnerEmail = ownerEmail || null;
-      console.log(res);
-    });
-  }, []);
+  // useEffect(() => {
+  //   API.get('/api/restaurants/:REGNumber').then((res) => {
+  //     const email = res.email;
+  //     const ownerEmail = email;
+  //     formValues.inputOwnerEmail = ownerEmail || null;
+  //     console.log(res);
+  //   });
+  // }, []);
 
   const handleOpenPopupSaveConfirm = (e: any) => {
     e.preventDefault();
@@ -112,6 +114,56 @@ const AccountRestaurants = () => {
   const handleOpenPostCodePopup = (e: any) => {
     e.preventDefault();
     setOpenPostCodePopup(true);
+  };
+
+  const [image, setImage] = useState<any>([]);
+  // const [image, setImage] = useState<any>({
+  //   image_file: [],
+  //   preview_URL: [],
+  // });
+
+  const saveFileImage = (e: any) => {
+    e.preventDefault();
+    // if (e.target.files[0]) {
+    //   URL.revokeObjectURL(image.preview_URL);
+    //   const preview_URL = URL.createObjectURL(e.target.files[0]);
+    //   setImage(() => ({
+    //     image_file: e.target.files[0],
+    //     preview_URL: preview_URL,
+    //   }));
+    // }
+
+    const imageLists = e.target.files; // 파일 객체 불러옴
+    let imageUrlLists = [...image];
+
+    for (let i = 0; i < imageLists.length; i++) {
+      const currentImageUrl = URL.createObjectURL(imageLists[i]);
+      imageUrlLists.push(currentImageUrl);
+    }
+
+    if (imageUrlLists.length > 6) {
+      imageUrlLists = imageUrlLists.slice(0, 6);
+    }
+
+    setImage(imageUrlLists);
+
+    // const imageLists = e.target.files; // 파일 객체 불러옴
+    // let imageUrlLists = [...image.preview_URL];
+
+    // for (let i = 0; i < imageLists.length; i++) {
+    //   const currentImageUrl = URL.createObjectURL(imageLists[i]);
+    //   imageUrlLists.push(currentImageUrl);
+    // }
+
+    // if (imageUrlLists.length > 6) {
+    //   imageUrlLists = imageUrlLists.slice(0, 6);
+    // }
+
+    // setImage({ preview_URL: imageUrlLists });
+  };
+
+  const deleteFileImage = (id: any) => {
+    setImage(image.filter((_: any, index: any) => index !== id));
   };
 
   const handleChange = (e: any) => {
@@ -143,6 +195,7 @@ const AccountRestaurants = () => {
         ownerEmail: formValues.inputOwnerEmail,
       };
       await API.post('/api/restaurants/', '', data);
+
       setOpenPopupSaveConfirm(true);
     } catch (err: any) {
       console.error(err);
@@ -169,8 +222,6 @@ const AccountRestaurants = () => {
     formValues.inputPostNumber = data.zonecode;
     formValues.inputAddres1 = data.address;
     setOpenPostCodePopup(openPostCodePopup);
-
-    console.log(formValues.inputPostNumber, formValues.inputAddres1);
   };
 
   const validate = (values: any) => {
@@ -286,18 +337,17 @@ const AccountRestaurants = () => {
     ],
   };
 
-  const inputImageData = {
-    owner: [
-      {
-        id: 'inputFileAvatarImage',
-        htmlFor: 'inputFileAvatarImage',
-        name: 'inputFileAvatarImage',
-      },
-    ],
-  };
+  // const inputImageData = {
+  //   owner: [
+  //     {
+  //       id: 'inputFileAvatarImage',
+  //       htmlFor: 'inputFileAvatarImage',
+  //       name: 'inputFileAvatarImage',
+  //     },
+  //   ],
+  // };
 
-  console.log(formValues);
-
+  console.log(image);
   return (
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
@@ -350,17 +400,26 @@ const AccountRestaurants = () => {
 
             <StyleInputFileContainer>
               <StyleTypography>{LABELTITLE.RESTAURANT_IMAGE}</StyleTypography>
-              {inputImageData.owner.map((item, index) => {
-                return (
-                  <InputFileThumbnail
-                    key={`${item.id}-${index}`}
-                    id={item.id}
-                    htmlFor={item.htmlFor}
-                    name={item.name}
-                    accept='image/*'
-                  />
-                );
-              })}
+              <InputFileButton
+                id='inputFileAvatarImage'
+                htmlFor='inputFileAvatarImage'
+                name='inputFileAvatarImage'
+                accept='image/*'
+                onChange={saveFileImage}
+                multiple
+              />
+              {image &&
+                image.map((image: any, id: any) => {
+                  return (
+                    <FileTumbnail
+                      image={image}
+                      key={id}
+                      onClick={() => {
+                        deleteFileImage(id);
+                      }}
+                    />
+                  );
+                })}
             </StyleInputFileContainer>
 
             <StyleTextareaContainer>
