@@ -89,7 +89,9 @@ const PopupReserve = ({ open, onClose, width, titleColor, title }: Props) => {
 
   useEffect(() => {
     API.userGet('/api/users/user').then((res) => {
-      setBooker(res);
+      if(res) {
+        setBooker(res);
+      }
     });
   }, []);
 
@@ -182,18 +184,16 @@ const PopupReserve = ({ open, onClose, width, titleColor, title }: Props) => {
           <UI.BookerInfo>
             <div>
               <span>예약자</span>
-              <input type='text' name='name' value={booker.name} />
+              <UI.StyledInput type="text" name="name" value={booker.name} />
             </div>
             <div>
               <span>연락처</span>
-              <input type='text' name='name' value={booker.phoneNumber} />
+              <UI.StyledInput type="text" name="name" value={booker.phoneNumber} />
             </div>
             <div>
               <span>요청사항</span>
-              <textarea
-                placeholder='식당에 요청하실 내용을 적어주세요'
-                rows={2}
-              ></textarea>
+              <UI.StyledTextarea placeholder='식당에 요청하실 내용을 적어주세요' rows={2}>
+              </UI.StyledTextarea>
             </div>
           </UI.BookerInfo>
         </label>

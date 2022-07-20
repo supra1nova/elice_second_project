@@ -1,7 +1,7 @@
-import * as Icon from '../../../../../assets/svg';
+import * as Icon from '../../../../../../assets/svg';
 import { useState, useEffect } from 'react';
-import * as API from '../../../../../api/api'
-import ProfileImage from '../../../../atoms/ProfileImage'
+import * as API from '../../../../../../api/api'
+import ProfileImage from '../../../../../atoms/ProfileImage'
 import * as UI from './style';
 import PopupDeleteConfirm from './template/PopupDeleteConfirm';
 
@@ -14,7 +14,7 @@ interface CommentListsProps {
     ownerComment: null | string,
     reserveId: number
 }
-const UserReviewDetail = ({
+const AdminReviewDetail = ({
     key,
     email,
     createdAt,
@@ -23,6 +23,8 @@ const UserReviewDetail = ({
     ownerComment,
     reserveId
 }: CommentListsProps) => {
+    const REGNumber = window.location.href.split('/')[5];
+
     const [reviewImgs, setReviewImgs] = useState<any>([
         {
             image: ''
@@ -31,6 +33,7 @@ const UserReviewDetail = ({
     const [ownerName, setOwnerName] = useState<string>('')
     const [myReview, setMyReview] = useState<boolean>(false)
     const [openPopupDeleteConfirm, setOpenPopupDeleteConfirm] = useState(false);
+    const reserveIdData = {reserveId: reserveId }
 
     const handleOpenPopupDeleteConfirm = (e: any) => {
         e.preventDefault();
@@ -42,21 +45,22 @@ const UserReviewDetail = ({
         setOpenPopupDeleteConfirm(!openPopupDeleteConfirm);
       };
 
-    const handleSubmit = async (e: any) => {
-        e.preventDefault();
+    const handleSubmit = () => {
         try {
-            await API.delete('/api/reviews');
+            API.delete('/api/reviews', '', reserveIdData);
             console.log('삭제완료')
+            setOpenPopupDeleteConfirm(false);
+            window.location.replace(`/account/restaurants/${REGNumber}`);
         } catch (err: any) {
             console.error(err);
         }
     };
 
     useEffect(() => {
-        const REGNumber = window.location.href.split('/')[5];
-
         API.get(`/api/restaurants/${REGNumber}`).then((res) => {
-            setOwnerName(res.name)
+            if(res) {
+                setOwnerName(res.name)
+            }
         })
 
         // 리뷰 이미지 가져오기
@@ -98,10 +102,13 @@ const UserReviewDetail = ({
             </UI.StyledReviewInner>
             {ownerComment === null ? null :
                 <UI.StyledOwnerReview>
-                    <UI.StyledReviwerProfile>
-                        <Icon.Profile fill={'#64AD57'} width={'30px'} height={'30px'}/>
-                        <UI.StyledOwnerName>{ownerName}</UI.StyledOwnerName>
-                    </UI.StyledReviwerProfile>
+                    <UI.StyledOwnerReviwerProfile>
+                        <div>
+                            <Icon.Profile fill={'#64AD57'} width={'30px'} height={'30px'}/>
+                            <UI.StyledOwnerName>{ownerName}</UI.StyledOwnerName>
+                        </div>
+                        <button onClick={handleOpenPopupDeleteConfirm}>삭제</button>
+                    </UI.StyledOwnerReviwerProfile>
                     <UI.StyledOwnerDescription>
                     {ownerComment}
                     </UI.StyledOwnerDescription>
@@ -116,4 +123,4 @@ const UserReviewDetail = ({
     );
 };
 
-export default UserReviewDetail;
+export default AdminReviewDetail;

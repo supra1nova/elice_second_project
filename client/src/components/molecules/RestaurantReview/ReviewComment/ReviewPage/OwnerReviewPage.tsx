@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import * as API from '../../../../api/api';
-import UserReviewDetail from './ReviewDetail/UserReviewDetail';
-import * as UI from './style';
+import * as API from '../../../../../api/api';
+import OwnerReviewDetail from './../ReviewPage/ReviewDetail/OwnerReviewDetail';
 
-const ReviewComment = () => {
+const OwnerReviewPage = () => {
   const [comments, setComment] = useState<any>([
     {
       // image: any,
@@ -26,10 +25,10 @@ const ReviewComment = () => {
   }, []);
 
   return (
-    <UI.StyledContent>
+    <>
       {comments.map((item: any, index: any) => {
         return (
-          <UserReviewDetail
+          <OwnerReviewDetail
             key={index}
             email={item.email}
             createdAt={item.createdAt}
@@ -40,8 +39,8 @@ const ReviewComment = () => {
           />
         );
       })}
-    </UI.StyledContent>
+    </>
   );
 };
 
-export default ReviewComment;
+export default OwnerReviewPage;

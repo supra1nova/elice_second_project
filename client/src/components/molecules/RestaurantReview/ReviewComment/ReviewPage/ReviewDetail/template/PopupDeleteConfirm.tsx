@@ -1,9 +1,9 @@
 import React from 'react';
-import PopupContainer from '../../../../../../components/oranisms/Popup/PopupContainer';
-import PopupHeader from '../../../../../../components/oranisms/Popup/PopupHeader';
-import PopupContents from '../../../../../../components/oranisms/Popup/PopupContents';
-import PopupFooter from '../../../../../../components/oranisms/Popup/PopupFooter';
-import { POPUP } from '../../../../../../constants/title';
+import PopupContainer from '../../../../../../oranisms/Popup/PopupContainer';
+import PopupHeader from '../../../../../../oranisms/Popup/PopupHeader';
+import PopupContents from '../../../../../../oranisms/Popup/PopupContents';
+import PopupFooter from '../../../../../../oranisms/Popup/PopupFooter';
+import { POPUP } from '../../../../../../../constants/title';
 
 interface Props {
   open: boolean;
