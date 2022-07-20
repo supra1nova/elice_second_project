@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
 import * as API from '../../../api/api';
@@ -100,6 +101,8 @@ type valueObject = {
 };
 
 const AccountRestaurants = () => {
+  const navigate = useNavigate();
+
   const initialValue = {
     inputRestaurantName: '',
     inputRestaurantOffice: '',
@@ -125,12 +128,15 @@ const AccountRestaurants = () => {
   const [image, setImage] = useState<any>({
     image_file: [],
     preview_URL: [],
+    image_key: [],
   });
   const [isSubmit, setIsSubmit] = useState(false);
 
   const errors: valueObject = {};
 
   const REGNumber = window.location.href.split('/')[5];
+
+  console.log(window.location.href.split('/'));
 
   useEffect(() => {
     API.get(`/api/restaurants/${REGNumber}`).then((res) => {
@@ -153,8 +159,14 @@ const AccountRestaurants = () => {
     });
 
     API.get(`/api/restaurantImages/${REGNumber}`).then((res) => {
+      const imageFile = res.map((item: any) => item.image);
       const imageList = res.map((item: any) => item.image);
-      setImage({ preview_URL: imageList });
+      const imageKeyList = res.map((item: any) => item.imageKey);
+      setImage({
+        image_file: imageFile,
+        preview_URL: imageList,
+        image_key: imageKeyList,
+      });
     });
   }, []);
 
@@ -166,7 +178,6 @@ const AccountRestaurants = () => {
 
   useEffect(() => {
     setFormValues(formValues);
-    console.log(formValues);
   }, [formValues]);
 
   const handleOpenPopupSaveConfirm = (e: any) => {
@@ -177,6 +188,7 @@ const AccountRestaurants = () => {
   const handleClosePopupSaveConfirm = (e: any) => {
     e.preventDefault();
     setOpenPopupSaveConfirm(!openPopupSaveConfirm);
+    navigate(`/account/restaurants/${REGNumber}`);
   };
 
   const handleOpenPostCodePopup = (e: any) => {
@@ -191,6 +203,7 @@ const AccountRestaurants = () => {
 
     let imageUrlLists = [...image.preview_URL];
     let imageFileLists = [...image.image_file];
+    let imageKeyLists = [...image.image_key];
 
     for (let i = 0; i < imageLists.length; i++) {
       URL.revokeObjectURL(imageLists[i]);
@@ -203,19 +216,39 @@ const AccountRestaurants = () => {
     if (imageUrlLists.length > 6) {
       imageUrlLists = imageUrlLists.slice(0, 6);
       imageFileLists = imageFileLists.slice(0, 6);
+      imageKeyLists = imageKeyLists.slice(0, 6);
     }
 
-    setImage({ image_file: imageFileLists, preview_URL: imageUrlLists });
+    setImage({
+      image_key: imageKeyLists,
+      image_file: imageFileLists,
+      preview_URL: imageUrlLists,
+    });
   };
 
-  const deleteFileImage = (id: any) => {
+  const deleteFileImage = async (id: any) => {
     URL.revokeObjectURL(image.preview_URL);
+
     const deleteImage = image.preview_URL.filter(
       (item: any, index: any) => index !== id,
     );
-    setImage({ ...image.image_file, preview_URL: deleteImage });
+    const selectImage = image.image_key.filter(
+      (item: any, index: any) => index === id,
+    );
+
+    const data = {
+      imageKey: selectImage,
+    };
+    await API.delete('/api/restaurantImages', '', data);
+    setImage({
+      image_file: deleteImage,
+      preview_URL: deleteImage,
+      image_key: deleteImage,
+    });
+    navigate(`/account/restaurants/${REGNumber}`);
   };
 
+  console.log(image);
   const handleChange = (e: any) => {
     const target = e.target;
     const value =
@@ -295,9 +328,6 @@ const AccountRestaurants = () => {
     const inputRestauranPhoneValue = values.inputRestauranPhone;
     const inputRegistrationNumberValue = values.inputRegistrationNumber;
     const inputSelectCategoryValue = values.inputSelectCategory;
-    const inputPostNumberValue = values.inputPostNumber;
-    const inputAddres1Value = values.inputAddres1;
-    const inputAddres2Value = values.inputAddres2;
     const inputDescriptionValue = values.inputDescription;
 
     if (!inputRestaurantNameValue) {
@@ -314,10 +344,6 @@ const AccountRestaurants = () => {
 
     if (!inputRegistrationNumberValue) {
       errors.inputRegistrationNumber = ERROR.OWNER_REGISTRATION_NUMBER_INPUT;
-    }
-
-    if (!inputPostNumberValue || !inputAddres1Value || inputAddres2Value) {
-      errors.address = ERROR.ADDRESS_INPUT;
     }
 
     if (!inputDescriptionValue) {
@@ -367,6 +393,7 @@ const AccountRestaurants = () => {
         onChange: handleChange,
         placeholder: PLACEHOLDER.OWNER_REGISTRATION_NUMBER,
         error: formErrors.inputRegistrationNumber,
+        readOnly: true,
       },
     ],
   };
