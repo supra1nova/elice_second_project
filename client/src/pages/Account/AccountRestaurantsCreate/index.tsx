@@ -265,9 +265,6 @@ const AccountRestaurants = () => {
     const inputRestauranPhoneValue = values.inputRestauranPhone;
     const inputRegistrationNumberValue = values.inputRegistrationNumber;
     const inputSelectCategoryValue = values.inputSelectCategory;
-    const inputPostNumberValue = values.inputPostNumber;
-    const inputAddres1Value = values.inputAddres1;
-    const inputAddres2Value = values.inputAddres2;
     const inputDescriptionValue = values.inputDescription;
 
     if (!inputRestaurantNameValue) {
@@ -284,10 +281,6 @@ const AccountRestaurants = () => {
 
     if (!inputRegistrationNumberValue) {
       errors.inputRegistrationNumber = ERROR.OWNER_REGISTRATION_NUMBER_INPUT;
-    }
-
-    if (!inputPostNumberValue || !inputAddres1Value || inputAddres2Value) {
-      errors.address = ERROR.ADDRESS_INPUT;
     }
 
     if (!inputDescriptionValue) {
