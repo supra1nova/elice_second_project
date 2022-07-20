@@ -36,7 +36,6 @@ const UserReviewDetail = ({
     const reserveIdData = {reserveId: reserveId }
 
     const isReviewer = roleEmail === email
-    console.log(isReviewer)
 
     const handleOpenPopupDeleteConfirm = (e: any) => {
         e.preventDefault();

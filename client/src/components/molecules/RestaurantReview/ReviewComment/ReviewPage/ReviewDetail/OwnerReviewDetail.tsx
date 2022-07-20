@@ -31,7 +31,6 @@ const OwnerReviewDetail = ({
         }
     ])
     const [ownerName, setOwnerName] = useState<string>('')
-    const [myReview, setMyReview] = useState<boolean>(false)
     const [openPopupDeleteConfirm, setOpenPopupDeleteConfirm] = useState(false);
     const reserveIdData = {reserveId: reserveId }
 
@@ -55,16 +54,6 @@ const OwnerReviewDetail = ({
             console.error(err);
         }
     };
-    // const handleSubmit = () => {
-    //     try {
-    //         API.delete('/api/reviews', '', reserveIdData);
-    //         console.log('삭제완료')
-    //         setOpenPopupDeleteConfirm(false);
-    //         window.location.replace(`/account/restaurants/${REGNumber}`);
-    //     } catch (err: any) {
-    //         console.error(err);
-    //     }
-    // };
 
     useEffect(() => {
         API.get(`/api/restaurants/${REGNumber}`).then((res) => {
@@ -110,14 +99,13 @@ const OwnerReviewDetail = ({
                     
                 </div>
             </UI.StyledReviewInner>
-            {ownerComment === null || "미식시간Owner리뷰삭제" ? null :
+            {ownerComment === null ? null :
                 <UI.StyledOwnerReview>
                     <UI.StyledOwnerReviwerProfile>
                         <div>
                             <Icon.Profile fill={'#64AD57'} width={'30px'} height={'30px'}/>
                             <UI.StyledOwnerName>{ownerName}</UI.StyledOwnerName>
                         </div>
-                        <button onClick={handleOpenPopupDeleteConfirm}>삭제</button>
                     </UI.StyledOwnerReviwerProfile>
                     <UI.StyledOwnerDescription>
                     {ownerComment}

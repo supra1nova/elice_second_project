@@ -20,9 +20,15 @@ const ReviewComment = () => {
   ]);
   const [role, setRole] = useState<string | null | undefined>(null)
   const isNotUser = role === undefined
-  const isUser = role === 'user' || 'USER'
-  const isOwner = role === 'owner' || 'OWNER'
-  const isAdmin = role === 'admin' || 'ADMIN'
+  const isUser = role === 'user' || role === 'USER'
+  const isOwner = role === 'owner' || role === 'OWNER'
+  const isAdmin = role === 'admin' || role === 'ADMIN'
+
+  console.log(role)
+  console.log(`isNotUser: ${isNotUser}`)
+  console.log(`isUser: ${isUser}`)
+  console.log(`isOwner: ${isOwner}`)
+  console.log(`isAdmin: ${isAdmin}`)
 
   useEffect(() => {
     API.userGet('/api/users/user').then((res) => {
