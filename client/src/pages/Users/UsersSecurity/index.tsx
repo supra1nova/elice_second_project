@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
 import * as API from '../../../api/api';
 import LNBLayout from '../../../components/molecules/LNBLayout';
 import Avatar from '../../../components/molecules/Avatar';
@@ -30,13 +31,14 @@ const UsersSignout = () => {
 
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
-  const [fileImage, setFileImage] = useState('');
+  const [fileImage, setFileImage] = useState(formValues.inputAvatar);
   const [isSubmit, setIsSubmit] = useState(false);
 
   const errors: valueObject = {};
 
   useEffect(() => {
     API.userGet('/api/users/user').then((res) => {
+      console.log(res);
       const data = {
         inputName: res.name,
         inputNickname: res.nickName,
@@ -44,6 +46,7 @@ const UsersSignout = () => {
         inputPhone: res.phoneNumber,
         inputPassword: '',
         inputPasswordConfirm: '',
+        inputAvatar: res.image,
       };
       setFormValues(data);
     });
@@ -63,10 +66,28 @@ const UsersSignout = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
+  const saveFileImage = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      // @ts-ignore
+      setFileImage(URL.createObjectURL(event.target.files[0]));
+    },
+    [],
+  );
+
+  const deleteFileImage = () => {
+    URL.revokeObjectURL(fileImage);
+    setFileImage('');
+  };
+
+  const formData = new FormData();
+  formData.append('file', fileImage); // 보통 image로 보냄?? 근데 현재 저는 body에 form-type 을 file로 지정해서 보냈다고 하셔서 일단 file로?
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
     setIsSubmit(true);
+
+    console.log(formData);
 
     try {
       const data = {
@@ -82,12 +103,28 @@ const UsersSignout = () => {
         currentPassword: formValues.inputPasswordCurrent,
       };
       const image = {
-        image: fileImage,
+        file: fileImage,
         currentPassword: formValues.inputPasswordCurrent,
       };
       await API.patch('/api/users', '', data);
+      await API.patch('/api/users', '', image);
+
       // if (fileImage) {
-      //   await API.patch('/api/users/image', '', image);
+      //   axios({
+      //     baseURL: 'http://localhost:3000',
+      //     url: '/api/users/image',
+      //     method: 'patch',
+      //     data: formData,
+      //     headers: {
+      //       'Content-Type': 'multipart/form-data',
+      //     },
+      //   })
+      //     .then((response) => {
+      //       console.log(response.data);
+      //     })
+      //     .catch((error) => {
+      //       console.error(error);
+      //     });
       // }
     } catch (err: any) {
       console.error(err);
@@ -218,15 +255,6 @@ const UsersSignout = () => {
         error: formErrors.inputPasswordCurrent,
       },
     ],
-  };
-
-  const saveFileImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // @ts-ignore
-    setFileImage(URL.createObjectURL(event.target.files[0]));
-  };
-  const deleteFileImage = () => {
-    URL.revokeObjectURL(fileImage);
-    setFileImage('');
   };
 
   return (

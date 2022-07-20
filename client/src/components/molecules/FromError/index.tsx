@@ -4,12 +4,13 @@ import * as UI from './style';
 
 interface Props {
   message?: string;
+  className?: string;
   children?: React.ReactNode | string;
 }
 
-const FormError = ({ message, children }: Props) => {
+const FormError = ({ className, message, children }: Props) => {
   return (
-    <UI.Container>
+    <UI.Container className={className}>
       <Typography>{message}</Typography>
       {children}
     </UI.Container>
