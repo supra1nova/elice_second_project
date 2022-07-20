@@ -18,6 +18,7 @@
     "react-datepicker": "^4.8.0",
     "react-daum-postcode": "^3.1.1",
     "react-dom": "^18.2.0",
+    "react-js-pagination": "^3.0.3",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@types/react-datepicker": "^4.4.2",
+    "@types/react-js-pagination": "^3.0.4",
     "@types/styled-components": "^5.1.25",
     "prettier": "2.7.1"
   },

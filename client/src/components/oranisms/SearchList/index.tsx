@@ -4,10 +4,15 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import LikeBtn from '../../atoms/LikeButton/LikeBtn';
 import * as API from '../../../api/api';
+import Pagination from '../../atoms/Pagination/Pagination';
+import Paging from '../../atoms/Pagination/Pagination';
 
 const SearchShopList = ({ inputValue, categorySelect }: any) => {
   const [wishes, setWishes] = useState([]);
   const [userEmail, setUserEmail] = useState('');
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(12);
+  const [total, setTotal] = useState(10);
 
   const [shop, setShop] = useState([
     {
@@ -34,8 +39,10 @@ const SearchShopList = ({ inputValue, categorySelect }: any) => {
 
   useEffect(() => {
     if (inputValue === '' || categorySelect === '') {
-      API.get('/api/restaurants').then((res) => {
+      API.get(`/api/restaurants/?page=${page}&perpage=10`).then((res) => {
         setShop(res.restaurants);
+        setPerPage(res.perPage);
+        setTotal(res.total);
       });
     } else {
       API.get('/api/restaurants').then((res) => {
@@ -47,9 +54,10 @@ const SearchShopList = ({ inputValue, categorySelect }: any) => {
             e.category.includes(categorySelect),
         );
         setShop(filtered);
+        setTotal(filtered.length);
       });
     }
-  }, [inputValue, categorySelect]);
+  }, [inputValue, categorySelect, page]);
 
   return (
     <UI.Container>
@@ -85,6 +93,7 @@ const SearchShopList = ({ inputValue, categorySelect }: any) => {
           );
         })}
       </UI.GridContainer>
+      <Paging page={page} setPage={setPage} total={total} perPage={perPage} />
     </UI.Container>
   );
 };
