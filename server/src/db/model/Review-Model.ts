@@ -33,11 +33,11 @@ export class ReviewModel {
   }
 
   async replyDelete(reserveId: number) {
-    await AppDataSource.createQueryBuilder()
-      .update(Review)
-      .set({ ownerComment: "" })
-      .where('reserveId = :reserveId', { reserveId: reserveId })
-      .execute();
+    await AppDataSource.query(` UPDATE Review SET ownerComment=NULL WHERE reserveId=${reserveId}`);
+      // .update(Review)
+      // .set({ ownerComment: a })
+      // .where('reserveId = :reserveId', { reserveId: reserveId })
+      // .execute();
   }
 
   //
