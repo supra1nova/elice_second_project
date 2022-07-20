@@ -23,6 +23,8 @@ const UserReviewDetail = ({
     ownerComment,
     reserveId
 }: CommentListsProps) => {
+    const REGNumber = window.location.href.split('/')[5];
+
     const [reviewImgs, setReviewImgs] = useState<any>([
         {
             image: ''
@@ -31,6 +33,7 @@ const UserReviewDetail = ({
     const [ownerName, setOwnerName] = useState<string>('')
     const [myReview, setMyReview] = useState<boolean>(false)
     const [openPopupDeleteConfirm, setOpenPopupDeleteConfirm] = useState(false);
+    const reverIdData = {reserveId: reserveId }
 
     const handleOpenPopupDeleteConfirm = (e: any) => {
         e.preventDefault();
@@ -42,22 +45,28 @@ const UserReviewDetail = ({
         setOpenPopupDeleteConfirm(!openPopupDeleteConfirm);
       };
 
-    const handleSubmit = async (e: any) => {
-        e.preventDefault();
+    const handleSubmit = () => {
         try {
-            await API.delete('/api/reviews');
+            API.delete('/api/reviews', '', reverIdData);
             console.log('삭제완료')
+            setOpenPopupDeleteConfirm(false);
+            window.location.replace(`/account/restaurants/${REGNumber}`);
         } catch (err: any) {
             console.error(err);
         }
     };
 
     useEffect(() => {
-        const REGNumber = window.location.href.split('/')[5];
-
         API.get(`/api/restaurants/${REGNumber}`).then((res) => {
             setOwnerName(res.name)
         })
+
+        API.userGet('/api/users/user').then((res) => {
+            if(res) {
+                setOwnerName(res.name)
+            }
+            // 여기 email이랑 리뷰 email이링 값이 같으면 삭제버튼을 보여주고
+        });
 
         // 리뷰 이미지 가져오기
         API.get(`/api/reviewImages/${reserveId}`).then((res: any) => {
@@ -98,10 +107,12 @@ const UserReviewDetail = ({
             </UI.StyledReviewInner>
             {ownerComment === null ? null :
                 <UI.StyledOwnerReview>
-                    <UI.StyledReviwerProfile>
-                        <Icon.Profile fill={'#64AD57'} width={'30px'} height={'30px'}/>
-                        <UI.StyledOwnerName>{ownerName}</UI.StyledOwnerName>
-                    </UI.StyledReviwerProfile>
+                    <UI.StyledOwnerReviwerProfile>
+                        <div>
+                            <Icon.Profile fill={'#64AD57'} width={'30px'} height={'30px'}/>
+                            <UI.StyledOwnerName>{ownerName}</UI.StyledOwnerName>
+                        </div>
+                    </UI.StyledOwnerReviwerProfile>
                     <UI.StyledOwnerDescription>
                     {ownerComment}
                     </UI.StyledOwnerDescription>
