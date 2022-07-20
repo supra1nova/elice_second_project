@@ -39,7 +39,7 @@ const SearchShopList = ({ inputValue, categorySelect }: any) => {
 
   useEffect(() => {
     if (inputValue === '' || categorySelect === '') {
-      API.get(`/api/restaurants/?page=${page}&perpage=10`).then((res) => {
+      API.get(`/api/restaurants/?page=${page}&perpage=12`).then((res) => {
         setShop(res.restaurants);
         setPerPage(res.perPage);
         setTotal(res.total);
