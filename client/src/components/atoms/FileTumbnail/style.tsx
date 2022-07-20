@@ -3,6 +3,9 @@ import styled, { css } from 'styled-components';
 export const Container = styled.div`
   position: relative;
   overflow: hidden;
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
 `;
 
 export const Label = styled.label`
@@ -41,15 +44,4 @@ export const Preview = styled.div`
     width: 100%;
     height: auto;
   }
-`;
-
-export const Input = styled.input`
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
 `;

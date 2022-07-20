@@ -88,18 +88,19 @@ const AccountRestaurants = () => {
   const [openPostCodePopup, setOpenPostCodePopup] = useState(false);
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
+  const [image, setImage] = useState<any>({
+    image_file: [],
+    preview_URL: [],
+  });
   const [isSubmit, setIsSubmit] = useState(false);
 
   const errors: valueObject = {};
 
-  // useEffect(() => {
-  //   API.get('/api/restaurants/:REGNumber').then((res) => {
-  //     const email = res.email;
-  //     const ownerEmail = email;
-  //     formValues.inputOwnerEmail = ownerEmail || null;
-  //     console.log(res);
-  //   });
-  // }, []);
+  useEffect(() => {
+    return () => {
+      URL.revokeObjectURL(image.preview_URL);
+    };
+  }, []);
 
   const handleOpenPopupSaveConfirm = (e: any) => {
     e.preventDefault();
@@ -116,54 +117,32 @@ const AccountRestaurants = () => {
     setOpenPostCodePopup(true);
   };
 
-  const [image, setImage] = useState<any>([]);
-  // const [image, setImage] = useState<any>({
-  //   image_file: [],
-  //   preview_URL: [],
-  // });
-
   const saveFileImage = (e: any) => {
     e.preventDefault();
-    // if (e.target.files[0]) {
-    //   URL.revokeObjectURL(image.preview_URL);
-    //   const preview_URL = URL.createObjectURL(e.target.files[0]);
-    //   setImage(() => ({
-    //     image_file: e.target.files[0],
-    //     preview_URL: preview_URL,
-    //   }));
-    // }
 
     const imageLists = e.target.files; // 파일 객체 불러옴
-    let imageUrlLists = [...image];
+
+    let imageUrlLists = [...image.preview_URL];
+    let imageFileLists = [...image.image_file];
 
     for (let i = 0; i < imageLists.length; i++) {
+      URL.revokeObjectURL(imageLists[i]);
       const currentImageUrl = URL.createObjectURL(imageLists[i]);
+      const currentImageFile = e.target.files[i];
       imageUrlLists.push(currentImageUrl);
+      imageFileLists.push(currentImageFile);
     }
 
     if (imageUrlLists.length > 6) {
       imageUrlLists = imageUrlLists.slice(0, 6);
+      imageFileLists = imageFileLists.slice(0, 6);
     }
 
-    setImage(imageUrlLists);
-
-    // const imageLists = e.target.files; // 파일 객체 불러옴
-    // let imageUrlLists = [...image.preview_URL];
-
-    // for (let i = 0; i < imageLists.length; i++) {
-    //   const currentImageUrl = URL.createObjectURL(imageLists[i]);
-    //   imageUrlLists.push(currentImageUrl);
-    // }
-
-    // if (imageUrlLists.length > 6) {
-    //   imageUrlLists = imageUrlLists.slice(0, 6);
-    // }
-
-    // setImage({ preview_URL: imageUrlLists });
+    setImage({ image_file: imageFileLists, preview_URL: imageUrlLists });
   };
-
   const deleteFileImage = (id: any) => {
-    setImage(image.filter((_: any, index: any) => index !== id));
+    URL.revokeObjectURL(image.preview_URL);
+    setImage(image.preview_URL.filter((index: any) => index !== id));
   };
 
   const handleChange = (e: any) => {
@@ -194,7 +173,17 @@ const AccountRestaurants = () => {
         description: formValues.inputDescription,
         ownerEmail: formValues.inputOwnerEmail,
       };
+
       await API.post('/api/restaurants/', '', data);
+
+      if (image.image_file) {
+        const formData = new FormData();
+        for (let i = 0; i < image.image_file.length; i++) {
+          formData.append('image', image.image_file[i]);
+        }
+        formData.append('REGNumber', formValues.inputRegistrationNumber);
+        await API.filePost('/api/restaurantImages', '', formData);
+      }
 
       setOpenPopupSaveConfirm(true);
     } catch (err: any) {
@@ -337,17 +326,6 @@ const AccountRestaurants = () => {
     ],
   };
 
-  // const inputImageData = {
-  //   owner: [
-  //     {
-  //       id: 'inputFileAvatarImage',
-  //       htmlFor: 'inputFileAvatarImage',
-  //       name: 'inputFileAvatarImage',
-  //     },
-  //   ],
-  // };
-
-  console.log(image);
   return (
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
@@ -408,8 +386,8 @@ const AccountRestaurants = () => {
                 onChange={saveFileImage}
                 multiple
               />
-              {image &&
-                image.map((image: any, id: any) => {
+              {image.preview_URL &&
+                image.preview_URL.map((image: any, id: any) => {
                   return (
                     <FileTumbnail
                       image={image}
