@@ -141,16 +141,17 @@ class UserService {
     const rangedProductsInfo = await this.userModel.getInRange(page, perPage);
     return rangedProductsInfo;
   }
+
   // //유저 정보 삭제, 현재 비밀번호가 있어야 수정 가능함.
   //박세웅
   async removeUser(userInfo:userInfo){
     const {email, password}= userInfo;
-    if(email==undefined) throw new Error("Email was not given");
+    if(!email) throw new Error("Email was not given");
     let user = await this.userModel.findUserbyEmail(email);
     if(user==null){throw new Error('존재하지 않는 아이디입니다.')}
     const correctPasswordHash = user.password;
 
-    if(password==undefined) throw new Error("Password was not given");
+    if(!password) throw new Error("Password was not given");
     const isPasswordCorrect = await bcrypt.compare(
       password,
       correctPasswordHash,
