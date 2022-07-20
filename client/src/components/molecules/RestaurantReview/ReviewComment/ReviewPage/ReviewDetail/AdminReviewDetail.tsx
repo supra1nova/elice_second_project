@@ -4,6 +4,7 @@ import * as API from '../../../../../../api/api'
 import ProfileImage from '../../../../../atoms/ProfileImage'
 import * as UI from './style';
 import PopupDeleteConfirm from './template/PopupDeleteConfirm';
+import PopupDeleteOwnerConfirm from './template/PopupDeleteOwnerConfirm';
 
 interface CommentListsProps {
     key: number,
@@ -31,19 +32,21 @@ const AdminReviewDetail = ({
         }
     ])
     const [ownerName, setOwnerName] = useState<string>('')
-    const [myReview, setMyReview] = useState<boolean>(false)
+    
+    
+    // --------- 유저댓글 삭제 --------------------
     const [openPopupDeleteConfirm, setOpenPopupDeleteConfirm] = useState(false);
     const reserveIdData = {reserveId: reserveId }
 
     const handleOpenPopupDeleteConfirm = (e: any) => {
         e.preventDefault();
         setOpenPopupDeleteConfirm(true);
-      };
+    };
     
-      const handleClosePopupDeleteConfirm = (e: any) => {
+    const handleClosePopupDeleteConfirm = (e: any) => {
         e.preventDefault();
         setOpenPopupDeleteConfirm(!openPopupDeleteConfirm);
-      };
+    };
 
     const handleSubmit = () => {
         try {
@@ -55,6 +58,33 @@ const AdminReviewDetail = ({
             console.error(err);
         }
     };
+    // --------- 유저댓글 삭제 여기까지 --------------
+
+    // --------- 사장님댓글 삭제 --------------------
+    const [openPopupOwnerDeleteConfirm, setOpenPopupOwnerDeleteConfirm] = useState(false);
+    const reserveIdOwnerData = {reserveId: reserveId }
+
+    const handleOpenPopupOwnerDeleteConfirm = (e: any) => {
+        e.preventDefault();
+        setOpenPopupOwnerDeleteConfirm(true);
+    };
+
+    const handleClosePopupOwnerDeleteConfirm = (e: any) => {
+        e.preventDefault();
+        setOpenPopupOwnerDeleteConfirm(!openPopupOwnerDeleteConfirm);
+    };
+
+    const handleOwnerSubmit = () => {
+        try {
+            API.delete('/api/reviews/owner', '', reserveIdData);
+            setOpenPopupOwnerDeleteConfirm(false);
+            window.location.replace(`/account/restaurants/${REGNumber}`);
+        } catch (err: any) {
+            console.error(err);
+        }
+    };
+
+    // --------- 사장님댓글 삭제 여기까지 --------------
 
     useEffect(() => {
         API.get(`/api/restaurants/${REGNumber}`).then((res) => {
@@ -107,7 +137,7 @@ const AdminReviewDetail = ({
                             <Icon.Profile fill={'#64AD57'} width={'30px'} height={'30px'}/>
                             <UI.StyledOwnerName>{ownerName}</UI.StyledOwnerName>
                         </div>
-                        <button onClick={handleOpenPopupDeleteConfirm}>삭제</button>
+                        <button onClick={handleOpenPopupOwnerDeleteConfirm}>삭제</button>
                     </UI.StyledOwnerReviwerProfile>
                     <UI.StyledOwnerDescription>
                     {ownerComment}
@@ -118,6 +148,11 @@ const AdminReviewDetail = ({
                 open={openPopupDeleteConfirm}
                 onClose={handleClosePopupDeleteConfirm}
                 onClick={handleSubmit}
+            />
+            <PopupDeleteOwnerConfirm
+                open={openPopupOwnerDeleteConfirm}
+                onClose={handleClosePopupOwnerDeleteConfirm}
+                onClick={handleOwnerSubmit}
             />
         </>
     );
