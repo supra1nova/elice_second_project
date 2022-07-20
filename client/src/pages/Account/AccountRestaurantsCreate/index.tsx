@@ -98,7 +98,7 @@ type valueObject = {
   [key: string]: any;
 };
 
-const AccountRestaurants = () => {
+const AccountRestaurantsCreate = () => {
   const initialValue = {
     inputRestaurantName: '',
     inputRestaurantOffice: '',
@@ -464,4 +464,4 @@ const AccountRestaurants = () => {
   );
 };
 
-export default AccountRestaurants;
+export default AccountRestaurantsCreate;
