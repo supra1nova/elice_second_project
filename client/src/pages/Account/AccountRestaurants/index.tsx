@@ -41,7 +41,37 @@ const StyleAddressContainer = styled.div`
   margin: 26px 0 26px;
 `;
 
+const StyleInputFileImage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  > p {
+    margin-bottom: 0;
+  }
+  & label {
+    width: 100px;
+    text-align: center;
+    background: ${(props) => props.theme.colors.main1};
+    color: ${(props) => props.theme.colors.white};
+  }
+`;
+
 const StyleInputFileContainer = styled.div``;
+
+const StyleInputFilePreview = styled.div`
+  display: flex;
+
+  > div {
+    margin-right: 10px;
+    margin-top: 26px;
+  }
+  > div:last-child {
+    margin-right: 0;
+  }
+  img {
+    min-height: 100px;
+  }
+`;
 
 const StyleTextareaContainer = styled.div`
   position: relative;
@@ -88,6 +118,10 @@ const AccountRestaurants = () => {
   const [openPostCodePopup, setOpenPostCodePopup] = useState(false);
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
+  const [address, setAddress] = useState<valueObject>({
+    inputPostNumber: '',
+    inputAddres1: '',
+  });
   const [image, setImage] = useState<any>({
     image_file: [],
     preview_URL: [],
@@ -101,6 +135,11 @@ const AccountRestaurants = () => {
       URL.revokeObjectURL(image.preview_URL);
     };
   }, []);
+
+  useEffect(() => {
+    setFormValues(formValues);
+    console.log(formValues);
+  }, [formValues]);
 
   const handleOpenPopupSaveConfirm = (e: any) => {
     e.preventDefault();
@@ -140,9 +179,14 @@ const AccountRestaurants = () => {
 
     setImage({ image_file: imageFileLists, preview_URL: imageUrlLists });
   };
+
   const deleteFileImage = (id: any) => {
-    URL.revokeObjectURL(image.preview_URL);
-    setImage(image.preview_URL.filter((index: any) => index !== id));
+    // URL.revokeObjectURL(image.preview_URL);
+    const deleteImage = image.preview_URL.filter(
+      (item: any, index: any) => index !== id,
+    );
+    setImage({ ...image.image_file, preview_URL: deleteImage });
+    console.log(image.image_file);
   };
 
   const handleChange = (e: any) => {
@@ -157,7 +201,7 @@ const AccountRestaurants = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
+    setAddress(address);
     setFormErrors(validate(formValues));
     setIsSubmit(true);
 
@@ -165,14 +209,16 @@ const AccountRestaurants = () => {
       const data = {
         REGNumber: formValues.inputRegistrationNumber,
         name: formValues.inputRestaurantName,
-        address1: formValues.inputAddres1,
+        address1: address.inputAddres1,
         address2: formValues.inputAddres2,
-        postalcode: formValues.inputPostNumber,
+        postalcode: address.inputPostNumber,
         phoneNumber: formValues.inputRestauranPhone,
         category: formValues.inputSelectCategory,
         description: formValues.inputDescription,
         ownerEmail: formValues.inputOwnerEmail,
       };
+
+      console.log(data);
 
       await API.post('/api/restaurants/', '', data);
 
@@ -208,8 +254,12 @@ const AccountRestaurants = () => {
       }
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
     }
-    formValues.inputPostNumber = data.zonecode;
-    formValues.inputAddres1 = data.address;
+
+    setAddress({
+      inputPostNumber: data.zonecode,
+      inputAddres1: data.address,
+    });
+
     setOpenPostCodePopup(openPostCodePopup);
   };
 
@@ -316,10 +366,11 @@ const AccountRestaurants = () => {
         type: 'text',
         id: 'inputPostNumber',
         name: 'inputPostNumber',
-        value: formValues.inputPostNumber || '',
+        value: address.inputPostNumber || '',
         maxLength: 5,
         autoComplete: undefined,
         placeholder: PLACEHOLDER.ADDRESS_POSTNUMBER,
+        onChange: handleChange,
         error: formErrors.inputPostNumber,
         readOnly: true,
       },
@@ -358,8 +409,9 @@ const AccountRestaurants = () => {
                   type='text'
                   id='inputAddres1'
                   name='inputAddres1'
-                  value={formValues.inputAddres1}
+                  value={address.inputAddres1}
                   placeholder=''
+                  onChange={handleChange}
                   readOnly
                 />
               </StyleFormItem>
@@ -377,27 +429,32 @@ const AccountRestaurants = () => {
             </StyleAddressContainer>
 
             <StyleInputFileContainer>
-              <StyleTypography>{LABELTITLE.RESTAURANT_IMAGE}</StyleTypography>
-              <InputFileButton
-                id='inputFileAvatarImage'
-                htmlFor='inputFileAvatarImage'
-                name='inputFileAvatarImage'
-                accept='image/*'
-                onChange={saveFileImage}
-                multiple
-              />
-              {image.preview_URL &&
-                image.preview_URL.map((image: any, id: any) => {
-                  return (
-                    <FileTumbnail
-                      image={image}
-                      key={id}
-                      onClick={() => {
-                        deleteFileImage(id);
-                      }}
-                    />
-                  );
-                })}
+              <StyleInputFileImage>
+                <StyleTypography>{LABELTITLE.RESTAURANT_IMAGE}</StyleTypography>
+                <InputFileButton
+                  id='inputFileAvatarImage'
+                  htmlFor='inputFileAvatarImage'
+                  name='inputFileAvatarImage'
+                  accept='image/*'
+                  onChange={saveFileImage}
+                  multiple
+                />
+              </StyleInputFileImage>
+              {image.preview_URL ? (
+                <StyleInputFilePreview>
+                  {image.preview_URL.map((image: any, id: any) => {
+                    return (
+                      <FileTumbnail
+                        image={image}
+                        key={id}
+                        onClick={() => {
+                          deleteFileImage(id);
+                        }}
+                      />
+                    );
+                  })}
+                </StyleInputFilePreview>
+              ) : null}
             </StyleInputFileContainer>
 
             <StyleTextareaContainer>
