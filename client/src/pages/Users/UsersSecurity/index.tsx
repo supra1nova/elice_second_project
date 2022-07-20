@@ -21,7 +21,6 @@ type valueObject = {
 const UsersSignout = () => {
   const navigate = useNavigate();
   const initialValue = {
-    inputFileAvatarImage: '',
     inputName: '',
     inputNickname: '',
     inputEmail: '',
@@ -35,16 +34,14 @@ const UsersSignout = () => {
 
   const [image, setImage] = useState<valueObject>({
     image_file: '',
-    preview_URL: formValues.inputFileAvatarImage,
+    preview_URL: '',
   });
 
   const [isSubmit, setIsSubmit] = useState(false);
-  let reader = new FileReader();
   const errors: valueObject = {};
 
   useEffect(() => {
     API.userGet('/api/users/user').then((res) => {
-      console.log(res);
       const data = {
         inputName: res.name,
         inputNickname: res.nickName,
@@ -52,9 +49,9 @@ const UsersSignout = () => {
         inputPhone: res.phoneNumber,
         inputPassword: '',
         inputPasswordConfirm: '',
-        inputAvatar: res.image,
       };
       setFormValues(data);
+      setImage({ preview_URL: res.image });
     });
   }, []);
 
@@ -64,6 +61,12 @@ const UsersSignout = () => {
       console.log(formValues);
     }
   }, [formErrors]);
+
+  useEffect(() => {
+    return () => {
+      URL.revokeObjectURL(image.preview_URL);
+    };
+  }, []);
 
   const handleChange = (e: any) => {
     const target = e.target;
@@ -92,19 +95,6 @@ const UsersSignout = () => {
     });
   };
 
-  useEffect(() => {
-    return () => {
-      URL.revokeObjectURL(image.preview_URL);
-    };
-  }, []);
-
-  const sendImageToServer = async () => {
-    const formData = new FormData();
-    formData.append('image', image.image_file);
-    console.log(formData);
-    await API.file('/api/users/image', '', formData);
-  };
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
@@ -122,7 +112,10 @@ const UsersSignout = () => {
       await API.patch('/api/users', '', data);
 
       if (image.image_file) {
-        sendImageToServer();
+        const formData = new FormData();
+        formData.append('image', image.image_file);
+        formData.append('currentPassword', formValues.inputPasswordCurrent);
+        await API.file('/api/users/image', '', formData);
       }
 
       navigate('/users/security');
