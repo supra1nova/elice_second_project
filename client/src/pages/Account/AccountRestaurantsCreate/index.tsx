@@ -179,7 +179,7 @@ const AccountRestaurantsCreate = () => {
     const deleteImage = image.preview_URL.filter(
       (item: any, index: any) => index !== id,
     );
-    setImage({ ...image.image_file, preview_URL: deleteImage });
+    setImage({ image_file: deleteImage, preview_URL: deleteImage });
   };
 
   const handleChange = (e: any) => {
