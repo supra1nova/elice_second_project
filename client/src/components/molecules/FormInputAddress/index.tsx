@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
 import DaumPostcode from 'react-daum-postcode';
+import styled from 'styled-components';
+import PostCodePopup from '../../oranisms/PostCode/PostCodePopup';
 import FormInputTextHorizontal from '../FormInputTextHorizontal';
 import FormItem from '../FormItem';
 import FormError from '../FromError';
@@ -12,7 +13,6 @@ interface Props {
   postalCode: any;
   address1: any;
   address2: any;
-  onChange: (e: any) => void;
   propsFunction: any;
 }
 
@@ -34,49 +34,55 @@ const FormInputAddress = ({
   postalCode,
   address1,
   address2,
-  onChange,
   propsFunction,
 }: Props) => {
-  const [data, setData] = useState({ name1: 'name1', name2: 'name2' });
-  propsFunction(data);
+  const initialValue = {
+    inputPostNumber: '',
+    inputAddres1: '',
+    inputAddres2: '',
+  };
+  const [addressValue, setAddressValue] = useState(initialValue);
 
-  // const [address, setAddress] = useState(''); // 주소
-  // const [addressDetail, setAddressDetail] = useState(''); // 상세주소
+  const [openPostCodePopup, setOpenPostCodePopup] = useState(false);
 
-  // const [isOpenPost, setIsOpenPost] = useState(false);
+  useEffect(() => {
+    propsFunction(addressValue);
+  }, [addressValue]);
+  // 팝업창 열기
 
-  // const onChangeOpenPost = () => {
-  //   setIsOpenPost(!isOpenPost);
-  // };
+  const handleOpenPostCodePopup = (e: any) => {
+    e.preventDefault();
+    setOpenPostCodePopup(true);
+  };
 
-  // const onCompletePost = (data: any) => {
-  //   let fullAddr = data.address;
-  //   let extraAddr = '';
+  const handleChange = (e: any) => {
+    const target = e.target;
+    const value =
+      target.type === 'checkbox' || target.type === 'radio'
+        ? target.checked
+        : target.value;
+    const name = target.name;
+    setAddressValue({ ...addressValue, [name]: value });
+  };
 
-  //   if (data.addressType === 'R') {
-  //     if (data.bname !== '') {
-  //       extraAddr += data.bname;
-  //     }
-  //     if (data.buildingName !== '') {
-  //       extraAddr +=
-  //         extraAddr !== '' ? `, ${data.buildingName}` : data.buildingName;
-  //     }
-  //     fullAddr += extraAddr !== '' ? ` (${extraAddr})` : '';
-  //   }
+  const handlePostCode = (data: any) => {
+    let fullAddress = data.address;
+    let extraAddress = '';
 
-  //   setAddress(data.zonecode);
-  //   setAddressDetail(fullAddress);
-  //   setIsOpenPost(false);
-  // };
-
-  // const postCodeStyle = {
-  //   display: 'block',
-  //   position: 'relative',
-  //   top: '0%',
-  //   width: '400px',
-  //   height: '400px',
-  //   padding: '7px',
-  // };
+    if (data.addressType === 'R') {
+      if (data.bname !== '') {
+        extraAddress += data.bname;
+      }
+      if (data.buildingName !== '') {
+        extraAddress +=
+          extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
+      }
+      fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
+    }
+    addressValue.inputPostNumber = data.zonecode;
+    addressValue.inputAddres1 = data.address;
+    setOpenPostCodePopup(openPostCodePopup);
+  };
 
   return (
     <>
@@ -87,20 +93,22 @@ const FormInputAddress = ({
               type='text'
               id='inputPostNumber'
               name='inputPostNumber'
-              value={postalCode}
-              readOnly
+              value={addressValue.inputPostNumber}
+              readOnly={true}
             />
           </FormInputTextHorizontal>
-          <ButtonText>우편번호 검색</ButtonText>
+          <ButtonText onClick={handleOpenPostCodePopup}>
+            우편번호 검색
+          </ButtonText>
         </StyleFormItemHorizontal>
         <StyleFormItem>
           <InputText
             type='text'
             id='inputAddres1'
             name='inputAddres1'
-            value={address1}
+            value={addressValue.inputAddres1}
             placeholder=''
-            onChange={onChange}
+            onChange={handleChange}
           />
         </StyleFormItem>
         <StyleFormItem>
@@ -108,19 +116,15 @@ const FormInputAddress = ({
             type='text'
             id='inputAddres2'
             name='inputAddres2'
-            value={address2}
+            value={addressValue.inputAddres2}
             placeholder=''
-            onChange={onChange}
+            onChange={handleChange}
           />
         </StyleFormItem>
       </UI.Container>
-      {/* {isOpenPost ? (
-        <DaumPostcode
-          style={postCodeStyle}
-          autoClose
-          onComplete={onCompletePost}
-        />
-      ) : null} */}
+      <PostCodePopup open={openPostCodePopup}>
+        <DaumPostcode onComplete={handlePostCode} />
+      </PostCodePopup>
     </>
   );
 };

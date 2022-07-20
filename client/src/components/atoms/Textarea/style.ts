@@ -22,5 +22,6 @@ export const Label = styled.label`
   color: ${(props) => props.theme.colors.black};
   + div {
     margin-top: 10px;
+    padding-bottom: 16px;
   }
 `;
