@@ -8,6 +8,8 @@ const Paging = ({ page, setPage, total, perPage }: any) => {
     setPage(page);
   };
 
+  console.log();
+
   return (
     <UI.PaginationBox>
       <Pagination

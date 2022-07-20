@@ -4,7 +4,7 @@ import GlobalLayout from './GlobalLayout';
 import HalfLayout from './HalfLayout';
 import Home from '../pages/Home';
 import RestaurantHome from '../pages/Restaurant/RestaurantHome';
-import SearchHome from '../pages/Search';
+import Search from '../pages/Search';
 import AccountHome from '../pages/Account/AccountHome';
 import AccountRestaurants from '../pages/Account/AccountRestaurants';
 import AccountRestaurantsList from '../pages/Account/AccountRestaurantsList';
@@ -27,7 +27,7 @@ function Router() {
         <Route element={<GlobalLayout />}>
           <Route path={URL.HOME} element={<Home />}></Route>
           <Route path={URL.RESTAURANT} element={<RestaurantHome />}></Route>
-          <Route path={URL.SEARCH} element={<SearchHome />}></Route>
+          <Route path={URL.SEARCH} element={<Search />}></Route>
           {/* <Route path={URL.ACCOUNT_HOME} element={<AccountHome />}></Route> */}
           <Route
             path={URL.ACCOUNT_RESTAURANTS}

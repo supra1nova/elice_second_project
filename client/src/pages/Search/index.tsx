@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as UI from './style';
 import SearchBar from '../../components/oranisms/SearchBar';
 import Category from '../../components/molecules/Category';

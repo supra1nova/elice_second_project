@@ -4,6 +4,12 @@ import * as Icon from '../../../../../assets/svg';
 
 const SearchInput = ({ setInputValue }: any) => {
   let timer: any;
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // 검색페이지 이동 시 input focus
+  useEffect(() => {
+    if (inputRef.current !== null) inputRef.current.focus();
+  }, []);
 
   return (
     <UI.EXContainer>
@@ -18,6 +24,7 @@ const SearchInput = ({ setInputValue }: any) => {
             setInputValue(e.target.value);
           }, 300);
         }}
+        ref={inputRef}
       />
     </UI.EXContainer>
   );
