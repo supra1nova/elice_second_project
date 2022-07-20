@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import * as API from '../../../api/api';
 import LNBLayout from '../../../components/molecules/LNBLayout';
 import Avatar from '../../../components/molecules/Avatar';
@@ -19,6 +19,7 @@ type valueObject = {
 };
 
 const UsersSignout = () => {
+  const navigate = useNavigate();
   const initialValue = {
     inputFileAvatarImage: '',
     inputName: '',
@@ -118,11 +119,13 @@ const UsersSignout = () => {
         currentPassword: formValues.inputPasswordCurrent,
       };
 
-      //await API.patch('/api/users', '', data);
+      await API.patch('/api/users', '', data);
 
       if (image.image_file) {
         sendImageToServer();
       }
+
+      navigate('/users/security');
     } catch (err: any) {
       console.error(err);
     }
