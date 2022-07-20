@@ -130,7 +130,8 @@ const AccountRestaurants = () => {
 
   const errors: valueObject = {};
 
-  const REGNumber = '111222333';
+  const REGNumber = window.location.href.split('/')[5];
+
   useEffect(() => {
     API.get(`/api/restaurants/${REGNumber}`).then((res) => {
       const data = {

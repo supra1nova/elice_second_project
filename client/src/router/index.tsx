@@ -28,18 +28,20 @@ function Router() {
         <Route element={<GlobalLayout />}>
           <Route path={URL.HOME} element={<Home />}></Route>
           <Route path={URL.RESTAURANTS} element={<RestaurantHome />}></Route>
-
           <Route
-            path={`${URL.RESTAURANTS}/:REGNumber`}
+            path={`${URL.RESTAURANTS_VIEW}/:REGNumber`}
             element={<AccountRestaurantsList />}
           ></Route>
-
           <Route path={URL.SEARCH} element={<SearchHome />}></Route>
           {/* <Route path={URL.ACCOUNT_HOME} element={<AccountHome />}></Route> */}
-          {/* <Route
-            path={URL.ACCOUNT_RESTAURANTS}
+          <Route
+            path={`${URL.ACCOUNT_RESTAURANTS}/:REGNumber`}
             element={<AccountRestaurants />}
-          ></Route> */}
+          ></Route>
+          <Route
+            path={URL.ACCOUNT_RESTAURANTS_CREATE}
+            element={<AccountRestaurantsCreate />}
+          ></Route>
           <Route
             path={URL.ACCOUNT_RESERVES}
             element={<AccountReserves />}
@@ -48,10 +50,7 @@ function Router() {
             path={URL.ACCOUNT_RESERVES_MANAGEMENT}
             element={<AccountReservesManagement />}
           ></Route>
-          <Route
-            path={`${URL.ACCOUNT_RESTAURANTS}/:REGNumber`}
-            element={<AccountRestaurants />}
-          ></Route>
+
           <Route
             path={URL.ACCOUNT_CATEGORIES}
             element={<AccountCategories />}
@@ -68,10 +67,6 @@ function Router() {
         <Route element={<HalfLayout />}>
           <Route path={URL.USERS_LOGIN} element={<UsersLogin />}></Route>
           <Route path={URL.USERS_REGISTER} element={<UsersRegister />}></Route>
-          <Route
-            path={URL.ACCOUNT_RESTAURANTS_CREATE}
-            element={<AccountRestaurantsCreate />}
-          ></Route>
         </Route>
       </Routes>
     </BrowserRouter>

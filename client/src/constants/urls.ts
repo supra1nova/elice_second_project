@@ -1,6 +1,7 @@
 export const URL = {
   HOME: '/',
   RESTAURANTS: '/restaurants',
+  RESTAURANTS_VIEW: '/restaurants/view',
   SEARCH: '/search',
   USERS_LOGIN: '/users/login',
   USERS_REGISTER: '/users/register',
