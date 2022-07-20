@@ -24,12 +24,6 @@ const ReviewComment = () => {
   const isOwner = role === 'owner' || role === 'OWNER'
   const isAdmin = role === 'admin' || role === 'ADMIN'
 
-  console.log(role)
-  console.log(`isNotUser: ${isNotUser}`)
-  console.log(`isUser: ${isUser}`)
-  console.log(`isOwner: ${isOwner}`)
-  console.log(`isAdmin: ${isAdmin}`)
-
   useEffect(() => {
     API.userGet('/api/users/user').then((res) => {
       if(res === undefined) {
