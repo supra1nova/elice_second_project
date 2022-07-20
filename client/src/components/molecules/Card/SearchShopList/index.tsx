@@ -29,7 +29,6 @@ const MainCardWithoutReview = ({
   const getReviewData = async () => {
     const result = await API.get(`/api/reviews/${regNumber}`).then((res) => {
       const count = res.reviews.length;
-      console.log(count);
       setReviewCount(count);
     });
   };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import * as API from '../../../api/api';
 import LNBLayout from '../../../components/molecules/LNBLayout';
 import Avatar from '../../../components/molecules/Avatar';
@@ -19,6 +19,7 @@ type valueObject = {
 };
 
 const UsersSignout = () => {
+  const navigate = useNavigate();
   const initialValue = {
     inputFileAvatarImage: '',
     inputName: '',
@@ -31,9 +32,14 @@ const UsersSignout = () => {
 
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
-  const [fileImage, setFileImage] = useState(formValues.inputAvatar);
-  const [isSubmit, setIsSubmit] = useState(false);
 
+  const [image, setImage] = useState<valueObject>({
+    image_file: '',
+    preview_URL: formValues.inputFileAvatarImage,
+  });
+
+  const [isSubmit, setIsSubmit] = useState(false);
+  let reader = new FileReader();
   const errors: valueObject = {};
 
   useEffect(() => {
@@ -66,21 +72,38 @@ const UsersSignout = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const saveFileImage = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      // @ts-ignore
-      setFileImage(URL.createObjectURL(event.target.files[0]));
-    },
-    [],
-  );
-
-  const deleteFileImage = () => {
-    URL.revokeObjectURL(fileImage);
-    setFileImage('');
+  const saveFileImage = (e: any) => {
+    e.preventDefault();
+    if (e.target.files[0]) {
+      URL.revokeObjectURL(image.preview_URL);
+      const preview_URL = URL.createObjectURL(e.target.files[0]);
+      setImage(() => ({
+        image_file: e.target.files[0],
+        preview_URL: preview_URL,
+      }));
+    }
   };
 
-  const formData = new FormData();
-  formData.append('file', fileImage); // 보통 image로 보냄?? 근데 현재 저는 body에 form-type 을 file로 지정해서 보냈다고 하셔서 일단 file로?
+  const deleteFileImage = () => {
+    URL.revokeObjectURL(image.preview_URL);
+    setImage({
+      image_file: '',
+      preview_URL: '',
+    });
+  };
+
+  useEffect(() => {
+    return () => {
+      URL.revokeObjectURL(image.preview_URL);
+    };
+  }, []);
+
+  const sendImageToServer = async () => {
+    const formData = new FormData();
+    formData.append('image', image.image_file);
+    console.log(formData);
+    await API.file('/api/users/image', '', formData);
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -95,32 +118,14 @@ const UsersSignout = () => {
         phoneNumber: formValues.inputPhone,
         currentPassword: formValues.inputPasswordCurrent,
       };
-      console.log(data);
-      const image = {
-        file: fileImage,
-        currentPassword: formValues.inputPasswordCurrent,
-      };
-      await API.patch('/api/users', '', data);
-      // await API.patch('/api/users', '', image);
 
-      // if (fileImage) {
-      //   axios({
-      //     baseURL: 'http://localhost:3000',
-      //     url: '/api/users/image',
-      //     method: 'patch',
-      //     data: formData,
-      //     headers: {
-      //       'Content-Type': 'multipart/form-data',
-      //       Authorization: `Bearer ${localStorage.getItem('token')}`,
-      //     },
-      //   })
-      //     .then((response) => {
-      //       console.log(response.data);
-      //     })
-      //     .catch((error) => {
-      //       console.error(error);
-      //     });
-      // }
+      await API.patch('/api/users', '', data);
+
+      if (image.image_file) {
+        sendImageToServer();
+      }
+
+      navigate('/users/security');
     } catch (err: any) {
       console.error(err);
     }
@@ -257,7 +262,7 @@ const UsersSignout = () => {
       <UI.Container>
         <UI.Content>
           <UI.AvatarContainer>
-            <Avatar userId='userIDDDD' image={fileImage} />
+            <Avatar userId='userIDDDD' image={image.preview_URL} />
 
             <UI.AvatarLabel>프로필</UI.AvatarLabel>
             <UI.AvatarInput>

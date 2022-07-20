@@ -27,7 +27,6 @@ const MainCardWithReview = ({
   const [reviewComment, setReviewComment] = useState('');
   const getReviewData = async () => {
     const result = await API.get(`/api/reviews/${regNumber}`).then((res) => {
-      console.log(res);
       const randomNumber = Math.floor(Math.random() * res.reviews.length);
       const comment = res.reviews[randomNumber].comment;
       setReviewComment(comment);
