@@ -1,7 +1,7 @@
-import * as Icon from '../../../../../assets/svg';
+import * as Icon from '../../../../../../assets/svg';
 import { useState, useEffect } from 'react';
-import * as API from '../../../../../api/api'
-import ProfileImage from '../../../../atoms/ProfileImage'
+import * as API from '../../../../../../api/api'
+import ProfileImage from '../../../../../atoms/ProfileImage'
 import * as UI from './style';
 import PopupDeleteConfirm from './template/PopupDeleteConfirm';
 
@@ -33,7 +33,7 @@ const AdminReviewDetail = ({
     const [ownerName, setOwnerName] = useState<string>('')
     const [myReview, setMyReview] = useState<boolean>(false)
     const [openPopupDeleteConfirm, setOpenPopupDeleteConfirm] = useState(false);
-    const reverIdData = {reserveId: reserveId }
+    const reserveIdData = {reserveId: reserveId }
 
     const handleOpenPopupDeleteConfirm = (e: any) => {
         e.preventDefault();
@@ -47,7 +47,7 @@ const AdminReviewDetail = ({
 
     const handleSubmit = () => {
         try {
-            API.delete('/api/reviews', '', reverIdData);
+            API.delete('/api/reviews', '', reserveIdData);
             console.log('삭제완료')
             setOpenPopupDeleteConfirm(false);
             window.location.replace(`/account/restaurants/${REGNumber}`);

@@ -1,7 +1,7 @@
-import * as Icon from '../../../../../assets/svg';
+import * as Icon from '../../../../../../assets/svg';
 import { useState, useEffect } from 'react';
-import * as API from '../../../../../api/api'
-import ProfileImage from '../../../../atoms/ProfileImage'
+import * as API from '../../../../../../api/api'
+import ProfileImage from '../../../../../atoms/ProfileImage'
 import * as UI from './style';
 import PopupDeleteConfirm from './template/PopupDeleteConfirm';
 
@@ -31,9 +31,12 @@ const UserReviewDetail = ({
         }
     ])
     const [ownerName, setOwnerName] = useState<string>('')
-    const [myReview, setMyReview] = useState<boolean>(false)
     const [openPopupDeleteConfirm, setOpenPopupDeleteConfirm] = useState(false);
-    const reverIdData = {reserveId: reserveId }
+    const [roleEmail, setRoleEmail] = useState<string | null | undefined>(null)
+    const reserveIdData = {reserveId: reserveId }
+
+    const isReviewer = roleEmail === email
+    console.log(isReviewer)
 
     const handleOpenPopupDeleteConfirm = (e: any) => {
         e.preventDefault();
@@ -47,7 +50,7 @@ const UserReviewDetail = ({
 
     const handleSubmit = () => {
         try {
-            API.delete('/api/reviews', '', reverIdData);
+            API.delete('/api/reviews', '', reserveIdData);
             console.log('삭제완료')
             setOpenPopupDeleteConfirm(false);
             window.location.replace(`/account/restaurants/${REGNumber}`);
@@ -57,6 +60,14 @@ const UserReviewDetail = ({
     };
 
     useEffect(() => {
+        API.userGet('/api/users/user').then((res) => {
+            if(res === undefined) {
+              setRoleEmail(undefined)
+            } else {
+              setRoleEmail(res.email)
+            }
+        });
+
         API.get(`/api/restaurants/${REGNumber}`).then((res) => {
             setOwnerName(res.name)
         })
@@ -89,7 +100,13 @@ const UserReviewDetail = ({
                 </UI.StyledReviwerProfile>
                 <UI.StyledReviewRight>
                     <UI.StyledGPA>평점 {rating}</UI.StyledGPA>
-                    <button onClick={handleOpenPopupDeleteConfirm}>삭제</button>
+                    {
+                        //변수 a -> token email === review emaill -> true면
+                        //button 보여주고, false면 null
+                        isReviewer
+                        ? <button onClick={handleOpenPopupDeleteConfirm}>삭제</button>
+                        : null
+                    }
                 </UI.StyledReviewRight>
             </UI.StyledReviewBox>
             <UI.StyledReviewInner>
