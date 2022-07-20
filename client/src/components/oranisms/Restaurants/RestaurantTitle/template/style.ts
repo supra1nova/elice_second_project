@@ -110,3 +110,25 @@ export const BookerInfo = styled.div`
     width: 55px;
   }
 `
+
+export const StyledInput = styled.input`
+  padding: 6px 6px;
+  border: 1px solid #E5E5E5;
+  width: 332px;
+
+  &:focus {
+    outline: none !important;
+    border: 1px solid #64AD57;
+  }
+`
+
+export const StyledTextarea = styled.textarea`
+  width: 332px;
+  padding: 6px 6px;
+  border: 1px solid #E5E5E5;
+
+  &:focus {
+    outline: none !important;
+    border: 1px solid #64AD57;
+  }
+`

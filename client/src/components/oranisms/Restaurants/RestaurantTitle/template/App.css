@@ -20,9 +20,9 @@ input[type="date"] {
     color: #2F353D;
     font-family: "Helvetica", arial, sans-serif;
     font-size: 16px;
-    border:1px solid #F4F6F3;
-    background:#F4F6F3;
-    padding:5px;
+    border:1px solid #E5E5E5;
+    background:#E5E5E5;
+    padding:6px;
     display: inline-block !important;
     visibility: visible !important;
 }
@@ -36,7 +36,17 @@ input[type="date"]:focus {
     border: 1px solid #64AD57;
 }
 
-input[type="text"] {
+.datePicker {
+    padding: 6px 6px;
+    border: 1px solid #E5E5E5;
+}
+
+.datePicker:focus {
+    outline: none !important;
+    border: 1px solid #64AD57;
+}
+
+/* input[type="text"] {
   padding: 6px 6px;
   border: 1px solid #E5E5E5;
   width: 332px;
@@ -45,9 +55,9 @@ input[type="text"] {
 input[type="text"]:focus {
     outline: none !important;
     border: 1px solid #64AD57;
-}
+} */
 
-textarea {
+/* textarea {
   width: 332px;
   padding: 6px 6px;
   border: 1px solid #E5E5E5;
@@ -56,4 +66,4 @@ textarea {
 textarea:focus {
     outline: none !important;
     border: 1px solid #64AD57;
-}
+} */

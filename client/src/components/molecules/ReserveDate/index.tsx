@@ -32,7 +32,8 @@ const ReserveDate = () => {
                 selected={startDate} 
                 onChange={(date:Date) => setStartDate(date)} 
                 minDate={startDate}
-                maxDate={new Date(lastDate)} 
+                maxDate={new Date(lastDate)}
+                className={'datePicker'}
             />
         </div>
     )

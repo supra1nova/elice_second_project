@@ -86,28 +86,22 @@ const UsersSignout = () => {
     e.preventDefault();
     setFormErrors(validate(formValues));
     setIsSubmit(true);
-
-    console.log(formData);
-
     try {
       const data = {
-        userInfo: {
-          email: formValues.inputEmail,
-          name: formValues.inputName,
-          password: formValues.inputPassword,
-          nickName: formValues.inputNickname,
-          phoneNumber: formValues.inputPhone,
-          inputPassword: formValues.inputPassword,
-          inputPasswordConfirm: formValues.inputPasswordConfirm,
-        },
+        email: formValues.inputEmail,
+        name: formValues.inputName,
+        password: formValues.inputPassword,
+        nickName: formValues.inputNickname,
+        phoneNumber: formValues.inputPhone,
         currentPassword: formValues.inputPasswordCurrent,
       };
+      console.log(data);
       const image = {
         file: fileImage,
         currentPassword: formValues.inputPasswordCurrent,
       };
       await API.patch('/api/users', '', data);
-      await API.patch('/api/users', '', image);
+      // await API.patch('/api/users', '', image);
 
       // if (fileImage) {
       //   axios({
@@ -117,6 +111,7 @@ const UsersSignout = () => {
       //     data: formData,
       //     headers: {
       //       'Content-Type': 'multipart/form-data',
+      //       Authorization: `Bearer ${localStorage.getItem('token')}`,
       //     },
       //   })
       //     .then((response) => {
