@@ -7,7 +7,6 @@ import Button from '../../../components/atoms/Button';
 import ButtonText from '../../../components/atoms/ButtonText';
 import InputText from '../../../components/atoms/InputText';
 import Select from '../../../components/atoms/Select';
-import InputFileThumbnail from '../../../components/atoms/InputFileThumbnail';
 import Textarea from '../../../components/atoms/Textarea';
 import Typography from '../../../components/atoms/Typography';
 import Form from '../../../components/atoms/Form';
@@ -130,33 +129,6 @@ const AccountRestaurants = () => {
 
   const errors: valueObject = {};
 
-  const REGNumber = '111222333';
-  useEffect(() => {
-    API.get(`/api/restaurants/${REGNumber}`).then((res) => {
-      const data = {
-        inputRegistrationNumber: res.REGNumber,
-        inputRestaurantName: res.name,
-        inputAddres2: res.address2,
-        inputRestauranPhone: res.phoneNumber,
-        inputSelectCategory: res.category,
-        inputDescription: res.description,
-        inputOwnerEmail: res.ownerEmail,
-      };
-      const address = {
-        inputPostNumber: res.postalcode,
-        inputAddres1: res.address1,
-      };
-
-      setFormValues(data);
-      setAddress(address);
-    });
-
-    API.get(`/api/restaurantImages/${REGNumber}`).then((res) => {
-      const imageList = res.map((item: any) => item.image);
-      setImage({ preview_URL: imageList });
-    });
-  }, []);
-
   useEffect(() => {
     return () => {
       URL.revokeObjectURL(image.preview_URL);
@@ -167,11 +139,6 @@ const AccountRestaurants = () => {
     setFormValues(formValues);
     console.log(formValues);
   }, [formValues]);
-
-  const handleOpenPopupSaveConfirm = (e: any) => {
-    e.preventDefault();
-    setOpenPopupSaveConfirm(true);
-  };
 
   const handleClosePopupSaveConfirm = (e: any) => {
     e.preventDefault();
@@ -186,7 +153,7 @@ const AccountRestaurants = () => {
   const saveFileImage = (e: any) => {
     e.preventDefault();
 
-    const imageLists = e.target.files;
+    const imageLists = e.target.files; // 파일 객체 불러옴
 
     let imageUrlLists = [...image.preview_URL];
     let imageFileLists = [...image.image_file];
@@ -249,7 +216,10 @@ const AccountRestaurants = () => {
         description: formValues.inputDescription,
         ownerEmail: formValues.inputOwnerEmail,
       };
-      await API.patch(`/api/restaurants/${REGNumber}`, '', data);
+
+      console.log(data);
+
+      await API.post('/api/restaurants/', '', data);
 
       if (image.image_file) {
         const formData = new FormData();
@@ -259,6 +229,7 @@ const AccountRestaurants = () => {
         formData.append('REGNumber', formValues.inputRegistrationNumber);
         await API.filePost('/api/restaurantImages', '', formData);
       }
+
       setOpenPopupSaveConfirm(true);
     } catch (err: any) {
       console.error(err);
@@ -390,115 +361,113 @@ const AccountRestaurants = () => {
   };
 
   return (
-    <LNBLayout items={ACCOUNT.OWNER}>
-      <UI.Container>
-        <UI.Content>
-          <Form onSubmit={handleSubmit}>
-            {inputTextData.owner.map((item, index) => {
-              return FormInputTextHorizontal(item, index);
-            })}
+    <UI.Container>
+      <UI.Content>
+        <Form onSubmit={handleSubmit}>
+          {inputTextData.owner.map((item, index) => {
+            return FormInputTextHorizontal(item, index);
+          })}
 
-            <Select
-              name='inputSelectCategory'
-              options={SELECT_CATEGORY_OPTIONS}
-              onChange={handleChange}
-              id='inputSelectCategory'
-              htmlFor='inputSelectCategory'
-              labelTitle={LABELTITLE.RESTAURANT_CATEGORY}
-            />
+          <Select
+            name='inputSelectCategory'
+            options={SELECT_CATEGORY_OPTIONS}
+            onChange={handleChange}
+            id='inputSelectCategory'
+            htmlFor='inputSelectCategory'
+            labelTitle={LABELTITLE.RESTAURANT_CATEGORY}
+          />
 
-            <StyleAddressContainer>
-              <StyleFormItemHorizontal>
-                {inputAddressData.owner.map((item, index) => {
-                  return FormInputTextHorizontal(item, index);
-                })}
-                <ButtonText onClick={handleOpenPostCodePopup}>
-                  우편번호 검색
-                </ButtonText>
-              </StyleFormItemHorizontal>
-              <StyleFormItem>
-                <InputText
-                  type='text'
-                  id='inputAddres1'
-                  name='inputAddres1'
-                  value={address.inputAddres1}
-                  placeholder=''
-                  onChange={handleChange}
-                  readOnly
-                />
-              </StyleFormItem>
-              <StyleFormItem>
-                <InputText
-                  type='text'
-                  id='inputAddres2'
-                  name='inputAddres2'
-                  value={formValues.inputAddres2}
-                  placeholder=''
-                  onChange={handleChange}
-                />
-              </StyleFormItem>
-              <FormError message={formErrors.address}></FormError>
-            </StyleAddressContainer>
-
-            <StyleInputFileContainer>
-              <StyleInputFileImage>
-                <StyleTypography>{LABELTITLE.RESTAURANT_IMAGE}</StyleTypography>
-                <InputFileButton
-                  id='inputFileAvatarImage'
-                  htmlFor='inputFileAvatarImage'
-                  name='inputFileAvatarImage'
-                  accept='image/*'
-                  onChange={saveFileImage}
-                  multiple
-                />
-              </StyleInputFileImage>
-              {image.preview_URL ? (
-                <StyleInputFilePreview>
-                  {image.preview_URL.map((image: any, id: any) => {
-                    return (
-                      <FileTumbnail
-                        image={image}
-                        key={id}
-                        onClick={() => {
-                          deleteFileImage(id);
-                        }}
-                      />
-                    );
-                  })}
-                </StyleInputFilePreview>
-              ) : null}
-            </StyleInputFileContainer>
-
-            <StyleTextareaContainer>
-              <Textarea
-                label={LABELTITLE.DESCRIPTION}
-                htmlFor='inputDescription'
-                id='inputDescription'
-                name='inputDescription'
+          <StyleAddressContainer>
+            <StyleFormItemHorizontal>
+              {inputAddressData.owner.map((item, index) => {
+                return FormInputTextHorizontal(item, index);
+              })}
+              <ButtonText onClick={handleOpenPostCodePopup}>
+                우편번호 검색
+              </ButtonText>
+            </StyleFormItemHorizontal>
+            <StyleFormItem>
+              <InputText
+                type='text'
+                id='inputAddres1'
+                name='inputAddres1'
+                value={address.inputAddres1}
                 placeholder=''
-                value={formValues.inputDescription}
+                onChange={handleChange}
+                readOnly
+              />
+            </StyleFormItem>
+            <StyleFormItem>
+              <InputText
+                type='text'
+                id='inputAddres2'
+                name='inputAddres2'
+                value={formValues.inputAddres2}
+                placeholder=''
                 onChange={handleChange}
               />
-              <FormError message={formErrors.inputDescription}></FormError>
-            </StyleTextareaContainer>
+            </StyleFormItem>
+            <FormError message={formErrors.address}></FormError>
+          </StyleAddressContainer>
 
-            <FormFooter>
-              <Button component='primary' size='large' block>
-                {BUTTON.SAVE_MODIFY_DATA}
-              </Button>
-            </FormFooter>
-          </Form>
-        </UI.Content>
+          <StyleInputFileContainer>
+            <StyleInputFileImage>
+              <StyleTypography>{LABELTITLE.RESTAURANT_IMAGE}</StyleTypography>
+              <InputFileButton
+                id='inputFileAvatarImage'
+                htmlFor='inputFileAvatarImage'
+                name='inputFileAvatarImage'
+                accept='image/*'
+                onChange={saveFileImage}
+                multiple
+              />
+            </StyleInputFileImage>
+            {image.preview_URL ? (
+              <StyleInputFilePreview>
+                {image.preview_URL.map((image: any, id: any) => {
+                  return (
+                    <FileTumbnail
+                      image={image}
+                      key={id}
+                      onClick={() => {
+                        deleteFileImage(id);
+                      }}
+                    />
+                  );
+                })}
+              </StyleInputFilePreview>
+            ) : null}
+          </StyleInputFileContainer>
 
-        <PopupSaveConfirm
-          open={openPopupSaveConfirm}
-          onClose={handleClosePopupSaveConfirm}
-        />
-        <PostCodePopup open={openPostCodePopup}>
-          <DaumPostcode onComplete={handlePostCode} />
-        </PostCodePopup>
-      </UI.Container>
-    </LNBLayout>
+          <StyleTextareaContainer>
+            <Textarea
+              label={LABELTITLE.DESCRIPTION}
+              htmlFor='inputDescription'
+              id='inputDescription'
+              name='inputDescription'
+              placeholder=''
+              value={formValues.inputDescription}
+              onChange={handleChange}
+            />
+            <FormError message={formErrors.inputDescription}></FormError>
+          </StyleTextareaContainer>
+
+          <FormFooter>
+            <Button component='primary' size='large' block>
+              {BUTTON.SAVE_MODIFY_DATA}
+            </Button>
+          </FormFooter>
+        </Form>
+      </UI.Content>
+
+      <PopupSaveConfirm
+        open={openPopupSaveConfirm}
+        onClose={handleClosePopupSaveConfirm}
+      />
+      <PostCodePopup open={openPostCodePopup}>
+        <DaumPostcode onComplete={handlePostCode} />
+      </PostCodePopup>
+    </UI.Container>
   );
 };
 

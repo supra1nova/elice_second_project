@@ -7,6 +7,7 @@ import RestaurantHome from '../pages/Restaurant/RestaurantHome';
 import SearchHome from '../pages/Search';
 import AccountHome from '../pages/Account/AccountHome';
 import AccountRestaurants from '../pages/Account/AccountRestaurants';
+import AccountRestaurantsCreate from '../pages/Account/AccountRestaurantsCreate';
 import AccountRestaurantsList from '../pages/Account/AccountRestaurantsList';
 import AccountReserves from '../pages/Account/AccountReserves';
 import AccountReservesManagement from '../pages/Account/AccountReservesManagement';
@@ -26,13 +27,19 @@ function Router() {
       <Routes>
         <Route element={<GlobalLayout />}>
           <Route path={URL.HOME} element={<Home />}></Route>
-          <Route path={URL.RESTAURANT} element={<RestaurantHome />}></Route>
+          <Route path={URL.RESTAURANTS} element={<RestaurantHome />}></Route>
+
+          <Route
+            path={`${URL.RESTAURANTS}/:REGNumber`}
+            element={<AccountRestaurantsList />}
+          ></Route>
+
           <Route path={URL.SEARCH} element={<SearchHome />}></Route>
           {/* <Route path={URL.ACCOUNT_HOME} element={<AccountHome />}></Route> */}
-          <Route
+          {/* <Route
             path={URL.ACCOUNT_RESTAURANTS}
             element={<AccountRestaurants />}
-          ></Route>
+          ></Route> */}
           <Route
             path={URL.ACCOUNT_RESERVES}
             element={<AccountReserves />}
@@ -43,7 +50,7 @@ function Router() {
           ></Route>
           <Route
             path={`${URL.ACCOUNT_RESTAURANTS}/:REGNumber`}
-            element={<AccountRestaurantsList />}
+            element={<AccountRestaurants />}
           ></Route>
           <Route
             path={URL.ACCOUNT_CATEGORIES}
@@ -61,6 +68,10 @@ function Router() {
         <Route element={<HalfLayout />}>
           <Route path={URL.USERS_LOGIN} element={<UsersLogin />}></Route>
           <Route path={URL.USERS_REGISTER} element={<UsersRegister />}></Route>
+          <Route
+            path={URL.ACCOUNT_RESTAURANTS_CREATE}
+            element={<AccountRestaurantsCreate />}
+          ></Route>
         </Route>
       </Routes>
     </BrowserRouter>
