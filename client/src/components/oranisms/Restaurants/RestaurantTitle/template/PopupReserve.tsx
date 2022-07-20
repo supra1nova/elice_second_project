@@ -7,11 +7,11 @@ import PopupFooter from '../../../Popup/PopupFooter';
 import { POPUP } from '../../../../../constants/title';
 import * as UI from './style';
 import * as Icon from '../../../../../assets/svg';
-import './App.css'
 import * as API from '../../../../../api/api';
 import Button from '../../../../atoms/Button'
 import { ERROR } from '../../../../../constants/error';
 import ReserveDate from '../../../../molecules/ReserveDate'
+import './App.css'
 
 interface Props {
   open: boolean;
@@ -193,16 +193,16 @@ const PopupReserve = ({ open, onClose, width, titleColor, title }: Props) => {
           <UI.BookerInfo>
             <div>
               <span>예약자</span>
-              <input type="text" name="name" value={booker.name} />
+              <UI.StyledInput type="text" name="name" value={booker.name} />
             </div>
             <div>
               <span>연락처</span>
-              <input type="text" name="name" value={booker.phoneNumber} />
+              <UI.StyledInput type="text" name="name" value={booker.phoneNumber} />
             </div>
             <div>
               <span>요청사항</span>
-              <textarea placeholder='식당에 요청하실 내용을 적어주세요' rows={2}>
-              </textarea>
+              <UI.StyledTextarea placeholder='식당에 요청하실 내용을 적어주세요' rows={2}>
+              </UI.StyledTextarea>
             </div>
           </UI.BookerInfo>
         </label>
