@@ -5,9 +5,16 @@ import LikeReviewNum from '../../../atoms/LikeReviewNum'
 import * as UI from './style';
 import PopupReserve from './template/PopupReserve';
 import LikeBtn from '../../../atoms/LikeButton/LikeBtn'
+import { useNavigate } from 'react-router-dom';
 
 const RestaurantTitle = () => {
     const REGNumber = window.location.href.split('/')[5];
+    const navigate = useNavigate();
+
+    const [role, setRole] = useState<string | null | undefined>(null)
+    const isNotUser = role === undefined
+    const isUser = role === 'user' || role === 'USER'
+
     const [name, setName] = useState<string>("")
     const [gpa, setGpa] = useState<string | null>(null) //toFixed를 하면 string으로 됨
     const [likeNum, setLikeNum] = useState<number>(0)
@@ -19,6 +26,7 @@ const RestaurantTitle = () => {
             .map((e: any) => e.REGNumber)
             .includes(REGNumber);
 
+    // 회원이 예약하기 눌렀을때
     const handleOpenPopupReserve = (e: any) => {
         e.preventDefault();
         setOpenPopupReserve(true);
@@ -50,39 +58,44 @@ const RestaurantTitle = () => {
         await API.get(`/api/wishes/${email}`).then((res) => setWishes(res));
       };
 
-    useEffect(
-        () => {
-            // 레스토랑명
-            API.get(`/api/restaurants/${REGNumber}`).then((res) => {
-                setName(cur => cur = res.name)
-            })
+    useEffect(() => {
+        API.userGet('/api/users/user').then((res) => {
+            if(res === undefined) {
+              setRole(undefined)
+            } else {
+              setRole(res.role)
+            }
+        });
 
-            // 리뷰개수
-            API.get(`/api/reviews/${REGNumber}`).then((res) => {
-                const reviews = res.reviews
+        // 레스토랑명
+        API.get(`/api/restaurants/${REGNumber}`).then((res) => {
+            setName(cur => cur = res.name)
+        })
 
-                if(reviews.length > 0) {
-                    let rating = 0
+        // 리뷰개수
+        API.get(`/api/reviews/${REGNumber}`).then((res) => {
+            const reviews = res.reviews
 
-                    reviews.map((review: any):any => {
-                        rating += review.rating
-                    })
+            if(reviews.length > 0) {
+                let rating = 0
 
-                    const averageRating = (rating / reviews.length).toFixed(1)
-                    setGpa(averageRating)
+                reviews.map((review: any):any => {
+                    rating += review.rating
+                })
 
-                    setReviewNum(reviews.length)
-                }
-            })
+                const averageRating = (rating / reviews.length).toFixed(1)
+                setGpa(averageRating)
 
-            // 찜 개수
-            API.get(`/api/wishes/total/${REGNumber}`).then((res) => {
-                setLikeNum(res)
-            })
+                setReviewNum(reviews.length)
+            }
+        })
 
-            getWished()
-        }, []
-    )
+        // 찜 개수
+        API.get(`/api/wishes/total/${REGNumber}`).then((res) => {
+            setLikeNum(res)
+        })
+        getWished()
+    }, [])
 
     return (
         <>
@@ -92,22 +105,32 @@ const RestaurantTitle = () => {
                         <UI.RestaurantName>{name}</UI.RestaurantName>
                         <UI.GPA>{gpa}</UI.GPA>
                     </div>
-                    <ReserveButton onClick={handleOpenPopupReserve}>예약하기</ReserveButton>
+                    {   
+                        isNotUser
+                        ? <ReserveButton onClick={() => navigate('/users/login')}>예약하기</ReserveButton>
+                        : isUser
+                        ? <ReserveButton onClick={handleOpenPopupReserve}>예약하기</ReserveButton>
+                        : null
+                    }
                 </UI.TitleBox>
                 <UI.Bottom>
                     <LikeReviewNum
                         likeNum={likeNum}
                         reviewNum={reviewNum}
                     />
-                    <UI.Like>
-                        <LikeBtn
-                            regNumber={REGNumber}
-                            email={userEmail}
-                            isWished={isWished}
-                            position={'static'}
-                        />
-                        <p>찜하기</p>
-                    </UI.Like>
+                    {
+                        isNotUser || isUser
+                        ? <UI.Like>
+                            <LikeBtn
+                                regNumber={REGNumber}
+                                email={userEmail}
+                                isWished={isWished}
+                                position={'static'}
+                            />
+                            <p>찜하기</p>
+                        </UI.Like>
+                        : null
+                    }
                 </UI.Bottom>
         </UI.InfoContainer>
         <PopupReserve
@@ -117,7 +140,7 @@ const RestaurantTitle = () => {
                 width={'427'}
                 titleColor={true}
                 title={name}
-            />
+        />
         </>
     );
 };
