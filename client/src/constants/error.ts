@@ -18,8 +18,8 @@ export const ERROR = {
   OWNER_REGISTRATION_NUMBER_VALID: '사업자 등록번호 형식이 아닙니다.',
   ADMIN_CODE_INPUT: '관리자 코드를 입력해주세요.',
   ADMIN_CODE_INPUT_VALID: 'ADMIN CODE가 일치하지 않습니다.',
-  TIME_INPUT: '시간을 선택해주세요.',
-  NUMBER_INPUT: '인원은 1명 이상이어야 합니다.',
-  RESERVE_NAME_INPUT: '예약자 이름을 입력해주세요.',
-  RESERVE_PHONE_INPUT: '예약자 전화번호를 입력해주세요.',
+  RESTAURANT_NAME: '업체명을 입력해주세요.',
+  RESTAURANT_OFFICE: '지점명을 입력해주세요.',
+  ADDRESS_INPUT: '주소를 입력해주세요.',
+  DESCRIPTION_INPUT: '설명을 입력해주세요.',
 };

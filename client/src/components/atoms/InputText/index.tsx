@@ -9,7 +9,8 @@ interface Props {
   maxLength?: number;
   name: string;
   value: string;
-  readOnly: boolean;
+  readOnly?: boolean | undefined;
+  disable?: boolean | undefined;
   onChange?: (e: any) => void;
 }
 const InputText = ({
