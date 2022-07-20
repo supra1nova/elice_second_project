@@ -14,6 +14,7 @@ export const StyledReviwerProfile = styled.div`
 export const StyledOwnerReviwerProfile = styled.div`
     display: flex;
     align-items: center;
+    width: 100%;
     justify-content: space-between;
 
     div {
@@ -76,4 +77,35 @@ export const StyledOwnerName = styled.div`
 export const StyledOwnerDescription = styled.div`
     ${(props) => props.theme.font.description2};
     padding-left: 40px;
+`
+export const OwnerComment = styled.div`
+    display: flex;
+    align-items: center;
+
+    form {
+        padding-left: 10px;
+        width: 100%;
+    }
+
+    form > input[type="text"] {
+        padding: 6px 6px;
+        display: inline-block;
+        border: 1px solid #E5E5E5;
+        width: calc(100% - 56px);
+        height: 36px;
+    }
+    form > input[type="text"]:focus {
+        outline: none !important;
+        border: 1px solid #64AD57;
+    }
+    form > input[type="submit"] {
+        ${(props) => props.theme.font.subtitle2};
+        color: ${(props) => props.theme.colors.white}; 
+        background-color: ${(props) => props.theme.colors.main1}; 
+        border: 1px solid #64AD57;
+        width: 56px;
+        height: 36px;
+        cursor: pointer;
+    }
+
 `

@@ -30,24 +30,33 @@ const OwnerReviewDetail = ({
             image: ''
         }
     ])
-    const [ownerName, setOwnerName] = useState<string>('')
+    const [owner, setOwner] = useState<{name: string, email: string}>({
+        name: '',
+        email: ''
+    })
+    const [inputValue, setInputValue] = useState<any>(null);
     const [openPopupDeleteConfirm, setOpenPopupDeleteConfirm] = useState(false);
+    const [roleEmail, setRoleEmail] = useState<string | null | undefined>(null)
     const reserveIdData = {reserveId: reserveId }
+    const OwnerCommentData = {
+        reserveId: reserveId,
+        ownerComment: inputValue
+    }
+    const isOwner = roleEmail === owner.email
 
     const handleOpenPopupDeleteConfirm = (e: any) => {
         e.preventDefault();
         setOpenPopupDeleteConfirm(true);
-      };
+    };
     
-      const handleClosePopupDeleteConfirm = (e: any) => {
+    const handleClosePopupDeleteConfirm = (e: any) => {
         e.preventDefault();
         setOpenPopupDeleteConfirm(!openPopupDeleteConfirm);
-      };
+    };
 
     const handleSubmit = () => {
         try {
             API.delete('/api/reviews/owner', '', reserveIdData);
-            console.log('삭제완료')
             setOpenPopupDeleteConfirm(false);
             window.location.replace(`/account/restaurants/${REGNumber}`);
         } catch (err: any) {
@@ -55,10 +64,28 @@ const OwnerReviewDetail = ({
         }
     };
 
+    const handleCommentSubmit = (e: any) => {
+        e.preventDefault()
+        if(inputValue !== null) {
+            try {
+                API.post('/api/reviews/owner', '', OwnerCommentData);
+                window.location.replace(`/account/restaurants/${REGNumber}`);
+            } catch (err: any) {
+                console.error(err);
+            }
+        } else {
+            alert('댓글을 입력해주세요.')
+        }
+    };
+
+    const onChangeHandler = (event:any) => {
+        setInputValue(event.target.value);
+     };
+
     useEffect(() => {
         API.get(`/api/restaurants/${REGNumber}`).then((res) => {
             if(res) {
-                setOwnerName(res.name)
+                setOwner({name: res.name, email: res.ownerEmail})
             }
         })
 
@@ -69,6 +96,14 @@ const OwnerReviewDetail = ({
             copy = res
             setReviewImgs(copy)
         })
+
+        API.userGet('/api/users/user').then((res) => {
+            if(res === undefined) {
+              setRoleEmail(undefined)
+            } else {
+              setRoleEmail(res.email)
+            }
+        });
     }, [])
 
     return (
@@ -83,7 +118,6 @@ const OwnerReviewDetail = ({
                 </UI.StyledReviwerProfile>
                 <UI.StyledReviewRight>
                     <UI.StyledGPA>평점 {rating}</UI.StyledGPA>
-                    <button onClick={handleOpenPopupDeleteConfirm}>삭제</button>
                 </UI.StyledReviewRight>
             </UI.StyledReviewBox>
             <UI.StyledReviewInner>
@@ -99,17 +133,40 @@ const OwnerReviewDetail = ({
                     
                 </div>
             </UI.StyledReviewInner>
-            {ownerComment === null ? null :
-                <UI.StyledOwnerReview>
+            {ownerComment !== null 
+                ? <UI.StyledOwnerReview>
                     <UI.StyledOwnerReviwerProfile>
                         <div>
                             <Icon.Profile fill={'#64AD57'} width={'30px'} height={'30px'}/>
-                            <UI.StyledOwnerName>{ownerName}</UI.StyledOwnerName>
+                            <UI.StyledOwnerName>{owner.name}</UI.StyledOwnerName>
                         </div>
+                        {
+                            //변수 a -> token email === review emaill -> true면
+                            //button 보여주고, false면 null
+                            isOwner
+                            ? <button onClick={handleOpenPopupDeleteConfirm}>삭제</button>
+                            : null
+                        }
                     </UI.StyledOwnerReviwerProfile>
                     <UI.StyledOwnerDescription>
                     {ownerComment}
                     </UI.StyledOwnerDescription>
+                </UI.StyledOwnerReview>
+                : !isOwner
+                ? null
+                : <UI.StyledOwnerReview>
+                    <UI.OwnerComment>
+                        <Icon.Profile fill={'#64AD57'} width={'30px'} height={'30px'}/>
+                        <form onSubmit={handleCommentSubmit}>
+                            <input 
+                                type="text" 
+                                placeholder='댓글을 입력하세요' 
+                                onChange={onChangeHandler}
+                                value={inputValue}
+                            />
+                            <input type="submit" value="등록" />
+                        </form>
+                    </UI.OwnerComment>
                 </UI.StyledOwnerReview>
             }
             <PopupDeleteConfirm
