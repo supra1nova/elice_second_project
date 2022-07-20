@@ -92,9 +92,12 @@ userRouter.get('/user/:email', async function (req: Request, res:Response, next:
 // // 4. 사용자 정보 수정
 userRouter.patch('/', loginRequired, async function (req: Request, res:Response, next:NextFunction) {
   try {
+    if (req.body.password.length == 0) {
+      req.body.password = req.body.currentPassword;
+    }
     const updateUserInfo:updateUserInfo=req.body;
     const email = req.email;
-    const {currentPassword} =updateUserInfo; //email 필수
+    const { currentPassword } = updateUserInfo; //email 필수
 
     // currentPassword 없을 시, 진행 불가
     if (!currentPassword) {
@@ -113,7 +116,7 @@ userRouter.patch('/', loginRequired, async function (req: Request, res:Response,
 userRouter.patch('/image',loginRequired, upload.single('image'), async function (req: Request, res:Response, next:NextFunction) {
   try {
     
-    const {currentPassword}=req.body;
+    const { currentPassword } = req.body;
     // if(req.email==undefined) throw new Error("error")
     // const email= req.email;
     // updateUserInfo.userInfo.email= email;
