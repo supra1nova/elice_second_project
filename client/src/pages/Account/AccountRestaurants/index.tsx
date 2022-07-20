@@ -99,13 +99,6 @@ const AccountRestaurants = () => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(formErrors);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
-    }
-  }, [formErrors]);
-
   const handleOpenPopupSaveConfirm = (e: any) => {
     e.preventDefault();
     setOpenPopupSaveConfirm(true);
@@ -176,6 +169,8 @@ const AccountRestaurants = () => {
     formValues.inputPostNumber = data.zonecode;
     formValues.inputAddres1 = data.address;
     setOpenPostCodePopup(openPostCodePopup);
+
+    console.log(formValues.inputPostNumber, formValues.inputAddres1);
   };
 
   const validate = (values: any) => {
@@ -284,7 +279,6 @@ const AccountRestaurants = () => {
         value: formValues.inputPostNumber || '',
         maxLength: 5,
         autoComplete: undefined,
-        onChange: handleChange,
         placeholder: PLACEHOLDER.ADDRESS_POSTNUMBER,
         error: formErrors.inputPostNumber,
         readOnly: true,
@@ -339,7 +333,6 @@ const AccountRestaurants = () => {
                   value={formValues.inputAddres1}
                   placeholder=''
                   readOnly
-                  onChange={handleChange}
                 />
               </StyleFormItem>
               <StyleFormItem>

@@ -8,6 +8,7 @@ import Button from '../../../components/atoms/Button';
 import { USERS } from '../../../constants/lnb';
 import { LABELTITLE, PLACEHOLDER } from '../../../constants/input';
 import { BUTTON } from '../../../constants/input';
+import { ERROR } from '../../../constants/error';
 import * as UI from './style';
 
 interface Props {
@@ -23,6 +24,7 @@ type valueObject = {
 const UsersSignout = () => {
   const navigate = useNavigate();
   const initialValue = {
+    inputEmail: '',
     inputPassword: '',
   };
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
@@ -30,9 +32,34 @@ const UsersSignout = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [openPopupSignoutConfirm, setOpenPopupSignoutConfirm] = useState(false);
 
+  const errors: valueObject = {};
+
+  useEffect(() => {
+    API.userGet('/api/users/user').then((res) => {
+      const data = {
+        inputEmail: res.email,
+      };
+      setFormValues(data);
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues);
+    }
+  }, [formErrors]);
+
   const handleOpenPopupSignoutConfirm = (e: any) => {
     e.preventDefault();
-    setOpenPopupSignoutConfirm(true);
+
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
+
+    const isSucess = Object.keys(formErrors).length === 0;
+    if (isSucess) {
+      setOpenPopupSignoutConfirm(true);
+    }
   };
 
   const handleClosePopupSignoutConfirm = (e: any) => {
@@ -49,10 +76,12 @@ const UsersSignout = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const currentPassword = formValues.inputPassword;
-    const data = { currentPassword };
-    console.log(data);
+
     try {
+      const data = {
+        email: formValues.inputEmail,
+        password: formValues.inputPasswordCurrent,
+      };
       await API.delete('/api/users', '', data);
       localStorage.removeItem('token');
       navigate('/');
@@ -61,26 +90,28 @@ const UsersSignout = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(formErrors);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
+  const validate = (values: any) => {
+    const inputPasswordCurrentValue = values.inputPasswordCurrent;
+    if (!inputPasswordCurrentValue) {
+      errors.inputPasswordCurrent = ERROR.PASSWORD_CURRENT;
     }
-  }, [formErrors]);
+
+    return errors;
+  };
 
   const inputTextData = [
     {
-      htmlFor: 'inputPassword',
+      htmlFor: 'inputPasswordCurrent',
       labelTitle: LABELTITLE.PASSWORD_CURRENT,
       type: 'password',
-      id: 'inputPassword',
-      name: 'inputPassword',
-      value: formValues.inputPassword,
+      id: 'inputPasswordCurrent',
+      name: 'inputPasswordCurrent',
+      value: formValues.inputPasswordCurrent || '',
       maxLength: 20,
       autoComplete: 'current-password',
       onChange: handleChange,
       placeholder: PLACEHOLDER.PASSWORD,
-      error: formErrors.inputPassword,
+      error: formErrors.inputPasswordCurrent,
     },
   ];
 
