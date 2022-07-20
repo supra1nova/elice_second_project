@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import * as API from '../../../../api/api';
-import ReviewDetail from './ReviewDetail/ReviewDetail';
-import UserReviewDetail from './ReviewDetail/UserReviewDetail';
-import OwnerReviewDetail from './ReviewDetail/OwnerReviewDetail';
-import AdminReviewDetail from './ReviewDetail/AdminReviewDetail';
+import ReviewPage from './ReviewPage/ReviewPage';
+import UserReviewPage from './ReviewPage/UserReviewPage';
+import OwnerReviewPage from './ReviewPage/OwnerReviewPage';
+import AdminReviewPage from './ReviewPage/AdminReviewPage';
 import * as UI from './style';
 
 const ReviewComment = () => {
@@ -20,20 +20,18 @@ const ReviewComment = () => {
   ]);
   const [role, setRole] = useState<string | null | undefined>(null)
   const isNotUser = role === undefined
-  const isUser = role === 'user'
-  const isOwner = role === 'owner'
-  const isAdmin = role === 'admin'
+  const isUser = role === 'user' || 'USER'
+  const isOwner = role === 'owner' || 'OWNER'
+  const isAdmin = role === 'admin' || 'ADMIN'
 
   useEffect(() => {
     API.userGet('/api/users/user').then((res) => {
-      console.log(res)
       if(res === undefined) {
         setRole(undefined)
       } else {
         setRole(res.role)
       }
-      // 여기 email이랑 리뷰 email이링 값이 같으면 삭제버튼을 보여주고
-  });
+    });
 
     const REGNumber = window.location.href.split('/')[5];
 
@@ -42,29 +40,23 @@ const ReviewComment = () => {
       setComment(reviews);
     });
   }, []);
-
+  
+  // role을 체크해서 유저일경우 -> UserReviewDetail
+  // role을 체크해서 사장님일경우 -> OwnerReviewDetail
+  // role을 체크해서 관리자일경우 -> AdminReviewDetail
   return (
     <UI.StyledContent>
-      {comments.map((item: any, index: any) => {
-        return (
-          // role을 체크해서 유저일경우 -> UserReviewDetail
-          // role을 체크해서 사장님일경우 -> OwnerReviewDetail
-          // role을 체크해서 관리자일경우 -> AdminReviewDetail
-          {
-            isNotUser
-            // ? <ReviewDetail
-            //     key={index}
-            //     email={item.email}
-            //     createdAt={item.createdAt}
-            //     comment={item.comment}
-            //     rating={item.rating}
-            //     ownerComment={item.ownerComment}
-            //     reserveId={item.reserveId}
-            //   />
-          }
-          
-        );
-      })}
+      {
+        isNotUser
+        ? <ReviewPage />
+        : isUser
+        ? <UserReviewPage />
+        : isOwner
+        ? <OwnerReviewPage />
+        : isAdmin
+        ? <AdminReviewPage />
+        : null
+      }
     </UI.StyledContent>
   );
 };
