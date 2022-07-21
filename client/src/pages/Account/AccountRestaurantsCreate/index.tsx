@@ -130,16 +130,12 @@ const AccountRestaurantsCreate = () => {
 
   const errors: valueObject = {};
 
-  // const path = window.location.pathname.split('/');
-  // const REGNumber = path[path.length - 1];
-
-  useEffect(() => {
-    const REGNumber = undefined;
-    if (REGNumber === undefined)
-      try {
-        API.get(`/api/restaurants/${REGNumber}`).then((res) => {});
-      } catch (err: any) {}
-  });
+  const REGNumber = localStorage.getItem('REGNumber');
+  if (REGNumber) {
+    console.log('aaa');
+    window.location.href = '/account/restaurants';
+  }
+  console.log(REGNumber);
 
   useEffect(() => {
     return () => {
@@ -241,6 +237,8 @@ const AccountRestaurantsCreate = () => {
         formData.append('REGNumber', formValues.inputRegistrationNumber);
         await API.filePost('/api/restaurantImages', '', formData);
       }
+
+      localStorage.setItem('REGNumber', data.REGNumber);
 
       setOpenPopupSaveConfirm(true);
     } catch (err: any) {
