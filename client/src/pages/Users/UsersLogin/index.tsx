@@ -45,9 +45,20 @@ const UsersLogin = () => {
       const result = await API.post('/api/users/login', '', data);
       const token = result.data.token;
       localStorage.setItem('token', token);
-
-      alert(`정상적으로 로그인되었습니다.`);
+      try {
+        API.userGet('/api/users/user').then((res) => {
+          const role = res.role;
+          if (role === 'owner') {
+            navigate('/account/restaurantscreate');
+          } else {
+            navigate('/');
+          }
+        });
+      } catch (err: any) {
+        console.error(err);
+      }
       navigate('/');
+      alert(`정상적으로 로그인되었습니다.`);
     } catch (err: any) {
       console.error(err);
     }

@@ -28,6 +28,7 @@ import {
 import * as UI from './style';
 import InputFileButton from '../../../components/atoms/InputFileButton';
 import FileTumbnail from '../../../components/atoms/FileTumbnail';
+import { channel } from 'diagnostics_channel';
 
 const StyleTypography = styled(Typography)`
   margin-bottom: 10px;
@@ -128,6 +129,17 @@ const AccountRestaurantsCreate = () => {
   const [isSubmit, setIsSubmit] = useState(false);
 
   const errors: valueObject = {};
+
+  // const path = window.location.pathname.split('/');
+  // const REGNumber = path[path.length - 1];
+
+  useEffect(() => {
+    const REGNumber = undefined;
+    if (REGNumber === undefined)
+      try {
+        API.get(`/api/restaurants/${REGNumber}`).then((res) => {});
+      } catch (err: any) {}
+  });
 
   useEffect(() => {
     return () => {
