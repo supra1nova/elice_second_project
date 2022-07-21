@@ -4,7 +4,7 @@ import { PaginationTable } from '../../../../../components/molecules/Table/Pagin
 import { ACCOUNT } from '../../../../../constants/lnb';
 import * as UI from './style';
 
-const AccountReservesOwner = () => {
+const AccountReservesListOwner = () => {
   return (
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
@@ -16,4 +16,4 @@ const AccountReservesOwner = () => {
   );
 };
 
-export default AccountReservesOwner;
+export default AccountReservesListOwner;
