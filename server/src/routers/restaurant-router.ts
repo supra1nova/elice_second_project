@@ -42,6 +42,18 @@ restaurantRouter.get('/', async (req: Request, res:Response, next:NextFunction) 
   }
 })
 
+// (이메일 이용 업체 조회 - 점주 고유 기능)
+// restaurantRouter.get('/owner/', ownerRequired, async function (req: Request, res: Response, next: NextFunction) {
+restaurantRouter.get('/owner/', loginRequired, async function (req: Request, res: Response, next: NextFunction) {
+  try {
+    const email = req.email;
+    const restaurant = await restaurantService.getRestaurantByEmail(email);
+    res.status(200).json(restaurant);
+  } catch(error) {
+    next(error)
+  }
+});
+
 // // 3. 업체 상세 정보 조회
 restaurantRouter.get('/:REGNumber', async function (req: Request, res:Response, next:NextFunction) {
   try {

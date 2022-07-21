@@ -12,13 +12,23 @@ class RestaurantService {
   
 
   async getRestaurant(REGNumber:string){
-    const product= await this.restaurantModel.findRestaurantByREGNumber(REGNumber);
-    if(!product){
+    const restaurant= await this.restaurantModel.findRestaurantByREGNumber(REGNumber);
+    if(!restaurant){
       throw new Error(
         '해당 제품이 존재하지 않습니다. 다시 한 번 확인해 주세요.'
       );
     }
-    return product;
+    return restaurant;
+  }
+
+  async getRestaurantByEmail(email: string) {
+    const restaurant= await this.restaurantModel.findRestaurantByOwnerEmail(email);
+    if(!restaurant){
+      throw new Error(
+        '해당 제품이 존재하지 않습니다. 다시 한 번 확인해 주세요.'
+      );
+    }
+    return restaurant;
   }
 
   async addRestaurant (restaurantInfo:restaurantInfo){
@@ -30,13 +40,17 @@ class RestaurantService {
 
     const restaurant = await restaurantModel.findRestaurantByOwnerEmail(email);
 
-    let a:string|undefined = restaurant?.REGNumber
+    let a: string | undefined = restaurant?.REGNumber
+    console.log(restaurant);
     if(a===undefined) throw new Error("권한이 없습니다") // 자기소유의 restaurant없음
-    else{ 
-        if(a!==REGNumber) throw new Error("권한이 없슴");
-          const deletedRestaurant= await this.restaurantModel.deleteRestaurant(REGNumber);
-          return deletedRestaurant;
-        }
+    else if (a !== REGNumber) { 
+      console.log(a);
+      console.log(REGNumber);
+      throw new Error("권한이 없슴");
+    } else {
+      const deletedRestaurant= await this.restaurantModel.deleteRestaurant(REGNumber);
+      return deletedRestaurant;
+    }
   }
   
   async countRestaurants() {

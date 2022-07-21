@@ -7,14 +7,15 @@ import {Restaurant} from '../entity'
  */
 export class RestaurantModel{
   
-  async findRestaurantbyEmail(email:string) {
-    const restaurantRepository= AppDataSource.getRepository(Restaurant);
-    // get a post repository to perform operations with post
-    const restaurant = await restaurantRepository.findOneBy({
-    // email: email
-    })
-    return (restaurant);
-  }
+  // async findRestaurantbyEmail(email:string) {
+  //   const restaurantRepository= AppDataSource.getRepository(Restaurant);
+  //   // get a post repository to perform operations with post
+  //   const restaurant = await restaurantRepository.findOneBy({
+  //   // email: email
+  //   })
+  //   console.log(restaurant);
+  //   return (restaurant);
+  // }
 
   async findRestaurantbyNickName(nickName:string) {
     const userRepository= AppDataSource.getRepository(Restaurant);
