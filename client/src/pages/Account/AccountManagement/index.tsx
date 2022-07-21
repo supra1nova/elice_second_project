@@ -5,7 +5,7 @@ import { ACCOUNT } from '../../../constants/lnb';
 import { SECTION } from '../../../constants/title';
 import * as UI from './style';
 
-const AccountReservesManagement = () => {
+const AccountManagement = () => {
   return (
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
@@ -19,4 +19,4 @@ const AccountReservesManagement = () => {
   );
 };
 
-export default AccountReservesManagement;
+export default AccountManagement;

@@ -38,8 +38,6 @@ const AccountMenusCreate = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  console.log(formValues.inputREGNumber);
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setFormErrors(validate(formValues));

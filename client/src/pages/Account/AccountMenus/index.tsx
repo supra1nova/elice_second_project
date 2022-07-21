@@ -1,21 +1,19 @@
-import React from 'react';
-import LNBLayout from '../../../components/molecules/LNBLayout';
-import { ACCOUNT } from '../../../constants/lnb';
-import * as UI from './style';
-import AccountMenusCreate from './template/AccountMenusCreate';
-import AccountMenusList from './template/AccountMenusList';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import * as API from '../../../api/api';
+import AccountMenusContainer from './template/AccountMenusContainer';
 
 const AccountMenus = () => {
-  return (
-    <LNBLayout items={ACCOUNT.OWNER}>
-      <UI.Container>
-        <UI.Content>
-          <AccountMenusCreate />
-          <AccountMenusList />
-        </UI.Content>
-      </UI.Container>
-    </LNBLayout>
-  );
+  const navigate = useNavigate();
+  const [role, setRole] = useState<string>();
+  useEffect(() => {
+    API.userGet('/api/users/user').then((res) => {
+      console.log(res);
+      setRole(res.role);
+    });
+  }, []);
+
+  return <>{role === 'owner' ? <AccountMenusContainer /> : navigate('/')}</>;
 };
 
 export default AccountMenus;

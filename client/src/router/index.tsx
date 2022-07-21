@@ -5,12 +5,11 @@ import HalfLayout from './HalfLayout';
 import Home from '../pages/Home';
 import RestaurantHome from '../pages/Restaurant/RestaurantHome';
 import Search from '../pages/Search';
-import AccountHome from '../pages/Account/AccountHome';
 import AccountBooking from '../pages/Account/AccountBooking';
 import AccountRestaurants from '../pages/Account/AccountRestaurants';
 import AccountRestaurantsList from '../pages/Account/AccountRestaurantsList';
 import AccountReserves from '../pages/Account/AccountReserves';
-import AccountReservesManagement from '../pages/Account/AccountReservesManagement';
+import AccountManagement from '../pages/Account/AccountManagement';
 import AccountCategories from '../pages/Account/AccountCategories';
 import AccountLikes from '../pages/Account/AccountLikes';
 import AccountMenus from '../pages/Account/AccountMenus';
@@ -48,7 +47,7 @@ function Router() {
           ></Route>
           <Route
             path={URL.ACCOUNT_MANAGEMENT}
-            element={<AccountReservesManagement />}
+            element={<AccountManagement />}
           ></Route>
 
           <Route
