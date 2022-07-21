@@ -1,6 +1,6 @@
 import React from 'react';
 import LNBLayout from '../../../../../components/molecules/LNBLayout';
-import { PaginationTable } from '../../../../../components/molecules/Table/PaginationTable';
+import { PaginationTable } from '../../../../../components/molecules/Table';
 import { ACCOUNT } from '../../../../../constants/lnb';
 import * as UI from './style';
 
