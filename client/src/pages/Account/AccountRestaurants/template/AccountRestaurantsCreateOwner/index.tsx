@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
 import * as API from '../../../../../api/api';
@@ -28,6 +29,7 @@ import {
 import * as UI from './style';
 import InputFileButton from '../../../../../components/atoms/InputFileButton';
 import FileTumbnail from '../../../../../components/atoms/FileTumbnail';
+import AccountHeader from '../../../../../components/molecules/AccountHeader';
 
 const StyleTypography = styled(Typography)`
   margin-bottom: 10px;
@@ -99,6 +101,8 @@ type valueObject = {
 };
 
 const AccountRestaurantsCreateOwner = () => {
+  const navigate = useNavigate();
+
   const initialValue = {
     inputRestaurantName: '',
     inputRestaurantOffice: '',
@@ -143,6 +147,7 @@ const AccountRestaurantsCreateOwner = () => {
   const handleClosePopupSaveConfirm = (e: any) => {
     e.preventDefault();
     setOpenPopupSaveConfirm(!openPopupSaveConfirm);
+    window.location.reload();
   };
 
   const handleOpenPostCodePopup = (e: any) => {
@@ -358,6 +363,7 @@ const AccountRestaurantsCreateOwner = () => {
   return (
     <UI.Container>
       <UI.Content>
+        <AccountHeader title={'레스토랑 등록'} />
         <Form onSubmit={handleSubmit}>
           {inputTextData.owner.map((item, index) => {
             return FormInputTextHorizontal(item, index);

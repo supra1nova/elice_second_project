@@ -12,7 +12,12 @@ const AccountBooking = () => {
     });
   }, []);
 
-  return <>{role === 'owner' ? <AccountBookingOwner /> : navigate('/')}</>;
+  const Navigate = () => {
+    window.location.href = '/';
+    return <></>;
+  };
+
+  return <>{role === 'owner' ? <AccountBookingOwner /> : <Navigate />}</>;
 };
 
 export default AccountBooking;

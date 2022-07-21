@@ -255,7 +255,7 @@ const UsersSignout = () => {
       <UI.Container>
         <UI.Content>
           <UI.AvatarContainer>
-            <Avatar userId='userIDDDD' image={image.preview_URL} />
+            <Avatar userId={formValues.inputEmail} image={image.preview_URL} />
 
             <UI.AvatarLabel>프로필</UI.AvatarLabel>
             <UI.AvatarInput>

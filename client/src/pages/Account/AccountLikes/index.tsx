@@ -8,12 +8,16 @@ const AccountLikes = () => {
   const [role, setRole] = useState<string>();
   useEffect(() => {
     API.userGet('/api/users/user').then((res) => {
-      console.log(res);
       setRole(res.role);
     });
   }, []);
 
-  return <>{role === 'user' ? <AccountLikesUser /> : navigate('/')}</>;
+  const Navigate = () => {
+    window.location.href = '/';
+    return <></>;
+  };
+
+  return <>{role === 'user' ? <AccountLikesUser /> : <Navigate />}</>;
 };
 
 export default AccountLikes;
