@@ -9,13 +9,13 @@ export const Gnb = () => {
   const [role, setRole] = useState('');
   const [name, setName] = useState('');
   const [image, setImage] = useState('');
-  const [login, setLogin] = useState(false);
+  const [log, setLog] = useState(true);
+  const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
   useEffect(() => {
     if (token) {
       API.userGet('/api/users/user').then((res) => {
-        setLogin(true);
         setRole(res.role);
         setImage(res.image);
         setName(res.name);
@@ -25,9 +25,17 @@ export const Gnb = () => {
 
   const logOut = () => {
     window.localStorage.clear();
-    window.location.replace('/');
-    setLogin(false);
+    setLog(false);
+    setRole('');
+    setImage('');
+    setName('');
+    alert('로그아웃 되었습니다');
+    navigate('/');
   };
+
+  useEffect(() => {
+    setLog(true);
+  }, [log]);
 
   if (role === '') {
     return (

@@ -16,7 +16,6 @@ const HomeList = () => {
   // 중복없이 랜덤한 레스토랑 6개 가져오기
   const getRecommentRandomData = async () => {
     const result = await API.get('/api/restaurants').then((res) => {
-      console.log(res.restaurants);
       return res.restaurants;
     });
     const randomShop = [];
