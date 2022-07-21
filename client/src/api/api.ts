@@ -71,6 +71,27 @@ const post = async (
   return res;
 };
 
+const filePost = async (
+  endpoint: String,
+  params: String | null = '',
+  data: object,
+): Promise<any> => {
+  try {
+    const apiUrl = `${endpoint}/${params}`;
+    const res = await axios.post(apiUrl, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return res;
+  } catch (err: any) {
+    if (err.response) {
+      console.log(err.response.data);
+    }
+  }
+};
+
 const patch = async (
   endpoint: String,
   params: String | null = '',
@@ -133,4 +154,4 @@ export const del = async (
   }
 };
 
-export { get, userGet, post, file, patch, del as delete };
+export { get, userGet, post, file, filePost, patch, del as delete };

@@ -6,6 +6,7 @@ interface Props {
   type: string;
   name: string;
   accept: string;
+  multiple?: boolean | undefined;
   onChange: (e: any) => void;
 }
 
@@ -15,6 +16,7 @@ const InputFileButton = ({
   name,
   accept,
   htmlFor,
+  multiple,
   onChange,
 }: Props) => {
   return (
@@ -26,6 +28,7 @@ const InputFileButton = ({
         onChange={onChange}
         name={name}
         accept={accept}
+        multiple={multiple}
       />
     </UI.Container>
   );
@@ -33,6 +36,7 @@ const InputFileButton = ({
 
 InputFileButton.defaultProps = {
   type: 'file',
+  multiple: false,
 };
 
 export default InputFileButton;

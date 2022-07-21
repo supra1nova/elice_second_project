@@ -149,11 +149,10 @@ userRouter.delete('/', loginRequired, async function (req: Request, res: Respons
   
   try {
     const userInfo:userInfo= req.body;
-    userInfo.email=req.email
     const {email}= userInfo;
-    if(email==undefined) throw new Error("user not found");
+    if(!email) throw new Error("user not found");
     const user = await userService.findUser(email);
-    if(user==undefined) throw new Error("user not found");
+    if(!user) throw new Error("user not found");
     
     s3.deleteObject({
       Bucket: 'matjip',

@@ -82,6 +82,7 @@ const UsersSignout = () => {
         email: formValues.inputEmail,
         password: formValues.inputPasswordCurrent,
       };
+      console.log(data);
       await API.delete('/api/users', '', data);
       localStorage.removeItem('token');
       navigate('/');
