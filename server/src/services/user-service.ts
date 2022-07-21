@@ -1,4 +1,4 @@
-import { UserModel, userModel} from "../db/data-source"
+import { restaurantModel, UserModel, userModel} from "../db/data-source"
 import { updateUserInfo, userInfo } from "src/routers";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -70,7 +70,15 @@ class UserService {
     // 2개 프로퍼티를 jwt 토큰에 담음
     const token = jwt.sign({ userEmail: user.email, role: user.role }, secretKey);
 
-    return { token };
+    const restaurant = await restaurantModel.findRestaurantByOwnerEmail(email);
+    if (!restaurant) {
+      const REGNumber = undefined;
+      return { token, REGNumber };
+    }
+    const REGNumber = restaurant?.REGNumber;
+
+    console.log(REGNumber);
+    return { token, REGNumber };
   }
 
   async findUser(email:string){
