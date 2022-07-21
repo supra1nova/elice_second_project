@@ -129,12 +129,6 @@ const AccountRestaurantsCreate = () => {
 
   const errors: valueObject = {};
 
-  // const REGNumber = localStorage.getItem('REGNumber');
-  // if (REGNumber) {
-  //   console.log('aaa');
-  //   window.location.href = '/account/restaurants';
-  // }
-
   useEffect(() => {
     return () => {
       URL.revokeObjectURL(image.preview_URL);

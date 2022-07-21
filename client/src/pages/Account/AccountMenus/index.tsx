@@ -1,18 +1,17 @@
 import React from 'react';
 import LNBLayout from '../../../components/molecules/LNBLayout';
-import AccountHeader from '../../../components/molecules/AccountHeader';
 import { ACCOUNT } from '../../../constants/lnb';
-import { SECTION } from '../../../constants/title';
 import * as UI from './style';
+import AccountMenusCreate from './template/AccountMenusCreate';
+import AccountMenusList from './template/AccountMenusList';
 
 const AccountMenus = () => {
   return (
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
         <UI.Content>
-          <AccountHeader title={SECTION.MENU_REGISTER} />
-
-          <AccountHeader title={SECTION.MENU_MANAGEMENT} />
+          <AccountMenusCreate />
+          <AccountMenusList />
         </UI.Content>
       </UI.Container>
     </LNBLayout>

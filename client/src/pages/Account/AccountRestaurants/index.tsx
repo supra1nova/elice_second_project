@@ -4,6 +4,7 @@ import AccountRestaurantsSecurity from './template/AccountRestaurantsSecurity';
 
 const AccountRestaurants = () => {
   const REGNumber = localStorage.getItem('REGNumber');
+  console.log(REGNumber);
   if (REGNumber) {
     return <AccountRestaurantsSecurity />;
   } else {
