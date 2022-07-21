@@ -4,17 +4,14 @@ import GlobalLayout from './GlobalLayout';
 import HalfLayout from './HalfLayout';
 import Home from '../pages/Home';
 import RestaurantHome from '../pages/Restaurant/RestaurantHome';
+import RestaurantView from '../pages/Restaurant/RestaurantView';
 import Search from '../pages/Search';
-import AccountHome from '../pages/Account/AccountHome';
+import AccountBooking from '../pages/Account/AccountBooking';
 import AccountRestaurants from '../pages/Account/AccountRestaurants';
-import AccountRestaurantsCreate from '../pages/Account/AccountRestaurantsCreate';
-import AccountRestaurantsList from '../pages/Account/AccountRestaurantsList';
 import AccountReserves from '../pages/Account/AccountReserves';
-import AccountReservesManagement from '../pages/Account/AccountReservesManagement';
-import AccountCategories from '../pages/Account/AccountCategories';
+import AccountManagement from '../pages/Account/AccountManagement';
 import AccountLikes from '../pages/Account/AccountLikes';
 import AccountMenus from '../pages/Account/AccountMenus';
-import AccountUsers from '../pages/Account/AccountUsers';
 import UsersLogin from '../pages/Users/UsersLogin';
 import UsersRegister from '../pages/Users/UsersRegister';
 import UsersSecurity from '../pages/Users/UsersSecurity';
@@ -30,33 +27,27 @@ function Router() {
           <Route path={URL.RESTAURANTS} element={<RestaurantHome />}></Route>
           <Route
             path={`${URL.RESTAURANTS_VIEW}/:REGNumber`}
-            element={<AccountRestaurantsList />}
+            element={<RestaurantView />}
           ></Route>
           <Route path={URL.SEARCH} element={<Search />}></Route>
-          {/* <Route path={URL.ACCOUNT_HOME} element={<AccountHome />}></Route> */}
           <Route
             path={`${URL.ACCOUNT_RESTAURANTS}`}
             element={<AccountRestaurants />}
           ></Route>
           <Route
-            path={URL.ACCOUNT_RESTAURANTS_CREATE}
-            element={<AccountRestaurantsCreate />}
-          ></Route>
-          <Route
             path={URL.ACCOUNT_RESERVES}
             element={<AccountReserves />}
           ></Route>
-          <Route
-            path={URL.ACCOUNT_RESERVES_MANAGEMENT}
-            element={<AccountReservesManagement />}
-          ></Route>
 
           <Route
-            path={URL.ACCOUNT_CATEGORIES}
-            element={<AccountCategories />}
+            path={URL.ACCOUNT_BOOKING}
+            element={<AccountBooking />}
+          ></Route>
+          <Route
+            path={URL.ACCOUNT_MANAGEMENT}
+            element={<AccountManagement />}
           ></Route>
           <Route path={URL.ACCOUNT_LIKES} element={<AccountLikes />}></Route>
-          <Route path={URL.ACCOUNT_USERS} element={<AccountUsers />}></Route>
           <Route path={URL.ACCOUNT_MENUS} element={<AccountMenus />}></Route>
           <Route
             path={`${URL.USERS_SECURITY}`}

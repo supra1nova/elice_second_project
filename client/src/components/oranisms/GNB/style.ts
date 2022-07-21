@@ -32,17 +32,73 @@ export const Footer = styled.footer`
 export const ProfileImg = styled.div`
   width: 42px;
   height: 42px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-export const UserInfoWrapper = styled.div``;
+export const UserInfoWrapper = styled.div`
+  margin-top: 20px;
+`;
 
-export const Greetings = styled.div``;
+export const Greetings = styled.div`
+  ${(props) => props.theme.font.subtitle2}
+  font-size: 18px;
+`;
 
-export const UserInfo = styled.div``;
+export const UserInfo = styled.div`
+  ${(props) => props.theme.font.caption}
+  font-size: 14px;
+  margin-top: 4px;
+`;
 
-export const MenuContainer = styled.div``;
+export const MenuContainer = styled.div`
+  color: ${(props) => props.theme.colors.font2};
+  margin-top: 40px;
 
-export const MenuTitle = styled.div``;
-export const MenuList = styled.div``;
-export const Menu = styled.div``;
-export const MenuName = styled.p``;
+  a,
+  button {
+    color: ${(props) => props.theme.colors.font2};
+  }
+`;
+
+export const MenuTitle = styled.div`
+  ${(props) => props.theme.font.captionBold}
+  padding-left: 20px;
+`;
+export const MenuList = styled.div`
+  margin-top: 10px;
+
+  + a {
+    margin-top: 10px;
+    background-color: black;
+  }
+`;
+export const MenuWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 193px;
+  height: 36px;
+  padding: 10px 20px;
+
+  border-radius: 50px;
+  margin-top: 5px;
+
+  svg {
+    margin-right: 8px;
+  }
+
+  :hover {
+    background-color: white;
+    color: #64ad57;
+
+    svg path {
+      fill: #64ad57;
+    }
+  }
+`;
+export const MenuName = styled.p`
+  font-size: 14px;
+`;

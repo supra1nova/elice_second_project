@@ -1,8 +1,19 @@
-import React from 'react';
-import * as UI from './style';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import * as API from '../../../api/api';
+import AccountLikesUser from './template/AccountLikesUser';
 
 const AccountLikes = () => {
-  return <UI.Container>계정관리 라이크</UI.Container>;
+  const navigate = useNavigate();
+  const [role, setRole] = useState<string>();
+  useEffect(() => {
+    API.userGet('/api/users/user').then((res) => {
+      console.log(res);
+      setRole(res.role);
+    });
+  }, []);
+
+  return <>{role === 'user' ? <AccountLikesUser /> : navigate('/')}</>;
 };
 
 export default AccountLikes;

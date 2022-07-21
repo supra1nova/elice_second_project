@@ -1,22 +1,18 @@
-import React from 'react';
-import LNBLayout from '../../../components/molecules/LNBLayout';
-import AccountHeader from '../../../components/molecules/AccountHeader';
-import { ACCOUNT } from '../../../constants/lnb';
-import { SECTION } from '../../../constants/title';
-import * as UI from './style';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import * as API from '../../../api/api';
+import AccountMenusOwner from './template/AccountMenusOwner';
 
 const AccountMenus = () => {
-  return (
-    <LNBLayout items={ACCOUNT.OWNER}>
-      <UI.Container>
-        <UI.Content>
-          <AccountHeader title={SECTION.MENU_REGISTER} />
+  const navigate = useNavigate();
+  const [role, setRole] = useState<string>();
+  useEffect(() => {
+    API.userGet('/api/users/user').then((res) => {
+      setRole(res.role);
+    });
+  }, []);
 
-          <AccountHeader title={SECTION.MENU_MANAGEMENT} />
-        </UI.Content>
-      </UI.Container>
-    </LNBLayout>
-  );
+  return <>{role === 'owner' ? <AccountMenusOwner /> : navigate('/')}</>;
 };
 
 export default AccountMenus;

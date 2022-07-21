@@ -11,19 +11,21 @@ const LikeBtn = ({ regNumber, email, isWished, position }: any) => {
   const [likedColor, setLikedColor] = useState('#A6A8A3');
   const postData = { email, REGNumber: regNumber };
 
-  const [role, setRole] = useState<string | null | undefined>(null)
-  const isNotUser = role === undefined
-  const isUser = role === 'user' || role === 'USER'
+  const [role, setRole] = useState<string | null | undefined>(null);
+  const isNotUser = role === undefined;
+  const isUser = role === 'user' || role === 'USER';
 
   useEffect(() => {
-    API.userGet('/api/users/user').then((res) => {
-      if(res === undefined) {
-        setRole(undefined)
-      } else {
-        setRole(res.role)
-      }
-    });
-  })
+    if (localStorage.getItem('token')) {
+      API.userGet('/api/users/user').then((res) => {
+        if (res === undefined) {
+          setRole(undefined);
+        } else {
+          setRole(res.role);
+        }
+      });
+    }
+  });
 
   useEffect(() => {
     if (isWished) {
@@ -45,24 +47,21 @@ const LikeBtn = ({ regNumber, email, isWished, position }: any) => {
 
   return (
     <UI.ButtonWrapper position={position}>
-      {
-        isNotUser
-        ? <button onClick={() => navigate('/users/login')}>
+      {isNotUser ? (
+        <button onClick={() => navigate('/users/login')}>
           <Heart width={23.69} height={22} fill={likedColor} />
         </button>
-        : isUser
-        ? <button
-            onClick={() => {
-              if (localStorage.getItem('token')) {
-                handleClick();
-              }
-            }}
-          >
+      ) : isUser ? (
+        <button
+          onClick={() => {
+            if (localStorage.getItem('token')) {
+              handleClick();
+            }
+          }}
+        >
           <Heart width={23.69} height={22} fill={likedColor} />
         </button>
-        : null
-      }
-      
+      ) : null}
     </UI.ButtonWrapper>
   );
 };

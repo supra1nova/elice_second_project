@@ -1,19 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as API from '../../../api/api';
-import AccountReservesOwner from './template/AccountReservesOwner';
-
+import AccountReservesListOwner from './template/AccountReservesListOwner';
+import AccountReservesListUser from './template/AccountReservesListUser';
 const AccountRestaurantsTemplate = () => {
+  const [role, setRole] = useState<string>();
   useEffect(() => {
     API.userGet('/api/users/user').then((res) => {
-      const { role } = res;
-      console.log(role);
+      console.log(res);
+      setRole(res.role);
     });
   }, []);
 
-  return (
-    // 사장님일 경우 => role 체크 필요 페이지
-    <AccountReservesOwner />
-  );
+  if (role === 'owner') {
+    return <AccountReservesListOwner />;
+  } else {
+    return <AccountReservesListUser />;
+  }
 };
 
 export default AccountRestaurantsTemplate;

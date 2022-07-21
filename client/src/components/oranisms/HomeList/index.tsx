@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import LikeBtn from '../../atoms/LikeButton/LikeBtn';
 
 const HomeList = () => {
-  const a = [1, 2, 3, 4, 5, 6, 7];
   const [recommendShop, setRecommendShop] = useState<any>([]);
   const [topGradeShop, setTopGradeShop] = useState([]);
   const [recentCreated, setRecentCreated] = useState([]);
@@ -63,13 +62,15 @@ const HomeList = () => {
 
   //기존 찜한 목록 가져오기
   const getWished = async () => {
-    const email = await API.userGet('/api/users/user').then((res) => {
-      setUserEmail(res.email);
-      return res.email;
-    });
-    await API.get(`/api/wishes/${email}`).then((res) => {
-      setWishes(res);
-    });
+    if (localStorage.getItem('token')) {
+      const email = await API.userGet('/api/users/user').then((res) => {
+        setUserEmail(res.email);
+        return res.email;
+      });
+      await API.get(`/api/wishes/${email}`).then((res) => {
+        setWishes(res);
+      });
+    }
   };
 
   useEffect(() => {
