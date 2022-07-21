@@ -43,18 +43,28 @@ const SearchShopList = ({ inputValue, categorySelect }: any) => {
         setShop(res.restaurants);
         setPerPage(res.perPage);
         setTotal(res.total);
+        console.log(res);
       });
     } else {
       API.get('/api/restaurants').then((res) => {
-        const data = res.restaurants;
-        const filtered = data.filter(
-          (e: any) =>
-            e.name.includes(inputValue) ||
-            e.category.includes(inputValue) ||
-            e.category.includes(categorySelect),
-        );
-        setShop(filtered);
-        setTotal(filtered.length);
+        let filtered: any[] = [];
+        for (let i = 1; i <= res.totalPage; i++) {
+          API.get(`/api/restaurants/?page=${i}&perPage=12`).then((res) => {
+            const data = res.restaurants.filter(
+              (e: any) =>
+                e.name.includes(inputValue) ||
+                e.category.includes(inputValue) ||
+                e.category.includes(categorySelect),
+            );
+            filtered = filtered.concat(data);
+            if (i === res.totalPage) {
+              console.log(filtered);
+              setShop(filtered);
+              setTotal(filtered.length);
+              setPerPage(filtered.length);
+            }
+          });
+        }
       });
     }
   }, [inputValue, categorySelect, page]);
@@ -99,3 +109,6 @@ const SearchShopList = ({ inputValue, categorySelect }: any) => {
 };
 
 export default SearchShopList;
+function newArr(newArr: any[]) {
+  throw new Error('Function not implemented.');
+}

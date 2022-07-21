@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { Gnb } from '../components/oranisms/Gnb';
+import { Gnb } from '../components/oranisms/GNB/Gnb';
 import styled from 'styled-components';
 
 const AppContainer = styled.div`
