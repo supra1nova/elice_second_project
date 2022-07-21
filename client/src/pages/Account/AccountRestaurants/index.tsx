@@ -158,15 +158,15 @@ const AccountRestaurants = () => {
         inputRestaurantName: res.name,
         inputAddres2: res.address2,
         inputRestauranPhone: res.phoneNumber,
-        inputSelectCategory: res.category,
+        inputSelectCategory: 'selectChicken',
         inputDescription: res.description,
-        inputOwnerEmail: res.email,
+        inputOwnerEmail: res.ownerEmail,
       };
       const address = {
         inputPostNumber: res.postalcode,
         inputAddres1: res.address1,
       };
-      console.log(res);
+
       setFormValues(data);
       setAddress(address);
     });
