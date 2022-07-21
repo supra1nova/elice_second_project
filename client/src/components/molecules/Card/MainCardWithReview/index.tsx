@@ -10,6 +10,7 @@ interface MainCardWithReviewProps {
   title: String;
   address: String;
   shopImg: any;
+  reviwerImg: any;
   regNumber: string;
 }
 const MainCardWithReview = ({
@@ -17,6 +18,7 @@ const MainCardWithReview = ({
   address,
   shopImg,
   regNumber,
+  reviwerImg,
 }: MainCardWithReviewProps) => {
   const [reviewComment, setReviewComment] = useState('첫 리뷰를 작성해주세요!');
   const [reviewer, setReviewer] = useState('');
@@ -68,7 +70,7 @@ const MainCardWithReview = ({
           <UI.SubTitle>{address}</UI.SubTitle>
           <UI.descriptionWrapper>
             <img
-              src={reviewerImg || shopImg}
+              src={reviewerImg || reviwerImg}
               style={{ width: '24px', height: '24px', borderRadius: '50%' }}
             />
 
@@ -89,6 +91,7 @@ MainCardWithReview.defaultProps = {
   address: '서울특별시 마포구 독막로14길 32',
   reviewComment: '방문 후 첫 리뷰를 작성해보세요!',
   shopImg: process.env.PUBLIC_URL + '/images/testImg.png',
+  reviwerImg: process.env.PUBLIC_URL + '/images/reviewerDefault.png',
 };
 
 export default MainCardWithReview;
