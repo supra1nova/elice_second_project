@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import * as API from '../../../api/api';
-import AccountReservesOwner from './template/AccountReservesOwner';
+import AccountReservesOwner from './template/AccountReservesCreateOwner/AccountReservesOwner';
 
 const AccountRestaurantsTemplate = () => {
   useEffect(() => {

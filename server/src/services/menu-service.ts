@@ -9,9 +9,9 @@ class MenuService {
   }
 
   // 1. 메뉴 생성
-  async addMenu(menuInfo:menuInfo) {
-    const createdNewReserve = await this.menuModel.create(menuInfo);
-    return createdNewReserve;
+  async addMenu(menuInfo: menuInfo) {
+    const newMenu = await this.menuModel.create(menuInfo);
+    return newMenu;
   }
   
   // 2. 상호 관련 전체 메뉴 목록 조회
@@ -33,8 +33,8 @@ class MenuService {
   
   // 4. 메뉴 업데이트
   async setMenu(menuId:number, menuInfo:menuInfo){
-    const menu =await menuModel.updateMenu(menuId,menuInfo);
-    return menu;
+    const updatedMenu =await menuModel.updateMenu(menuId,menuInfo);
+    return updatedMenu;
   }
   
   // 5. 메뉴 삭제

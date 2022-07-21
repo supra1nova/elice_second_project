@@ -26,4 +26,6 @@ export const ERROR = {
   NUMBER_INPUT: '인원은 1명 이상이어야 합니다.',
   RESERVE_NAME_INPUT: '예약자 이름을 입력해주세요.',
   RESERVE_PHONE_INPUT: '예약자 전화번호를 입력해주세요.',
+  MENU_INPUT: '메뉴명을 입력해주세요.',
+  PRICE_INPUT: '가격을 입력해주세요.',
 };

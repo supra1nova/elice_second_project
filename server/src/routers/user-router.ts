@@ -37,8 +37,8 @@ userRouter.post('/login', async function (req: Request, res:Response, next:NextF
     // const email = req.body.email;
     // const password = req.body.password;
     let loginInfo:userInfo=req.body;
-    const userToken = await userService.getUserToken(loginInfo);
-    res.status(200).json(userToken);
+    const { token, REGNumber} = await userService.getUserToken(loginInfo);
+    res.status(200).json({ userToken: token , REGNumber});
   } catch (error) {
     next(error);
   }

@@ -40,6 +40,8 @@ export const LABELTITLE = {
   RESTAURANT_PARKING: '주차 여부',
   RESTAURANT_IMAGE: '레스토랑 이미지',
   DESCRIPTION: '설명',
+  MENU_NAME: '메뉴명',
+  PRICE: '가격',
 };
 
 export const PLACEHOLDER = {
@@ -69,4 +71,5 @@ export const BUTTON = {
   USER_SECURITY_MODIFY: '회원정보 수정',
   USER_MEMBER_DELETE: '회원정보 안전하게 삭제하기',
   SAVE_MODIFY_DATA: '변경사항 저장',
+  REGISTER: '등록하기',
 };

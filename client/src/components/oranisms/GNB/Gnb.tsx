@@ -120,7 +120,7 @@ export const Gnb = () => {
           </UI.MenuContainer>
         </UI.InfoWrapper>
         <UI.Footer>
-          <UI.Description>소개 · TEAM MEMBER</UI.Description>
+          <UI.Description>미식시간 · TEAM 3</UI.Description>
           <UI.Description>
             © 2022 Elice TEAM 3 Co., Ltd. All rights reserved.
           </UI.Description>
