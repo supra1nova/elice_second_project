@@ -1,6 +1,6 @@
 import React from 'react';
-import AccountHeader from '../../../../../components/molecules/AccountHeader';
-import { SECTION } from '../../../../../constants/title';
+import AccountHeader from '../../molecules/AccountHeader';
+import { SECTION } from '../../../constants/title';
 import * as UI from './style';
 
 const AccountMenusList = () => {
