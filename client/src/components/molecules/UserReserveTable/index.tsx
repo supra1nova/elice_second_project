@@ -5,12 +5,9 @@ import { TableButton } from '../../atoms/TableButton/TableButton'
 import * as UI from './style';
 import * as API from '../../../api/api'
 import { cp } from 'fs/promises';
+import Paging from '../../atoms/Pagination/Pagination';
 
-type valueObject = {
-    [key: string]: any;
-  };
-
-export const PaginationTable = () => {
+export const UserReserveTable = () => {
     const [reserveLists, setReserveLists] = useState<any>([])
     const [email, setEmail] = useState('')
 
@@ -20,6 +17,10 @@ export const PaginationTable = () => {
     const [data1, setData1] = useState<any>([])
     const [data2, setData2] = useState<string[]>([])
     const [data3, setData3] = useState<string[]>([])
+
+    const [pages, setPages] = useState(1);
+    const [perPage, setPerPage] = useState(12);
+    const [total, setTotal] = useState(10);
 
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => reserveLists, [reserveLists])
@@ -34,6 +35,8 @@ export const PaginationTable = () => {
 
     useEffect(() => {
         API.get(`/api/reserves/user/${email}`).then((res) => {
+            setPerPage(res.perPage)
+            setTotal(res.total)
             const datas = res.reserves
             datas.forEach((data:any) => {
                 setData1((result:any) => {
@@ -79,21 +82,11 @@ export const PaginationTable = () => {
         }
     }, [data3])
 
-    console.log(reserveLists)
-    console.log(data2)
-
     const { 
         getTableProps, 
         getTableBodyProps, 
         headerGroups, 
         page,
-        nextPage,
-        previousPage,
-        canNextPage,
-        canPreviousPage,
-        pageOptions,
-        gotoPage,
-        pageCount,
         state,
         prepareRow,
     } = useTable({
@@ -103,17 +96,16 @@ export const PaginationTable = () => {
         },
         usePagination
     );
-
     const { pageIndex } = state
 
     return (
         <div className="table">
             <UI.StyledTable {...getTableProps()}>
                 <thead>
-                    {headerGroups.map((headerGroup) => (                   
-                        <tr {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map((column) => (
-                                <UI.StyledTh {...column.getHeaderProps()}>
+                    {headerGroups.map((headerGroup:any, index: number) => (                   
+                        <tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                            {headerGroup.headers.map((column: any, index: number) => (
+                                <UI.StyledTh {...column.getHeaderProps()} key={index}>
                                     {column.render('Header')}
                                 </UI.StyledTh>
                             ))}
@@ -129,9 +121,9 @@ export const PaginationTable = () => {
                         prepareRow(row)
                         return (
                             <tr {...row.getRowProps()}>
-                                {row.cells.map((cell: any) => {
+                                {row.cells.map((cell: any, index: number) => {
                                     return (
-                                        <UI.StyledTd {...cell.getCellProps()}>{cell.render('Cell')}</UI.StyledTd>
+                                        <UI.StyledTd key={index} {...cell.getCellProps()}>{cell.render('Cell')}</UI.StyledTd>
                                     );
                                 })}
                                 <UI.StyledTd role="cell">예약 완료</UI.StyledTd>
@@ -145,28 +137,9 @@ export const PaginationTable = () => {
                     })}
                 </tbody>
             </UI.StyledTable>
-
-            {/* <UI.StyledTablePagination>
-                <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-                    {'<'}
-                </button>
-                <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-                    Previous
-                </button>
-                <span>
-                    <strong style={{display: 'block', width: '100px', textAlign: 'center'}}>
-                        {pageIndex + 1} / {pageOptions.length} 
-                    </strong>
-                </span>
-                <button onClick={() => nextPage()} disabled={!canNextPage}>
-                    Next
-                </button>
-                <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-                    {'>'}
-                </button>
-            </UI.StyledTablePagination> */}
+            <Paging page={pages} setPage={setPages} total={total} perPage={perPage} />
         </div>
     );
 }
 
-export default PaginationTable;
+export default UserReserveTable;
