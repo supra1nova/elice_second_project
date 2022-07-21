@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import * as API from '../../../../../api/api';
-import AccountHeader from '../../../../../components/molecules/AccountHeader';
-import Form from '../../../../../components/atoms/Form';
-import FormInputTextHorizontal from '../../../../../components/molecules/FormInputTextHorizontal';
-import { SECTION } from '../../../../../constants/title';
-import { LABELTITLE, BUTTON } from '../../../../../constants/input';
-import { ERROR } from '../../../../../constants/error';
+import * as API from '../../../api/api';
+import AccountHeader from '../../molecules/AccountHeader';
+import Form from '../../atoms/Form';
+import FormInputTextHorizontal from '../../molecules/FormInputTextHorizontal';
+import { SECTION } from '../../../constants/title';
+import { LABELTITLE, BUTTON } from '../../../constants/input';
+import { ERROR } from '../../../constants/error';
 import * as UI from './style';
-import Button from '../../../../../components/atoms/Button';
+import Button from '../../atoms/Button';
 
 type valueObject = {
   [key: string]: any;
@@ -37,8 +37,6 @@ const AccountMenusCreate = () => {
     const name = target.name;
     setFormValues({ ...formValues, [name]: value });
   };
-
-  console.log(formValues.inputREGNumber);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

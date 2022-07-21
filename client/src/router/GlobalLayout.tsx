@@ -15,6 +15,7 @@ const GlobalContainer = styled.div``;
 const GlobalContainerOutlet = styled.div`
   position: relative;
   margin-left: 233px;
+  background: ${(props) => props.theme.colors.white};
 `;
 
 const GlobalLayout = () => {
