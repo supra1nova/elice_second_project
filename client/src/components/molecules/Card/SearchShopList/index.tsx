@@ -26,6 +26,7 @@ const MainCardWithoutReview = ({
   regNumber,
 }: MainCardWithoutReviewProps) => {
   const [reviewCount, setReviewCount] = useState(0);
+  const [image, setImage] = useState();
   const getReviewData = async () => {
     const result = await API.get(`/api/reviews/${regNumber}`).then((res) => {
       const count = res.reviews.length;
@@ -33,14 +34,23 @@ const MainCardWithoutReview = ({
     });
   };
 
+  const getImage = async () => {
+    const result = await API.get(`/api/restaurantImages/${regNumber}`).then(
+      (res) => {
+        setImage(res[0].image);
+      },
+    );
+  };
+
   useEffect(() => {
     getReviewData();
+    getImage();
   }, []);
   return (
     <>
       <UI.Container large={large}>
         <UI.ImgWrapper large={large}>
-          <Img src={shopImg}></Img>
+          <Img src={image}></Img>
         </UI.ImgWrapper>
         <UI.InfoWrapper>
           <UI.Title large={large}>

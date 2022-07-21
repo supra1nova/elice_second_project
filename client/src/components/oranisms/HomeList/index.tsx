@@ -16,6 +16,7 @@ const HomeList = () => {
   // 중복없이 랜덤한 레스토랑 6개 가져오기
   const getRecommentRandomData = async () => {
     const result = await API.get('/api/restaurants').then((res) => {
+      console.log(res.restaurants);
       return res.restaurants;
     });
     const randomShop = [];
@@ -28,13 +29,6 @@ const HomeList = () => {
       }
     }
     setRecommendShop(randomShop);
-  };
-
-  // 평점 높은 순, 최근 생성 순으로 정렬 후 7개의 데이터만 추출
-  const getSomeData = async () => {
-    const result = await API.get('/api/restaurants').then((res) => {
-      return res.restaurants;
-    });
     const sortRestaurantsByGrade = result.sort((a: any, b: any) => {
       if (a.average > b.average) {
         return -1;
@@ -76,7 +70,6 @@ const HomeList = () => {
   useEffect(() => {
     getRecommentRandomData();
     getWished();
-    getSomeData();
   }, []);
 
   return (
