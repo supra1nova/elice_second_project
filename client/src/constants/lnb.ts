@@ -1,8 +1,6 @@
 import { PAGES } from './title';
 import { URL } from './urls';
 
-const REGNumber = window.location.href.split('/')[5];
-
 export const USERS = [
   { menu: PAGES.USER_SECURITY, to: URL.USERS_SECURITY },
   { menu: PAGES.USER_SIGNOUT, to: URL.USERS_SIGNOUT },
@@ -17,8 +15,8 @@ export const ACCOUNT = {
     { menu: PAGES.ACCOUNT_RESTAURANTS, to: URL.ACCOUNT_RESTAURANTS },
     { menu: PAGES.ACCOUNT_RESERVES, to: URL.ACCOUNT_RESERVES },
     {
-      menu: PAGES.ACCOUNT_RESERVES_MANAGEMENT,
-      to: URL.ACCOUNT_MANAGEMENT,
+      menu: PAGES.ACCOUNT_BOOKING,
+      to: URL.ACCOUNT_BOOKING,
     },
     { menu: PAGES.ACCOUNT_MENUS, to: URL.ACCOUNT_MENUS },
   ],
