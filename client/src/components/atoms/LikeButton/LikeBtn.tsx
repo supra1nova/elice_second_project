@@ -15,9 +15,6 @@ const LikeBtn = ({ regNumber, email, isWished, position }: any) => {
   const isNotUser = role === undefined
   const isUser = role === 'user' || role === 'USER'
 
-  console.log(role)
-  console.log(isNotUser)
-
   useEffect(() => {
     API.userGet('/api/users/user').then((res) => {
       if(res === undefined) {

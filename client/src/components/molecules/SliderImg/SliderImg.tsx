@@ -37,12 +37,12 @@ const SliderImg = () => {
               })
         }, []
     )
-
+        console.log(images.length)
 	//옵션
 	const setting = {
         infinite: true,
         speed: 300,
-        slidesToShow: 4,
+        slidesToShow: images.length >= 4 ? 4 : images.length,
         slidesToScroll: 1,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />
