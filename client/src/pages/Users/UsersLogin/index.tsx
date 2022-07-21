@@ -48,10 +48,11 @@ const UsersLogin = () => {
       localStorage.setItem('token', token);
       try {
         API.userGet('/api/users/user').then((res) => {
+          console.log(res);
           const role = res.role;
           if (role === 'owner') {
             if (!REGNumber) {
-              navigate('/account/restaurantscreate');
+              navigate('/account/restaurant');
             } else {
               localStorage.setItem('REGNumber', REGNumber);
               navigate('/');
