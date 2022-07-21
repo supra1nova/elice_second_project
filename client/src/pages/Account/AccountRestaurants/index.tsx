@@ -158,7 +158,7 @@ const AccountRestaurants = () => {
         inputRestaurantName: res.name,
         inputAddres2: res.address2,
         inputRestauranPhone: res.phoneNumber,
-        inputSelectCategory: 'selectChicken',
+        inputSelectCategory: res.category,
         inputDescription: res.description,
         inputOwnerEmail: res.ownerEmail,
       };
