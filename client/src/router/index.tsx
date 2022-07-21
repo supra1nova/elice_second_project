@@ -4,6 +4,7 @@ import GlobalLayout from './GlobalLayout';
 import HalfLayout from './HalfLayout';
 import Home from '../pages/Home';
 import RestaurantHome from '../pages/Restaurant/RestaurantHome';
+import RestaurantView from '../pages/Restaurant/RestaurantView';
 import Search from '../pages/Search';
 import AccountBooking from '../pages/Account/AccountBooking';
 import AccountRestaurants from '../pages/Account/AccountRestaurants';
@@ -24,6 +25,10 @@ function Router() {
         <Route element={<GlobalLayout />}>
           <Route path={URL.HOME} element={<Home />}></Route>
           <Route path={URL.RESTAURANTS} element={<RestaurantHome />}></Route>
+          <Route
+            path={`${URL.RESTAURANTS_VIEW}/:REGNumber`}
+            element={<RestaurantView />}
+          ></Route>
           <Route path={URL.SEARCH} element={<Search />}></Route>
           <Route
             path={`${URL.ACCOUNT_RESTAURANTS}`}
