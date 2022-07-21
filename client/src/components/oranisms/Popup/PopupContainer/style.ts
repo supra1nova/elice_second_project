@@ -6,6 +6,7 @@ interface Props {
 }
 
 export const Container = styled.div`
+  z-index: 99;
   position: fixed;
   left: 0;
   top: 0;

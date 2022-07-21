@@ -26,17 +26,19 @@ const RestaurantTitle = () => {
             .map((e: any) => e.REGNumber)
             .includes(REGNumber);
 
-    // 회원이 예약하기 눌렀을때
+    // 회원이 예약하기 눌렀을때 핸들러
     const handleOpenPopupReserve = (e: any) => {
         e.preventDefault();
         setOpenPopupReserve(true);
     };
 
+    // 팝업창 닫기 핸들러
     const handleClosePopupReserve = (e: any) => {
         e.preventDefault();
         setOpenPopupReserve(!openPopupReserve);
     };
 
+    // 예약하기 버튼 눌렀을때 Form Submit 핸들러
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
@@ -56,7 +58,7 @@ const RestaurantTitle = () => {
             }
         });
         await API.get(`/api/wishes/${email}`).then((res) => setWishes(res));
-      };
+    };
 
     useEffect(() => {
         API.userGet('/api/users/user').then((res) => {
