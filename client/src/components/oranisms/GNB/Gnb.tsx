@@ -1,50 +1,131 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as UI from './style';
 import GnbNotUser from './GNBNotUser';
-import GNBUser from './GNBUser';
-import GNBAdmin from './GNBAdmin';
-import GNBOwner from './GNBOwner';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as Icon from '../../../assets/svg';
+import * as API from '../../../api/api';
 
 export const Gnb = () => {
-  return (
-    <UI.Container>
-      <UI.Logo>
-        <img
-          style={{}}
-          src={process.env.PUBLIC_URL + '/images/serviceLogo.png'}
-        />
-      </UI.Logo>
-      <UI.InfoWrapper>
-        <UI.ProfileImg>
-          <Icon.Profile width={42} height={42} fill={'#64AD57'} />
-        </UI.ProfileImg>
-        <UI.UserInfoWrapper>
-          <UI.Greetings>안녕하세요 000님</UI.Greetings>
-          <UI.UserInfo>방문예정: 1건 or 소유 shop</UI.UserInfo>
-        </UI.UserInfoWrapper>
-        <UI.MenuContainer>
-          <UI.MenuTitle>MENU</UI.MenuTitle>
-          <UI.MenuList>
-            <UI.Menu></UI.Menu>
-            <UI.Menu></UI.Menu>
-            <UI.Menu></UI.Menu>
-            <UI.Menu></UI.Menu>
-          </UI.MenuList>
-        </UI.MenuContainer>
+  const [role, setRole] = useState('');
+  const [name, setName] = useState('');
+  const [image, setImage] = useState('');
+  const [login, setLogin] = useState(false);
+  const token = localStorage.getItem('token');
 
-        {/* <GnbNotUser></GnbNotUser> */}
-        {/* <GNBUser></GNBUser> */}
-        {/* <GNBOwner></GNBOwner> */}
-        <GNBAdmin></GNBAdmin>
-      </UI.InfoWrapper>
-      <UI.Footer>
-        <UI.Description>소개 · TEAM MEMBER</UI.Description>
-        <UI.Description>
-          © 2022 Elice TEAM 3 Co., Ltd. All rights reserved.
-        </UI.Description>
-      </UI.Footer>
-    </UI.Container>
-  );
+  useEffect(() => {
+    if (token) {
+      API.userGet('/api/users/user').then((res) => {
+        setLogin(true);
+        setRole(res.role);
+        setImage(res.image);
+        setName(res.name);
+      });
+    }
+  }, []);
+
+  const logOut = () => {
+    window.localStorage.clear();
+    window.location.replace('/');
+    setLogin(false);
+  };
+
+  if (role === '') {
+    return (
+      <UI.Container>
+        <Link to='/'>
+          <UI.Logo>
+            <img
+              style={{}}
+              src={process.env.PUBLIC_URL + '/images/serviceLogo.png'}
+            />
+          </UI.Logo>
+        </Link>
+        <GnbNotUser></GnbNotUser>
+      </UI.Container>
+    );
+  } else {
+    return (
+      <UI.Container>
+        <Link to='/'>
+          <UI.Logo>
+            <img
+              style={{}}
+              src={process.env.PUBLIC_URL + '/images/serviceLogo.png'}
+            />
+          </UI.Logo>
+        </Link>
+        <UI.InfoWrapper>
+          <UI.ProfileImg>
+            {image ? (
+              <img src={image} style={{ width: '30px', height: '30px' }} />
+            ) : (
+              <Icon.Profile width={42} height={42} fill={'#64AD57'} />
+            )}
+          </UI.ProfileImg>
+          <UI.UserInfoWrapper>
+            <UI.Greetings>안녕하세요 {name}님</UI.Greetings>
+            {role === 'admin' ? null : (
+              <UI.UserInfo>
+                {role === 'user' ? `방문예정: ${1}건` : `업체명: ${123}`}
+              </UI.UserInfo>
+            )}
+          </UI.UserInfoWrapper>
+          <UI.MenuContainer>
+            <UI.MenuTitle>MENU</UI.MenuTitle>
+            <UI.MenuList>
+              <Link to='/'>
+                <UI.MenuWrapper>
+                  <Icon.Home width={18} height={15.3} />
+                  <UI.MenuName>홈</UI.MenuName>
+                </UI.MenuWrapper>
+              </Link>
+              {role === 'user' ? (
+                <>
+                  <Link to='/account/reserves'>
+                    <UI.MenuWrapper>
+                      <Icon.Calender width={18} height={18} />
+                      <UI.MenuName>나의 예약</UI.MenuName>
+                    </UI.MenuWrapper>
+                  </Link>
+                  <Link to='/account/likes'>
+                    <UI.MenuWrapper>
+                      <Icon.Heart width={18} height={16.71} fill={'#A6A8A3'} />
+                      <UI.MenuName>찜</UI.MenuName>
+                    </UI.MenuWrapper>
+                  </Link>
+                </>
+              ) : (
+                <Link to='/account/restaurants'>
+                  <UI.MenuWrapper>
+                    <Icon.Setting width={18} height={18} />
+                    <UI.MenuName>
+                      {role === 'admin' ? '관리자' : '레스토랑 관리'}
+                    </UI.MenuName>
+                  </UI.MenuWrapper>
+                </Link>
+              )}
+              <Link to='/users/security'>
+                <UI.MenuWrapper>
+                  <Icon.Profile width={18} height={18} />
+                  <UI.MenuName>계정관리</UI.MenuName>
+                </UI.MenuWrapper>
+              </Link>
+              <button onClick={() => logOut()}>
+                <UI.MenuWrapper>
+                  <Icon.Exit width={18} height={16.2} />
+                  <UI.MenuName>로그아웃</UI.MenuName>
+                </UI.MenuWrapper>
+              </button>
+            </UI.MenuList>
+          </UI.MenuContainer>
+        </UI.InfoWrapper>
+        <UI.Footer>
+          <UI.Description>소개 · TEAM MEMBER</UI.Description>
+          <UI.Description>
+            © 2022 Elice TEAM 3 Co., Ltd. All rights reserved.
+          </UI.Description>
+        </UI.Footer>
+      </UI.Container>
+    );
+  }
 };
