@@ -5,6 +5,8 @@ import * as Icon from '../../../assets/svg';
 import React, { useState, useEffect } from 'react';
 import * as API from '../../../api/api'
 import * as UI from './style';
+import './style'
+
 interface NextArrowProps {
     onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
