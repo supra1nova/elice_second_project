@@ -131,7 +131,7 @@ const HomeList = () => {
                 email={userEmail}
                 isWished={checkWished}
               />
-              <Link to={`/account/restaurants/${item.REGNumber}`}>
+              <Link to={`/restaurants/view/${item.REGNumber}`}>
                 <MainCardWithoutReview
                   regNumber={item.REGNumber}
                   large={false}
@@ -167,7 +167,7 @@ const HomeList = () => {
                 email={userEmail}
                 isWished={checkWished}
               />
-              <Link to={`/account/restaurants/${item.REGNumber}`}>
+              <Link to={`/restaurants/view/${item.REGNumber}`}>
                 <MainCardWithoutReview
                   regNumber={item.REGNumber}
                   large={false}

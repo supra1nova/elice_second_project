@@ -1,9 +1,10 @@
-import * as Icon from '../../../../../assets/svg';
+import * as Icon from '../../../../../../assets/svg';
 import { useState, useEffect } from 'react';
-import * as API from '../../../../../api/api'
-import ProfileImage from '../../../../atoms/ProfileImage'
+import * as API from '../../../../../../api/api'
+import ProfileImage from '../../../../../atoms/ProfileImage'
 import * as UI from './style';
 import PopupDeleteConfirm from './template/PopupDeleteConfirm';
+import PopupDeleteOwnerConfirm from './template/PopupDeleteOwnerConfirm';
 
 interface CommentListsProps {
     key: number,
@@ -14,7 +15,7 @@ interface CommentListsProps {
     ownerComment: null | string,
     reserveId: number
 }
-const UserReviewDetail = ({
+const AdminReviewDetail = ({
     key,
     email,
     createdAt,
@@ -31,23 +32,25 @@ const UserReviewDetail = ({
         }
     ])
     const [ownerName, setOwnerName] = useState<string>('')
-    const [myReview, setMyReview] = useState<boolean>(false)
+    
+    
+    // --------- 유저댓글 삭제 --------------------
     const [openPopupDeleteConfirm, setOpenPopupDeleteConfirm] = useState(false);
-    const reverIdData = {reserveId: reserveId }
+    const reserveIdData = {reserveId: reserveId }
 
     const handleOpenPopupDeleteConfirm = (e: any) => {
         e.preventDefault();
         setOpenPopupDeleteConfirm(true);
-      };
+    };
     
-      const handleClosePopupDeleteConfirm = (e: any) => {
+    const handleClosePopupDeleteConfirm = (e: any) => {
         e.preventDefault();
         setOpenPopupDeleteConfirm(!openPopupDeleteConfirm);
-      };
+    };
 
     const handleSubmit = () => {
         try {
-            API.delete('/api/reviews', '', reverIdData);
+            API.delete('/api/reviews', '', reserveIdData);
             console.log('삭제완료')
             setOpenPopupDeleteConfirm(false);
             window.location.replace(`/account/restaurants/${REGNumber}`);
@@ -55,18 +58,40 @@ const UserReviewDetail = ({
             console.error(err);
         }
     };
+    // --------- 유저댓글 삭제 여기까지 --------------
+
+    // --------- 사장님댓글 삭제 --------------------
+    const [openPopupOwnerDeleteConfirm, setOpenPopupOwnerDeleteConfirm] = useState(false);
+    const reserveIdOwnerData = {reserveId: reserveId }
+
+    const handleOpenPopupOwnerDeleteConfirm = (e: any) => {
+        e.preventDefault();
+        setOpenPopupOwnerDeleteConfirm(true);
+    };
+
+    const handleClosePopupOwnerDeleteConfirm = (e: any) => {
+        e.preventDefault();
+        setOpenPopupOwnerDeleteConfirm(!openPopupOwnerDeleteConfirm);
+    };
+
+    const handleOwnerSubmit = () => {
+        try {
+            API.delete('/api/reviews/owner', '', reserveIdData);
+            setOpenPopupOwnerDeleteConfirm(false);
+            window.location.replace(`/account/restaurants/${REGNumber}`);
+        } catch (err: any) {
+            console.error(err);
+        }
+    };
+
+    // --------- 사장님댓글 삭제 여기까지 --------------
 
     useEffect(() => {
         API.get(`/api/restaurants/${REGNumber}`).then((res) => {
-            setOwnerName(res.name)
-        })
-
-        API.userGet('/api/users/user').then((res) => {
             if(res) {
                 setOwnerName(res.name)
             }
-            // 여기 email이랑 리뷰 email이링 값이 같으면 삭제버튼을 보여주고
-        });
+        })
 
         // 리뷰 이미지 가져오기
         API.get(`/api/reviewImages/${reserveId}`).then((res: any) => {
@@ -112,6 +137,7 @@ const UserReviewDetail = ({
                             <Icon.Profile fill={'#64AD57'} width={'30px'} height={'30px'}/>
                             <UI.StyledOwnerName>{ownerName}</UI.StyledOwnerName>
                         </div>
+                        <button onClick={handleOpenPopupOwnerDeleteConfirm}>삭제</button>
                     </UI.StyledOwnerReviwerProfile>
                     <UI.StyledOwnerDescription>
                     {ownerComment}
@@ -123,8 +149,13 @@ const UserReviewDetail = ({
                 onClose={handleClosePopupDeleteConfirm}
                 onClick={handleSubmit}
             />
+            <PopupDeleteOwnerConfirm
+                open={openPopupOwnerDeleteConfirm}
+                onClose={handleClosePopupOwnerDeleteConfirm}
+                onClick={handleOwnerSubmit}
+            />
         </>
     );
 };
 
-export default UserReviewDetail;
+export default AdminReviewDetail;

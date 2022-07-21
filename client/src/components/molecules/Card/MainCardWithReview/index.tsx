@@ -38,7 +38,7 @@ const MainCardWithReview = ({
   }, []);
 
   return (
-    <Link to={`/account/restaurants/${regNumber}`}>
+    <Link to={`/restaurants/view/${regNumber}`}>
       <UI.Container>
         <UI.ImgWrapper>
           <img src={shopImg}></img>

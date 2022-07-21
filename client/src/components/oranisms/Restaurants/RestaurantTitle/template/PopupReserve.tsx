@@ -7,11 +7,11 @@ import PopupFooter from '../../../Popup/PopupFooter';
 import { POPUP } from '../../../../../constants/title';
 import * as UI from './style';
 import * as Icon from '../../../../../assets/svg';
+import './App.css';
 import * as API from '../../../../../api/api';
-import Button from '../../../../atoms/Button'
+import Button from '../../../../atoms/Button';
 import { ERROR } from '../../../../../constants/error';
-import ReserveDate from '../../../../molecules/ReserveDate'
-import './App.css'
+import ReserveDate from '../../../../molecules/ReserveDate';
 
 interface Props {
   open: boolean;
@@ -38,14 +38,14 @@ type valueObject = {
 
 const PopupReserve = ({ open, onClose, width, titleColor, title }: Props) => {
   const navigate = useNavigate();
-  const initialValue = { 
+  const initialValue = {
     timeId: 0,
     email: '',
     number: 0,
     REGNumber: '',
     comment: '',
     phoneNumber: '',
-    name: ''
+    name: '',
   };
 
   const [formErrors, setFormErrors] = useState<valueObject>({});
@@ -55,7 +55,7 @@ const PopupReserve = ({ open, onClose, width, titleColor, title }: Props) => {
   const [count, setCount] = useState(0);
   const [booker, setBooker] = useState({
     name: '',
-    phoneNumber: ''
+    phoneNumber: '',
   });
 
   function handleClickTime(time: any) {
@@ -78,8 +78,7 @@ const PopupReserve = ({ open, onClose, width, titleColor, title }: Props) => {
     setFormErrors(validate(formValues));
     setIsSubmit(true);
     try {
-      const data = {
-      };
+      const data = {};
       await API.post('/api/reserves/', '', data);
 
       navigate('/');
@@ -120,16 +119,8 @@ const PopupReserve = ({ open, onClose, width, titleColor, title }: Props) => {
   };
 
   return (
-    <PopupContainer 
-      open={open}
-      width={width}
-      paddingBottom={'20'}
-    >
-      <PopupHeader
-        title={title}
-        onClose={onClose}
-        titleColor={titleColor}
-      />
+    <PopupContainer open={open} width={width} paddingBottom={'20'}>
+      <PopupHeader title={title} onClose={onClose} titleColor={titleColor} />
 
       <UI.FormContainer onSubmit={handleSubmit}>
         <label>
@@ -153,7 +144,7 @@ const PopupReserve = ({ open, onClose, width, titleColor, title }: Props) => {
                   key={`${time}-${idx}`}
                   active={timeSelect === time}
                   onClick={() => handleClickTime(time)}
-                  type="button"
+                  type='button'
                 >
                   {time}
                 </UI.TimeSelectButton>
@@ -176,11 +167,11 @@ const PopupReserve = ({ open, onClose, width, titleColor, title }: Props) => {
             <UI.FormName>인원 선택</UI.FormName>
           </UI.FormCategory>
           <UI.CountWrapper>
-            <UI.ButtonWrapper onClick={onDecrease} type="button">
+            <UI.ButtonWrapper onClick={onDecrease} type='button'>
               <Icon.PlusButton width={28} height={28}></Icon.PlusButton>
             </UI.ButtonWrapper>
             {count}
-            <UI.ButtonWrapper onClick={onIncrease} type="button">
+            <UI.ButtonWrapper onClick={onIncrease} type='button'>
               <Icon.MinusButton width={28} height={28}></Icon.MinusButton>
             </UI.ButtonWrapper>
           </UI.CountWrapper>
@@ -210,7 +201,7 @@ const PopupReserve = ({ open, onClose, width, titleColor, title }: Props) => {
         <UI.Divider />
 
         <Button component={'primary'} size={'large'} block>
-            예약하기
+          예약하기
         </Button>
       </UI.FormContainer>
     </PopupContainer>

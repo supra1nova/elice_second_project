@@ -71,6 +71,27 @@ const post = async (
   return res;
 };
 
+const filePost = async (
+  endpoint: String,
+  params: String | null = '',
+  data: object,
+): Promise<any> => {
+  try {
+    const apiUrl = `${endpoint}/${params}`;
+    const res = await axios.post(apiUrl, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return res;
+  } catch (err: any) {
+    if (err.response) {
+      console.log(err.response.data);
+    }
+  }
+};
+
 const patch = async (
   endpoint: String,
   params: String | null = '',
@@ -80,6 +101,27 @@ const patch = async (
     const apiUrl = `${endpoint}/${params}`;
     const res = await axios.patch(apiUrl, data, {
       headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return res;
+  } catch (err: any) {
+    if (err.response) {
+      console.log(err.response.data);
+    }
+  }
+};
+
+const file = async (
+  endpoint: String,
+  params: String | null = '',
+  data: object,
+): Promise<any> => {
+  try {
+    const apiUrl = `${endpoint}/${params}`;
+    const res = await axios.patch(apiUrl, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     });
@@ -112,4 +154,4 @@ export const del = async (
   }
 };
 
-export { get, userGet, post, patch, del as delete };
+export { get, userGet, post, file, filePost, patch, del as delete };

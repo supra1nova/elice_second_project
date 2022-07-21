@@ -87,7 +87,7 @@ const SearchShopList = ({ inputValue, categorySelect }: any) => {
                 email={userEmail}
                 isWished={isWished}
               />
-              <Link to={`/account/restaurants/${item.REGNumber}`}>
+              <Link to={`/restaurants/view/${item.REGNumber}`}>
                 <ShopListCard
                   regNumber={item.REGNumber}
                   title={item.name}

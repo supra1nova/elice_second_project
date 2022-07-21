@@ -90,7 +90,6 @@ class UserService {
   
   // // 유저정보 수정, 현재 비밀번호가 있어야 수정 가능함.
   async setUser(updateUserInfo: updateUserInfo, email: string) {
-    console.log(1);
     const { currentPassword } = updateUserInfo;
     if(!email) throw new Error("email not provided");
     const user = await this.userModel.findUserbyEmail(email);
@@ -99,7 +98,6 @@ class UserService {
         '해당 이메일은 가입 내역이 없습니다. 다시 한 번 확인해 주세요.'
       );
     }
-    console.log(2);
     const correctPasswordHash = user.password; // db에 저장되어 있는 암호화된 비밀번호
 
     // 매개변수의 순서 중요 (1번째는 프론트가 보내온 비밀번호, 2번쨰는 db에 있떤 암호화된 비밀번호)
@@ -116,22 +114,19 @@ class UserService {
 
     // 이제 드디어 업데이트 시작
 
-    console.log(3);
     // 비밀번호도 변경하는 경우에는, 회원가입 때처럼 해쉬화 해주어야 함.
     const { password } = updateUserInfo;
-
-    if (password) {
+    
+    console.log('password : ', password, '<<');
+    if (password !== undefined) {
       const newPasswordHash = await bcrypt.hash(password, 10);
       updateUserInfo.password = newPasswordHash;
     }
+    console.log('after password : ', updateUserInfo.password, '<<');
 
-    console.log(4);
     // 업데이트 진행
-    // console.log("============",email);
-    // console.log("============",userInfo);
     delete updateUserInfo.email;
     const updateduser = await this.userModel.updateUser(email, updateUserInfo);
-    console.log(5);
     return updateduser;
   }
     // 3. 전체 제품 품목 수(SKU) 조회
@@ -146,16 +141,17 @@ class UserService {
     const rangedProductsInfo = await this.userModel.getInRange(page, perPage);
     return rangedProductsInfo;
   }
+
   // //유저 정보 삭제, 현재 비밀번호가 있어야 수정 가능함.
   //박세웅
   async removeUser(userInfo:userInfo){
     const {email, password}= userInfo;
-    if(email==undefined) throw new Error("Email was not given");
+    if(!email) throw new Error("Email was not given");
     let user = await this.userModel.findUserbyEmail(email);
     if(user==null){throw new Error('존재하지 않는 아이디입니다.')}
     const correctPasswordHash = user.password;
 
-    if(password==undefined) throw new Error("Password was not given");
+    if(!password) throw new Error("Password was not given");
     const isPasswordCorrect = await bcrypt.compare(
       password,
       correctPasswordHash,

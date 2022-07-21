@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
 import * as API from '../../../api/api';
@@ -8,7 +7,6 @@ import Button from '../../../components/atoms/Button';
 import ButtonText from '../../../components/atoms/ButtonText';
 import InputText from '../../../components/atoms/InputText';
 import Select from '../../../components/atoms/Select';
-import InputFileThumbnail from '../../../components/atoms/InputFileThumbnail';
 import Textarea from '../../../components/atoms/Textarea';
 import Typography from '../../../components/atoms/Typography';
 import Form from '../../../components/atoms/Form';
@@ -100,9 +98,7 @@ type valueObject = {
   [key: string]: any;
 };
 
-const AccountRestaurants = () => {
-  const navigate = useNavigate();
-
+const AccountRestaurantsCreate = () => {
   const initialValue = {
     inputRestaurantName: '',
     inputRestaurantOffice: '',
@@ -128,47 +124,10 @@ const AccountRestaurants = () => {
   const [image, setImage] = useState<any>({
     image_file: [],
     preview_URL: [],
-    image_key: [],
   });
   const [isSubmit, setIsSubmit] = useState(false);
 
   const errors: valueObject = {};
-
-  const REGNumber = window.location.href.split('/')[5];
-
-  console.log(window.location.href.split('/'));
-
-  useEffect(() => {
-    API.get(`/api/restaurants/${REGNumber}`).then((res) => {
-      const data = {
-        inputRegistrationNumber: res.REGNumber,
-        inputRestaurantName: res.name,
-        inputAddres2: res.address2,
-        inputRestauranPhone: res.phoneNumber,
-        inputSelectCategory: res.category,
-        inputDescription: res.description,
-        inputOwnerEmail: res.ownerEmail,
-      };
-      const address = {
-        inputPostNumber: res.postalcode,
-        inputAddres1: res.address1,
-      };
-
-      setFormValues(data);
-      setAddress(address);
-    });
-
-    API.get(`/api/restaurantImages/${REGNumber}`).then((res) => {
-      const imageFile = res.map((item: any) => item.image);
-      const imageList = res.map((item: any) => item.image);
-      const imageKeyList = res.map((item: any) => item.imageKey);
-      setImage({
-        image_file: imageFile,
-        preview_URL: imageList,
-        image_key: imageKeyList,
-      });
-    });
-  }, []);
 
   useEffect(() => {
     return () => {
@@ -178,17 +137,12 @@ const AccountRestaurants = () => {
 
   useEffect(() => {
     setFormValues(formValues);
+    console.log(formValues);
   }, [formValues]);
-
-  const handleOpenPopupSaveConfirm = (e: any) => {
-    e.preventDefault();
-    setOpenPopupSaveConfirm(true);
-  };
 
   const handleClosePopupSaveConfirm = (e: any) => {
     e.preventDefault();
     setOpenPopupSaveConfirm(!openPopupSaveConfirm);
-    navigate(`/account/restaurants/${REGNumber}`);
   };
 
   const handleOpenPostCodePopup = (e: any) => {
@@ -199,11 +153,10 @@ const AccountRestaurants = () => {
   const saveFileImage = (e: any) => {
     e.preventDefault();
 
-    const imageLists = e.target.files;
+    const imageLists = e.target.files; // 파일 객체 불러옴
 
     let imageUrlLists = [...image.preview_URL];
     let imageFileLists = [...image.image_file];
-    let imageKeyLists = [...image.image_key];
 
     for (let i = 0; i < imageLists.length; i++) {
       URL.revokeObjectURL(imageLists[i]);
@@ -216,39 +169,19 @@ const AccountRestaurants = () => {
     if (imageUrlLists.length > 6) {
       imageUrlLists = imageUrlLists.slice(0, 6);
       imageFileLists = imageFileLists.slice(0, 6);
-      imageKeyLists = imageKeyLists.slice(0, 6);
     }
 
-    setImage({
-      image_key: imageKeyLists,
-      image_file: imageFileLists,
-      preview_URL: imageUrlLists,
-    });
+    setImage({ image_file: imageFileLists, preview_URL: imageUrlLists });
   };
 
-  const deleteFileImage = async (id: any) => {
+  const deleteFileImage = (id: any) => {
     URL.revokeObjectURL(image.preview_URL);
-
     const deleteImage = image.preview_URL.filter(
       (item: any, index: any) => index !== id,
     );
-    const selectImage = image.image_key.filter(
-      (item: any, index: any) => index === id,
-    );
-
-    const data = {
-      imageKey: selectImage,
-    };
-    await API.delete('/api/restaurantImages', '', data);
-    setImage({
-      image_file: deleteImage,
-      preview_URL: deleteImage,
-      image_key: deleteImage,
-    });
-    navigate(`/account/restaurants/${REGNumber}`);
+    setImage({ image_file: deleteImage, preview_URL: deleteImage });
   };
 
-  console.log(image);
   const handleChange = (e: any) => {
     const target = e.target;
     const value =
@@ -283,7 +216,10 @@ const AccountRestaurants = () => {
         description: formValues.inputDescription,
         ownerEmail: formValues.inputOwnerEmail,
       };
-      await API.patch(`/api/restaurants/${REGNumber}`, '', data);
+
+      console.log(data);
+
+      await API.post('/api/restaurants/', '', data);
 
       if (image.image_file) {
         const formData = new FormData();
@@ -293,6 +229,7 @@ const AccountRestaurants = () => {
         formData.append('REGNumber', formValues.inputRegistrationNumber);
         await API.filePost('/api/restaurantImages', '', formData);
       }
+
       setOpenPopupSaveConfirm(true);
     } catch (err: any) {
       console.error(err);
@@ -393,7 +330,6 @@ const AccountRestaurants = () => {
         onChange: handleChange,
         placeholder: PLACEHOLDER.OWNER_REGISTRATION_NUMBER,
         error: formErrors.inputRegistrationNumber,
-        readOnly: true,
       },
     ],
   };
@@ -418,116 +354,114 @@ const AccountRestaurants = () => {
   };
 
   return (
-    <LNBLayout items={ACCOUNT.OWNER}>
-      <UI.Container>
-        <UI.Content>
-          <Form onSubmit={handleSubmit}>
-            {inputTextData.owner.map((item, index) => {
-              return FormInputTextHorizontal(item, index);
-            })}
+    <UI.Container>
+      <UI.Content>
+        <Form onSubmit={handleSubmit}>
+          {inputTextData.owner.map((item, index) => {
+            return FormInputTextHorizontal(item, index);
+          })}
 
-            <Select
-              name='inputSelectCategory'
-              options={SELECT_CATEGORY_OPTIONS}
-              onChange={handleChange}
-              id='inputSelectCategory'
-              htmlFor='inputSelectCategory'
-              labelTitle={LABELTITLE.RESTAURANT_CATEGORY}
-            />
+          <Select
+            name='inputSelectCategory'
+            options={SELECT_CATEGORY_OPTIONS}
+            onChange={handleChange}
+            id='inputSelectCategory'
+            htmlFor='inputSelectCategory'
+            labelTitle={LABELTITLE.RESTAURANT_CATEGORY}
+          />
 
-            <StyleAddressContainer>
-              <StyleFormItemHorizontal>
-                {inputAddressData.owner.map((item, index) => {
-                  return FormInputTextHorizontal(item, index);
-                })}
-                <ButtonText onClick={handleOpenPostCodePopup}>
-                  우편번호 검색
-                </ButtonText>
-              </StyleFormItemHorizontal>
-              <StyleFormItem>
-                <InputText
-                  type='text'
-                  id='inputAddres1'
-                  name='inputAddres1'
-                  value={address.inputAddres1}
-                  placeholder=''
-                  onChange={handleChange}
-                  readOnly
-                />
-              </StyleFormItem>
-              <StyleFormItem>
-                <InputText
-                  type='text'
-                  id='inputAddres2'
-                  name='inputAddres2'
-                  value={formValues.inputAddres2}
-                  placeholder=''
-                  onChange={handleChange}
-                />
-              </StyleFormItem>
-              <FormError message={formErrors.address}></FormError>
-            </StyleAddressContainer>
-
-            <StyleInputFileContainer>
-              <StyleInputFileImage>
-                <StyleTypography>{LABELTITLE.RESTAURANT_IMAGE}</StyleTypography>
-                <InputFileButton
-                  id='inputFileAvatarImage'
-                  htmlFor='inputFileAvatarImage'
-                  name='inputFileAvatarImage'
-                  accept='image/*'
-                  onChange={saveFileImage}
-                  multiple
-                />
-              </StyleInputFileImage>
-              {image.preview_URL ? (
-                <StyleInputFilePreview>
-                  {image.preview_URL.map((image: any, id: any) => {
-                    return (
-                      <FileTumbnail
-                        image={image}
-                        key={id}
-                        onClick={() => {
-                          deleteFileImage(id);
-                        }}
-                      />
-                    );
-                  })}
-                </StyleInputFilePreview>
-              ) : null}
-            </StyleInputFileContainer>
-
-            <StyleTextareaContainer>
-              <Textarea
-                label={LABELTITLE.DESCRIPTION}
-                htmlFor='inputDescription'
-                id='inputDescription'
-                name='inputDescription'
+          <StyleAddressContainer>
+            <StyleFormItemHorizontal>
+              {inputAddressData.owner.map((item, index) => {
+                return FormInputTextHorizontal(item, index);
+              })}
+              <ButtonText onClick={handleOpenPostCodePopup}>
+                우편번호 검색
+              </ButtonText>
+            </StyleFormItemHorizontal>
+            <StyleFormItem>
+              <InputText
+                type='text'
+                id='inputAddres1'
+                name='inputAddres1'
+                value={address.inputAddres1}
                 placeholder=''
-                value={formValues.inputDescription}
+                onChange={handleChange}
+                readOnly
+              />
+            </StyleFormItem>
+            <StyleFormItem>
+              <InputText
+                type='text'
+                id='inputAddres2'
+                name='inputAddres2'
+                value={formValues.inputAddres2}
+                placeholder=''
                 onChange={handleChange}
               />
-              <FormError message={formErrors.inputDescription}></FormError>
-            </StyleTextareaContainer>
+            </StyleFormItem>
+            <FormError message={formErrors.address}></FormError>
+          </StyleAddressContainer>
 
-            <FormFooter>
-              <Button component='primary' size='large' block>
-                {BUTTON.SAVE_MODIFY_DATA}
-              </Button>
-            </FormFooter>
-          </Form>
-        </UI.Content>
+          <StyleInputFileContainer>
+            <StyleInputFileImage>
+              <StyleTypography>{LABELTITLE.RESTAURANT_IMAGE}</StyleTypography>
+              <InputFileButton
+                id='inputFileAvatarImage'
+                htmlFor='inputFileAvatarImage'
+                name='inputFileAvatarImage'
+                accept='image/*'
+                onChange={saveFileImage}
+                multiple
+              />
+            </StyleInputFileImage>
+            {image.preview_URL ? (
+              <StyleInputFilePreview>
+                {image.preview_URL.map((image: any, id: any) => {
+                  return (
+                    <FileTumbnail
+                      image={image}
+                      key={id}
+                      onClick={() => {
+                        deleteFileImage(id);
+                      }}
+                    />
+                  );
+                })}
+              </StyleInputFilePreview>
+            ) : null}
+          </StyleInputFileContainer>
 
-        <PopupSaveConfirm
-          open={openPopupSaveConfirm}
-          onClose={handleClosePopupSaveConfirm}
-        />
-        <PostCodePopup open={openPostCodePopup}>
-          <DaumPostcode onComplete={handlePostCode} />
-        </PostCodePopup>
-      </UI.Container>
-    </LNBLayout>
+          <StyleTextareaContainer>
+            <Textarea
+              label={LABELTITLE.DESCRIPTION}
+              htmlFor='inputDescription'
+              id='inputDescription'
+              name='inputDescription'
+              placeholder=''
+              value={formValues.inputDescription}
+              onChange={handleChange}
+            />
+            <FormError message={formErrors.inputDescription}></FormError>
+          </StyleTextareaContainer>
+
+          <FormFooter>
+            <Button component='primary' size='large' block>
+              {BUTTON.SAVE_MODIFY_DATA}
+            </Button>
+          </FormFooter>
+        </Form>
+      </UI.Content>
+
+      <PopupSaveConfirm
+        open={openPopupSaveConfirm}
+        onClose={handleClosePopupSaveConfirm}
+      />
+      <PostCodePopup open={openPostCodePopup}>
+        <DaumPostcode onComplete={handlePostCode} />
+      </PostCodePopup>
+    </UI.Container>
   );
 };
 
-export default AccountRestaurants;
+export default AccountRestaurantsCreate;
