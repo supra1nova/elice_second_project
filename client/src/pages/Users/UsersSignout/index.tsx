@@ -84,7 +84,7 @@ const UsersSignout = () => {
       };
       console.log(data);
       await API.delete('/api/users', '', data);
-      localStorage.removeItem('token');
+      window.localStorage.clear();
       navigate('/');
     } catch (err: any) {
       console.error(err);

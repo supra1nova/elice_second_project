@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useInsertionEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
@@ -133,23 +133,18 @@ const AccountRestaurants = () => {
 
   const [role, setRole] = useState<any>({
     email: '',
-    registrationNumber: '',
+    registrationNumber: [],
   });
 
   const [isSubmit, setIsSubmit] = useState(false);
 
   const errors: valueObject = {};
 
-  const path = window.location.pathname.split('/');
-  const REGNumber = path[path.length - 1];
+  const REGNumber = localStorage.getItem('REGNumber');
 
-  //console.log(window.location.href.split('/'));
-
-  useEffect(() => {
-    API.userGet('/api/users/user').then((res) => {
-      setRole({ email: res.email });
-    });
-  }, []);
+  if (!REGNumber) {
+    navigate('/account/restaurantscreate');
+  }
 
   useEffect(() => {
     API.get(`/api/restaurants/${REGNumber}`).then((res) => {

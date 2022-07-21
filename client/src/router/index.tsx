@@ -35,7 +35,7 @@ function Router() {
           <Route path={URL.SEARCH} element={<Search />}></Route>
           {/* <Route path={URL.ACCOUNT_HOME} element={<AccountHome />}></Route> */}
           <Route
-            path={`${URL.ACCOUNT_RESTAURANTS}/:REGNumber`}
+            path={`${URL.ACCOUNT_RESTAURANTS}`}
             element={<AccountRestaurants />}
           ></Route>
           <Route
