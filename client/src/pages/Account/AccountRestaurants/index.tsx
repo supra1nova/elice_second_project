@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useInsertionEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
@@ -130,13 +130,26 @@ const AccountRestaurants = () => {
     preview_URL: [],
     image_key: [],
   });
+
+  const [role, setRole] = useState<any>({
+    email: '',
+    registrationNumber: '',
+  });
+
   const [isSubmit, setIsSubmit] = useState(false);
 
   const errors: valueObject = {};
 
-  const REGNumber = window.location.href.split('/')[5];
+  const path = window.location.pathname.split('/');
+  const REGNumber = path[path.length - 1];
 
-  console.log(window.location.href.split('/'));
+  //console.log(window.location.href.split('/'));
+
+  useEffect(() => {
+    API.userGet('/api/users/user').then((res) => {
+      setRole({ email: res.email });
+    });
+  }, []);
 
   useEffect(() => {
     API.get(`/api/restaurants/${REGNumber}`).then((res) => {
@@ -175,10 +188,6 @@ const AccountRestaurants = () => {
       URL.revokeObjectURL(image.preview_URL);
     };
   }, []);
-
-  useEffect(() => {
-    setFormValues(formValues);
-  }, [formValues]);
 
   const handleOpenPopupSaveConfirm = (e: any) => {
     e.preventDefault();
@@ -248,7 +257,6 @@ const AccountRestaurants = () => {
     navigate(`/account/restaurants/${REGNumber}`);
   };
 
-  console.log(image);
   const handleChange = (e: any) => {
     const target = e.target;
     const value =
@@ -281,8 +289,9 @@ const AccountRestaurants = () => {
         phoneNumber: formValues.inputRestauranPhone,
         category: formValues.inputSelectCategory,
         description: formValues.inputDescription,
-        ownerEmail: formValues.inputOwnerEmail,
+        ownerEmail: role.email,
       };
+
       await API.patch(`/api/restaurants/${REGNumber}`, '', data);
 
       if (image.image_file) {
