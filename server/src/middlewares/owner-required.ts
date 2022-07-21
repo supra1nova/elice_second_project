@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 function ownerRequired(req: Request, res: Response, next: NextFunction) {
   try {
     // role: "owner-user" 확인
-    if (req.role === "OWNER") {
+    if (req.role === "OWNER" || "owner") {
       next();
     } else {
       throw new Error;
