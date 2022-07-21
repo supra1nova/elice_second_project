@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 export const StyledImg = styled.img`
     padding: 0 20px 20px;
+    width: 272px;
+    height: 272px;
+    object-fit: cover;
 `
 export const StyledCarousel = styled.div`
     position: relative;
