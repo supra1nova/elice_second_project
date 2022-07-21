@@ -8,7 +8,7 @@ const AccountManagementAdmin = () => {
   return (
     <LNBLayout items={ACCOUNT.ADMIN}>
       <UI.Container>
-        <UI.Content>어드민이다</UI.Content>
+        <UI.Content>어드민이다 회원조회</UI.Content>
       </UI.Container>
     </LNBLayout>
   );
