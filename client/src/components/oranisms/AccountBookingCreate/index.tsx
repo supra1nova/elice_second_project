@@ -17,7 +17,7 @@ const AccountBookingCreate = () => {
   const handleSubmit = () => {};
   return (
     <UI.Container>
-      <AccountHeader title={SECTION.MENU_REGISTER} />
+      <AccountHeader title={SECTION.RESERVATION_REGISTER} />
       <Form onSubmit={handleSubmit}>
         <UI.FormItem>
           <UI.FormColumn></UI.FormColumn>

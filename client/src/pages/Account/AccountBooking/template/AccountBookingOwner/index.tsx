@@ -12,9 +12,7 @@ const AccountBookingOwner = () => {
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
         <UI.Content>
-          <AccountHeader title={SECTION.RESERVATION_REGISTER} />
           <AccountBookingCreate />
-          <AccountHeader title={SECTION.RESERVATION_MANAGEMENT} />
           <AccountBookingList />
         </UI.Content>
       </UI.Container>

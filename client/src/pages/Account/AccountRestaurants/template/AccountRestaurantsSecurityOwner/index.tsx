@@ -4,6 +4,7 @@ import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
 import * as API from '../../../../../api/api';
 import LNBLayout from '../../../../../components/molecules/LNBLayout';
+import AccountHeader from '../../../../../components/molecules/AccountHeader';
 import Button from '../../../../../components/atoms/Button';
 import ButtonText from '../../../../../components/atoms/ButtonText';
 import InputText from '../../../../../components/atoms/InputText';
@@ -424,6 +425,7 @@ const AccountRestaurantsSecurityOwner = () => {
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
         <UI.Content>
+          <AccountHeader title={'레스토랑 등록'} />
           <Form onSubmit={handleSubmit}>
             {inputTextData.owner.map((item, index) => {
               return FormInputTextHorizontal(item, index);
