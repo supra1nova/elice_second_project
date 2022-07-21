@@ -6,6 +6,7 @@ import Home from '../pages/Home';
 import RestaurantHome from '../pages/Restaurant/RestaurantHome';
 import Search from '../pages/Search';
 import AccountHome from '../pages/Account/AccountHome';
+import AccountBooking from '../pages/Account/AccountBooking';
 import AccountRestaurants from '../pages/Account/AccountRestaurants';
 import AccountRestaurantsList from '../pages/Account/AccountRestaurantsList';
 import AccountReserves from '../pages/Account/AccountReserves';
@@ -32,7 +33,6 @@ function Router() {
             element={<AccountRestaurantsList />}
           ></Route>
           <Route path={URL.SEARCH} element={<Search />}></Route>
-          {/* <Route path={URL.ACCOUNT_HOME} element={<AccountHome />}></Route> */}
           <Route
             path={`${URL.ACCOUNT_RESTAURANTS}`}
             element={<AccountRestaurants />}
@@ -41,8 +41,13 @@ function Router() {
             path={URL.ACCOUNT_RESERVES}
             element={<AccountReserves />}
           ></Route>
+
           <Route
-            path={URL.ACCOUNT_RESERVES_MANAGEMENT}
+            path={URL.ACCOUNT_BOOKING}
+            element={<AccountBooking />}
+          ></Route>
+          <Route
+            path={URL.ACCOUNT_MANAGEMENT}
             element={<AccountReservesManagement />}
           ></Route>
 

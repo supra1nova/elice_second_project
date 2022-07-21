@@ -7,6 +7,7 @@ const AccountMenusList = () => {
   return (
     <UI.Container>
       <AccountHeader title={SECTION.MENU_MANAGEMENT} />
+      테이블이들어갑니다
     </UI.Container>
   );
 };
