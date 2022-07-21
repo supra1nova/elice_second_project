@@ -9,10 +9,8 @@ import AccountBooking from '../pages/Account/AccountBooking';
 import AccountRestaurants from '../pages/Account/AccountRestaurants';
 import AccountReserves from '../pages/Account/AccountReserves';
 import AccountManagement from '../pages/Account/AccountManagement';
-import AccountCategories from '../pages/Account/AccountCategories';
 import AccountLikes from '../pages/Account/AccountLikes';
 import AccountMenus from '../pages/Account/AccountMenus';
-import AccountUsers from '../pages/Account/AccountUsers';
 import UsersLogin from '../pages/Users/UsersLogin';
 import UsersRegister from '../pages/Users/UsersRegister';
 import UsersSecurity from '../pages/Users/UsersSecurity';
@@ -44,13 +42,7 @@ function Router() {
             path={URL.ACCOUNT_MANAGEMENT}
             element={<AccountManagement />}
           ></Route>
-
-          <Route
-            path={URL.ACCOUNT_CATEGORIES}
-            element={<AccountCategories />}
-          ></Route>
           <Route path={URL.ACCOUNT_LIKES} element={<AccountLikes />}></Route>
-          <Route path={URL.ACCOUNT_USERS} element={<AccountUsers />}></Route>
           <Route path={URL.ACCOUNT_MENUS} element={<AccountMenus />}></Route>
           <Route
             path={`${URL.USERS_SECURITY}`}

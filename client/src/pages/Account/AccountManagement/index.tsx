@@ -1,22 +1,19 @@
-import React from 'react';
-import LNBLayout from '../../../components/molecules/LNBLayout';
-import AccountHeader from '../../../components/molecules/AccountHeader';
-import { ACCOUNT } from '../../../constants/lnb';
-import { SECTION } from '../../../constants/title';
-import * as UI from './style';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import * as API from '../../../api/api';
+import AccountManagementAdmin from './template/AccountManagementAdmin';
 
 const AccountManagement = () => {
-  return (
-    <LNBLayout items={ACCOUNT.OWNER}>
-      <UI.Container>
-        <UI.Content>
-          <AccountHeader title={SECTION.RESERVATION_REGISTER} />
+  const navigate = useNavigate();
+  const [role, setRole] = useState<string>();
+  useEffect(() => {
+    API.userGet('/api/users/user').then((res) => {
+      console.log(res);
+      setRole(res.role);
+    });
+  }, []);
 
-          <AccountHeader title={SECTION.RESERVATION_MANAGEMENT} />
-        </UI.Content>
-      </UI.Container>
-    </LNBLayout>
-  );
+  return <>{role === 'admin' ? <AccountManagementAdmin /> : navigate('/')}</>;
 };
 
 export default AccountManagement;

@@ -1,7 +1,8 @@
 import React from 'react';
+import * as UI from './style';
 
 const AccountBookingList = () => {
-  return <div>AccountBookingList</div>;
+  return <div>index</div>;
 };
 
 export default AccountBookingList;
