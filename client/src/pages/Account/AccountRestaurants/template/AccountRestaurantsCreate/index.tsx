@@ -1,34 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
-import * as API from '../../../api/api';
-import LNBLayout from '../../../components/molecules/LNBLayout';
-import Button from '../../../components/atoms/Button';
-import ButtonText from '../../../components/atoms/ButtonText';
-import InputText from '../../../components/atoms/InputText';
-import Select from '../../../components/atoms/Select';
-import Textarea from '../../../components/atoms/Textarea';
-import Typography from '../../../components/atoms/Typography';
-import Form from '../../../components/atoms/Form';
-import FormItem from '../../../components/molecules/FormItem';
-import FormInputTextHorizontal from '../../../components/molecules/FormInputTextHorizontal';
-import FormFooter from '../../../components/molecules/FormFooter';
-import FormError from '../../../components/molecules/FromError';
-import PostCodePopup from '../../../components/oranisms/PostCode/PostCodePopup';
-import PopupSaveConfirm from './template/PopupSaveConfirm';
-import { ACCOUNT } from '../../../constants/lnb';
-import { BUTTON } from '../../../constants/input';
-import { ROLE } from '../../../constants/member';
-import { ERROR } from '../../../constants/error';
+import * as API from '../../../../../api/api';
+import LNBLayout from '../../../../../components/molecules/LNBLayout';
+import Button from '../../../../../components/atoms/Button';
+import ButtonText from '../../../../../components/atoms/ButtonText';
+import InputText from '../../../../../components/atoms/InputText';
+import Select from '../../../../../components/atoms/Select';
+import Textarea from '../../../../../components/atoms/Textarea';
+import Typography from '../../../../../components/atoms/Typography';
+import Form from '../../../../../components/atoms/Form';
+import FormItem from '../../../../../components/molecules/FormItem';
+import FormInputTextHorizontal from '../../../../../components/molecules/FormInputTextHorizontal';
+import FormFooter from '../../../../../components/molecules/FormFooter';
+import FormError from '../../../../../components/molecules/FromError';
+import PostCodePopup from '../../../../../components/oranisms/PostCode/PostCodePopup';
+import PopupSaveConfirm from '../PopupSaveConfirm';
+import { ACCOUNT } from '../../../../../constants/lnb';
+import { BUTTON } from '../../../../../constants/input';
+import { ROLE } from '../../../../../constants/member';
+import { ERROR } from '../../../../../constants/error';
 import {
   LABELTITLE,
   PLACEHOLDER,
   SELECT_CATEGORY_OPTIONS,
-} from '../../../constants/input';
+} from '../../../../../constants/input';
 import * as UI from './style';
-import InputFileButton from '../../../components/atoms/InputFileButton';
-import FileTumbnail from '../../../components/atoms/FileTumbnail';
-import { channel } from 'diagnostics_channel';
+import InputFileButton from '../../../../../components/atoms/InputFileButton';
+import FileTumbnail from '../../../../../components/atoms/FileTumbnail';
 
 const StyleTypography = styled(Typography)`
   margin-bottom: 10px;
@@ -129,13 +128,6 @@ const AccountRestaurantsCreate = () => {
   const [isSubmit, setIsSubmit] = useState(false);
 
   const errors: valueObject = {};
-
-  const REGNumber = localStorage.getItem('REGNumber');
-  if (REGNumber) {
-    console.log('aaa');
-    window.location.href = '/account/restaurants';
-  }
-  console.log(REGNumber);
 
   useEffect(() => {
     return () => {

@@ -9,9 +9,13 @@ const StyledFormError = styled(FormError)`
   margin-left: 150px;
 `;
 
-const FormInputTextHorizontal = (item: any, index: number) => {
+const FormInputTextHorizontal = (
+  item: any,
+  index: number,
+  className?: string,
+) => {
   return (
-    <FormItem key={`${item.id}-${index}`}>
+    <FormItem key={`${item.id}-${index}`} className={className}>
       <FormInput
         htmlFor={item.htmlFor}
         labelTitle={item.labelTitle}
