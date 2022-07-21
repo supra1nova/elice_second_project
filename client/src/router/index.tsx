@@ -7,7 +7,6 @@ import RestaurantHome from '../pages/Restaurant/RestaurantHome';
 import Search from '../pages/Search';
 import AccountBooking from '../pages/Account/AccountBooking';
 import AccountRestaurants from '../pages/Account/AccountRestaurants';
-import AccountRestaurantsList from '../pages/Account/AccountRestaurantsList';
 import AccountReserves from '../pages/Account/AccountReserves';
 import AccountManagement from '../pages/Account/AccountManagement';
 import AccountCategories from '../pages/Account/AccountCategories';
@@ -27,10 +26,6 @@ function Router() {
         <Route element={<GlobalLayout />}>
           <Route path={URL.HOME} element={<Home />}></Route>
           <Route path={URL.RESTAURANTS} element={<RestaurantHome />}></Route>
-          <Route
-            path={`${URL.RESTAURANTS_VIEW}/:REGNumber`}
-            element={<AccountRestaurantsList />}
-          ></Route>
           <Route path={URL.SEARCH} element={<Search />}></Route>
           <Route
             path={`${URL.ACCOUNT_RESTAURANTS}`}
