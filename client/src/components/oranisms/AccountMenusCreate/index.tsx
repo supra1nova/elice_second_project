@@ -15,7 +15,7 @@ type valueObject = {
 
 const REGNumber = localStorage.getItem('REGNumber');
 
-const AccountMenusCreate = () => {
+const AccountMenusCreate = ({ setRender }: any) => {
   const initialValue = {
     inputMenuName: '',
     inputMenuPrice: '',
@@ -51,6 +51,7 @@ const AccountMenusCreate = () => {
       };
       console.log(data);
       await API.tokenPost('/api/menus', '', data);
+      setRender(true);
     } catch (err: any) {
       console.error(err);
     }

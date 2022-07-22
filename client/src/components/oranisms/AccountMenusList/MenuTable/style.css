@@ -7,3 +7,7 @@ td {
   padding: 0.5rem;
   border: 1px solid black;
 }
+
+th:last-child {
+  width: 100px;
+}

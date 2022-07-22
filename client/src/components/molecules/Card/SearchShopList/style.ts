@@ -57,6 +57,9 @@ export const SubTitle = styled.div`
   ${(props) => props.theme.font.caption};
   color: ${(props) => props.theme.colors.font2};
   line-height: 17.38px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const Caption = styled.div`

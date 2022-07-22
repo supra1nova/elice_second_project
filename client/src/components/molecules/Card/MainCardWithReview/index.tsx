@@ -27,10 +27,15 @@ const MainCardWithReview = ({
   const getReviewData = async () => {
     const result = await API.get(`/api/reviews/${regNumber}`).then((res) => {
       // setReviewer(res.reviews[0].email);
-      setReviewer(res.reviews[0].email);
-      const randomNumber = Math.floor(Math.random() * res.reviews.length);
-      const comment = res.reviews[randomNumber].comment;
-      setReviewComment(comment);
+      if (res) {
+        setReviewer(res.reviews[0].email);
+        const randomNumber = Math.floor(Math.random() * res.reviews.length);
+        const comment = res.reviews[randomNumber].comment;
+        setReviewComment(comment);
+      } else {
+        setReviewer('');
+        setReviewComment('첫 리뷰를 작성해주세요!');
+      }
     });
   };
 
