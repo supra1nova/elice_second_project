@@ -6,16 +6,20 @@ import AccountMenusOwner from './template/AccountMenusOwner';
 const AccountMenus = () => {
   const navigate = useNavigate();
   const [role, setRole] = useState<string>();
-  useEffect(() => {
+
+  const getData = async () => {
     API.userGet('/api/users/user').then((res) => {
       setRole(res.role);
     });
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
 
-  const Navigate = () => {
-    window.location.href = '/';
-    return <></>;
-  };
+  if (role !== 'owner') {
+    navigate('/');
+  }
 
   return (
     <>
