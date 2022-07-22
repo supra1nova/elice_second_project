@@ -28,7 +28,7 @@ export const FormColumn = styled.div`
     width: 70px;
   }
   p {
-    margin-left: -70px;
+    margin-left: -80px;
   }
 `;
 
@@ -36,4 +36,15 @@ export const FormButton = styled.div`
   width: 110px;
   text-align: right;
   margin-top: 10px;
+`;
+
+export const FormError = styled.div`
+  position: relative;
+  height: 40px;
+
+  p {
+    position: absolute;
+    left: 0;
+    top: 10px;
+  }
 `;
