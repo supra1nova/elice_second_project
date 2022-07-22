@@ -15,6 +15,7 @@ import * as UI from './style';
 import InputText from '../../atoms/InputText';
 import FormInputText from '../../molecules/FormInputText';
 import { yearsToMonths } from 'date-fns';
+import Typography from '../../atoms/Typography';
 
 type valueObject = {
   [key: string]: any;
@@ -63,9 +64,7 @@ const AccountBookingCreate = () => {
       inputMonth: month,
       inputDate: day,
     });
-  }, [selectDate]);
-
-  console.log(formValues);
+  }, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -82,31 +81,22 @@ const AccountBookingCreate = () => {
         initialRemainder: formValues.inputRemainder,
       };
       await API.tokenPost('/api/times', '', data);
+      alert(
+        `${data.year}/${data.month}/${data.date} ${data.hour}시에 ${data.remainder}명 예약 가능 인원이 설정 됐습니다.`,
+      );
     } catch (err: any) {
       console.error(err);
     }
   };
 
   const validate = (values: any) => {
-    const inputYearValue = values.inputYearValue;
-    const inputSelectHourValue = values.inputSelectHour;
     const inputRemainderValue = values.inputRemainder;
 
-    if (!inputYearValue) {
-      errors.inputYearValue = '에러발생 1';
-    }
-
-    if (!inputSelectHourValue) {
-      errors.inputSelectHourValue = '에러발생 2';
-    }
-
     if (!inputRemainderValue) {
-      errors.inputSelectHourValue = '에러발생 3';
+      errors.inputSelectHourValue = '예약 가능 인원을 입력하세요';
     }
     return errors;
   };
-
-  console.log(errors);
 
   return (
     <UI.Container>
@@ -162,7 +152,11 @@ const AccountBookingCreate = () => {
             </Button>
           </UI.FormButton>
         </UI.FormItem>
-        <UI.FormItem>{errors.inputSelectHourValue}</UI.FormItem>
+        <UI.FormError>
+          <Typography>
+            {formErrors ? formErrors.inputSelectHourValue : null}
+          </Typography>
+        </UI.FormError>
       </Form>
     </UI.Container>
   );

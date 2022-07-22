@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 export const Container = styled.div`
   position: relative;
   max-width: 740px;
-  margin-bottom: 40px;
 `;
 
 export const FormItem = styled.div`
@@ -48,4 +47,15 @@ export const FormLabel = styled.div`
   ${(props) => props.theme.font.subtitle1};
   color: ${(props) => props.theme.colors.black};
   margin-bottom: 10px;
+`;
+
+export const FormError = styled.div`
+  position: relative;
+  height: 40px;
+
+  p {
+    position: absolute;
+    left: 0;
+    top: 10px;
+  }
 `;
