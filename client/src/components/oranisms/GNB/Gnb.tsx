@@ -65,7 +65,7 @@ export const Gnb = () => {
         <UI.InfoWrapper>
           <UI.ProfileImg>
             {image ? (
-              <img src={image} style={{ width: '30px', height: '30px' }} />
+              <img src={image} style={{ width: '100%', minHeight: '30px' }} />
             ) : (
               <Icon.Profile width={42} height={42} fill={'#64AD57'} />
             )}

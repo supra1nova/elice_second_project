@@ -11,8 +11,10 @@ export const Container = styled.section`
 `;
 
 export const Logo = styled.div`
-  height: 60px;
-  width: 100%;
+  width: 120px;
+  img {
+    width: 100%;
+  }
 `;
 
 export const InfoWrapper = styled.div`
@@ -37,6 +39,7 @@ export const ProfileImg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 `;
 
 export const UserInfoWrapper = styled.div`
