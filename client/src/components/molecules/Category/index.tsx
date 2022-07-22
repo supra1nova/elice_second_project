@@ -75,12 +75,17 @@ const Items = [
   },
 ];
 
-const Category = () => {
+const Category = ({ setSelect }: any) => {
   let widthValue = 25;
   const [currTab, setCurrTab] = useState('');
 
   function handleClick(title: string) {
     setCurrTab(title);
+    setSelect(title);
+    if (currTab === title) {
+      setCurrTab('');
+      setSelect('');
+    }
   }
   return (
     <UI.Container>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import * as API from '../../../../api/api';
 import PopupContainer from '../../../../components/oranisms/Popup/PopupContainer';
 import PopupHeader from '../../../../components/oranisms/Popup/PopupHeader';
 import PopupContents from '../../../../components/oranisms/Popup/PopupContents';
@@ -12,20 +13,23 @@ interface Props {
   open: boolean;
   onClose: any;
   onClick?: any;
+  propsData: any;
 }
 
 type valueObject = {
   [key: string]: any;
 };
 
-const PopupCurrentPassword = ({ open, onClose, onClick }: Props) => {
+const PopupCurrentPassword = ({ open, onClose, onClick, propsData }: Props) => {
   const initialValue = {
     inputPassword: '',
   };
 
-  const [formValues, setFormValues] = useState<valueObject>(initialValue);
+  const [formValues, setFormValues] = useState<valueObject>(propsData);
   const [formErrors, setFormErrors] = useState<valueObject>({});
   const [isSubmit, setIsSubmit] = useState(false);
+
+  console.log(formValues);
 
   const handleChange = (e: any) => {
     const target = e.target;
@@ -33,13 +37,6 @@ const PopupCurrentPassword = ({ open, onClose, onClick }: Props) => {
     const name = target.name;
     setFormValues({ ...formValues, [name]: value });
   };
-
-  useEffect(() => {
-    console.log(formErrors);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
-    }
-  }, [formErrors]);
 
   const inputTextData = [
     {
@@ -57,6 +54,23 @@ const PopupCurrentPassword = ({ open, onClose, onClick }: Props) => {
     },
   ];
 
+  const handleSubmit = async () => {
+    try {
+      const data = {
+        email: formValues.inputEmail,
+        name: formValues.inputName,
+        password: formValues.inputPassword,
+        nickName: formValues.inputNickname,
+        phoneNumber: formValues.inputPhone,
+        image: formValues.inputFileAvatarImage,
+      };
+
+      await API.patch('/api/users/user', '', data);
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+
   return (
     <PopupContainer open={open} width={'600'}>
       <PopupHeader
@@ -71,7 +85,7 @@ const PopupCurrentPassword = ({ open, onClose, onClick }: Props) => {
       <PopupFooter
         footerType={'checkType'}
         onClose={onClose}
-        onClick={onClick}
+        onClick={handleSubmit}
       />
     </PopupContainer>
   );

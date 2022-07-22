@@ -1,20 +1,68 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
 import Heart from '../../../assets/svg/Heart';
+import * as API from '../../../api/api';
+import * as UI from './style';
+import { useNavigate } from 'react-router-dom';
 
-//onclick => 유저의 찜목록으로 넘거가도록 + 색상 변화
+const LikeBtn = ({ regNumber, email, isWished, position }: any) => {
+  const navigate = useNavigate();
 
-const LikeBtn = () => {
-  const [liked, setLiked] = useState('#A6A8A3');
+  const [liked, setLiked] = useState(false);
+  const [likedColor, setLikedColor] = useState('#A6A8A3');
+  const postData = { email, REGNumber: regNumber };
+
+  const [role, setRole] = useState<string | null | undefined>(null);
+  const isNotUser = role === undefined;
+  const isUser = role === 'user' || role === 'USER';
+
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      API.userGet('/api/users/user').then((res) => {
+        if (res === undefined) {
+          setRole(undefined);
+        } else {
+          setRole(res.role);
+        }
+      });
+    }
+  });
+
+  useEffect(() => {
+    if (isWished) {
+      setLiked(true);
+      setLikedColor('#FB5E64');
+    }
+  }, [isWished, liked]);
+
   function handleClick() {
-    liked === '#A6A8A3' ? setLiked('#FB5E64') : setLiked('#A6A8A3');
+    liked === false ? setLiked(true) : setLiked(false);
+    if (liked) {
+      API.delete('/api/wishes', '', postData).then((res) => res);
+      setLikedColor('#A6A8A3');
+    } else {
+      API.post('/api/wishes', '', postData).then((res) => res);
+      setLikedColor('#FB5E64');
+    }
   }
+
   return (
-    <>
-      <button onClick={handleClick}>
-        <Heart width={23.69} height={22} fill={liked} />
-      </button>
-    </>
+    <UI.ButtonWrapper position={position}>
+      {isNotUser ? (
+        <button onClick={() => navigate('/users/login')}>
+          <Heart width={23.69} height={22} fill={likedColor} />
+        </button>
+      ) : isUser ? (
+        <button
+          onClick={() => {
+            if (localStorage.getItem('token')) {
+              handleClick();
+            }
+          }}
+        >
+          <Heart width={23.69} height={22} fill={likedColor} />
+        </button>
+      ) : null}
+    </UI.ButtonWrapper>
   );
 };
 

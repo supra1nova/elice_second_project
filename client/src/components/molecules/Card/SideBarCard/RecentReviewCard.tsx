@@ -15,12 +15,14 @@ interface RecentReviewCardProps {
   userId: String;
   description: String;
   dateCreated: String;
+  regNumber: string;
 }
 const RecentReviewCard = ({
   title,
   userId,
   description,
   dateCreated,
+  regNumber,
 }: RecentReviewCardProps) => {
   return (
     <div>
@@ -34,7 +36,7 @@ const RecentReviewCard = ({
               <UI.Title>{title}</UI.Title>
               <UI.SubTitleWrapper>
                 {userId}
-                <Grade />
+                <Grade regNumber={regNumber} />
                 <UI.Caption>{dateCreated}</UI.Caption>
               </UI.SubTitleWrapper>
             </UI.TitleWrapper>

@@ -10,6 +10,17 @@ export const USERS = [
 
 export const ACCOUNT = {
   USER: [{ menu: '', to: '' }],
-  ADMIN: [{ menu: '', to: '' }],
-  OWNER: [{ menu: '', to: '' }],
+  ADMIN: [
+    { menu: PAGES.ACCOUNT_RESTAURANS_LIST, to: URL.ACCOUNT_RESTAURANTS },
+    { menu: PAGES.ACCOUNT_USERS, to: URL.ACCOUNT_MANAGEMENT },
+  ],
+  OWNER: [
+    { menu: PAGES.ACCOUNT_RESTAURANTS, to: URL.ACCOUNT_RESTAURANTS },
+    { menu: PAGES.ACCOUNT_RESERVES, to: URL.ACCOUNT_RESERVES },
+    {
+      menu: PAGES.ACCOUNT_BOOKING,
+      to: URL.ACCOUNT_BOOKING,
+    },
+    { menu: PAGES.ACCOUNT_MENUS, to: URL.ACCOUNT_MENUS },
+  ],
 };

@@ -3,6 +3,7 @@ import FormInput from '../FormInput';
 import FormItem from '../FormItem';
 import FormError from '../FromError';
 import InputText from '../../atoms/InputText';
+import * as UI from './style';
 
 const FormInputText = (item: any, index: number) => {
   return (

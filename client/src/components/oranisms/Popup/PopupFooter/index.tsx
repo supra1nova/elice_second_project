@@ -21,7 +21,7 @@ const PopupFooter = ({ children, footerType, onClose, onClick }: Props) => {
         </>
       ) : null}
       {footerType === 'closeType' ? (
-        <Button onClick={onClose}>취소</Button>
+        <Button onClick={onClose}>확인</Button>
       ) : null}
       {footerType === 'customType' ? <>{children}</> : null}
     </UI.Container>

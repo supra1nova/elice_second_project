@@ -43,12 +43,29 @@ const UsersLogin = () => {
         password: formValues.inputPassword,
       };
       const result = await API.post('/api/users/login', '', data);
-      const token = result.data.token;
-      console.log(result, token);
+      const token = result.data.userToken;
+      const REGNumber = result.data.REGNumber;
       localStorage.setItem('token', token);
-
+      console.log(REGNumber);
+      try {
+        API.userGet('/api/users/user').then((res) => {
+          console.log(res);
+          const role = res.role;
+          if (role === 'owner') {
+            if (!REGNumber) {
+              navigate('/account/restaurants');
+            } else {
+              localStorage.setItem('REGNumber', REGNumber);
+              navigate('/');
+            }
+          } else {
+            navigate('/');
+          }
+        });
+      } catch (err: any) {
+        console.error(err);
+      }
       alert(`정상적으로 로그인되었습니다.`);
-      navigate('/');
     } catch (err: any) {
       console.error(err);
     }

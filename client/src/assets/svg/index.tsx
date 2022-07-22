@@ -15,6 +15,7 @@ import Check from './Check';
 import ArrowButton from './ArrowButton';
 import PlusButton from './PlusButton';
 import MinusButton from './MinusButton';
+import Home from './Home';
 
 export {
   Profile,
@@ -34,4 +35,5 @@ export {
   ArrowButton,
   PlusButton,
   MinusButton,
+  Home,
 };

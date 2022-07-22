@@ -1,67 +1,97 @@
 import * as UI from './style';
 import { Link } from 'react-router-dom';
 import Grade from '../../../atoms/Grade';
-import SeeMore from '../../../atoms/SeeMore';
-import Img from '../../../atoms/Img';
 import * as Icon from '../../../../assets/svg';
-import LikeBtn from '../../../atoms/LikeButton/LikeBtn';
-
-// heart가 interative 하게 만들어야 함
-// // 클릭 > 색이 생기고, 유저의 찜리스트에 해당 shop 추가
-// 링크는 각 리스트 아이템의 shop detail로 갈 수 있도록
-// grade는 계산된 shop의 데이터 가져오기 (atoms/grade)
-// description 의 내용은 해당 shop의 가장 최신 리뷰를 들고 와야함.
-// 리뷰의 profile은 리뷰작성자의 정보를 가져와야 함
+import { useEffect, useState } from 'react';
+import * as API from '../../../../api/api';
+import Img from '../../../atoms/Img';
 
 interface MainCardWithReviewProps {
   title: String;
   address: String;
-  description: String;
   shopImg: any;
+  reviwerImg: any;
+  regNumber: string;
 }
 const MainCardWithReview = ({
   title,
   address,
-  description,
   shopImg,
+  regNumber,
+  reviwerImg,
 }: MainCardWithReviewProps) => {
+  const [reviewComment, setReviewComment] = useState('첫 리뷰를 작성해주세요!');
+  const [reviewer, setReviewer] = useState('');
+  const [reviewerImg, setReviewerImg] = useState('');
+  const [image, setImage] = useState('');
+  const getReviewData = async () => {
+    const result = await API.get(`/api/reviews/${regNumber}`).then((res) => {
+      // setReviewer(res.reviews[0].email);
+      setReviewer(res.reviews[0].email);
+      const randomNumber = Math.floor(Math.random() * res.reviews.length);
+      const comment = res.reviews[randomNumber].comment;
+      setReviewComment(comment);
+    });
+  };
+
+  const getImage = async () => {
+    const result = await API.get(`/api/restaurantImages/${regNumber}`).then(
+      (res) => {
+        setImage(res[0].image);
+      },
+    );
+  };
+
+  const getUserImage = async () => {
+    const result = await API.get(`/api/users/user/${reviewer}`);
+    setReviewerImg(result.image);
+  };
+
+  useEffect(() => {
+    getReviewData();
+    getImage();
+  }, []);
+
+  useEffect(() => {
+    getUserImage();
+  }, [reviewer]);
+
   return (
-    <div>
-      <Link to=''>
-        <UI.Container>
-          <UI.ImgWrapper>
-            <img src={shopImg}></img>
-          </UI.ImgWrapper>
-          <UI.InfoWrapper>
-            <UI.Title>
-              {title}
-              <Grade />
-              <LikeBtn />
-            </UI.Title>
-            <UI.SubTitle>{address}</UI.SubTitle>
-            <UI.descriptionWrapper>
-              <Icon.Profile width={24} height={24} />
-              <UI.Description>
-                {description}
-                <SeeMore></SeeMore>
-              </UI.Description>
-            </UI.descriptionWrapper>
-            <UI.SeeDetails>
-              {title} 더보기
-              <Icon.Arrow />
-            </UI.SeeDetails>
-          </UI.InfoWrapper>
-        </UI.Container>
-      </Link>
-    </div>
+    <Link to={`/restaurants/view/${regNumber}`}>
+      <UI.Container>
+        <UI.ImgWrapper>
+          <Img src={image || shopImg}></Img>
+        </UI.ImgWrapper>
+        <UI.InfoWrapper>
+          <UI.Title>
+            {title}
+            <Grade regNumber={regNumber} />
+          </UI.Title>
+          <UI.SubTitle>{address}</UI.SubTitle>
+          <UI.descriptionWrapper>
+            <img
+              src={reviewerImg || reviwerImg}
+              style={{ width: '24px', height: '24px', borderRadius: '50%' }}
+            />
+
+            <UI.Description>{reviewComment}</UI.Description>
+          </UI.descriptionWrapper>
+          <UI.SeeDetails>
+            {title} 더보기
+            <Icon.Arrow />
+          </UI.SeeDetails>
+        </UI.InfoWrapper>
+      </UI.Container>
+    </Link>
   );
 };
 
 MainCardWithReview.defaultProps = {
   title: '오츠에스프레소',
   address: '서울특별시 마포구 독막로14길 32',
-  description:
-    '무려 망고플레이트 별점 4.7의 오츠 에스프레소! 역시 믿고 가는 망플 픽이라는 생각을 했네요. 정말 맛있었습니다. 아인슈페너 한잔 마...',
+  reviewComment: '방문 후 첫 리뷰를 작성해보세요!',
+  shopImg: process.env.PUBLIC_URL + '/images/testImg.png',
+  reviwerImg: process.env.PUBLIC_URL + '/images/reviewerDefault.png',
 };
 
 export default MainCardWithReview;

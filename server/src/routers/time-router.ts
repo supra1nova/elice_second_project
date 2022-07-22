@@ -24,9 +24,9 @@ timeRouter.post('/', async (req: Request, res: Response, next: NextFunction) => 
 timeRouter.get('/', async (req: Request, res:Response, next:NextFunction) => {
   try {
     const REGNumber = String(req.query.REGNumber)
-    const year= Number(req.query.year)
-    const month= Number(req.query.month)
-    const date= Number(req.query.date)
+    const year= Number(req.query.year) 
+    const month= Number(req.query.month) 
+    const date= Number(req.query.date) || 0;
     const times = await timeService.getTime(REGNumber,year,month,date);
     res.status(200).json(times);
   } catch (error) {

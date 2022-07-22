@@ -1,38 +1,37 @@
-import React, { useState } from 'react';
-import Button from '../../../components/atoms/Button';
-import PopupSaveConfirm from './template/PopupSaveConfirm';
-import * as UI from './style';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import * as API from '../../../api/api';
+import AccountRestaurantsListUser from './template/AccountRestaurantsListUser';
+import AccountRestaurantsListAdmin from './template/AccountRestaurantsListAdmin';
+import AccountRestaurantsCreateOwner from './template/AccountRestaurantsCreateOwner';
+import AccountRestaurantsSecurityOwner from './template/AccountRestaurantsSecurityOwner';
 
 const AccountRestaurants = () => {
-  const [openPopupSaveConfirm, setOpenPopupSaveConfirm] = useState(false);
+  const [role, setRole] = useState<string>();
+  const REGNumber = localStorage.getItem('REGNumber');
 
-  const handleOpenPopupSaveConfirm = (e: any) => {
-    e.preventDefault();
-    setOpenPopupSaveConfirm(true);
+  const getData = async () => {
+    API.userGet('/api/users/user').then((res) => {
+      setRole(res.role);
+    });
   };
 
-  const handleClosePopupSaveConfirm = (e: any) => {
-    e.preventDefault();
-    setOpenPopupSaveConfirm(!openPopupSaveConfirm);
-  };
+  useEffect(() => {
+    getData();
+  }, []);
 
-  return (
-    <UI.Container>
-      <Button
-        component='primary'
-        size='large'
-        block
-        onClick={handleOpenPopupSaveConfirm}
-      >
-        변경사항 저장
-      </Button>
-
-      <PopupSaveConfirm
-        open={openPopupSaveConfirm}
-        onClose={handleClosePopupSaveConfirm}
-      />
-    </UI.Container>
-  );
+  console.log(role);
+  if (role === 'admin') {
+    return <AccountRestaurantsListAdmin />;
+  } else if (role === 'owner') {
+    if (REGNumber) {
+      return <AccountRestaurantsSecurityOwner />;
+    } else {
+      return <AccountRestaurantsCreateOwner />;
+    }
+  } else {
+    return <AccountRestaurantsListUser />;
+  }
 };
 
 export default AccountRestaurants;
