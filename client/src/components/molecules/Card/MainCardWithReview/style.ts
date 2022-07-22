@@ -42,7 +42,7 @@ export const SubTitle = styled.h4`
 export const descriptionWrapper = styled.div`
   display: flex;
   margin-top: 20px;
-  align-items: flex-start;
+  align-items: center;
   svg {
     flex-shrink: 0;
   }

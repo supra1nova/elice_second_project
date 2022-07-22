@@ -28,11 +28,11 @@ export const ItemWrapper = styled.button`
 
   svg path {
     margin-bottom: 10px;
-    fill: ${(props: Props) => (props.active ? 'black' : '')};
+    fill: ${(props: Props) => (props.active ? '#2F353D' : '')};
   }
 
   &.active {
     font-weight: bold;
-    color: black;
+    color: ${(props) => props.theme.colors.font1};
   }
 `;

@@ -7,6 +7,9 @@ export const EXContainer = styled.button`
   align-items: center;
   padding: 19px 40px;
   border-bottom: 1px solid ${(props) => props.theme.colors.line};
+  position: fixed;
+  background-color: #fff;
+  z-index: 10;
 `;
 
 export const Container = styled.div`
