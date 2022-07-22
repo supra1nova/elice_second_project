@@ -12,6 +12,8 @@ import Button from '../../../atoms/Button';
 import "react-datepicker/dist/react-datepicker.css";
 import InputFileButton from '../../../../components/atoms/InputFileButton';
 import FileTumbnail from '../../../../components/atoms/FileTumbnail';
+import DatePicker from 'react-datepicker';
+import { ko } from 'date-fns/esm/locale';
 
 interface Props {
   open: boolean;
@@ -27,7 +29,6 @@ interface Props {
 
 const PopupReserve = ({ open, onClose, width, titleColor, title, REGNumber, reserveId, email }: Props) => {
   const navigate = useNavigate();
-  console.log(reserveId)
 
   const [reviewValue, setReviewValues] = useState<any>('');
   const [rating, setRating] = useState<any>(5);

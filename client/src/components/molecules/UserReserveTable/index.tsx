@@ -15,6 +15,7 @@ export const UserReserveTable = () => {
     const [date, setDate] = useState<any>([])
     const [handleIndex, setHandleIndex] = useState<number>(0)
     const [reserveId, setReserveId] = useState<any>([])
+    const [reviewPost, setReviewPost] = useState<boolean[]>([])
 
     const [pages, setPages] = useState(1);
     const [perPage, setPerPage] = useState(12);
@@ -60,7 +61,6 @@ export const UserReserveTable = () => {
 
     useEffect(() => {
         API.userGet(`/api/reserves/user/${email}`).then((res) => {
-            console.log(res)
             if(res) {
                 setPerPage(res.perPage)
                 setTotal(res.total)
@@ -98,8 +98,17 @@ export const UserReserveTable = () => {
                     setDate((result: any) => [...result, `${res[0].year}년 ${res[0].month}월 ${res[0].date}일 ${res[0].hour}시`])
                 }
             })
+            API.userGet(`/api/reviews/specific/${reserveId[i]}`).then((res) => {
+                console.log(res)
+                if(res === null) {
+                    setReviewPost((result: any) => [...result, true])
+                } else {
+                    setReviewPost((result: any) => [...result, false])
+                }
+            });
         }
     }, [reserveLists])
+
     const { 
         getTableProps, 
         getTableBodyProps, 
@@ -152,7 +161,11 @@ export const UserReserveTable = () => {
                                         <UI.TableButton onClick={() => handleClick(row.cells)}>예약 취소</UI.TableButton>
                                     </UI.StyledTd>
                                     <UI.StyledTd role="cell">
-                                        <UI.BtnReview onClick={() => handleOpenPopup(row)}>리뷰 등록</UI.BtnReview>
+                                        {
+                                            reviewPost[row.id]
+                                            ? <UI.BtnReview onClick={() => handleOpenPopup(row)}>리뷰 등록</UI.BtnReview>
+                                            : null
+                                        }
                                     </UI.StyledTd>
                                 </tr>
                             );

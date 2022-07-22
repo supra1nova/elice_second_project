@@ -7,7 +7,7 @@ const GNBNotUser = () => {
   return (
     <>
       <UI.Description>
-        회원가입 후 미식시간과 함께
+        회원가입 후 미식시간에서
         <br /> 근사한 식사를 준비해보세요!
       </UI.Description>
       <UI.ButtonWrapper>

@@ -3,16 +3,17 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 40px;
+  padding: 60px 40px 0;
   margin-bottom: 50px;
 `;
 export const Title = styled.p`
-  font-size: 24px;
-  font-weight: 700;
+  ${(props) => props.theme.font.title1};
+  color: ${(props) => props.theme.colors.font1};
+  margin-top: 60px;
 `;
 
 export const SubTitle = styled.p`
-  ${(props) => props.theme.font.caption};
+  ${(props) => props.theme.font.description2};
   color: ${(props) => props.theme.colors.font2};
   margin-top: 10px;
 `;
@@ -28,7 +29,7 @@ export const GridContainer = styled.div`
 export const FlexContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 20px;
 `;
 
 export const Divider = styled.div`

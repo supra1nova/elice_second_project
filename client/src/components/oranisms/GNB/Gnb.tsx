@@ -42,13 +42,17 @@ export const Gnb = () => {
       <UI.Container>
         <Link to='/'>
           <UI.Logo>
-            <img
-              style={{}}
-              src={process.env.PUBLIC_URL + '/images/serviceLogo.png'}
-            />
+            미식시간
           </UI.Logo>
+          <UI.Line />
         </Link>
         <GnbNotUser></GnbNotUser>
+        <UI.Footer>
+          <UI.Description>미식시간 · <a href='https://kdt-gitlab.elice.io/sw_track/class_02_seoul/web_project_2/team3/reservation_web'>TEAM 3</a></UI.Description>
+          <UI.Description>
+            © 2022 미식시간 Co., Ltd. All rights reserved.
+          </UI.Description>
+        </UI.Footer>
       </UI.Container>
     );
   } else {
@@ -56,11 +60,9 @@ export const Gnb = () => {
       <UI.Container>
         <Link to='/'>
           <UI.Logo>
-            <img
-              style={{}}
-              src={process.env.PUBLIC_URL + '/images/serviceLogo.png'}
-            />
+            미식시간
           </UI.Logo>
+          <UI.Line />
         </Link>
         <UI.InfoWrapper>
           <UI.ProfileImg>
@@ -72,8 +74,7 @@ export const Gnb = () => {
           </UI.ProfileImg>
           <UI.UserInfoWrapper>
             <UI.Greetings>
-              안녕하세요 <br></br>
-              {name}님
+              안녕하세요 {name}님
             </UI.Greetings>
             {/* {role === 'admin' ? null : (
               <UI.UserInfo>
@@ -131,9 +132,9 @@ export const Gnb = () => {
           </UI.MenuContainer>
         </UI.InfoWrapper>
         <UI.Footer>
-          <UI.Description>미식시간 · TEAM 3</UI.Description>
+          <UI.Description>미식시간 · <a href='https://kdt-gitlab.elice.io/sw_track/class_02_seoul/web_project_2/team3/reservation_web'>TEAM 3</a></UI.Description>
           <UI.Description>
-            © 2022 Elice TEAM 3 Co., Ltd. All rights reserved.
+            © 2022 미식시간 Co., Ltd. All rights reserved.
           </UI.Description>
         </UI.Footer>
       </UI.Container>
