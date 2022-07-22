@@ -27,7 +27,6 @@ interface Props {
 
 const PopupReserve = ({ open, onClose, width, titleColor, title, REGNumber, reserveId, email }: Props) => {
   const navigate = useNavigate();
-  console.log(reserveId)
 
   const [reviewValue, setReviewValues] = useState<any>('');
   const [rating, setRating] = useState<any>(5);
