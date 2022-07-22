@@ -86,7 +86,7 @@ userRouter.get(
 // // 4. 사용자 정보 수정
 userRouter.patch(
   '/',
-  // loginRequired,
+  loginRequired,
   async function (req: Request, res: Response, next: NextFunction) {
     try {
       if (req.body.password.length == 0) {
@@ -112,7 +112,7 @@ userRouter.patch(
 
 userRouter.patch(
   '/image',
-  // loginRequired,
+  loginRequired,
   upload.single('image'),
   async function (req: Request, res: Response, next: NextFunction) {
     try {
@@ -147,7 +147,7 @@ userRouter.patch(
 // 5. 사용자 삭제
 userRouter.delete(
   '/',
-  // loginRequired,
+  loginRequired,
   async function (req: Request, res: Response, next: NextFunction) {
     try {
       const userInfo: userInfo = req.body;
