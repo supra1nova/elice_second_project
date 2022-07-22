@@ -1,44 +1,16 @@
-// import is from '@sindresorhus/is';
 import { Router, Request, Response, NextFunction } from 'express';
 import { loginRequired } from '../middlewares';
-// import { loginRequired } from 'src/middlewares';
-// import { updateLanguageServiceSourceFile } from 'typescript';
 import { userService } from '../services/user-service';
 import { upload, s3 } from '../config/upload';
-import { SimpleConsoleLogger } from 'typeorm';
-
 // import { adminRequired } from '../middlewares/admin-required';
 
 const userRouter = Router();
 
-// 1-2. 일반 사용자 등록
-userRouter.post(
-  '/register',
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      req.body.role = req.body.role || 'USER';
-      let userInfo: userInfo = req.body;
-      console.log(11111111);
-      const newUser = await userService.addUser(userInfo);
-      res.status(201).json(newUser);
-    } catch (error) {
-      next(error);
-    }
-  },
-);
-
-// 6. 로그인 구현
+// 0. 로그인 구현
 userRouter.post(
   '/login',
   async function (req: Request, res: Response, next: NextFunction) {
     try {
-      // if (is.emptyObject(req.body)) {
-      //   throw new Error(
-      //     'headers의 Content-Type을 application/json으로 설정해주세요'
-      //   );
-      // }
-      // const email = req.body.email;
-      // const password = req.body.password;
       let loginInfo: userInfo = req.body;
       const { token, REGNumber } = await userService.getUserToken(loginInfo);
       res.status(200).json({ userToken: token, REGNumber });
@@ -48,6 +20,22 @@ userRouter.post(
   },
 );
 
+// 1. 일반 사용자 등록
+userRouter.post(
+  '/register',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      req.body.role = req.body.role || 'USER';
+      const userInfo: userInfo = req.body;
+      const newUser = await userService.addUser(userInfo);
+      res.status(201).json(newUser);
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+// 1-2. 이메일 기준 사용자 조회
 userRouter.get('/user', loginRequired, async (req, res, next) => {
   try {
     const email = req.email;
@@ -59,7 +47,7 @@ userRouter.get('/user', loginRequired, async (req, res, next) => {
   }
 });
 
-// 2. 페이지네이션 된 유저 리스트 조회 - 페이지네이션 적용
+// 1-2. 페이지네이션 된 유저 리스트 조회 - 페이지네이션 적용
 userRouter.get('/', async function (req, res, next) {
   try {
     // url 쿼리로부터 page 값 수신, 부재시 기본값 1
