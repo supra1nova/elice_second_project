@@ -9,10 +9,6 @@ const AccountMenusOwner = ({ email }: any) => {
   const [render, setRender] = useState(false);
   console.log(render);
 
-  useEffect(() => {
-    setRender(false);
-    return;
-  }, [render]);
   return (
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
