@@ -8,8 +8,8 @@ const menuRouter = Router();
 // 1. 메뉴 생성
 menuRouter.post(
   '/',
-  loginRequired,
-  ownerRequired,
+  // loginRequired,
+  // ownerRequired,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const menuInfo: menuInfo = req.body;
@@ -53,8 +53,8 @@ menuRouter.get(
 // 4-1. 메뉴 정보 업데이트
 menuRouter.patch(
   '/:menuId',
-  loginRequired,
-  ownerRequired,
+  // loginRequired,
+  // ownerRequired,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       //REGNuber가 request에 있어서는 안된다. REGNumber은 수정가능한 값이 아니기떄문에

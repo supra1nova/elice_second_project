@@ -7,7 +7,7 @@ const reviewRouter = Router();
 // 1-1. 유저 리뷰 생성
 reviewRouter.post(
   '/user',
-  loginRequired,
+  // loginRequired,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const reviewInfo = req.body;
@@ -22,8 +22,8 @@ reviewRouter.post(
 // 1-2. 업주 리뷰 생성
 reviewRouter.post(
   '/owner',
-  loginRequired,
-  ownerRequired,
+  // loginRequired,
+  // ownerRequired,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { reserveId, ownerComment } = req.body;
@@ -80,7 +80,7 @@ reviewRouter.get(
 // 3. 사용자 리뷰 정보 삭제
 reviewRouter.delete(
   '/',
-  loginRequired,
+  // loginRequired,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const reviewInfo: reviewInfo = req.body;
@@ -95,8 +95,8 @@ reviewRouter.delete(
 // 3. 업주 리뷰 정보 삭제
 reviewRouter.delete(
   '/owner',
-  loginRequired,
-  ownerRequired,
+  // loginRequired,
+  // ownerRequired,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { reserveId } = req.body;
