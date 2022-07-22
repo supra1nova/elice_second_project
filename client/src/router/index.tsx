@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GlobalLayout from './GlobalLayout';
 import HalfLayout from './HalfLayout';
 import Home from '../pages/Home';
-import RestaurantHome from '../pages/Restaurant/RestaurantHome';
 import RestaurantView from '../pages/Restaurant/RestaurantView';
 import Search from '../pages/Search';
 import AccountBooking from '../pages/Account/AccountBooking';
@@ -24,7 +23,6 @@ function Router() {
       <Routes>
         <Route element={<GlobalLayout />}>
           <Route path={URL.HOME} element={<Home />}></Route>
-          <Route path={URL.RESTAURANTS} element={<RestaurantHome />}></Route>
           <Route
             path={`${URL.RESTAURANTS_VIEW}/:REGNumber`}
             element={<RestaurantView />}
