@@ -90,7 +90,8 @@ menuRouter.patch(
 );
 
 // 5. 메뉴 정보 삭제
-menuRouter.delete('/', loginRequired, ownerRequired, async (req, res, next) => {
+// menuRouter.delete('/', loginRequired, ownerRequired, async (req, res, next) => {
+menuRouter.delete('/', async (req, res, next) => {
   try {
     //req.email이 나중에는 input이 되어야 한다.
     const { menuId, email } = req.body;
