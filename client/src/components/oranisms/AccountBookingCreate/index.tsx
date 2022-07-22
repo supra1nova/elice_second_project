@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/esm/locale';
 import * as API from '../../../api/api';
@@ -15,6 +16,11 @@ import * as UI from './style';
 type valueObject = {
   [key: string]: any;
 };
+
+const StyleSelect = styled(Select)`
+  display: block;
+  background-position: calc(100% - 20px) calc(100% - 30%);
+`;
 
 const AccountBookingCreate = () => {
   const initialValue = {
@@ -56,31 +62,34 @@ const AccountBookingCreate = () => {
         <UI.FormItem>
           <UI.FormColumn>
             <UI.FormInput>
-              <DatePicker
-                selected={selectStartData}
-                onChange={(date: Date) => setSelectStartData(date)}
-                minDate={new Date()}
-                className={'datePicker'}
-                dateFormat='yyyy/MM/dd'
-                locale={ko}
-                placeholderText={LABELTITLE.RESERVES_DATE}
-              />
+              <UI.FormLabel>{LABELTITLE.RESERVES_DATE}</UI.FormLabel>
+              <UI.DatePicker>
+                <DatePicker
+                  selected={selectStartData}
+                  onChange={(date: Date) => setSelectStartData(date)}
+                  minDate={new Date()}
+                  dateFormat='yyyy/MM/dd'
+                  locale={ko}
+                  placeholderText={LABELTITLE.RESERVES_DATE}
+                />
+              </UI.DatePicker>
             </UI.FormInput>
             <UI.FormInput>
-              <DatePicker
-                selected={selectLastData}
-                onChange={(date: Date) => setSelectLastData(date)}
-                minDate={new Date()}
-                className={'datePicker'}
-                dateFormat='yyyy/MM/dd'
-                locale={ko}
-                placeholderText=''
-              />
+              <UI.DatePicker>
+                <DatePicker
+                  selected={selectLastData}
+                  onChange={(date: Date) => setSelectLastData(date)}
+                  minDate={new Date()}
+                  dateFormat='yyyy/MM/dd'
+                  locale={ko}
+                  placeholderText=''
+                />
+              </UI.DatePicker>
             </UI.FormInput>
           </UI.FormColumn>
           <UI.FormColumn>
             <UI.FormInput>
-              <Select
+              <StyleSelect
                 name='inputSelectOpenTime'
                 options={SELECT_TIME}
                 onChange={handleChange}
@@ -90,7 +99,7 @@ const AccountBookingCreate = () => {
               />
             </UI.FormInput>
             <UI.FormInput>
-              <Select
+              <StyleSelect
                 name='inputSelectCloseTime'
                 options={SELECT_TIME}
                 onChange={handleChange}
