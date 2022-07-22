@@ -14,8 +14,7 @@ restaurantRouter.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const restaurantInfo: restaurantInfo = req.body;
-      console.log(req.body);
-      console.log(restaurantInfo);
+      restaurantInfo.ownerEmail = req.email;
       const newRestaurant = await restaurantService.addRestaurant(
         restaurantInfo,
       );

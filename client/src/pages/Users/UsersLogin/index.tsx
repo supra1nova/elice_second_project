@@ -46,6 +46,7 @@ const UsersLogin = () => {
       const token = result.data.userToken;
       const REGNumber = result.data.REGNumber;
       localStorage.setItem('token', token);
+      console.log(REGNumber);
       try {
         API.userGet('/api/users/user').then((res) => {
           console.log(res);
