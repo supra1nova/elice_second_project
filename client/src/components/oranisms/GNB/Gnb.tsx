@@ -72,11 +72,11 @@ export const Gnb = () => {
           </UI.ProfileImg>
           <UI.UserInfoWrapper>
             <UI.Greetings>안녕하세요 {name}님</UI.Greetings>
-            {role === 'admin' ? null : (
+            {/* {role === 'admin' ? null : (
               <UI.UserInfo>
                 {role === 'user' ? `방문예정: ${1}건` : `업체명: ${123}`}
               </UI.UserInfo>
-            )}
+            )} */}
           </UI.UserInfoWrapper>
           <UI.MenuContainer>
             <UI.MenuTitle>MENU</UI.MenuTitle>
