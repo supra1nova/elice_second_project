@@ -52,7 +52,7 @@ const UserReviewDetail = ({
             API.delete('/api/reviews', '', reserveIdData);
             console.log('삭제완료')
             setOpenPopupDeleteConfirm(false);
-            window.location.replace(`/account/restaurants/${REGNumber}`);
+            window.location.replace(`/restaurants/view/${REGNumber}`);
         } catch (err: any) {
             console.error(err);
         }

@@ -1,6 +1,22 @@
 import styled from 'styled-components';
-import { TableButton } from '../../atoms/TableButton/TableButton'
 
+export const TableButton = styled.div`
+    padding: 6px 16px;
+    border-radius: 50px;
+    color: #2F353D;
+    background-color: #E5E5E5;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    display: inline-block;
+    cursor: pointer;
+
+    + button {
+        margin-left: 5px;
+    }
+`;
 export const BtnReview = styled(TableButton)`
     color: #fff;
     background-color: #64AD57;

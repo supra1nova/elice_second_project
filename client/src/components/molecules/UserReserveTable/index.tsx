@@ -1,22 +1,20 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { COLUMNS } from './columns';
 import { usePagination, useTable } from 'react-table';
-import { TableButton } from '../../atoms/TableButton/TableButton';
 import * as UI from './style';
 import * as API from '../../../api/api';
-import { cp } from 'fs/promises';
 import Paging from '../../atoms/Pagination/Pagination';
 
 export const UserReserveTable = () => {
     const [reserveLists, setReserveLists] = useState<any>([])
     const [email, setEmail] = useState('')
 
-  // 1: REGNumber, name, number, reserveId, timeId
-  // 2: RestaurantName
-  // 3: ReserveTime
-  const [data1, setData1] = useState<any>([]);
-  const [data2, setData2] = useState<string[]>([]);
-  const [data3, setData3] = useState<string[]>([]);
+    // 1: REGNumber, name, number, reserveId, timeId
+    // 2: RestaurantName
+    // 3: ReserveTime
+    const [data1, setData1] = useState<any>([]);
+    const [data2, setData2] = useState<string[]>([]);
+    const [data3, setData3] = useState<string[]>([]);
 
     const [pages, setPages] = useState(1);
     const [perPage, setPerPage] = useState(12);
@@ -25,36 +23,52 @@ export const UserReserveTable = () => {
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => reserveLists, [reserveLists])
 
-  useEffect(() => {
-    API.userGet('/api/users/user').then((res) => {
-      if (res) {
-        setEmail(res.email);
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    API.get(`/api/reserves/user/${email}`).then((res) => {
-      const datas = res.reserves;
-      datas.forEach((data: any) => {
-        setData1((result: any) => {
-          return [
-            ...result,
-            {
-              REGNumber: data.REGNumber,
-              timeId: data.timeId,
-              reserveId: data.reserveId,
-              name: data.name,
-              number: data.number,
-            },
-          ];
-        });
-      });
-    });
-  }, [email]);
+    // 삭제버튼
+    function handleClick(cell: any) {
+        console.log(email)
+        console.log(cell[0].value)
+        const reserveId: number = cell[0].value
+        const data = {reserveId, email}
+        try {
+            API.delete('/api/reserves', '', data);
+            alert('예약이 취소되었습니다.')
+            window.location.replace('/account/reserves');
+        } catch (err: any) {
+            console.error(err);
+        }
+    }
 
     useEffect(() => {
-        API.get(`/api/reserves/user/${email}`).then((res) => {
+        API.userGet('/api/users/user').then((res) => {
+            if (res) {
+                setEmail(res.email);
+            }
+            });
+    }, []);
+
+    useEffect(() => {
+        API.userGet(`/api/reserves/user/${email}`).then((res) => {
+            console.log(res)
+            const datas = res.reserves;
+            datas.forEach((data: any) => {
+                setData1((result: any) => {
+                return [
+                    ...result,
+                    {
+                    REGNumber: data.REGNumber,
+                    timeId: data.timeId,
+                    reserveId: data.reserveId,
+                    name: data.name,
+                    number: data.number,
+                    },
+                ];
+                });
+            });
+        });
+    }, [email]);
+
+    useEffect(() => {
+        API.userGet(`/api/reserves/user/${email}`).then((res) => {
             setPerPage(res.perPage)
             setTotal(res.total)
             const datas = res.reserves
@@ -77,10 +91,10 @@ export const UserReserveTable = () => {
 
     useEffect(() => {
         data1.forEach((data: any) => {
-            API.get(`/api/restaurants/${data.REGNumber}`).then((res) => {
+            API.userGet(`/api/restaurants/${data.REGNumber}`).then((res) => {
                 setData2((result: any) => [...result, res.name])
             })
-            API.get(`/api/times/${data.timeId}`).then((res) => {
+            API.userGet(`/api/times/${data.timeId}`).then((res) => {
                 setData3((result: any) => [...result, `${res[0].year}년 ${res[0].month}월 ${res[0].date}일 ${res[0].hour}시`])
             })
         })
@@ -93,7 +107,7 @@ export const UserReserveTable = () => {
             // console.log([i], data2[i])
             // console.log([i], data3[i])
             setReserveLists((result: any) => [...result, {
-                timeId: data1[i].timeId,
+                reserveId: data1[i].reserveId,
                 restaurant: data2[i],
                 name: data1[i].name,
                 number: data1[i].number,
@@ -102,12 +116,14 @@ export const UserReserveTable = () => {
         }
     }, [data3])
 
+    // console.log(data2)
+    // console.log(reserveLists)
+
     const { 
         getTableProps, 
         getTableBodyProps, 
         headerGroups, 
         page,
-        state,
         prepareRow,
     } = useTable({
             // @ts-ignore
@@ -116,7 +132,6 @@ export const UserReserveTable = () => {
         },
         usePagination
     );
-    const { pageIndex } = state
 
     return (
         <div className="table">
@@ -143,13 +158,12 @@ export const UserReserveTable = () => {
                             <tr {...row.getRowProps()}>
                                 {row.cells.map((cell: any, index: number) => {
                                     return (
-                                        <UI.StyledTd key={index} {...cell.getCellProps()}>{cell.render('Cell')}</UI.StyledTd>
+                                        <UI.StyledTd key={`${cell}-${index}`} {...cell.getCellProps()}>{cell.render('Cell')}</UI.StyledTd>
                                     );
                                 })}
                                 <UI.StyledTd role="cell">예약 완료</UI.StyledTd>
                                 <UI.StyledTd role="cell">
-                                    <UI.BtnModification>수정</UI.BtnModification>
-                                    <TableButton>취소</TableButton>
+                                    <UI.TableButton onClick={() => handleClick(row.cells)}>취소</UI.TableButton>
                                 </UI.StyledTd>
                                 <UI.StyledTd role="cell"><UI.BtnReview>작성하기</UI.BtnReview></UI.StyledTd>
                             </tr>
