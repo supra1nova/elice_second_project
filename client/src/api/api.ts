@@ -1,23 +1,12 @@
 import axios from 'axios';
 
-// import * as API from '~~~ /api/api' ;
-// 위와 같이 import 하고 사용
-// url 맨앞의 /api도 공용으로 줄 수 있긴 한데 복붙하기 불편하실까봐 그냥 두겠습니다.
-// 혹시 붙이고 싶으시면 전역변수 만드시고 말씀해주세요. 아니면 요청해주세요
-
-/*
-
-useEfeect(() => {
-    API.get('/api/users').then((res) => setData(res));
-})
-
-*/
+const VMUrl = 'http://localhost:3000';
 
 const get = async (
   endpoint: String,
   params: String | null = '',
 ): Promise<any> => {
-  const apiUrl = `${endpoint}/${params}`;
+  const apiUrl = `${VMUrl}${endpoint}/${params}`;
   const res = await axios.get(apiUrl);
   return res.data;
 };
@@ -27,7 +16,7 @@ const userGet = async (
   params: String | null = '',
 ): Promise<any> => {
   try {
-    const apiUrl = `${endpoint}/${params}`;
+    const apiUrl = `${VMUrl}${endpoint}/${params}`;
     const token = localStorage.getItem('token');
     const res = await axios.get(apiUrl, {
       headers: {
@@ -66,7 +55,7 @@ const post = async (
   params: String | null = '',
   data: object,
 ): Promise<any> => {
-  const apiUrl = `${endpoint}/${params}`;
+  const apiUrl = `${VMUrl}${endpoint}/${params}`;
   const res = await axios.post(apiUrl, data);
   return res;
 };
@@ -76,7 +65,7 @@ const tokenPost = async (
   params: String | null = '',
   data: object,
 ): Promise<any> => {
-  const apiUrl = `${endpoint}/${params}`;
+  const apiUrl = `${VMUrl}${endpoint}/${params}`;
   const res = await axios.post(apiUrl, data, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -91,7 +80,7 @@ const filePost = async (
   data: object,
 ): Promise<any> => {
   try {
-    const apiUrl = `${endpoint}/${params}`;
+    const apiUrl = `${VMUrl}${endpoint}/${params}`;
     const res = await axios.post(apiUrl, data, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -112,7 +101,7 @@ const patch = async (
   data: object,
 ): Promise<any> => {
   try {
-    const apiUrl = `${endpoint}/${params}`;
+    const apiUrl = `${VMUrl}${endpoint}/${params}`;
     const res = await axios.patch(apiUrl, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -132,7 +121,7 @@ const file = async (
   data: object,
 ): Promise<any> => {
   try {
-    const apiUrl = `${endpoint}/${params}`;
+    const apiUrl = `${VMUrl}${endpoint}/${params}`;
     const res = await axios.patch(apiUrl, data, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -155,7 +144,7 @@ export const del = async (
   data: object | null = {},
 ): Promise<any> => {
   try {
-    const apiUrl = `${endpoint}/${params}`;
+    const apiUrl = `${VMUrl}${endpoint}/${params}`;
     const res = await axios.delete(apiUrl, {
       data,
       headers: {

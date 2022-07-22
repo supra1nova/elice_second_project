@@ -1,13 +1,16 @@
 import React from 'react';
 import { useTable } from 'react-table';
-// import './style.css';
+import './style.css';
 
 function Table({ columns, data }: any) {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data });
 
   return (
-    <table style={{ borderCollapse: 'collapse' }} {...getTableProps()}>
+    <table
+      style={{ borderCollapse: 'collapse', width: '100%', textAlign: 'center' }}
+      {...getTableProps()}
+    >
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
@@ -29,7 +32,10 @@ function Table({ columns, data }: any) {
             <tr {...row.getRowProps()}>
               {row.cells.map((cell) => (
                 <td
-                  style={{ padding: '0.5rem', border: '1px solid black' }}
+                  style={{
+                    padding: '0.5rem',
+                    border: '1px solid black',
+                  }}
                   {...cell.getCellProps()}
                 >
                   {cell.render('Cell')}
