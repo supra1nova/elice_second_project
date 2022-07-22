@@ -1,7 +1,7 @@
 export const COLUMNS = [
     {
         Header : '예약번호',
-        accessor : 'timeId'
+        accessor : 'reserveId'
     },
     {
         Header : '식당이름',

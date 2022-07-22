@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
-import { Request, Response,NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 
-function loginRequired(req: Request, res:Response, next:NextFunction) {
+function loginRequired(req: Request, res: Response, next: NextFunction) {
   // request 헤더로부터 authorization bearer 토큰을 받음.
   const userToken = req.headers['authorization']?.split(' ')[1];
 

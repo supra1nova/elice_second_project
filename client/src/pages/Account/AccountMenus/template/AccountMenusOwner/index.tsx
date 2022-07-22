@@ -5,13 +5,13 @@ import * as UI from './style';
 import AccountMenusCreate from '../../../../../components/oranisms/AccountMenusCreate';
 import AccountMenusList from '../../../../../components/oranisms/AccountMenusList';
 
-const AccountMenusOwner = () => {
+const AccountMenusOwner = ({ email }: any) => {
   return (
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
         <UI.Content>
           <AccountMenusCreate />
-          <AccountMenusList />
+          <AccountMenusList email={email} />
         </UI.Content>
       </UI.Container>
     </LNBLayout>

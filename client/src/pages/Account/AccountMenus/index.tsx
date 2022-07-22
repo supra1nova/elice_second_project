@@ -6,22 +6,28 @@ import AccountMenusOwner from './template/AccountMenusOwner';
 const AccountMenus = () => {
   const navigate = useNavigate();
   const [role, setRole] = useState<string>();
+  const [email, setEmail] = useState('');
   useEffect(() => {
     API.userGet('/api/users/user').then((res) => {
       setRole(res.role);
+      setEmail(res.email);
     });
-  }, []);
+  });
 
-  const Navigate = () => {
-    window.location.href = '/';
-    return <></>;
-  };
+  // useEffect(() => {
+  //   getData();
+  // }, []);
+  // useEffect(() => {
+  //   if (role !== 'owner') {
+  //     navigate('/');
+  //   }
+  // }, [role]);
+  // const Navigate = () => {
+  //   window.location.href = '/';
+  //   return <></>;
+  // };
 
-  return (
-    <>
-      <AccountMenusOwner />
-    </>
-  );
+  return <AccountMenusOwner email={email} />;
 };
 
 export default AccountMenus;

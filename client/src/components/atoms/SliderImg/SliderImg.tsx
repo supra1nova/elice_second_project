@@ -53,8 +53,8 @@ const SliderImg = () => {
 	return (
 		<UI.StyledCarousel className="carouse1">
 			<Slider { ...setting }>
-                {images.map((item) => (
-                <UI.StyledImg src={item} />
+                {images.map((item: any, index: number) => (
+                <UI.StyledImg key={`${item}-${index}`} src={item} />
             ))}
 			</Slider>
 		</UI.StyledCarousel>

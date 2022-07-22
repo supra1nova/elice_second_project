@@ -147,6 +147,7 @@ const PopupReserve = ({ open, onClose, width, titleColor, title }: Props) => {
       setReserveDate({...reserveDate, year, month, date})
 
       API.get(`/api/times/?REGNumber=${REGNumber}&year=${year}&month=${month}&date=${date}&`).then((res) => {
+        console.log(res)
         if(res) {
           res.forEach((data: any) => {
             data.hour >= 12
