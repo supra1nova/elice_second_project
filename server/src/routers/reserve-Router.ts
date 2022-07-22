@@ -109,7 +109,7 @@ reserveRouter.get(
 
 // 3. 예약 정보 삭제
 // reserveRouter.delete('/', loginRequired, async (req, res, next) => {
-reserveRouter.delete('/', loginRequired, async (req, res, next) => {
+reserveRouter.delete('/', async (req, res, next) => {
   try {
     const { reserveId, email } = req.body;
 
