@@ -9,7 +9,6 @@ const AccountReservesListUser = () => {
     <UI.Container>
       <UI.Content>
         <UserReserveTable />
-        USER TABLE
       </UI.Content>
     </UI.Container>
   );

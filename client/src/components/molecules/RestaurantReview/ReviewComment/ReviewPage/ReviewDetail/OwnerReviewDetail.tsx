@@ -58,7 +58,7 @@ const OwnerReviewDetail = ({
         try {
             API.delete('/api/reviews/owner', '', reserveIdData);
             setOpenPopupDeleteConfirm(false);
-            window.location.replace(`/account/restaurants/${REGNumber}`);
+            window.location.replace(`/restaurants/view/${REGNumber}`);
         } catch (err: any) {
             console.error(err);
         }
@@ -69,7 +69,7 @@ const OwnerReviewDetail = ({
         if(inputValue !== null) {
             try {
                 API.post('/api/reviews/owner', '', OwnerCommentData);
-                window.location.replace(`/account/restaurants/${REGNumber}`);
+                window.location.replace(`/restaurants/view/${REGNumber}`);
             } catch (err: any) {
                 console.error(err);
             }
