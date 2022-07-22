@@ -1,11 +1,11 @@
 import styled, { css } from 'styled-components';
 
 export const FormContainer = styled.form`
-    width: 387px;
-    border-top: 1px solid ${(props) => props.theme.colors.line};
-    padding: 20px 0 0;
-    color: ${(props) => props.theme.colors.font1};
-    ${(props) => props.theme.font.subtitle1}
+  width: 387px;
+  border-top: 1px solid ${(props) => props.theme.colors.line};
+  padding: 20px 0 0;
+  color: ${(props) => props.theme.colors.font1};
+  ${(props) => props.theme.font.subtitle1}
 `;
 
 export const FormName = styled.div`
@@ -32,31 +32,52 @@ export const Info = styled.div`
 `
 
 export const StyleInputFileImage = styled.div`
-display: flex;
-align-items: center;
-justify-content: space-between;
-> p {
-  margin-bottom: 0;
-}
-& label {
-  width: 100px;
-  text-align: center;
-  background: ${(props) => props.theme.colors.main1};
-  color: ${(props) => props.theme.colors.white};
-}
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  > p {
+    margin-bottom: 0;
+  }
+  & label {
+    width: 100px;
+    text-align: center;
+    background: ${(props) => props.theme.colors.main1};
+    color: ${(props) => props.theme.colors.white};
+  }
 `;
 
 export const StyleInputFilePreview = styled.div`
-display: flex;
+  display: flex;
+  margin-bottom: 20px;
 
-> div {
-  margin-right: 10px;
-  margin-top: 26px;
-}
-> div:last-child {
-  margin-right: 0;
-}
-img {
-  min-height: 100px;
-}
+  > div {
+    margin-right: 10px;
+    margin-top: 26px;
+  }
+  > div:last-child {
+    margin-right: 0;
+  }
+  img {
+    min-height: 100px;
+  }
 `;
+
+export const StyleSelect = styled.select`
+  padding: 4px 6px;
+  border: 1px solid ${(props) => props.theme.colors.line};
+  margin-bottom: 20px;
+
+  &:focus {
+    outline: none !important;
+    border: 1px solid #64AD57;
+  }
+  &:required:invalid {
+    color: gray;
+  }
+  option[value=""][disabled] {
+    display: none;
+  }
+  option {
+    color: black;
+  }
+`
