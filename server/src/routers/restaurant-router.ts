@@ -15,6 +15,7 @@ restaurantRouter.post(
     try {
       const restaurantInfo: restaurantInfo = req.body;
       restaurantInfo.ownerEmail = req.email;
+      console.log(restaurantInfo.ownerEmail)
       const newRestaurant = await restaurantService.addRestaurant(
         restaurantInfo,
       );
@@ -52,8 +53,8 @@ restaurantRouter.get(
 // 2-2. (이메일 이용 업체 조회 - 점주 고유 기능)
 restaurantRouter.get(
   '/owner/',
-  loginRequired,
-  ownerRequired,
+  // loginRequired,
+  // ownerRequired,
   async function (req: Request, res: Response, next: NextFunction) {
     try {
       const email = req.email;
@@ -82,8 +83,8 @@ restaurantRouter.get(
 // 4. 업체 정보 업데이트
 restaurantRouter.patch(
   '/:REGNumber',
-  loginRequired,
-  ownerRequired,
+  // loginRequired,
+  // ownerRequired,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const REGNumber = req.params.REGNumber;
@@ -103,8 +104,8 @@ restaurantRouter.patch(
 // 5. 음식점 정보 삭제
 restaurantRouter.delete(
   '/',
-  loginRequired,
-  ownerRequired,
+  // loginRequired,
+  // ownerRequired,
   async (req, res, next) => {
     try {
       //menu다 지워야 함

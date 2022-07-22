@@ -12,7 +12,11 @@ const AccountMenus = () => {
       setRole(res.role);
       setEmail(res.email);
     });
-  }, []);
+  });
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
   // useEffect(() => {
   //   if (role !== 'owner') {
   //     navigate('/');

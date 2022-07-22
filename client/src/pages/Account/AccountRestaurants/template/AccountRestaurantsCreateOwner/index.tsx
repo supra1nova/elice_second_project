@@ -119,6 +119,7 @@ const AccountRestaurantsCreateOwner = () => {
 
   const [openPopupSaveConfirm, setOpenPopupSaveConfirm] = useState(false);
   const [openPostCodePopup, setOpenPostCodePopup] = useState(false);
+  const [role, setRole] = useState<string>('');
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
   const [address, setAddress] = useState<valueObject>({
@@ -133,16 +134,21 @@ const AccountRestaurantsCreateOwner = () => {
 
   const errors: valueObject = {};
 
+  const getData = async () => {
+    API.userGet('/api/users/user').then((res) => {
+      setRole(res.email);
+    });
+  };
+
+  useEffect(() => {
+    getData();
+  });
+
   useEffect(() => {
     return () => {
       URL.revokeObjectURL(image.preview_URL);
     };
   }, []);
-
-  useEffect(() => {
-    setFormValues(formValues);
-    console.log(formValues);
-  }, [formValues]);
 
   const handleClosePopupSaveConfirm = (e: any) => {
     e.preventDefault();
@@ -219,10 +225,8 @@ const AccountRestaurantsCreateOwner = () => {
         phoneNumber: formValues.inputRestauranPhone,
         category: formValues.inputSelectCategory,
         description: formValues.inputDescription,
-        ownerEmail: formValues.inputOwnerEmail,
+        ownerEmail: role,
       };
-
-      // console.log(data);
 
       await API.tokenPost('/api/restaurants', '', data);
 
