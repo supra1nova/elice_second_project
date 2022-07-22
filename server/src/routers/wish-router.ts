@@ -1,13 +1,11 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { wishService } from '../services';
-import { loginRequired } from '../middlewares';
 
 const wishRouter = Router();
 
 // 1. 찜 생성 - 사용자 찜 추가(return 값으로 찜한 전체 인원수 반환)
 wishRouter.post(
   '/',
-  loginRequired,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, REGNumber } = req.body;
@@ -51,7 +49,7 @@ wishRouter.get(
 );
 
 // 3. 이메일, REGNumber 기준 찜 삭제
-wishRouter.delete('/', loginRequired, async (req, res, next) => {
+wishRouter.delete('/', async (req, res, next) => {
   try {
     //req.email이 나중에는 input이 되어야 한다.
     const { email, REGNumber } = req.body;

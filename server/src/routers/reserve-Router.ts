@@ -7,7 +7,7 @@ const reserveRouter = Router();
 // 1. 예약 생성
 reserveRouter.post(
   '/',
-  loginRequired,
+  // loginRequired,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       let reserveInfo: reserveInfo = req.body;
@@ -22,8 +22,8 @@ reserveRouter.post(
 // 2-1. admin 전용 전체 예약 조회
 reserveRouter.get(
   '/admin/',
-  loginRequired,
-  adminRequired,
+  // loginRequired,
+  // adminRequired,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const page = Number(req.query.page) || 1;
@@ -45,7 +45,7 @@ reserveRouter.get(
 // 2-2. 특정 이메일 기준 예약 조회
 reserveRouter.get(
   '/user/:email',
-  loginRequired,
+  // loginRequired,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email } = req.params;
@@ -68,7 +68,7 @@ reserveRouter.get(
 // 2-3. 특정 사업자 기준 예약 조회
 reserveRouter.get(
   '/owner/:REGNumber',
-  loginRequired,
+  // loginRequired,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { REGNumber } = req.params;
@@ -95,7 +95,7 @@ reserveRouter.get(
 // 2-4. 예약 상세 정보 조회
 reserveRouter.get(
   '/:reserveId',
-  loginRequired,
+  // loginRequired,
   async function (req: Request, res: Response, next: NextFunction) {
     try {
       const reserveId = Number(req.params.reserveId);
@@ -108,6 +108,7 @@ reserveRouter.get(
 );
 
 // 3. 예약 정보 삭제
+// reserveRouter.delete('/', loginRequired, async (req, res, next) => {
 reserveRouter.delete('/', loginRequired, async (req, res, next) => {
   try {
     const { reserveId, email } = req.body;
