@@ -42,7 +42,6 @@ const RestaurantTitle = () => {
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         try {
-            //이게 뭐지..? 예약하기 폼인가??
             await API.delete('/api/reviews/users');
             console.log('예약완료')
         } catch (err: any) {
