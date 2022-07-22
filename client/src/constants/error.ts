@@ -28,4 +28,5 @@ export const ERROR = {
   RESERVE_PHONE_INPUT: '예약자 전화번호를 입력해주세요.',
   MENU_INPUT: '메뉴명을 입력해주세요.',
   PRICE_INPUT: '가격을 입력해주세요.',
+  HOUR_SELECT: '예약 가능 인원을 입력하세요.',
 };

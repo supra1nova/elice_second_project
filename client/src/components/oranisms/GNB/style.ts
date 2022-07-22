@@ -11,8 +11,10 @@ export const Container = styled.section`
 `;
 
 export const Logo = styled.div`
-  height: 60px;
-  width: 100%;
+  width: 120px;
+  img {
+    width: 100%;
+  }
 `;
 
 export const InfoWrapper = styled.div`
@@ -37,6 +39,7 @@ export const ProfileImg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 `;
 
 export const UserInfoWrapper = styled.div`
@@ -46,6 +49,7 @@ export const UserInfoWrapper = styled.div`
 export const Greetings = styled.div`
   ${(props) => props.theme.font.subtitle2}
   font-size: 18px;
+  line-height: 1.3;
 `;
 
 export const UserInfo = styled.div`

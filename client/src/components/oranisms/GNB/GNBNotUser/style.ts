@@ -20,6 +20,7 @@ export const BtnMenu = styled.button`
 export const Description = styled.p`
   font-size: 15px;
   letter-spacing: normal;
+  margin-top: 30px;
 `;
 
 export const ButtonWrapper = styled.div`

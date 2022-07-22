@@ -8,6 +8,7 @@ interface Props {
   labelTitle: string;
   id: string;
   htmlFor: string;
+  className?: string;
   onChange: (e: any) => void;
 }
 const Select = ({
@@ -17,9 +18,10 @@ const Select = ({
   id,
   htmlFor,
   onChange,
+  className,
 }: Props) => {
   return (
-    <UI.Container>
+    <UI.Container className={className}>
       <Label htmlFor={htmlFor} labelTitle={labelTitle}></Label>
       <UI.Select id={id} name={name} onChange={onChange}>
         {options.map((option: any, index: number) => {

@@ -12,6 +12,7 @@ export const Container = styled.div`
   height: ${(props: Props) => (props.large ? '326px' : '245px')};
   box-shadow: 5px 5px 3px #eaece5;
   border-radius: 10px;
+  overflow: hidden;
 `;
 
 export const ImgWrapper = styled.div`
@@ -60,6 +61,7 @@ export const SubTitle = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin-top: 2px;
 `;
 
 export const Caption = styled.div`

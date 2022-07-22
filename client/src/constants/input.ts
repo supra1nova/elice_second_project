@@ -15,6 +15,24 @@ export const SELECT_CATEGORY_OPTIONS = [
   { value: 'selectPasta', name: '파스타' },
 ];
 
+export const SELECT_TIME = [
+  { value: '10', name: '오전 10 : 00' },
+  { value: '11', name: '오전 11 : 00' },
+  { value: '12', name: '오전 12 : 00' },
+  { value: '13', name: '오후 13 : 00' },
+  { value: '14', name: '오후 14 : 00' },
+  { value: '15', name: '오후 15 : 00' },
+  { value: '16', name: '오후 16 : 00' },
+  { value: '17', name: '오후 17 : 00' },
+  { value: '18', name: '오후 18 : 00' },
+  { value: '19', name: '오후 19 : 00' },
+  { value: '20', name: '오후 20 : 00' },
+  { value: '21', name: '오후 21 : 00' },
+  { value: '22', name: '오후 22 : 00' },
+  { value: '23', name: '오후 23 : 00' },
+  { value: '24', name: '오후 24 : 00' },
+];
+
 export const LABELTITLE = {
   ID: '아이디',
   PASSWORD: '비밀번호',
@@ -42,6 +60,11 @@ export const LABELTITLE = {
   DESCRIPTION: '설명',
   MENU_NAME: '메뉴명',
   PRICE: '가격',
+  RESERVE_TIME: '예약 시간',
+  OPEN_TIME: '오픈시간',
+  CLOSE_TIME: '마지막 주문 시간',
+  RESERVES_DATE: '예약 가능 날짜',
+  REMAINDER: '예약 가능 자리',
 };
 
 export const PLACEHOLDER = {

@@ -65,13 +65,16 @@ export const Gnb = () => {
         <UI.InfoWrapper>
           <UI.ProfileImg>
             {image ? (
-              <img src={image} style={{ width: '30px', height: '30px' }} />
+              <img src={image} style={{ width: '100%', minHeight: '30px' }} />
             ) : (
               <Icon.Profile width={42} height={42} fill={'#64AD57'} />
             )}
           </UI.ProfileImg>
           <UI.UserInfoWrapper>
-            <UI.Greetings>안녕하세요 {name}님</UI.Greetings>
+            <UI.Greetings>
+              안녕하세요 <br></br>
+              {name}님
+            </UI.Greetings>
             {/* {role === 'admin' ? null : (
               <UI.UserInfo>
                 {role === 'user' ? `방문예정: ${1}건` : `업체명: ${123}`}

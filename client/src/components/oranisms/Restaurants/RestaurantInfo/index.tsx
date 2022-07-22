@@ -1,6 +1,6 @@
-import { MapViewButton } from '../../../atoms/MapViewButton/index';
 import React, { useState, useEffect } from 'react';
 import * as API from '../../../../api/api';
+import { MapViewButton } from '../../../atoms/MapViewButton/index';
 import * as UI from './style';
 
 type infoObject = {
@@ -24,10 +24,7 @@ const RestaurantInfo = () => {
     phoneNumber: '',
     category: '',
   });
-  const [menuInputs, setMenuInputs] = useState<menuObject>({
-    name: '',
-    price: 0,
-  });
+  const [menuInputs, setMenuInputs] = useState<any>([]);
 
   const [menuPrice, setMenuPrice] = useState<any>('');
 
@@ -36,20 +33,16 @@ const RestaurantInfo = () => {
     API.get(`/api/restaurants/${REGNumber}`).then((res) => {
       setInfoInputs(res);
     });
-    API.get(`/api/menus/${REGNumber}`).then((res) => {
+    const result = API.get(`/api/menus/${REGNumber}`).then((res) => {
       if (res.length > 0) {
-        const data = res[0];
-        setMenuInputs(data);
+        setMenuInputs(res);
       }
     });
   }, []);
 
-  // 메뉴 가격 천단위 콤마
-  useEffect(() => {
-    setMenuPrice(
-      menuInputs.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-    );
-  }, [menuInputs]);
+  const moneyMark = (item: any) => {
+    return item.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
 
   return (
     <UI.RestaurantInfo>
@@ -71,13 +64,19 @@ const RestaurantInfo = () => {
         <UI.InfoTitle>음식 종류</UI.InfoTitle>
         <UI.InfoDescription>{infoInputs.category}</UI.InfoDescription>
       </UI.Info>
-      <UI.Info>
-        <UI.InfoTitle>메뉴</UI.InfoTitle>
-        <UI.InfoDescription>
-          <UI.InfoMenu>{menuInputs.name}</UI.InfoMenu>
-          <UI.InfoPrice>{menuPrice}원</UI.InfoPrice>
-        </UI.InfoDescription>
-      </UI.Info>
+      {menuInputs.length > 0 ? (
+        <UI.Info>
+          <UI.InfoTitle>메뉴</UI.InfoTitle>
+          <UI.InfoDescription>
+            {menuInputs.map((item: any) => (
+              <UI.InfoDescriptionItem>
+                <UI.InfoMenu>{item.name}</UI.InfoMenu>
+                <UI.InfoPrice>{moneyMark(item.price)}원</UI.InfoPrice>
+              </UI.InfoDescriptionItem>
+            ))}
+          </UI.InfoDescription>
+        </UI.Info>
+      ) : null}
     </UI.RestaurantInfo>
   );
 };
