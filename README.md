@@ -68,9 +68,6 @@ Remove: 파일을 삭제하는 작업만 수행한 경우
 ```
 reservation_web
 ├─ client
-│  ├─ .prettierrc.json
-│  ├─ package-lock.json
-│  ├─ package.json
 │  ├─ public
 │  │  ├─ images
 │  │  │  ├─ favicon
@@ -79,27 +76,32 @@ reservation_web
 │  ├─ src
 │  │  ├─ App.tsx
 │  │  ├─ api
+│  │  ├─ assets
+│  │  │  └─ svg
 │  │  ├─ components
 │  │  │  ├─ atoms
 │  │  │  ├─ molecules
 │  │  │  └─ oranisms
 │  │  ├─ constants
+│  │  ├─ functions
+│  │  ├─ index.tsx
 │  │  ├─ pages
-│  │  ├─ redux
-│  │  │  ├─ actions
-│  │  │  └─ reducers
+│  │  ├─ router
 │  │  └─ styles
+
 ```
 
 - client/public => static 파일 폴더
 - clent/src/api => api 파일 폴더
+- clent/src/assets => svg 파일 폴더
 - client/src/componets => components 파일 폴더 : atomic design pattern
   - client/src/componets/atoms => 인터페이스를 구성하는 기본 HTML 태그 구성
   - client/src/componets/molecules => atmos를 기반으로 결합하여 하나의 분자(inputSearch, menuItem) 생성
   - client/src/componets/oranisms => molecules를 기반으로 하나의 유기체(header, footer) 생성
 - client/constants => 상수 파일 폴더
+- client/functions => 함수 파일 폴더
 - client/src/pages => router에 연결되는 page 파일 폴더
-- client/src/redux => redux 파일 폴더
+- client/src/router => router 파일 폴더
 - client/src/style => 전역적으로 사용될 style 파일 폴더
 
 [Atomic Design Pattern 관련 내용 바로가기 - 개념](https://brunch.co.kr/@ultra0034/63)<br>
