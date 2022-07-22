@@ -131,23 +131,15 @@ const AccountRestaurantsSecurityOwner = () => {
     image_key: [],
   });
 
-  const [role, setRole] = useState<any>({
-    email: '',
-    registrationNumber: [],
-  });
-
   const [isSubmit, setIsSubmit] = useState(false);
 
   const errors: valueObject = {};
 
   const REGNumber = localStorage.getItem('REGNumber');
 
-  // if (!REGNumber) {
-  //   navigate('/account/restaurantscreate');
-  // }
-
   useEffect(() => {
     API.get(`/api/restaurants/${REGNumber}`).then((res) => {
+      console.log(res);
       const data = {
         inputRegistrationNumber: res.REGNumber,
         inputRestaurantName: res.name,
@@ -192,7 +184,7 @@ const AccountRestaurantsSecurityOwner = () => {
   const handleClosePopupSaveConfirm = (e: any) => {
     e.preventDefault();
     setOpenPopupSaveConfirm(!openPopupSaveConfirm);
-    navigate(`/account/restaurants`);
+    navigate(`/restaurants/view/${REGNumber}`);
   };
 
   const handleOpenPostCodePopup = (e: any) => {
@@ -284,7 +276,7 @@ const AccountRestaurantsSecurityOwner = () => {
         phoneNumber: formValues.inputRestauranPhone,
         category: formValues.inputSelectCategory,
         description: formValues.inputDescription,
-        ownerEmail: role.email,
+        ownerEmail: formValues.inputOwnerEmail,
       };
 
       await API.patch(`/api/restaurants/${REGNumber}`, '', data);
