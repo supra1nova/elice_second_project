@@ -3,37 +3,59 @@ import styled, { css } from 'styled-components';
 export const Container = styled.div`
   position: relative;
   max-width: 740px;
-  margin-bottom: 40px;
 `;
 
 export const FormItem = styled.div`
   display: flex;
-  align-items: start;
+  align-items: center;
 `;
 
 export const FormColumn = styled.div`
-  width: calc(100% - 120px);
+  width: calc(33% - 60px);
   display: flex;
-  > div:first-child {
-    width: 60%;
+  margin-right: 20px;
+`;
+
+export const FormInput = styled.div`
+  width: 100%;
+  div {
+    padding-bottom: 0;
   }
-  > div:last-childe {
-    width: 40%;
-    margin-bottom: 10px;
-  }
-  > div + div {
+  & + div {
     margin-left: 20px;
   }
   label {
-    width: 70px;
-  }
-  p {
-    margin-left: -70px;
+    display: block;
+    margin-bottom: 10px;
   }
 `;
 
 export const FormButton = styled.div`
-  width: 110px;
-  text-align: right;
-  margin-top: 10px;
+  margin-top: 20px;
+`;
+
+export const DatePicker = styled.div`
+  input {
+    width: 100%;
+    border: 1px solid ${(props) => props.theme.colors.line};
+    height: 50px;
+    padding: 16px 20px;
+  }
+`;
+
+export const FormLabel = styled.div`
+  ${(props) => props.theme.font.subtitle1};
+  color: ${(props) => props.theme.colors.black};
+  margin-bottom: 10px;
+`;
+
+export const FormError = styled.div`
+  position: relative;
+  height: 40px;
+
+  p {
+    position: absolute;
+    left: 0;
+    top: 10px;
+  }
 `;
