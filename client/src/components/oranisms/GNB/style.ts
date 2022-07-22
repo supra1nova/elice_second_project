@@ -31,8 +31,9 @@ export const Description = styled.p`
   color: ${(props) => props.theme.colors.font3};
   margin-bottom: 5px;
 
-  a{
-    color: ${(props) => props.theme.colors.font1};
+  a {
+    text-decoration: underline;
+    color: ${(props) => props.theme.colors.font2};
   }
 `;
 
