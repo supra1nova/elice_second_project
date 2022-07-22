@@ -5,13 +5,10 @@ import AccountReservesListUser from './template/AccountReservesListUser';
 const AccountReserves = () => {
   const [role, setRole] = useState<string>();
   useEffect(() => {
-    async function roleCheck() {
-      await API.userGet('/api/users/user').then((res) => {
-        console.log(res);
-        setRole(res.role);
-      });
-    }
-    roleCheck();
+    API.userGet('/api/users/user').then((res) => {
+      console.log(res);
+      setRole(res.role);
+    });
   }, []);
 
   const Navigate = () => {
