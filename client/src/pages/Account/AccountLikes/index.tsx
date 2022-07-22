@@ -22,8 +22,7 @@ const AccountLikes = () => {
   };
   useEffect(() => {
     getData();
-    setChange(false);
-  }, []);
+  }, [change]);
 
   if (!localStorage.getItem('token')) {
     navigate('/');
@@ -32,6 +31,7 @@ const AccountLikes = () => {
   return (
     <AccountLikesUser
       setChange={setChange}
+      change={change}
       wishes={wishes}
       regNumber={regNumber}
     />
