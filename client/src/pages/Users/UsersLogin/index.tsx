@@ -82,13 +82,10 @@ const UsersLogin = () => {
     const errors: valueObject = {};
     const isInputIdValue = values.inputId;
     const isInputPasswordValue = values.inputPassword;
-    const isValidIdEmail = validateEmail(values.inputId);
     const isMinPasswordLength = isInputPasswordValue.length >= 4;
 
     if (!isInputIdValue) {
       errors.inputId = ERROR.ID_INPUT;
-    } else if (!isValidIdEmail) {
-      errors.inputId = ERROR.ID_EMAIL_VALID;
     }
 
     if (!isInputPasswordValue) {

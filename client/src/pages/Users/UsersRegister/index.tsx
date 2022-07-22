@@ -119,8 +119,6 @@ const UsersRegister = () => {
 
     if (!inputEmailValue) {
       errors.inputEmail = ERROR.EMAIL_INPUT;
-    } else if (isValidEmail) {
-      errors.inputEmail = ERROR.ID_EMAIL_VALID;
     }
 
     if (!inputPasswordValue) {
