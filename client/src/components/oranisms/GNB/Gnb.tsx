@@ -9,13 +9,13 @@ export const Gnb = () => {
   const [role, setRole] = useState('');
   const [name, setName] = useState('');
   const [image, setImage] = useState('');
-  const [login, setLogin] = useState(false);
+  const [log, setLog] = useState(true);
+  const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
   useEffect(() => {
     if (token) {
       API.userGet('/api/users/user').then((res) => {
-        setLogin(true);
         setRole(res.role);
         setImage(res.image);
         setName(res.name);
@@ -25,9 +25,17 @@ export const Gnb = () => {
 
   const logOut = () => {
     window.localStorage.clear();
-    window.location.replace('/');
-    setLogin(false);
+    setLog(false);
+    setRole('');
+    setImage('');
+    setName('');
+    alert('로그아웃 되었습니다');
+    navigate('/');
   };
+
+  useEffect(() => {
+    setLog(true);
+  }, [log]);
 
   if (role === '') {
     return (
@@ -64,11 +72,11 @@ export const Gnb = () => {
           </UI.ProfileImg>
           <UI.UserInfoWrapper>
             <UI.Greetings>안녕하세요 {name}님</UI.Greetings>
-            {role === 'admin' ? null : (
+            {/* {role === 'admin' ? null : (
               <UI.UserInfo>
                 {role === 'user' ? `방문예정: ${1}건` : `업체명: ${123}`}
               </UI.UserInfo>
-            )}
+            )} */}
           </UI.UserInfoWrapper>
           <UI.MenuContainer>
             <UI.MenuTitle>MENU</UI.MenuTitle>

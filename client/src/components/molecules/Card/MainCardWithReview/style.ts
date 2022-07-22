@@ -6,7 +6,7 @@ export const Container = styled.div`
 `;
 
 export const ImgWrapper = styled.div`
-  min-width: 170px;
+  width: 170px;
   height: 170px;
   background-color: black;
 `;

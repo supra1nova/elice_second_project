@@ -44,13 +44,13 @@ const AccountMenusCreate = () => {
     setIsSubmit(true);
     try {
       const data = {
-        menuId: 3,
         REGNumber: formValues.inputREGNumber,
         name: formValues.inputMenuName,
         price: formValues.inputMenuPrice,
         description: formValues.inputDescirption,
       };
-      await API.post('/api/menus', '', data);
+      console.log(data);
+      await API.tokenPost('/api/menus', '', data);
     } catch (err: any) {
       console.error(err);
     }

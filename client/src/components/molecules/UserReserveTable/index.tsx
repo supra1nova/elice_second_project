@@ -1,9 +1,9 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { COLUMNS } from './columns'
-import { usePagination, useTable } from 'react-table'
-import { TableButton } from '../../atoms/TableButton/TableButton'
+import { COLUMNS } from './columns';
+import { usePagination, useTable } from 'react-table';
+import { TableButton } from '../../atoms/TableButton/TableButton';
 import * as UI from './style';
-import * as API from '../../../api/api'
+import * as API from '../../../api/api';
 import { cp } from 'fs/promises';
 import Paging from '../../atoms/Pagination/Pagination';
 
@@ -11,12 +11,12 @@ export const UserReserveTable = () => {
     const [reserveLists, setReserveLists] = useState<any>([])
     const [email, setEmail] = useState('')
 
-    // 1: REGNumber, name, number, reserveId, timeId
-    // 2: RestaurantName
-    // 3: ReserveTime
-    const [data1, setData1] = useState<any>([])
-    const [data2, setData2] = useState<string[]>([])
-    const [data3, setData3] = useState<string[]>([])
+  // 1: REGNumber, name, number, reserveId, timeId
+  // 2: RestaurantName
+  // 3: ReserveTime
+  const [data1, setData1] = useState<any>([]);
+  const [data2, setData2] = useState<string[]>([]);
+  const [data3, setData3] = useState<string[]>([]);
 
     const [pages, setPages] = useState(1);
     const [perPage, setPerPage] = useState(12);
@@ -25,13 +25,33 @@ export const UserReserveTable = () => {
     const columns = useMemo(() => COLUMNS, [])
     const data = useMemo(() => reserveLists, [reserveLists])
 
-    useEffect(() => {
-        API.userGet('/api/users/user').then((res) => {
-            if(res) {
-                setEmail(res.email)
-            }
+  useEffect(() => {
+    API.userGet('/api/users/user').then((res) => {
+      if (res) {
+        setEmail(res.email);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    API.get(`/api/reserves/user/${email}`).then((res) => {
+      const datas = res.reserves;
+      datas.forEach((data: any) => {
+        setData1((result: any) => {
+          return [
+            ...result,
+            {
+              REGNumber: data.REGNumber,
+              timeId: data.timeId,
+              reserveId: data.reserveId,
+              name: data.name,
+              number: data.number,
+            },
+          ];
         });
-    }, [])
+      });
+    });
+  }, [email]);
 
     useEffect(() => {
         API.get(`/api/reserves/user/${email}`).then((res) => {

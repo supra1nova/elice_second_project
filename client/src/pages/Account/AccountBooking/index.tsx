@@ -6,13 +6,22 @@ import AccountBookingOwner from './template/AccountBookingOwner';
 const AccountBooking = () => {
   const navigate = useNavigate();
   const [role, setRole] = useState<string>();
-  useEffect(() => {
+
+  const getData = async () => {
     API.userGet('/api/users/user').then((res) => {
       setRole(res.role);
     });
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
 
-  return <>{role === 'owner' ? <AccountBookingOwner /> : navigate('/')}</>;
+  if (role !== 'owner') {
+    navigate('/');
+  }
+
+  return <AccountBookingOwner />;
 };
 
 export default AccountBooking;

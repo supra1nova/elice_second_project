@@ -6,14 +6,22 @@ import AccountManagementAdmin from './template/AccountManagementAdmin';
 const AccountManagement = () => {
   const navigate = useNavigate();
   const [role, setRole] = useState<string>();
-  useEffect(() => {
+
+  const getData = async () => {
     API.userGet('/api/users/user').then((res) => {
-      console.log(res);
       setRole(res.role);
     });
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
 
-  return <>{role === 'admin' ? <AccountManagementAdmin /> : navigate('/')}</>;
+  if (role !== 'admin') {
+    navigate('/');
+  }
+
+  return <AccountManagementAdmin />;
 };
 
 export default AccountManagement;

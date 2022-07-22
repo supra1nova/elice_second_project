@@ -4,6 +4,7 @@ import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
 import * as API from '../../../../../api/api';
 import LNBLayout from '../../../../../components/molecules/LNBLayout';
+import AccountHeader from '../../../../../components/molecules/AccountHeader';
 import Button from '../../../../../components/atoms/Button';
 import ButtonText from '../../../../../components/atoms/ButtonText';
 import InputText from '../../../../../components/atoms/InputText';
@@ -130,23 +131,15 @@ const AccountRestaurantsSecurityOwner = () => {
     image_key: [],
   });
 
-  const [role, setRole] = useState<any>({
-    email: '',
-    registrationNumber: [],
-  });
-
   const [isSubmit, setIsSubmit] = useState(false);
 
   const errors: valueObject = {};
 
   const REGNumber = localStorage.getItem('REGNumber');
 
-  // if (!REGNumber) {
-  //   navigate('/account/restaurantscreate');
-  // }
-
   useEffect(() => {
     API.get(`/api/restaurants/${REGNumber}`).then((res) => {
+      console.log(res);
       const data = {
         inputRegistrationNumber: res.REGNumber,
         inputRestaurantName: res.name,
@@ -191,7 +184,7 @@ const AccountRestaurantsSecurityOwner = () => {
   const handleClosePopupSaveConfirm = (e: any) => {
     e.preventDefault();
     setOpenPopupSaveConfirm(!openPopupSaveConfirm);
-    navigate(`/account/restaurants`);
+    navigate(`/restaurants/view/${REGNumber}`);
   };
 
   const handleOpenPostCodePopup = (e: any) => {
@@ -283,7 +276,7 @@ const AccountRestaurantsSecurityOwner = () => {
         phoneNumber: formValues.inputRestauranPhone,
         category: formValues.inputSelectCategory,
         description: formValues.inputDescription,
-        ownerEmail: role.email,
+        ownerEmail: formValues.inputOwnerEmail,
       };
 
       await API.patch(`/api/restaurants/${REGNumber}`, '', data);
@@ -424,6 +417,7 @@ const AccountRestaurantsSecurityOwner = () => {
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
         <UI.Content>
+          <AccountHeader title={'레스토랑 등록'} />
           <Form onSubmit={handleSubmit}>
             {inputTextData.owner.map((item, index) => {
               return FormInputTextHorizontal(item, index);

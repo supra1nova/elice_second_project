@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import DaumPostcode from 'react-daum-postcode';
 import styled from 'styled-components';
 import * as API from '../../../../../api/api';
@@ -28,6 +29,7 @@ import {
 import * as UI from './style';
 import InputFileButton from '../../../../../components/atoms/InputFileButton';
 import FileTumbnail from '../../../../../components/atoms/FileTumbnail';
+import AccountHeader from '../../../../../components/molecules/AccountHeader';
 
 const StyleTypography = styled(Typography)`
   margin-bottom: 10px;
@@ -99,6 +101,8 @@ type valueObject = {
 };
 
 const AccountRestaurantsCreateOwner = () => {
+  const navigate = useNavigate();
+
   const initialValue = {
     inputRestaurantName: '',
     inputRestaurantOffice: '',
@@ -115,6 +119,7 @@ const AccountRestaurantsCreateOwner = () => {
 
   const [openPopupSaveConfirm, setOpenPopupSaveConfirm] = useState(false);
   const [openPostCodePopup, setOpenPostCodePopup] = useState(false);
+  const [role, setRole] = useState<string>('');
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
   const [address, setAddress] = useState<valueObject>({
@@ -129,20 +134,26 @@ const AccountRestaurantsCreateOwner = () => {
 
   const errors: valueObject = {};
 
+  const getData = async () => {
+    API.userGet('/api/users/user').then((res) => {
+      setRole(res.email);
+    });
+  };
+
+  useEffect(() => {
+    getData();
+  });
+
   useEffect(() => {
     return () => {
       URL.revokeObjectURL(image.preview_URL);
     };
   }, []);
 
-  useEffect(() => {
-    setFormValues(formValues);
-    console.log(formValues);
-  }, [formValues]);
-
   const handleClosePopupSaveConfirm = (e: any) => {
     e.preventDefault();
     setOpenPopupSaveConfirm(!openPopupSaveConfirm);
+    window.location.reload();
   };
 
   const handleOpenPostCodePopup = (e: any) => {
@@ -214,12 +225,10 @@ const AccountRestaurantsCreateOwner = () => {
         phoneNumber: formValues.inputRestauranPhone,
         category: formValues.inputSelectCategory,
         description: formValues.inputDescription,
-        ownerEmail: formValues.inputOwnerEmail,
+        ownerEmail: role,
       };
 
-      console.log(data);
-
-      await API.post('/api/restaurants/', '', data);
+      await API.tokenPost('/api/restaurants', '', data);
 
       if (image.image_file) {
         const formData = new FormData();
@@ -358,6 +367,7 @@ const AccountRestaurantsCreateOwner = () => {
   return (
     <UI.Container>
       <UI.Content>
+        <AccountHeader title={'레스토랑 등록'} />
         <Form onSubmit={handleSubmit}>
           {inputTextData.owner.map((item, index) => {
             return FormInputTextHorizontal(item, index);

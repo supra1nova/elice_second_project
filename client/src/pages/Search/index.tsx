@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import * as UI from './style';
 import SearchBar from '../../components/oranisms/SearchBar';
 import Category from '../../components/molecules/Category';
 import SearchShopList from '../../components/oranisms/SearchList';
-import HomeList from '../../components/oranisms/HomeList';
 
 const SearchHome = () => {
   const [inputValue, setInputValue] = useState('');

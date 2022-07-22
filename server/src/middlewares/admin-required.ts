@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 function adminRequired(req: Request, res: Response, next: NextFunction) {
   try {
     // role: "admin-user" 확인
-    if (req.role === "ADMIN") {
+    if (req.role === "ADMIN" || "admin") {
       next();
     } else {
       throw new Error;
