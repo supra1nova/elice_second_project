@@ -17,9 +17,9 @@ export const FormColumn = styled.div`
   > div:first-child {
     width: 60%;
   }
-  > div:last-childe {
+  > div:last-child {
     width: 40%;
-    margin-bottom: 10px;
+    margin-bottom: 10px !important;
   }
   > div + div {
     margin-left: 20px;
