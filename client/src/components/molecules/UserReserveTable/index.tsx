@@ -32,7 +32,7 @@ export const UserReserveTable = () => {
         try {
             API.delete('/api/reserves', '', data);
             alert('예약이 취소되었습니다.')
-            // window.location.replace('/account/reserves');
+            window.location.replace('/account/reserves');
         } catch (err: any) {
             console.error(err);
         }
@@ -107,7 +107,7 @@ export const UserReserveTable = () => {
             // console.log([i], data2[i])
             // console.log([i], data3[i])
             setReserveLists((result: any) => [...result, {
-                timeId: data1[i].timeId,
+                reserveId: data1[i].reserveId,
                 restaurant: data2[i],
                 name: data1[i].name,
                 number: data1[i].number,
@@ -116,8 +116,8 @@ export const UserReserveTable = () => {
         }
     }, [data3])
 
-    console.log(data2)
-    console.log(reserveLists)
+    // console.log(data2)
+    // console.log(reserveLists)
 
     const { 
         getTableProps, 
