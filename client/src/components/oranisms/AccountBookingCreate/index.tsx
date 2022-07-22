@@ -14,6 +14,7 @@ import { ERROR } from '../../../constants/error';
 import * as UI from './style';
 import InputText from '../../atoms/InputText';
 import FormInputText from '../../molecules/FormInputText';
+import { yearsToMonths } from 'date-fns';
 
 type valueObject = {
   [key: string]: any;
@@ -25,44 +26,87 @@ const StyleSelect = styled(Select)`
 `;
 
 const AccountBookingCreate = () => {
+  const REGNumber = localStorage.getItem('REGNumber');
+
   const initialValue = {
-    inputREGNumber: '',
+    inputREGNumber: REGNumber,
     inputYear: '',
     inputMonth: '',
     inputDate: '',
-    inputHour: '',
+    inputSelectHour: '10',
     inputRemainder: '',
     inputInitialRemainder: '',
   };
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
-  const [selectStartData, setSelectStartData] = useState(new Date());
-  const [selectLastData, setSelectLastData] = useState(new Date());
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [selectDate, setSelectDate] = useState(new Date());
+
+  const errors: valueObject = {};
 
   const handleChange = (e: any) => {
     const target = e.target;
-    const value =
-      target.type === 'checkbox' || target.type === 'radio'
-        ? target.checked
-        : target.value;
+    const value = target.value;
     const name = target.name;
     setFormValues({ ...formValues, [name]: value });
   };
-  const handleSubmit = (e: any) => {
-    e.prevendDefault();
 
-    const data = {
-      REGNumber: formValues.inputREGNumber,
-      year: formValues.inputYear,
-      month: formValues.inputMonth,
-      date: formValues.inputDate,
-      hour: formValues.inputHour,
-      remainder: formValues.inputRemainder,
-      initialRemainder: formValues.inputRemainder,
-    };
+  useEffect(() => {
+    const date = selectDate.toLocaleDateString('ko-KR').split(' ');
+    const year = date[0].slice(0, -1);
+    const month = date[1].slice(0, -1);
+    const day = date[2].slice(0, -1);
 
-    console.log(data);
+    setFormValues({
+      ...formValues,
+      inputYear: year,
+      inputMonth: month,
+      inputDate: day,
+    });
+  }, [selectDate]);
+
+  console.log(formValues);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
+    try {
+      const data = {
+        REGNumber: formValues.inputREGNumber,
+        year: formValues.inputYear,
+        month: formValues.inputMonth,
+        date: formValues.inputDate,
+        hour: formValues.inputSelectHour,
+        remainder: formValues.inputRemainder,
+        initialRemainder: formValues.inputRemainder,
+      };
+      await API.tokenPost('/api/times', '', data);
+    } catch (err: any) {
+      console.error(err);
+    }
   };
+
+  const validate = (values: any) => {
+    const inputYearValue = values.inputYearValue;
+    const inputSelectHourValue = values.inputSelectHour;
+    const inputRemainderValue = values.inputRemainder;
+
+    if (!inputYearValue) {
+      errors.inputYearValue = '에러발생 1';
+    }
+
+    if (!inputSelectHourValue) {
+      errors.inputSelectHourValue = '에러발생 2';
+    }
+
+    if (!inputRemainderValue) {
+      errors.inputSelectHourValue = '에러발생 3';
+    }
+    return errors;
+  };
+
+  console.log(errors);
 
   return (
     <UI.Container>
@@ -74,8 +118,8 @@ const AccountBookingCreate = () => {
               <UI.FormLabel>{LABELTITLE.RESERVES_DATE}</UI.FormLabel>
               <UI.DatePicker>
                 <DatePicker
-                  selected={selectStartData}
-                  onChange={(date: Date) => setSelectStartData(date)}
+                  selected={selectDate}
+                  onChange={(date: Date) => setSelectDate(date)}
                   minDate={new Date()}
                   dateFormat='yyyy/MM/dd'
                   locale={ko}
@@ -83,6 +127,20 @@ const AccountBookingCreate = () => {
                 />
               </UI.DatePicker>
             </UI.FormInput>
+          </UI.FormColumn>
+          <UI.FormColumn>
+            <UI.FormInput>
+              <StyleSelect
+                name='inputSelectHour'
+                options={SELECT_TIME}
+                onChange={handleChange}
+                id='inputSelectHour'
+                htmlFor='inputSelectHour'
+                labelTitle={LABELTITLE.RESERVE_TIME}
+              />
+            </UI.FormInput>
+          </UI.FormColumn>
+          <UI.FormColumn>
             <UI.FormInput>
               <FormInputText
                 htmlFor='inputRemainder'
@@ -98,24 +156,13 @@ const AccountBookingCreate = () => {
               />
             </UI.FormInput>
           </UI.FormColumn>
-          <UI.FormColumn>
-            <UI.FormInput>
-              <StyleSelect
-                name='inputSelectOpenTime'
-                options={SELECT_TIME}
-                onChange={handleChange}
-                id='inputSelectOpenTime'
-                htmlFor='inputSelectOpenTime'
-                labelTitle={LABELTITLE.OPEN_TIME}
-              />
-            </UI.FormInput>
-          </UI.FormColumn>
           <UI.FormButton>
             <Button component='primary' size='small'>
               {BUTTON.REGISTER}
             </Button>
           </UI.FormButton>
         </UI.FormItem>
+        <UI.FormItem>{errors.inputSelectHourValue}</UI.FormItem>
       </Form>
     </UI.Container>
   );

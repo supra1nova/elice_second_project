@@ -12,22 +12,18 @@ export const FormItem = styled.div`
 `;
 
 export const FormColumn = styled.div`
-  width: calc(50% - 65px);
+  width: calc(33% - 60px);
   display: flex;
   margin-right: 20px;
 `;
 
 export const FormInput = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-
+  width: 100%;
+  div {
+    padding-bottom: 0;
+  }
   & + div {
     margin-left: 20px;
-    & > div {
-      padding-bottom: 0;
-    }
   }
   label {
     display: block;
