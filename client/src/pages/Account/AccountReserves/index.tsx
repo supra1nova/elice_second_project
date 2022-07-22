@@ -10,7 +10,6 @@ const AccountReserves = () => {
 
   const getData = async () => {
     API.userGet('/api/users/user').then((res) => {
-      console.log(res);
       setRole(res.role);
     });
   };

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as API from '../../../api/api';
 import AccountHeader from '../../molecules/AccountHeader';
 import Form from '../../atoms/Form';
 import FormInputTextHorizontal from '../../molecules/FormInputTextHorizontal';
+import PopupSaveConfirm from './PopupCreateConfirm';
 import { SECTION } from '../../../constants/title';
 import { LABELTITLE, BUTTON } from '../../../constants/input';
 import { ERROR } from '../../../constants/error';
@@ -15,18 +17,28 @@ type valueObject = {
 
 const REGNumber = localStorage.getItem('REGNumber');
 
-const AccountMenusCreate = () => {
+const AccountMenusCreate = ({ setRender }: any) => {
+  const REGNumber = localStorage.getItem('REGNumber');
+  const navigate = useNavigate();
+
   const initialValue = {
     inputMenuName: '',
     inputMenuPrice: '',
     inputREGNumber: REGNumber,
     inputDescirption: '',
   };
-
+  const [openPopupSaveConfirm, setOpenPopupSaveConfirm] = useState(false);
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
   const [isSubmit, setIsSubmit] = useState(false);
   const errors: valueObject = {};
+
+  const handleClosePopupSaveConfirm = (e: any) => {
+    e.preventDefault();
+    setOpenPopupSaveConfirm(!openPopupSaveConfirm);
+    navigate(`/account/menus`);
+    // navigate(`/restaurants/view/${REGNumber}`);
+  };
 
   const handleChange = (e: any) => {
     const target = e.target;
@@ -51,6 +63,8 @@ const AccountMenusCreate = () => {
       };
       console.log(data);
       await API.tokenPost('/api/menus', '', data);
+      setRender(true);
+      setOpenPopupSaveConfirm(true);
     } catch (err: any) {
       console.error(err);
     }
@@ -58,13 +72,13 @@ const AccountMenusCreate = () => {
 
   const validate = (values: any) => {
     const inputMenuNameValue = values.inputMenuName;
-    const inputMenuPrice = values.inputMenuPrice;
+    const inputMenuPriceValue = values.inputMenuPrice;
 
     if (!inputMenuNameValue) {
-      errors.inputMenuNameValue = ERROR.MENU_INPUT;
+      errors.inputMenuName = ERROR.MENU_INPUT;
     }
 
-    if (!inputMenuPrice) {
+    if (!inputMenuPriceValue) {
       errors.inputMenuPrice = ERROR.PRICE_INPUT;
     }
     return errors;
@@ -79,7 +93,7 @@ const AccountMenusCreate = () => {
         id: 'inputMenuName',
         name: 'inputMenuName',
         value: formValues.inputMenuName || '',
-        maxLength: undefined,
+        maxLength: 15,
         autoComplete: undefined,
         placeholder: '',
         onChange: handleChange,
@@ -92,7 +106,7 @@ const AccountMenusCreate = () => {
         id: 'inputMenuPrice',
         name: 'inputMenuPrice',
         value: formValues.inputMenuPrice || '',
-        maxLength: undefined,
+        maxLength: 10,
         autoComplete: undefined,
         placeholder: '',
         onChange: handleChange,
@@ -102,23 +116,29 @@ const AccountMenusCreate = () => {
   };
 
   return (
-    <UI.Container>
-      <AccountHeader title={SECTION.MENU_REGISTER} />
-      <Form onSubmit={handleSubmit}>
-        <UI.FormItem>
-          <UI.FormColumn>
-            {inputMenuData.owner.map((item, index) => {
-              return FormInputTextHorizontal(item, index);
-            })}
-          </UI.FormColumn>
-          <UI.FormButton>
-            <Button component='primary' size='small'>
-              {BUTTON.REGISTER}
-            </Button>
-          </UI.FormButton>
-        </UI.FormItem>
-      </Form>
-    </UI.Container>
+    <>
+      <UI.Container>
+        <AccountHeader title={SECTION.MENU_REGISTER} />
+        <Form onSubmit={handleSubmit}>
+          <UI.FormItem>
+            <UI.FormColumn>
+              {inputMenuData.owner.map((item, index) => {
+                return FormInputTextHorizontal(item, index);
+              })}
+            </UI.FormColumn>
+            <UI.FormButton>
+              <Button component='primary' size='small'>
+                {BUTTON.REGISTER}
+              </Button>
+            </UI.FormButton>
+          </UI.FormItem>
+        </Form>
+      </UI.Container>
+      <PopupSaveConfirm
+        open={openPopupSaveConfirm}
+        onClose={handleClosePopupSaveConfirm}
+      />
+    </>
   );
 };
 
