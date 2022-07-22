@@ -17,7 +17,11 @@ const AccountMenus = () => {
     return <></>;
   };
 
-  return <>{role === 'owner' ? <AccountMenusOwner /> : <Navigate />}</>;
+  return (
+    <>
+      <AccountMenusOwner />
+    </>
+  );
 };
 
 export default AccountMenus;
