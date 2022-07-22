@@ -57,5 +57,6 @@ export const FormError = styled.div`
     position: absolute;
     left: 0;
     top: 10px;
+    color: #fb5e64;
   }
 `;
