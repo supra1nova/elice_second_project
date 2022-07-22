@@ -12,6 +12,7 @@ export const PAGES = {
   ACCOUNT_BOOKING: '예약 등록 및 관리',
   ACCOUNT_CATEGORIES: '카테고리',
   ACCOUNT_RESTAURANS_LIST: '레스토랑 조회',
+  ACCOUNT_RESERVES_LIST: '예약 등록 및 관리',
   ACCOUNT_USERS: '회원 조회',
 };
 
