@@ -12,12 +12,16 @@ const AccountMenus = () => {
     });
   }, []);
 
-  const Navigate = () => {
-    window.location.href = '/';
-    return <></>;
-  };
+  // const Navigate = () => {
+  //   window.location.href = '/';
+  //   return <></>;
+  // };
 
-  return <>{role === 'owner' ? <AccountMenusOwner /> : <Navigate />}</>;
+  if (role !== 'owner') {
+    navigate('/');
+  }
+
+  return <AccountMenusOwner />;
 };
 
 export default AccountMenus;
