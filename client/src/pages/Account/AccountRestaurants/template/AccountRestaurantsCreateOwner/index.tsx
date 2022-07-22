@@ -224,7 +224,7 @@ const AccountRestaurantsCreateOwner = () => {
 
       console.log(data);
 
-      await API.post('/api/restaurants/', '', data);
+      await API.post('/api/restaurants', '', data);
 
       if (image.image_file) {
         const formData = new FormData();
