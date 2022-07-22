@@ -95,7 +95,7 @@ const SearchShopList = ({ inputValue, categorySelect }: any) => {
                   category={item.category}
                   likeCount={item.wishers}
                   reviewCount={10}
-                  shopImg={item.image}
+                  shopImg={''}
                   large={true}
                 />
               </Link>
