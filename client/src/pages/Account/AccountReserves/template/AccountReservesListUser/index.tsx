@@ -6,13 +6,12 @@ import * as UI from './style';
 
 const AccountReservesListUser = () => {
   return (
-    <LNBLayout items={ACCOUNT.OWNER}>
-      <UI.Container>
-        <UI.Content>
-          <UserReserveTable />
-        </UI.Content>
-      </UI.Container>
-    </LNBLayout>
+    <UI.Container>
+      <UI.Content>
+        <UserReserveTable />
+        USER TABLE
+      </UI.Content>
+    </UI.Container>
   );
 };
 

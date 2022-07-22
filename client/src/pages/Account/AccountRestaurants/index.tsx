@@ -20,6 +20,7 @@ const AccountRestaurants = () => {
     getData();
   }, []);
 
+  console.log(role);
   if (role === 'admin') {
     return <AccountRestaurantsListAdmin />;
   } else if (role === 'owner') {
