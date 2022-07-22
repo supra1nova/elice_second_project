@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import LikeBtn from '../../atoms/LikeButton/LikeBtn';
 import * as API from '../../../api/api';
-import Pagination from '../../atoms/Pagination/Pagination';
 import Paging from '../../atoms/Pagination/Pagination';
 
 const SearchShopList = ({ inputValue, categorySelect }: any) => {
@@ -43,7 +42,6 @@ const SearchShopList = ({ inputValue, categorySelect }: any) => {
         setShop(res.restaurants);
         setPerPage(res.perPage);
         setTotal(res.total);
-        console.log(res);
       });
     } else {
       API.get('/api/restaurants').then((res) => {
@@ -58,7 +56,6 @@ const SearchShopList = ({ inputValue, categorySelect }: any) => {
             );
             filtered = filtered.concat(data);
             if (i === res.totalPage) {
-              console.log(filtered);
               setShop(filtered);
               setTotal(filtered.length);
               setPerPage(filtered.length);

@@ -15,6 +15,11 @@ export const PageTitle = styled.div`
   font-weight: 700;
 `;
 
+export const DeleteAll = styled.button`
+  margin-left: auto;
+  border-bottom: 1px solid black;
+`;
+
 export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);

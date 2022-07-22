@@ -35,7 +35,6 @@ const MainCardWithoutReview = ({
   };
 
   const getImage = async () => {
-    // console.log(regNumber);
     const result = await API.get(`/api/restaurantImages/${regNumber}`).then(
       (res) => {
         setImage(res[0].image);
