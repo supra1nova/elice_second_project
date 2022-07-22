@@ -61,7 +61,6 @@ const AccountMenusCreate = ({ setRender }: any) => {
         price: formValues.inputMenuPrice,
         description: formValues.inputDescirption,
       };
-      console.log(data);
       await API.tokenPost('/api/menus', '', data);
       setRender(true);
       setOpenPopupSaveConfirm(true);
