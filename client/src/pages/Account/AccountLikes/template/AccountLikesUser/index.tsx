@@ -12,6 +12,8 @@ interface MainCardWithoutReviewProps {
   address: String;
   regNumber: any;
   foodType: string;
+  wishes: any;
+  setChange: any;
 }
 
 const AccountLikesUser = ({
@@ -19,6 +21,8 @@ const AccountLikesUser = ({
   address,
   regNumber,
   foodType,
+  wishes,
+  setChange,
 }: MainCardWithoutReviewProps) => {
   const navigate = useNavigate();
   const [shop, setShop] = useState<any>([]);
@@ -26,31 +30,28 @@ const AccountLikesUser = ({
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [postPerPage] = useState(8);
-  const [loading, setLoading] = useState(true);
 
   const [indexOfLastPost, setIndexOfLastPost] = useState(0);
   const [indexOfFirstPost, setIndexOfFirstPost] = useState(0);
   const [currentPosts, setCurrentPosts] = useState([]);
 
   const getData = async () => {
-    setLoading(true);
     await regNumber.forEach((e: any, idx: any) => {
-      API.get(`/api/restaurants/${e}`).then((res) =>
+      API.get(`/api/restaurants/${e}`).then((res) => {
         setShop((prev: any) => {
           return [...prev, res];
-        }),
-      );
+        });
+      });
       API.get(`/api/restaurantImages/${e}`).then((res) => {
         if (res[0] === undefined) {
           return;
         } else {
           setImage((prev: any) => {
-            return [...prev, res[0]];
+            return [...prev, res[0].image];
           });
         }
       });
     });
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -58,16 +59,12 @@ const AccountLikesUser = ({
     getData();
   }, [regNumber]);
 
-  console.log(loading);
-
   useEffect(() => {
     setCount(shop.length);
     setIndexOfLastPost(page * postPerPage);
     setIndexOfFirstPost(indexOfLastPost - postPerPage);
     setCurrentPosts(shop.slice(indexOfFirstPost, indexOfLastPost));
-  }, [page, indexOfFirstPost, indexOfLastPost, shop, postPerPage]);
-
-  // console.log(shop);
+  }, [page, indexOfFirstPost, shop, indexOfLastPost, postPerPage]);
 
   return (
     <UI.Container>
@@ -78,22 +75,53 @@ const AccountLikesUser = ({
           <UI.GridContainer>
             {currentPosts.map((item: any, idx: any) => {
               return (
-                <UI.CardContainer
+                <div
+                  style={{ position: 'relative' }}
                   key={`${idx}-${item.REGNumber}`}
-                  onClick={() => {
-                    navigate(`/restaurants/view/${item.REGNumber}`);
-                  }}
                 >
-                  <UI.ImgWrapper>
-                    <Img src={image[idx]}></Img>
-                  </UI.ImgWrapper>
-                  <UI.InfoWrapper>
-                    <UI.Title>{item.name}</UI.Title>
-                    <UI.SubTitle>
-                      {item.address1} - {item.category} -{idx}
-                    </UI.SubTitle>
-                  </UI.InfoWrapper>
-                </UI.CardContainer>
+                  <UI.CardContainer
+                    onClick={() => {
+                      navigate(`/restaurants/view/${item.REGNumber}`);
+                    }}
+                  >
+                    <UI.ImgWrapper>
+                      <Img src={image[idx]}></Img>
+                    </UI.ImgWrapper>
+                    <UI.InfoWrapper>
+                      <UI.Title>{item.name}</UI.Title>
+                      <UI.SubTitle>
+                        {item.address1} - {item.category} -{idx}
+                      </UI.SubTitle>
+                    </UI.InfoWrapper>
+                  </UI.CardContainer>
+                  <button
+                    style={{
+                      position: 'absolute',
+                      top: '8px',
+                      right: '15px',
+                      borderRadius: '20px',
+                      width: '50px',
+                      height: '30px',
+                      backgroundColor: '#64AD57',
+                      color: 'white',
+                      zIndex: '10,',
+                    }}
+                    onClick={async () => {
+                      const filtered = wishes.filter(
+                        (e: { REGNumber: any }) =>
+                          e.REGNumber === item.REGNumber,
+                      );
+                      const REGNumber = filtered[0].REGNumber;
+                      const email = filtered[0].email;
+                      const data = { REGNumber, email };
+                      await API.delete('/api/wishes', '', data).then((res) =>
+                        alert('삭제 완료'),
+                      );
+                    }}
+                  >
+                    삭제
+                  </button>
+                </div>
               );
             })}
           </UI.GridContainer>

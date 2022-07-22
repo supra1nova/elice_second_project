@@ -15,7 +15,9 @@ type valueObject = {
   [key: string]: any;
 };
 
-const AccountMenusCreate = () => {
+const REGNumber = localStorage.getItem('REGNumber');
+
+const AccountMenusCreate = ({ setRender }: any) => {
   const REGNumber = localStorage.getItem('REGNumber');
   const navigate = useNavigate();
 
@@ -61,6 +63,7 @@ const AccountMenusCreate = () => {
       };
       console.log(data);
       await API.tokenPost('/api/menus', '', data);
+      setRender(true);
       setOpenPopupSaveConfirm(true);
     } catch (err: any) {
       console.error(err);
