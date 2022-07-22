@@ -12,6 +12,8 @@ import { SECTION } from '../../../constants/title';
 import { SELECT_TIME, LABELTITLE, BUTTON } from '../../../constants/input';
 import { ERROR } from '../../../constants/error';
 import * as UI from './style';
+import InputText from '../../atoms/InputText';
+import FormInputText from '../../molecules/FormInputText';
 
 type valueObject = {
   [key: string]: any;
@@ -25,12 +27,10 @@ const StyleSelect = styled(Select)`
 const AccountBookingCreate = () => {
   const initialValue = {
     inputREGNumber: '',
-    inputStartAt: {
-      inputYear: '',
-      inputMonth: '',
-      inputDate: '',
-      inputHour: '',
-    },
+    inputYear: '',
+    inputMonth: '',
+    inputDate: '',
+    inputHour: '',
     inputRemainder: '',
     inputInitialRemainder: '',
   };
@@ -47,14 +47,23 @@ const AccountBookingCreate = () => {
         : target.value;
     const name = target.name;
     setFormValues({ ...formValues, [name]: value });
-
-    if (target.type === 'select-one') {
-      const index = target.options.selectedIndex;
-      const text = target.options[index].text;
-      setFormValues({ ...formValues, [name]: text });
-    }
   };
-  const handleSubmit = () => {};
+  const handleSubmit = (e: any) => {
+    e.prevendDefault();
+
+    const data = {
+      REGNumber: formValues.inputREGNumber,
+      year: formValues.inputYear,
+      month: formValues.inputMonth,
+      date: formValues.inputDate,
+      hour: formValues.inputHour,
+      remainder: formValues.inputRemainder,
+      initialRemainder: formValues.inputRemainder,
+    };
+
+    console.log(data);
+  };
+
   return (
     <UI.Container>
       <AccountHeader title={SECTION.RESERVATION_REGISTER} />
@@ -75,16 +84,18 @@ const AccountBookingCreate = () => {
               </UI.DatePicker>
             </UI.FormInput>
             <UI.FormInput>
-              <UI.DatePicker>
-                <DatePicker
-                  selected={selectLastData}
-                  onChange={(date: Date) => setSelectLastData(date)}
-                  minDate={new Date()}
-                  dateFormat='yyyy/MM/dd'
-                  locale={ko}
-                  placeholderText=''
-                />
-              </UI.DatePicker>
+              <FormInputText
+                htmlFor='inputRemainder'
+                labelTitle={LABELTITLE.REMAINDER}
+                type='text'
+                id='inputRemainder'
+                name='inputRemainder'
+                value={formValues.inputRemainder || ''}
+                maxLength='3'
+                autoComplete={undefined}
+                onChange={handleChange}
+                placeholder=''
+              />
             </UI.FormInput>
           </UI.FormColumn>
           <UI.FormColumn>
@@ -96,16 +107,6 @@ const AccountBookingCreate = () => {
                 id='inputSelectOpenTime'
                 htmlFor='inputSelectOpenTime'
                 labelTitle={LABELTITLE.OPEN_TIME}
-              />
-            </UI.FormInput>
-            <UI.FormInput>
-              <StyleSelect
-                name='inputSelectCloseTime'
-                options={SELECT_TIME}
-                onChange={handleChange}
-                id='inputSelectCloseTime'
-                htmlFor='inputSelectCloseTime'
-                labelTitle={LABELTITLE.CLOSE_TIME}
               />
             </UI.FormInput>
           </UI.FormColumn>

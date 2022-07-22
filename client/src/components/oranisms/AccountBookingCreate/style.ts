@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   position: relative;
+  max-width: 740px;
   margin-bottom: 40px;
 `;
 
@@ -21,8 +22,12 @@ export const FormInput = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: end;
+
   & + div {
     margin-left: 20px;
+    & > div {
+      padding-bottom: 0;
+    }
   }
   label {
     display: block;

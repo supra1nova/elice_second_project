@@ -50,6 +50,7 @@ export const LABELTITLE = {
   OPEN_TIME: '오픈시간',
   CLOSE_TIME: '마지막 주문 시간',
   RESERVES_DATE: '예약 가능 날짜',
+  REMAINDER: '예약 가능 자리',
 };
 
 export const PLACEHOLDER = {
