@@ -64,7 +64,7 @@ const AccountBookingCreate = () => {
       inputMonth: month,
       inputDate: day,
     });
-  }, []);
+  }, [selectDate]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
