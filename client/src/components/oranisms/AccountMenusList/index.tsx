@@ -5,16 +5,17 @@ import * as UI from './style';
 import Table from './MenuTable';
 import * as API from '../../../api/api';
 
-const AccountMenusList = () => {
-  const [menus, setMenus] = useState([]);
+const AccountMenusList = ({ email }: any) => {
+  const [menus, setMenus] = useState<any>([]);
   const getData = async () => {
-    const result = await API.get(`/api/menus/12345678`);
-    setMenus(result);
+    const shop = await API.userGet('/api/restaurants/owner');
+    const result = await API.get(`/api/menus/${shop.REGNumber}`);
+    setMenus([...result]);
   };
   useEffect(() => {
     getData();
   }, []);
-  console.log(menus);
+
   const columns = useMemo(
     () => [
       {
@@ -44,22 +45,15 @@ const AccountMenusList = () => {
         name: e.name,
         price: e.price,
       })),
-    [],
+    [menus],
   );
-  if (menus.length > 0) {
-    return (
-      <UI.Container>
-        <AccountHeader title={SECTION.MENU_MANAGEMENT} />
-        <Table columns={columns} data={data} />
-      </UI.Container>
-    );
-  } else {
-    return (
-      <UI.Container>
-        <AccountHeader title={SECTION.MENU_MANAGEMENT} />
-      </UI.Container>
-    );
-  }
+
+  return (
+    <UI.Container>
+      <AccountHeader title={SECTION.MENU_MANAGEMENT} />
+      <Table columns={columns} data={data} />
+    </UI.Container>
+  );
 };
 
 export default AccountMenusList;
