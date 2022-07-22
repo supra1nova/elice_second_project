@@ -161,7 +161,7 @@ const UsersRegister = () => {
         id: 'inputName',
         name: 'inputName',
         value: formValues.inputName,
-        maxLength: undefined,
+        maxLength: 8,
         autoComplete: undefined,
         onChange: handleChange,
         placeholder: PLACEHOLDER.NAME,
