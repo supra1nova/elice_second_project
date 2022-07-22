@@ -139,7 +139,6 @@ const AccountRestaurantsSecurityOwner = () => {
 
   useEffect(() => {
     API.get(`/api/restaurants/${REGNumber}`).then((res) => {
-      console.log(res);
       const data = {
         inputRegistrationNumber: res.REGNumber,
         inputRestaurantName: res.name,

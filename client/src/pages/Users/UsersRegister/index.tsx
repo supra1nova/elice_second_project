@@ -103,7 +103,7 @@ const UsersRegister = () => {
     const isPhoneMinLength = inputPhoneValue.length >= 11;
     const isNameMinLength = inputNameValue < 2;
     const isNickNameMinLength = inputNameValue < 2;
-    const isValidEmail = validateEmail(values.inputEmail);
+    const isValidEmail = values.inputEmail;
 
     if (!inputNameValue) {
       errors.inputName = ERROR.NAME_INPUT;

@@ -86,6 +86,7 @@ const HomeList = () => {
                 position: 'relative',
                 boxShadow: '1px 1px  8px #dfdfdf',
                 borderRadius: '8px',
+                overflow: 'hidden',
               }}
               key={`${idx}-${item.REGNumber}`}
             >
