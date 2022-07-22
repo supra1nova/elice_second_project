@@ -71,6 +71,20 @@ const post = async (
   return res;
 };
 
+const tokenPost = async (
+  endpoint: String,
+  params: String | null = '',
+  data: object,
+): Promise<any> => {
+  const apiUrl = `${endpoint}/${params}`;
+  const res = await axios.post(apiUrl, data, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  });
+  return res;
+};
+
 const filePost = async (
   endpoint: String,
   params: String | null = '',
@@ -154,4 +168,4 @@ export const del = async (
   }
 };
 
-export { get, userGet, post, file, filePost, patch, del as delete };
+export { get, userGet, tokenPost, post, file, filePost, patch, del as delete };

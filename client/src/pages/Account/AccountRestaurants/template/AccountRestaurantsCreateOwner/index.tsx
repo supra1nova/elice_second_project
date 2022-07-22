@@ -222,7 +222,7 @@ const AccountRestaurantsCreateOwner = () => {
         ownerEmail: formValues.inputOwnerEmail,
       };
 
-      console.log(data);
+      // console.log(data);
 
       await API.post('/api/restaurants', '', data);
 
