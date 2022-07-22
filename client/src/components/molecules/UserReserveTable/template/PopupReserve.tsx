@@ -25,9 +25,10 @@ interface Props {
   REGNumber: number;
   email: string;
   reserveId: number;
+  restaurantName: string;
 }
 
-const PopupReserve = ({ open, onClose, width, titleColor, title, REGNumber, reserveId, email }: Props) => {
+const PopupReserve = ({ open, onClose, width, titleColor, title, restaurantName, REGNumber, reserveId, email }: Props) => {
   const navigate = useNavigate();
 
   const [reviewValue, setReviewValues] = useState<any>('');
@@ -113,14 +114,17 @@ const PopupReserve = ({ open, onClose, width, titleColor, title, REGNumber, rese
       <UI.FormContainer onSubmit={handleSubmit}>
 
         <label>
-          <select name="rating" onChange={e => setRating(e.target.value)}>
+          <UI.FormName>{restaurantName}에서 식사는 어떠셨나요?</UI.FormName>
+          <UI.StyleSelect name="rating" onChange={e => setRating(e.target.value)}>
+            <option value="" disabled selected>평점을 선택해주세요</option>
             <option value="5">5</option>
             <option value="4">4</option>
             <option value="3">3</option>
             <option value="2">2</option>
             <option value="1">1</option>
-          </select>
+          </UI.StyleSelect>
         </label>
+        
         <label>
             <UI.FormName>리뷰</UI.FormName>
             <UI.StyledTextarea 

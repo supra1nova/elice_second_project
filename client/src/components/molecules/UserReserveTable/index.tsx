@@ -183,6 +183,7 @@ export const UserReserveTable = () => {
                 REGNumber={REGNumber[handleIndex]}
                 email={email}
                 reserveId={reserveId[handleIndex]}
+                restaurantName={restaurantName[handleIndex]}
             />
         </>
     );
