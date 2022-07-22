@@ -8,13 +8,10 @@ import Paging from '../../atoms/Pagination/Pagination';
 export const UserReserveTable = () => {
     const [reserveLists, setReserveLists] = useState<any>([])
     const [email, setEmail] = useState('')
-
-    // 1: REGNumber, name, number, reserveId, timeId
-    // 2: RestaurantName
-    // 3: ReserveTime
-    const [data1, setData1] = useState<any>([]);
-    const [data2, setData2] = useState<string[]>([]);
-    const [data3, setData3] = useState<string[]>([]);
+    const [REGNumber, setREGNumber] = useState<any>([])
+    const [timeId, setTimeId] = useState<any>([])
+    const [restaurantName, setRestaurantName] = useState<any>([])
+    const [date, setDate] = useState<any>([])
 
     const [pages, setPages] = useState(1);
     const [perPage, setPerPage] = useState(12);
@@ -43,7 +40,7 @@ export const UserReserveTable = () => {
             if (res) {
                 setEmail(res.email);
             }
-            });
+        });
     }, []);
 
     useEffect(() => {
@@ -52,51 +49,37 @@ export const UserReserveTable = () => {
             setTotal(res.total)
             const datas = res.reserves
             datas.forEach((data:any) => {
-                setData1((result:any) => {
+                setReserveLists((result:any) => {
                     return [
                         ...result,
                         {
-                            REGNumber: data.REGNumber,
-                            timeId: data.timeId,
                             reserveId: data.reserveId,
                             name: data.name,
                             number: data.number
                         }
                     ]}
                 )
+                setREGNumber((result: any) => [...result, data.REGNumber])
+                setTimeId((result: any) => [...result, data.timeId])
             })
         })
     }, [email])
 
     useEffect(() => {
-        data1.forEach((data: any) => {
-            API.userGet(`/api/restaurants/${data.REGNumber}`).then((res) => {
-                setData2((result: any) => [...result, res.name])
+        for(let i = 0; i < reserveLists.length; i++) {
+            API.userGet(`/api/restaurants/${REGNumber[i]}`).then((res) => {
+                setRestaurantName((result: any) => [...result, res.name])
             })
-            API.userGet(`/api/times/${data.timeId}`).then((res) => {
-                setData3((result: any) => [...result, `${res[0].year}년 ${res[0].month}월 ${res[0].date}일 ${res[0].hour}시`])
+            API.userGet(`/api/times/${timeId[i]}`).then((res) => {
+                setDate((result: any) => [...result, `${res[0].year}년 ${res[0].month}월 ${res[0].date}일 ${res[0].hour}시`])
             })
-        })
-    }, [data1])
-
-    // 레스토랑명, 날짜
-    useEffect(() => {
-        for(let i = 0; i < data1.length; i++) {
-            // console.log([i], data1[i])
-            // console.log([i], data2[i])
-            // console.log([i], data3[i])
-            setReserveLists((result: any) => [...result, {
-                reserveId: data1[i].reserveId,
-                restaurant: data2[i],
-                name: data1[i].name,
-                number: data1[i].number,
-                date: data3[i]
-            }])
         }
-    }, [data3])
+    }, [reserveLists])
 
-    console.log(data2)
-    console.log(reserveLists)
+    console.log(REGNumber)
+    console.log(timeId)
+    console.log(restaurantName)
+    console.log(date)
 
     const { 
         getTableProps, 
@@ -118,11 +101,13 @@ export const UserReserveTable = () => {
                 <thead>
                     {headerGroups.map((headerGroup:any, index: number) => (                   
                         <tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                            <UI.StyledTh>식당이름</UI.StyledTh>
                             {headerGroup.headers.map((column: any, index: number) => (
                                 <UI.StyledTh {...column.getHeaderProps()} key={index}>
                                     {column.render('Header')}
                                 </UI.StyledTh>
                             ))}
+                            <UI.StyledTh>예약날짜</UI.StyledTh>
                             <UI.StyledTh>승인상태</UI.StyledTh>
                             <UI.StyledTh>예약관리</UI.StyledTh>
                             <UI.StyledTh>리뷰</UI.StyledTh>
@@ -135,14 +120,16 @@ export const UserReserveTable = () => {
                         prepareRow(row)
                         return (
                             <tr {...row.getRowProps()}>
+                                <UI.StyledTd role="cell">{restaurantName[row.id]}</UI.StyledTd>
                                 {row.cells.map((cell: any, index: number) => {
                                     return (
                                         <UI.StyledTd key={`${cell}-${index}`} {...cell.getCellProps()}>{cell.render('Cell')}</UI.StyledTd>
                                     );
                                 })}
+                                <UI.StyledTd role="cell">{date[row.id]}</UI.StyledTd>
                                 <UI.StyledTd role="cell">예약 완료</UI.StyledTd>
                                 <UI.StyledTd role="cell">
-                                    <UI.TableButton onClick={() => handleClick(row.cells)}>취소</UI.TableButton>
+                                    <UI.TableButton onClick={() => handleClick(row.cells)}>예약 취소</UI.TableButton>
                                 </UI.StyledTd>
                                 <UI.StyledTd role="cell"><UI.BtnReview>작성하기</UI.BtnReview></UI.StyledTd>
                             </tr>
