@@ -11,6 +11,8 @@ export const FormItem = styled.div`
   align-items: start;
 `;
 
+export const FormInput = styled.div``;
+
 export const FormColumn = styled.div`
   width: calc(100% - 120px);
   display: flex;
