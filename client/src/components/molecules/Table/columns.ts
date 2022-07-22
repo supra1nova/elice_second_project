@@ -1,7 +1,7 @@
 export const COLUMNS = [
     {
         Header : '예약번호',
-        accessor : 'id'
+        accessor : 'timeId'
     },
     {
         Header : '식당이름',
@@ -18,13 +18,5 @@ export const COLUMNS = [
     {
         Header : '예약날짜',
         accessor : 'date'
-    },
-    {
-        Header : '예약시간',
-        accessor : 'time'
-    },
-    {
-        Header : '결제 금액',
-        accessor : '\bpayment'
     },
 ];

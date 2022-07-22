@@ -1,110 +1,91 @@
-import { restaurantInfo, updateRestaurantInfo } from "../../routers";
-import {AppDataSource} from "../data-source"
-import {Restaurant} from '../entity'
+import { restaurantInfo, updateRestaurantInfo } from '../../routers';
+import { AppDataSource } from '../data-source';
+import { Restaurant } from '../entity';
 
-/**
- * Loads all posts from the database.
- */
-export class RestaurantModel{
-  
-  async findRestaurantbyEmail(email:string) {
-    const restaurantRepository= AppDataSource.getRepository(Restaurant);
-    // get a post repository to perform operations with post
+export class RestaurantModel {
+  // 1. 업체 생성
+  async create(restaurantInfo: restaurantInfo) {
+    await AppDataSource.createQueryBuilder()
+      .insert()
+      .into(Restaurant)
+      .values([restaurantInfo])
+      .execute();
+  }
+
+  // 2-1. REGNumber 이용 특정 업체 정보 조회
+  async findRestaurantByREGNumber(REGNumber: string) {
+    const restaurantRepository = AppDataSource.getRepository(Restaurant);
     const restaurant = await restaurantRepository.findOneBy({
-    // email: email
-    })
-    return (restaurant);
+      REGNumber: REGNumber,
+    });
+    return restaurant;
   }
 
-  async findRestaurantbyNickName(nickName:string) {
-    const userRepository= AppDataSource.getRepository(Restaurant);
-    // get a post repository to perform operations with post
-    const restaurant = await userRepository.findOneBy({
-    // nickName: nickName
-    })
-    return (restaurant);
-  }
-
-  async findRestaurantByOwnerEmail(ownerEmail:string){
-    const restaurantRepository= AppDataSource.getRepository(Restaurant);
+  // 2-2. email 이용 특정 업체 정보 조회
+  async findRestaurantByOwnerEmail(ownerEmail: string) {
+    const restaurantRepository = AppDataSource.getRepository(Restaurant);
     const restaurant = await restaurantRepository.findOneBy({
-    ownerEmail: ownerEmail
-    })
-    return (restaurant);
+      ownerEmail: ownerEmail,
+    });
+    return restaurant;
   }
 
-  async findRestaurantByREGNumber(REGNumber:string) {
-    const restaurantRepository= AppDataSource.getRepository(Restaurant);
-    const restaurant = await restaurantRepository.findOneBy({
-      REGNumber: REGNumber
-    })
-    return (restaurant);
-  }
-
-  async create(restaurantInfo:restaurantInfo){
-    // const {email, name,password, nickName, phoneNumber,REGNumber}= userInfo;
-    await AppDataSource
-    .createQueryBuilder()
-    .insert()
-    .into(Restaurant)
-    .values([
-      restaurantInfo
-    ])
-    .execute()
-  }
-
-  async deleteRestaurant(REGNumber:string){
-    await AppDataSource
-    .createQueryBuilder()
-    .delete()
-    .from(Restaurant)
-    .where('REGNumber = :REGNumber',{REGNumber:REGNumber})
-    .execute()
-  }
-
-  async countAll() {
-    const restaurantRepository= AppDataSource.getRepository(Restaurant);
-    const count = await restaurantRepository.count({
-    })
-    return count;
-  }
-
-  // 4. 특정 범위(페이지) 위치한 제품 정보 조회
-  async getInRange(criteria: string, page:number, perPage:number) {
-    const restaurantRepository= AppDataSource.getRepository(Restaurant);
-    
+  // 2-3. 특정 범위(페이지) 위치한 제품 정보 조회
+  async getInRange(criteria: string, page: number, perPage: number) {
+    const restaurantRepository = AppDataSource.getRepository(Restaurant);
     if (criteria === 'default') {
       const restaurantsInRange = await restaurantRepository.find({
-        order:{
-          createdAt:"ASC"
+        order: {
+          createdAt: 'ASC',
         },
-        skip:perPage*(page-1),
-        take:perPage
+        skip: perPage * (page - 1),
+        take: perPage,
       });
       return restaurantsInRange;
-    } 
-    else {
+    } else {
       const restaurantsInRange = await restaurantRepository.find({
-        order:{
+        order: {
           average: 'DESC',
-          createdAt: "ASC"
+          createdAt: 'ASC',
         },
-        skip:perPage*(page-1),
-        take:perPage
+        skip: perPage * (page - 1),
+        take: perPage,
       });
       return restaurantsInRange;
     }
   }
-  
-  async updateRestaurant(REGNumber:string, updateRestaurantInfo:updateRestaurantInfo){
-    const restaurantRepository=AppDataSource.getRepository(Restaurant)
-    const updated= await restaurantRepository.update(REGNumber, updateRestaurantInfo)
-    return updated.affected
+
+  // 3. 업체 정보 수정
+  async updateRestaurant(
+    REGNumber: string,
+    updateRestaurantInfo: updateRestaurantInfo,
+  ) {
+    const restaurantRepository = AppDataSource.getRepository(Restaurant);
+    const updated = await restaurantRepository.update(
+      REGNumber,
+      updateRestaurantInfo,
+    );
+    return updated.affected;
   }
 
+  // 4. 업체 정보 삭제
+  async deleteRestaurant(REGNumber: string) {
+    await AppDataSource.createQueryBuilder()
+      .delete()
+      .from(Restaurant)
+      .where('REGNumber = :REGNumber', { REGNumber: REGNumber })
+      .execute();
+  }
 
-  // 4. 평점 추가
-  async updateWisherNumber(isAddition:boolean, REGNumber: string) {
+  // 5. 전체 업체 숫자 카운트
+  async countAll() {
+    const restaurantRepository = AppDataSource.getRepository(Restaurant);
+    const count = await restaurantRepository.count({});
+    return count;
+  }
+
+  // 6. 평점 추가
+  async updateWisherNumber(isAddition: boolean, REGNumber: string) {
     const restaurantRepository = AppDataSource.getRepository(Restaurant);
     const restaurant = await restaurantRepository.find({
       where: { REGNumber: REGNumber },
@@ -114,11 +95,13 @@ export class RestaurantModel{
     } else {
       restaurant[0].wishers -= 1;
     }
-    const ratingUpdatedRestaurant = await restaurantRepository.update(REGNumber, restaurant[0]);
+    const ratingUpdatedRestaurant = await restaurantRepository.update(
+      REGNumber,
+      restaurant[0],
+    );
     return ratingUpdatedRestaurant;
   }
 }
 
-
-const restaurantModel= new RestaurantModel();
-export{restaurantModel};
+const restaurantModel = new RestaurantModel();
+export { restaurantModel };

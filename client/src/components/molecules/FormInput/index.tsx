@@ -3,14 +3,15 @@ import * as UI from './style';
 import Label from '../../atoms/Label';
 
 interface Props {
-  htmlFor?: string;
-  labelTitle?: string;
-  children?: React.ReactNode | string;
+  htmlFor: string;
+  labelTitle: string;
+  direction?: string;
+  children: React.ReactNode | string;
 }
 
-const FormInput = ({ htmlFor, labelTitle, children }: Props) => {
+const FormInput = ({ htmlFor, labelTitle, direction, children }: Props) => {
   return (
-    <UI.Container>
+    <UI.Container direction={direction}>
       <Label htmlFor={htmlFor} labelTitle={labelTitle} />
       {children}
     </UI.Container>

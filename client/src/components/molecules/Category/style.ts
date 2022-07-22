@@ -5,7 +5,7 @@ interface Props {
 }
 
 export const Container = styled.div`
-  padding: 100px 30px 40px 30px;
+  padding: 100px 30px 20px 30px;
   /* height: 130px; */
   display: flex;
   justify-content: space-around;

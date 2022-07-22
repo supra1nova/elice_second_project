@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { Gnb } from '../components/oranisms/Gnb';
+import { Gnb } from '../components/oranisms/GNB/Gnb';
 import styled from 'styled-components';
 
 const AppContainer = styled.div`
@@ -15,6 +15,7 @@ const GlobalContainer = styled.div``;
 const GlobalContainerOutlet = styled.div`
   position: relative;
   margin-left: 233px;
+  background: ${(props) => props.theme.colors.white};
 `;
 
 const GlobalLayout = () => {

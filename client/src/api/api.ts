@@ -71,6 +71,27 @@ const post = async (
   return res;
 };
 
+const filePost = async (
+  endpoint: String,
+  params: String | null = '',
+  data: object,
+): Promise<any> => {
+  try {
+    const apiUrl = `${endpoint}/${params}`;
+    const res = await axios.post(apiUrl, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return res;
+  } catch (err: any) {
+    if (err.response) {
+      console.log(err.response.data);
+    }
+  }
+};
+
 const patch = async (
   endpoint: String,
   params: String | null = '',
@@ -85,7 +106,30 @@ const patch = async (
     });
     return res;
   } catch (err: any) {
-    console.error(err);
+    if (err.response) {
+      console.log(err.response.data);
+    }
+  }
+};
+
+const file = async (
+  endpoint: String,
+  params: String | null = '',
+  data: object,
+): Promise<any> => {
+  try {
+    const apiUrl = `${endpoint}/${params}`;
+    const res = await axios.patch(apiUrl, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return res;
+  } catch (err: any) {
+    if (err.response) {
+      console.log(err.response.data);
+    }
   }
 };
 
@@ -94,14 +138,20 @@ const patch = async (
 export const del = async (
   endpoint: String,
   params: String | null = '',
+  data: object | null = {},
 ): Promise<any> => {
-  const apiUrl = `${endpoint}/${params}`;
-  const res = await axios.delete(apiUrl, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`,
-    },
-  });
-  return res;
+  try {
+    const apiUrl = `${endpoint}/${params}`;
+    const res = await axios.delete(apiUrl, {
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return res;
+  } catch (err: any) {
+    console.error(err);
+  }
 };
 
-export { get, userGet, post, patch, del as delete };
+export { get, userGet, post, file, filePost, patch, del as delete };

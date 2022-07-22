@@ -44,12 +44,23 @@ wishRouter.get('/total/:REGNumber', async (req: Request, res:Response, next:Next
 
 // 4. 찜 삭제 - 사용자 찜 삭제(return 값으로 찜한 전체 인원수 반환)
 // wishRouter.delete('/', ownerRequired, async (req, res, next) => {
+// wishRouter.delete('/', async (req, res, next) => {
+//   try {
+//     //req.email이 나중에는 input이 되어야 한다.
+//     const wishId = Number(req.body.wishId); 
+//     const REGNumber = req.body.REGNumber;
+//     const wishersNumber = await wishService.removeWish(wishId, REGNumber);
+//     res.status(200).json(wishersNumber);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
+
 wishRouter.delete('/', async (req, res, next) => {
   try {
     //req.email이 나중에는 input이 되어야 한다.
-    const wishId = Number(req.body.wishId); 
-    const REGNumber = req.body.REGNumber;
-    const wishersNumber = await wishService.removeWish(wishId, REGNumber);
+    const { email, REGNumber } = req.body;
+    const wishersNumber = await wishService.removeWish(email, REGNumber);
     res.status(200).json(wishersNumber);
   } catch (error) {
     next(error);

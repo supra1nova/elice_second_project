@@ -7,13 +7,14 @@ export interface Props {
   title: string;
   subTitle?: string;
   primary?: boolean;
+  titleColor?: boolean;
   onClose: Dispatch<SetStateAction<boolean>>;
 }
 
-const PopupHeader = ({ title, subTitle, primary, onClose }: Props) => {
+const PopupHeader = ({ title, subTitle, primary, titleColor, onClose }: Props) => {
   return (
     <UI.Container>
-      <UI.Title primary={primary!}>{title}</UI.Title>
+      <UI.Title primary={primary!} titleColor={titleColor}>{title}</UI.Title>
       {subTitle && <UI.SubTitle>{subTitle}</UI.SubTitle>}
       <UI.Close>
         <ButtonIcon onClick={onClose}>
@@ -27,6 +28,7 @@ const PopupHeader = ({ title, subTitle, primary, onClose }: Props) => {
 PopupHeader.defaultProps = {
   subTitle: null,
   primary: false,
+  titleColor: false
 };
 
 export default PopupHeader;

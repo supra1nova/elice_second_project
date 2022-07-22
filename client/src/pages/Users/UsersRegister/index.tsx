@@ -29,7 +29,6 @@ const UsersRegister = () => {
     inputPasswordConfirm: '',
     inputPhone: '',
     inputCheckOwner: undefined,
-    inputRegistrationNumber: '',
     inputCheckAdmin: undefined,
     inputAdminCode: '',
     inputRole: ROLE.USER,
@@ -49,13 +48,10 @@ const UsersRegister = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
     if (formValues.inputCheckOwner) {
       formValues.inputRole = ROLE.OWNER;
-    } else {
-      formValues.inputRole = ROLE.USER;
-    }
-
-    if (
+    } else if (
       formValues.inputCheckAdmin &&
       formValues.inputAdminCode === CODE.ADMIN
     ) {
@@ -78,14 +74,7 @@ const UsersRegister = () => {
       };
 
       await API.post('/api/users/register', '', data);
-      const isError = !!formErrors;
-      if (isError) {
-        if (data.role === ROLE.OWNER) {
-          navigate('/account');
-        } else {
-          navigate('/users/login');
-        }
-      }
+      navigate('/users/login');
     } catch (err: any) {
       console.error(err);
     }
@@ -99,58 +88,64 @@ const UsersRegister = () => {
   }, [formErrors]);
 
   const validate = (values: any) => {
-    const isInputNameValue = values.inputName;
-    const isInputNicknameValue = values.inputNickname;
-    const isInputEmailValue = values.inputEmail;
-    const isInputPasswordValue = values.inputPassword;
-    const isInputPasswordConfirmValue = values.inputPasswordConfirm;
-    const isInputPhoneValue = values.inputPhone;
-    const isInputCheckOwnerValue = values.inputCheckOwner;
-    const isInputCheckAdminChecked = values.inputCheckAdmin;
-    const isInputAdminCodeValue = values.inputAdminCode;
+    const inputNameValue = values.inputName;
+    const inputNicknameValue = values.inputNickname;
+    const inputEmailValue = values.inputEmail;
+    const inputPasswordValue = values.inputPassword;
+    const inputPasswordConfirmValue = values.inputPasswordConfirm;
+    const inputPhoneValue = values.inputPhone;
+    const inputCheckOwnerValue = values.inputCheckOwner;
+    const inputCheckAdminChecked = values.inputCheckAdmin;
+    const inputAdminCodeValue = values.inputAdminCode;
 
+    const isPasswordMinLength = inputPasswordValue.length >= 8;
+    const isPasswordConfirmMinLength = inputPasswordConfirmValue.length >= 8;
+    const isPhoneMinLength = inputPhoneValue.length >= 11;
+    const isNameMinLength = inputNameValue < 2;
+    const isNickNameMinLength = inputNameValue < 2;
     const isValidEmail = validateEmail(values.inputEmail);
 
-    const isPasswordMinLength = isInputPasswordValue.length >= 8;
-    const isPhoneMinLength = isInputPhoneValue.length >= 11;
-    const isAdminCodeMinLength = isInputPasswordValue.length >= 4;
-    const isNameMinLength = isInputNameValue < 2;
-
-    if (!isInputNameValue) {
+    if (!inputNameValue) {
       errors.inputName = ERROR.NAME_INPUT;
     } else if (isNameMinLength) {
       errors.inputName = ERROR.NAME_MIN_LENGTH;
     }
 
-    if (!isInputNicknameValue) {
+    if (!inputNicknameValue) {
       errors.inputNickname = ERROR.NICKNAME_INPUT;
+    } else if (isNickNameMinLength) {
+      errors.inputNickname = ERROR.NICKNAME_MIN_LENGTH;
     }
 
-    if (!isInputEmailValue) {
+    if (!inputEmailValue) {
       errors.inputEmail = ERROR.EMAIL_INPUT;
-    } else if (!isValidEmail) {
-      errors.inputEmail = ERROR.EMAIL_VALID;
+    } else if (isValidEmail) {
+      errors.inputEmail = ERROR.ID_EMAIL_VALID;
     }
 
-    if (!isInputPasswordValue) {
+    if (!inputPasswordValue) {
       errors.inputPassword = ERROR.PASSWORD_INPUT;
     } else if (!isPasswordMinLength) {
       errors.inputPassword = ERROR.PASSWORD_MIN_LENGTH;
     }
 
-    if (!isInputPasswordConfirmValue) {
+    if (!inputPasswordConfirmValue) {
       errors.inputPasswordConfirm = ERROR.PASSWORD_INPUT;
-    } else if (!isPasswordMinLength) {
+    } else if (!isPasswordConfirmMinLength) {
+      errors.inputPasswordConfirm = ERROR.PASSWORD_MIN_LENGTH;
+    } else if (inputPasswordConfirmValue !== inputPasswordValue) {
       errors.inputPasswordConfirm = ERROR.PASSWORD_SAME;
     }
 
-    if (!isInputPhoneValue) {
+    if (!inputPhoneValue) {
       errors.inputPhone = ERROR.PHONE_INPUT;
     } else if (!isPhoneMinLength) {
       errors.inputPhone = ERROR.PHONE_VALID;
     }
 
-    if (isInputCheckAdminChecked && isInputAdminCodeValue !== CODE.ADMIN) {
+    if (inputCheckAdminChecked && !inputAdminCodeValue) {
+      errors.inputAdminCode = ERROR.ADMIN_CODE_INPUT;
+    } else if (inputCheckAdminChecked && inputAdminCodeValue !== CODE.ADMIN) {
       errors.inputAdminCode = ERROR.ADMIN_CODE_INPUT_VALID;
     }
 
@@ -251,21 +246,6 @@ const UsersRegister = () => {
         onChange: handleChange,
         placeholder: PLACEHOLDER.AMDIN_CODE,
         error: formErrors.inputAdminCode,
-      },
-    ],
-    owner: [
-      {
-        htmlFor: 'inputRegistrationNumber',
-        labelTitle: LABELTITLE.OWNER_REGISTRATION_NUMBER,
-        type: 'text',
-        id: 'inputRegistrationNumber',
-        name: 'inputRegistrationNumber',
-        value: formValues.inputRegistrationNumber,
-        maxLength: 11,
-        autoComplete: undefined,
-        onChange: handleChange,
-        placeholder: PLACEHOLDER.OWNER_REGISTRATION_NUMBER,
-        error: formErrors.inputRegistrationNumber,
       },
     ],
   };

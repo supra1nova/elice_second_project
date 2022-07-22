@@ -13,9 +13,13 @@
     "@types/react-slick": "^0.23.10",
     "@types/react-table": "^7.7.12",
     "axios": "^0.27.2",
+    "date-fns": "^2.28.0",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
+    "react-datepicker": "^4.8.0",
+    "react-daum-postcode": "^3.1.1",
     "react-dom": "^18.2.0",
+    "react-js-pagination": "^3.0.3",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
@@ -27,6 +31,8 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
+    "@types/react-datepicker": "^4.4.2",
+    "@types/react-js-pagination": "^3.0.4",
     "@types/styled-components": "^5.1.25",
     "prettier": "2.7.1"
   },
@@ -60,5 +66,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:3001/"
 }

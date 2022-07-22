@@ -1,5 +1,5 @@
-import { UserModel, userModel} from "../db/data-source"
-import { userInfo } from "src/routers";
+import { restaurantModel, UserModel, userModel} from "../db/data-source"
+import { updateUserInfo, userInfo } from "src/routers";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -12,9 +12,8 @@ class UserService {
 
   // 회원가입
   async addUser(userInfo:userInfo) {
-    const { email, name, password,nickName,phoneNumber } = userInfo;
+    const { email, name, password, nickName, phoneNumber } = userInfo;
     // 이메일 중복 확인
-    console.log(email)
     if(email==undefined) throw new Error("Email was not given");
     const user = await this.userModel.findUserbyEmail(email);
     if (user) {
@@ -24,10 +23,11 @@ class UserService {
     }
     // 이메일 중복은 이제 아니므로, 회원가입을 진행함
     // 우선 비밀번호 해쉬화(암호화)
-    if(password==undefined) throw new Error("Password was not given");
+    if(!email || !name || !password || !nickName || !phoneNumber) throw new Error("data is not given");
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUserInfo:userInfo = userInfo;
-    newUserInfo.password= hashedPassword;
+    newUserInfo.password = hashedPassword;
+
     // db에 저장
     const createdNewUser = await this.userModel.create(newUserInfo);
     return createdNewUser;
@@ -70,7 +70,15 @@ class UserService {
     // 2개 프로퍼티를 jwt 토큰에 담음
     const token = jwt.sign({ userEmail: user.email, role: user.role }, secretKey);
 
-    return { token };
+    const restaurant = await restaurantModel.findRestaurantByOwnerEmail(email);
+    if (!restaurant) {
+      const REGNumber = undefined;
+      return { token, REGNumber };
+    }
+    const REGNumber = restaurant?.REGNumber;
+
+    console.log(REGNumber);
+    return { token, REGNumber };
   }
 
   async findUser(email:string){
@@ -87,11 +95,11 @@ class UserService {
     const user= await this.userModel.findUserbyEmail(email);
     return user
   }
-
+  
   // // 유저정보 수정, 현재 비밀번호가 있어야 수정 가능함.
-  async setUser(currentPassword:string, userInfo:userInfo) {
-    const {email} = userInfo;
-    if(email==undefined) throw new Error("email not provided");
+  async setUser(updateUserInfo: updateUserInfo, email: string) {
+    const { currentPassword } = updateUserInfo;
+    if(!email) throw new Error("email not provided");
     const user = await this.userModel.findUserbyEmail(email);
     if (!user) {
       throw new Error(
@@ -115,20 +123,18 @@ class UserService {
     // 이제 드디어 업데이트 시작
 
     // 비밀번호도 변경하는 경우에는, 회원가입 때처럼 해쉬화 해주어야 함.
-    const { password } = userInfo;
-
-    if (password) {
+    const { password } = updateUserInfo;
+    
+    console.log('password : ', password, '<<');
+    if (password !== undefined) {
       const newPasswordHash = await bcrypt.hash(password, 10);
-      userInfo.password = newPasswordHash;
+      updateUserInfo.password = newPasswordHash;
     }
+    console.log('after password : ', updateUserInfo.password, '<<');
 
     // 업데이트 진행
-    // console.log("============",email);
-    // console.log("============",userInfo);
-    delete userInfo.email;
-    console.log("===============", userInfo);
-    console.log("============", email)
-    const updateduser = await this.userModel.updateUser(email,userInfo);
+    delete updateUserInfo.email;
+    const updateduser = await this.userModel.updateUser(email, updateUserInfo);
     return updateduser;
   }
     // 3. 전체 제품 품목 수(SKU) 조회
@@ -143,16 +149,17 @@ class UserService {
     const rangedProductsInfo = await this.userModel.getInRange(page, perPage);
     return rangedProductsInfo;
   }
+
   // //유저 정보 삭제, 현재 비밀번호가 있어야 수정 가능함.
   //박세웅
   async removeUser(userInfo:userInfo){
     const {email, password}= userInfo;
-    if(email==undefined) throw new Error("Email was not given");
+    if(!email) throw new Error("Email was not given");
     let user = await this.userModel.findUserbyEmail(email);
     if(user==null){throw new Error('존재하지 않는 아이디입니다.')}
     const correctPasswordHash = user.password;
 
-    if(password==undefined) throw new Error("Password was not given");
+    if(!password) throw new Error("Password was not given");
     const isPasswordCorrect = await bcrypt.compare(
       password,
       correctPasswordHash,

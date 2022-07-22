@@ -1,9 +1,7 @@
-import {BaseEntity, Entity, Column, PrimaryGeneratedColumn,PrimaryColumn, CreateDateColumn, ManyToOne, OneToMany} from "typeorm"
-import { Reserve } from "./Reserve";
-import { Restaurant } from "./Restaurant";
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 
 @Entity('Wish')
-export class Wish extends BaseEntity{
+export class Wish extends BaseEntity {
   @PrimaryGeneratedColumn()
   wishId: number;
 
@@ -13,12 +11,6 @@ export class Wish extends BaseEntity{
   @Column()
   email: string;
 
-  @CreateDateColumn({type:"timestamp"})
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
-  
-  // @ManyToOne(()=>Restaurant, restaurant=> restaurant.times, {onDelete:'CASCADE'})
-  // restaurant:Restaurant
-
-  // @OneToMany(()=>Reserve, reserve=>reserve.time,{ cascade: ['insert', 'update'] })
-  // reserves: Reserve[]
 }

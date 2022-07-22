@@ -1,5 +1,5 @@
 import { PlainObjectToNewEntityTransformer } from "typeorm/query-builder/transformer/PlainObjectToNewEntityTransformer";
-import { userInfo } from "../../routers";
+import { updateUserInfo, userInfo } from "../../routers";
 import {AppDataSource} from "../data-source"
 import {User} from '../entity/User'
 
@@ -66,9 +66,10 @@ export class UserModel{
     return usersInRange;
   }
 
-  async updateUser(email:string,userInfo:userInfo){
-    const userRepository=AppDataSource.getRepository(User)
-    const updated= await userRepository.update(email, userInfo)
+  async updateUser(userEmail: string, updateUserInfo: updateUserInfo) {
+    const userRepository = AppDataSource.getRepository(User)
+    const { currentPassword, ...others } = updateUserInfo;
+    const updated = await userRepository.update(userEmail, others);
     return updated.affected
   }
 }

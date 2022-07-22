@@ -1,96 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as API from '../../../api/api';
 import LNBLayout from '../../../components/molecules/LNBLayout';
 import Avatar from '../../../components/molecules/Avatar';
+import InputFileButton from '../../../components/atoms/InputFileButton';
 import Form from '../../../components/atoms/Form';
 import FormInputText from '../../../components/molecules/FormInputText';
 import FormFooter from '../../../components/molecules/FormFooter';
-import PopupCurrentPassword from './template/PopupCurrentPassword';
 import Button from '../../../components/atoms/Button';
 import { USERS } from '../../../constants/lnb';
 import { BUTTON } from '../../../constants/input';
-import { ROLE } from '../../../constants/member';
 import { LABELTITLE, PLACEHOLDER } from '../../../constants/input';
 import { ERROR } from '../../../constants/error';
-import { validateEmail } from '../../../functions';
 import * as UI from './style';
-import InputFileButton from '../../../components/atoms/InputFileButton';
-import Typography from '../../../components/atoms/Typography';
 
 type valueObject = {
   [key: string]: any;
 };
 
 const UsersSignout = () => {
+  const navigate = useNavigate();
   const initialValue = {
-    inputFileAvatarImage: '',
     inputName: '',
     inputNickname: '',
+    inputEmail: '',
     inputPassword: '',
     inputPasswordConfirm: '',
     inputPhone: '',
-    inputRole: ROLE.USER,
   };
 
-  const [openPopupCurrentPassword, setOpenPopupCurrentPassword] =
-    useState(false);
   const [formValues, setFormValues] = useState<valueObject>(initialValue);
   const [formErrors, setFormErrors] = useState<valueObject>({});
-  const [fileImage, setFileImage] = useState('');
-  const [isSubmit, setIsSubmit] = useState(false);
 
+  const [image, setImage] = useState<valueObject>({
+    image_file: '',
+    preview_URL: '',
+  });
+
+  const [isSubmit, setIsSubmit] = useState(false);
   const errors: valueObject = {};
 
   useEffect(() => {
     API.userGet('/api/users/user').then((res) => {
       const data = {
-        inputFileAvatarImage: res.image,
         inputName: res.name,
         inputNickname: res.nickName,
         inputEmail: res.email,
         inputPhone: res.phoneNumber,
+        inputPassword: '',
+        inputPasswordConfirm: '',
       };
       setFormValues(data);
+      setImage({ preview_URL: res.image });
     });
   }, []);
-
-  const handleOpenPopupCurrentPassword = (e: any) => {
-    e.preventDefault();
-    setOpenPopupCurrentPassword(true);
-  };
-
-  const handleClosePopupCurrentPassword = (e: any) => {
-    e.preventDefault();
-    setOpenPopupCurrentPassword(!openPopupCurrentPassword);
-  };
-
-  const handleChange = (e: any) => {
-    const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-    setFormValues({ ...formValues, [name]: value });
-  };
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    setFormErrors(validate(formValues));
-    setIsSubmit(true);
-
-    try {
-      const data = {
-        name: formValues.inputName,
-        password: formValues.inputPassword,
-        nickName: formValues.inputNickname,
-        phoneNumber: formValues.inputPhone,
-        image: formValues.inputFileAvatarImage,
-      };
-      console.log(data);
-
-      await API.patch('/api/users', '', data);
-    } catch (err: any) {
-      console.error(err);
-    }
-  };
 
   useEffect(() => {
     console.log(formErrors);
@@ -99,53 +62,107 @@ const UsersSignout = () => {
     }
   }, [formErrors]);
 
+  useEffect(() => {
+    return () => {
+      URL.revokeObjectURL(image.preview_URL);
+    };
+  }, []);
+
+  const handleChange = (e: any) => {
+    const target = e.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+  const saveFileImage = (e: any) => {
+    e.preventDefault();
+    if (e.target.files[0]) {
+      URL.revokeObjectURL(image.preview_URL);
+      const preview_URL = URL.createObjectURL(e.target.files[0]);
+      setImage(() => ({
+        image_file: e.target.files[0],
+        preview_URL: preview_URL,
+      }));
+    }
+  };
+
+  const deleteFileImage = () => {
+    URL.revokeObjectURL(image.preview_URL);
+    setImage({
+      image_file: '',
+      preview_URL: '',
+    });
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setFormErrors(validate(formValues));
+    setIsSubmit(true);
+    try {
+      const data = {
+        email: formValues.inputEmail,
+        name: formValues.inputName,
+        password: formValues.inputPassword,
+        nickName: formValues.inputNickname,
+        phoneNumber: formValues.inputPhone,
+        currentPassword: formValues.inputPasswordCurrent,
+      };
+
+      await API.patch('/api/users', '', data);
+
+      if (image.image_file) {
+        const formData = new FormData();
+        formData.append('image', image.image_file);
+        formData.append('currentPassword', formValues.inputPasswordCurrent);
+        await API.file('/api/users/image', '', formData);
+      }
+      navigate('/users/security');
+      formValues.inputPasswordCurrent = '';
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
+
   const validate = (values: any) => {
-    // const isInputNameValue = values.inputName;
-    // const isInputNicknameValue = values.inputNickname;
-    // const isInputEmailValue = values.inputEmail;
-    // const isInputPasswordValue = values.inputPassword;
-    // const isInputPasswordConfirmValue = values.inputPasswordConfirm;
-    // const isInputPhoneValue = values.inputPhone;
+    const inputNameValue = values.inputName;
+    const inputNicknameValue = values.inputNickname;
+    const inputPhoneValue = values.inputPhone;
+    const inputPasswordValue = values.inputPassword;
+    const inputPasswordConfirmValue = values.inputPasswordConfirm;
+    const inputPasswordCurrentValue = values.inputPasswordCurrent;
 
-    // const isValidEmail = validateEmail(values.inputEmail);
+    const isPasswordMinLength = inputPasswordValue.length >= 8;
+    const isPasswordConfirmMinLength = inputPasswordConfirmValue.length >= 8;
+    const isPhoneMinLength = inputPhoneValue.length >= 11;
+    const isNameMinLength = inputNameValue < 2;
+    const isNickNameMinLength = inputNameValue < 2;
 
-    // const isPasswordMinLength = isInputPasswordValue.length >= 8;
-    // const isPhoneMinLength = isInputPhoneValue.length >= 11;
-    // const isNameMinLength = isInputNameValue < 2;
+    if (inputNameValue && isNameMinLength) {
+      errors.inputName = ERROR.NAME_MIN_LENGTH;
+    }
 
-    // if (!isInputNameValue) {
-    //   errors.inputName = ERROR.NAME_INPUT;
-    // } else if (isNameMinLength) {
-    //   errors.inputName = ERROR.NAME_MIN_LENGTH;
-    // }
+    if (inputNicknameValue && isNickNameMinLength) {
+      errors.inputNickname = ERROR.NICKNAME_MIN_LENGTH;
+    }
 
-    // if (!isInputNicknameValue) {
-    //   errors.inputNickname = ERROR.NICKNAME_INPUT;
-    // }
+    if (inputPasswordValue && !isPasswordMinLength) {
+      errors.inputPassword = ERROR.PASSWORD_MIN_LENGTH;
+    }
 
-    // if (!isInputEmailValue) {
-    //   errors.inputEmail = ERROR.EMAIL_INPUT;
-    // } else if (!isValidEmail) {
-    //   errors.inputEmail = ERROR.EMAIL_VALID;
-    // }
+    if (inputPhoneValue && !isPhoneMinLength) {
+      errors.inputPhone = ERROR.PHONE_VALID;
+    }
 
-    // if (!isInputPasswordValue) {
-    //   errors.inputPassword = ERROR.PASSWORD_INPUT;
-    // } else if (!isPasswordMinLength) {
-    //   errors.inputPassword = ERROR.PASSWORD_MIN_LENGTH;
-    // }
+    if (inputPasswordConfirmValue && !isPasswordConfirmMinLength) {
+      errors.inputPasswordConfirm = ERROR.PASSWORD_MIN_LENGTH;
+    } else if (inputPasswordConfirmValue !== inputPasswordValue) {
+      errors.inputPasswordConfirm = ERROR.PASSWORD_SAME;
+    }
 
-    // if (!isInputPasswordConfirmValue) {
-    //   errors.inputPasswordConfirm = ERROR.PASSWORD_INPUT;
-    // } else if (!isPasswordMinLength) {
-    //   errors.inputPasswordConfirm = ERROR.PASSWORD_SAME;
-    // }
-
-    // if (!isInputPhoneValue) {
-    //   errors.inputPhone = ERROR.PHONE_INPUT;
-    // } else if (!isPhoneMinLength) {
-    //   errors.inputPhone = ERROR.PHONE_VALID;
-    // }
+    if (!inputPasswordCurrentValue) {
+      errors.inputPasswordCurrent = ERROR.PASSWORD_CURRENT;
+    }
 
     return errors;
   };
@@ -179,6 +196,19 @@ const UsersSignout = () => {
         error: formErrors.inputNickname,
       },
       {
+        htmlFor: 'inputPhone',
+        labelTitle: LABELTITLE.PHONE,
+        type: 'text',
+        id: 'inputPhone',
+        name: 'inputPhone',
+        value: formValues.inputPhone || '',
+        maxLength: 11,
+        autoComplete: undefined,
+        onChange: handleChange,
+        placeholder: PLACEHOLDER.PHONE,
+        error: formErrors.inputPhone,
+      },
+      {
         htmlFor: 'inputPassword',
         labelTitle: LABELTITLE.PASSWORD,
         type: 'password',
@@ -205,28 +235,19 @@ const UsersSignout = () => {
         error: formErrors.inputPasswordConfirm,
       },
       {
-        htmlFor: 'inputPhone',
-        labelTitle: LABELTITLE.PHONE,
-        type: 'text',
-        id: 'inputPhone',
-        name: 'inputPhone',
-        value: formValues.inputPhone || '',
-        maxLength: 11,
+        htmlFor: 'inputPasswordCurrent',
+        labelTitle: LABELTITLE.PASSWORD_CURRENT,
+        type: 'password',
+        id: 'inputPasswordCurrent',
+        name: 'inputPasswordCurrent',
+        value: formValues.inputPasswordCurrent || '',
+        maxLength: undefined,
         autoComplete: undefined,
         onChange: handleChange,
-        placeholder: PLACEHOLDER.PHONE,
-        error: formErrors.inputPhone,
+        placeholder: PLACEHOLDER.PASSWORD_CURRENT,
+        error: formErrors.inputPasswordCurrent,
       },
     ],
-  };
-
-  const saveFileImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // @ts-ignore
-    setFileImage(URL.createObjectURL(event.target.files[0]));
-  };
-  const deleteFileImage = () => {
-    URL.revokeObjectURL(fileImage);
-    setFileImage('');
   };
 
   return (
@@ -234,7 +255,7 @@ const UsersSignout = () => {
       <UI.Container>
         <UI.Content>
           <UI.AvatarContainer>
-            <Avatar userId='userIDDDD' image={fileImage} />
+            <Avatar userId={formValues.inputEmail} image={image.preview_URL} />
 
             <UI.AvatarLabel>프로필</UI.AvatarLabel>
             <UI.AvatarInput>
@@ -267,12 +288,6 @@ const UsersSignout = () => {
             </FormFooter>
           </Form>
         </UI.Content>
-
-        <PopupCurrentPassword
-          open={openPopupCurrentPassword}
-          onClose={handleClosePopupCurrentPassword}
-          onClick={handleOpenPopupCurrentPassword}
-        />
       </UI.Container>
     </LNBLayout>
   );

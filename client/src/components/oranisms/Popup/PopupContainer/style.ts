@@ -6,6 +6,7 @@ interface Props {
 }
 
 export const Container = styled.div`
+  z-index: 99;
   position: fixed;
   left: 0;
   top: 0;
@@ -38,10 +39,11 @@ export const Content = styled.div`
   z-index: 10;
 `;
 
-export const Section = styled.section`
+export const Section = styled.section<any>`
   position: relative;
-  min-width: 350px;
-  padding: 40px 20px;
+  min-width: ${(props) => 
+    props.width ? `${props.width}px` : '350px'};
+  padding: ${(props) => `40px 20px ${props.paddingBottom}px`};
   border-radius: 5px;
   background: #fff;
 `;
