@@ -48,27 +48,6 @@ export const UserReserveTable = () => {
 
     useEffect(() => {
         API.userGet(`/api/reserves/user/${email}`).then((res) => {
-            console.log(res)
-            const datas = res.reserves;
-            datas.forEach((data: any) => {
-                setData1((result: any) => {
-                return [
-                    ...result,
-                    {
-                    REGNumber: data.REGNumber,
-                    timeId: data.timeId,
-                    reserveId: data.reserveId,
-                    name: data.name,
-                    number: data.number,
-                    },
-                ];
-                });
-            });
-        });
-    }, [email]);
-
-    useEffect(() => {
-        API.userGet(`/api/reserves/user/${email}`).then((res) => {
             setPerPage(res.perPage)
             setTotal(res.total)
             const datas = res.reserves
@@ -116,8 +95,8 @@ export const UserReserveTable = () => {
         }
     }, [data3])
 
-    // console.log(data2)
-    // console.log(reserveLists)
+    console.log(data2)
+    console.log(reserveLists)
 
     const { 
         getTableProps, 
