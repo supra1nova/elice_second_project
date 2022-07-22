@@ -222,9 +222,9 @@ const AccountRestaurantsCreateOwner = () => {
         ownerEmail: formValues.inputOwnerEmail,
       };
 
-      console.log(data);
+      // console.log(data);
 
-      await API.post('/api/restaurants/', '', data);
+      await API.tokenPost('/api/restaurants', '', data);
 
       if (image.image_file) {
         const formData = new FormData();
