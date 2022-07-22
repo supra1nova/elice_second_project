@@ -7,7 +7,7 @@ export const BtnMenu = styled.button`
   border: ${(props) =>
     props.name === 'register' ? 'none' : '1px solid #64AD57'};
   border-radius: 20px;
-  margin-top: ${(props) => (props.name === 'register' ? '20px' : '6px')};
+  margin-top: ${(props) => (props.name === 'register' ? '20px' : '10px')};
   height: 40px;
   width: 100%;
   color: ${(props) => (props.name === 'register' ? 'white' : '#64AD57')};
@@ -18,9 +18,11 @@ export const BtnMenu = styled.button`
 `;
 
 export const Description = styled.p`
-  font-size: 15px;
+  ${(props) => props.theme.font.description2};
+  color: ${(props) => props.theme.colors.font1};
+  line-height: 18px;
   letter-spacing: normal;
-  margin-top: 30px;
+  margin-top: 40px;
 `;
 
 export const ButtonWrapper = styled.div`

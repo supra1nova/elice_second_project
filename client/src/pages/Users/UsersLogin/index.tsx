@@ -157,7 +157,7 @@ const UsersLogin = () => {
         </FormFooter>
       </Form>
       <UI.JoinContainer>
-        <Typography>TEAM3의 회원이 아니신가요?</Typography>
+        <Typography>미식시간의 회원이 아니신가요?</Typography>
         <ButtonText component='primary' to={'/users/register'}>
           회원가입
         </ButtonText>

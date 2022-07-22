@@ -11,11 +11,16 @@ export const Container = styled.section`
 `;
 
 export const Logo = styled.div`
-  width: 120px;
-  img {
-    width: 100%;
-  }
+  ${(props) => props.theme.font.title1};
+  font-weight: 700;
+  color: ${(props) => props.theme.colors.fontMain};
 `;
+
+export const Line = styled.div`
+  margin: 0 -30px 0 -20px;
+  padding: 0 0 18px;
+  border-bottom: 1px solid #E5E5E5;
+`
 
 export const InfoWrapper = styled.div`
   padding-top: 30px;
@@ -25,6 +30,10 @@ export const Description = styled.p`
   ${(props) => props.theme.font.caption};
   color: ${(props) => props.theme.colors.font3};
   margin-bottom: 5px;
+
+  a{
+    color: ${(props) => props.theme.colors.font1};
+  }
 `;
 
 export const Footer = styled.footer`
@@ -48,7 +57,7 @@ export const UserInfoWrapper = styled.div`
 
 export const Greetings = styled.div`
   ${(props) => props.theme.font.subtitle2}
-  font-size: 18px;
+  color: ${(props) => props.theme.colors.font1};
   line-height: 1.3;
 `;
 

@@ -15,6 +15,7 @@ export const GridContainer = styled.div`
 `;
 
 export const Title = styled.p`
+  color: ${(props) => props.theme.colors.font1};
   font-size: 24px;
   font-weight: 700;
   margin-top: 20px;

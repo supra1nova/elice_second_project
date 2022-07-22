@@ -8,11 +8,13 @@ interface Props {
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: ${(props: Props) => (props.large ? '370px' : '193px')};
   height: ${(props: Props) => (props.large ? '326px' : '245px')};
-  box-shadow: 5px 5px 3px #eaece5;
-  border-radius: 10px;
+  /* box-shadow: 5px 5px 3px #eaece5; */
+  /* border-radius: 10px; */
   overflow: hidden;
+  margin-right: 10px;
 `;
 
 export const ImgWrapper = styled.div`
@@ -33,7 +35,7 @@ export const ImgWrapper = styled.div`
 export const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 10px;
+  /* padding: 0 10px; */
 `;
 
 export const Title = styled.div`

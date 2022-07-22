@@ -21,6 +21,7 @@ export const SECTION = {
   MENU_MANAGEMENT: '메뉴 관리',
   RESERVATION_REGISTER: '예약 등록',
   RESERVATION_MANAGEMENT: '예약 관리',
+  RESERVATION_RESERVES: '예약 조회',
 };
 
 export const POPUP = {

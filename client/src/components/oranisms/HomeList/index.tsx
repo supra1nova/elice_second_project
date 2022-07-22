@@ -84,8 +84,10 @@ const HomeList = () => {
             <div
               style={{
                 position: 'relative',
-                boxShadow: '1px 1px  8px #dfdfdf',
-                borderRadius: '8px',
+                // boxShadow: '1px 1px  8px #dfdfdf',
+                borderBottom: '1px solid #E5E5E5',
+                padding: '20px 0',
+                // borderRadius: '8px',
                 overflow: 'hidden',
               }}
               key={`${idx}-${item.REGNumber}`}
@@ -104,7 +106,6 @@ const HomeList = () => {
           );
         })}
       </UI.GridContainer>
-      <UI.Divider />
 
       <UI.Title>평점이 높은 인기 식당</UI.Title>
       <UI.SubTitle>방문자들이 평가한 높은 평점의 식당을 만나보세요</UI.SubTitle>
@@ -141,7 +142,6 @@ const HomeList = () => {
         })}
       </UI.FlexContainer>
 
-      <UI.Divider />
       <UI.Title>신규 오픈!</UI.Title>
       <UI.SubTitle>신규 오픈한 식당을 만나보세요</UI.SubTitle>
       <UI.FlexContainer>
