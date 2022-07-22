@@ -417,7 +417,7 @@ const AccountRestaurantsSecurityOwner = () => {
     <LNBLayout items={ACCOUNT.OWNER}>
       <UI.Container>
         <UI.Content>
-          <AccountHeader title={'레스토랑 등록'} />
+          <AccountHeader title={'레스토랑 관리'} />
           <Form onSubmit={handleSubmit}>
             {inputTextData.owner.map((item, index) => {
               return FormInputTextHorizontal(item, index);
