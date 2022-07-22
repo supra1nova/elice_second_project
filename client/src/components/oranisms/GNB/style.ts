@@ -49,6 +49,7 @@ export const UserInfoWrapper = styled.div`
 export const Greetings = styled.div`
   ${(props) => props.theme.font.subtitle2}
   font-size: 18px;
+  line-height: 1.3;
 `;
 
 export const UserInfo = styled.div`
