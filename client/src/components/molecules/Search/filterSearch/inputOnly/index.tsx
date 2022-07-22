@@ -22,7 +22,7 @@ const SearchInput = ({ setInputValue }: any) => {
           }
           timer = setTimeout(function () {
             setInputValue(e.target.value);
-          }, 300);
+          }, 100);
         }}
         ref={inputRef}
       />
