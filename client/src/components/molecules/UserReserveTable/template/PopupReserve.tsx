@@ -12,6 +12,8 @@ import Button from '../../../atoms/Button';
 import "react-datepicker/dist/react-datepicker.css";
 import InputFileButton from '../../../../components/atoms/InputFileButton';
 import FileTumbnail from '../../../../components/atoms/FileTumbnail';
+import DatePicker from 'react-datepicker';
+import { ko } from 'date-fns/esm/locale';
 
 interface Props {
   open: boolean;

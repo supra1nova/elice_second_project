@@ -64,6 +64,7 @@ export const LABELTITLE = {
   OPEN_TIME: '오픈시간',
   CLOSE_TIME: '마지막 주문 시간',
   RESERVES_DATE: '예약 가능 날짜',
+  RESERVES_DATE_CHECK: '예약 관리 날짜 조회',
   REMAINDER: '예약 가능 자리',
 };
 

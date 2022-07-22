@@ -8,7 +8,7 @@ import { LABELTITLE, BUTTON } from '../../../constants/input';
 import { ERROR } from '../../../constants/error';
 import * as UI from './style';
 import Button from '../../atoms/Button';
-import BookingList from '../../molecules/BookingList'
+import ReserveList from '../../molecules/ReserveList'
 
 type valueObject = {
   [key: string]: any;
@@ -19,7 +19,8 @@ const AccountBookingList = () => {
   return (
     <UI.Container>
       <AccountHeader title={SECTION.RESERVATION_MANAGEMENT} />
-      <BookingList />
+      <UI.StyledText>* 예약자가 있을 시 삭제가 불가능합니다.</UI.StyledText>
+      <ReserveList />
     </UI.Container>
   );
 };
