@@ -118,5 +118,7 @@ reservation_web
 ## 🗄 Server
 
 ### **Title**
+- multer-S3적용기: https://returnzer0.tistory.com/49?category=947571
+- Redis 적용기: https://returnzer0.tistory.com/55
 
 내용적기
