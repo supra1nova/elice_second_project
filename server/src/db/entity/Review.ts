@@ -1,8 +1,8 @@
-import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import { BaseEntity, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, PrimaryColumn } from 'typeorm';
 
 @Entity('Review')
 export class Review extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   reserveId: number;
 
   @Column({})

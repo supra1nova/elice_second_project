@@ -3,6 +3,10 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { restaurantService, restaurantImageService } from '../services';
 import { ownerRequired, loginRequired } from '../middlewares';
 import { upload, s3 } from '../config/upload';
+const DEFAULT_EXPRIE= 3600
+import {client} from '../config/redis'
+import { resolveModuleName } from 'typescript';
+
 
 const restaurantRouter = Router();
 
@@ -72,13 +76,24 @@ restaurantRouter.get(
   async function (req: Request, res: Response, next: NextFunction) {
     try {
       const { REGNumber } = req.params;
-      const restaurant = await restaurantService.getRestaurant(REGNumber);
-      res.status(200).json(restaurant);
-    } catch (error) {
+      let redisresult = await client.get(`restaurant?REGNumber=${REGNumber}`)
+      if(redisresult!==null){
+        console.log("CACHE HIT");
+        res.status(200).json(JSON.parse(redisresult))
+      }
+      else{
+        console.log("CACHE MISS");
+          const restaurant = await restaurantService.getRestaurant(REGNumber);
+          client.set(`restaurant?REGNumber=${REGNumber}`,JSON.stringify(restaurant),{
+            EX: DEFAULT_EXPRIE
+          });
+          res.status(200).json(restaurant);
+        }
+    }catch (error) {
       next(error);
-    }
-  },
-);
+    }},
+)
+
 
 // 4. 업체 정보 업데이트
 restaurantRouter.patch(
@@ -94,7 +109,11 @@ restaurantRouter.patch(
         REGNumber,
         updateRestaurantInfo,
       );
-      res.status(200).json(updatedRestaurantInfo); // 업데이트된 데이터를 프론트에 json 형태로 전달
+      const restaurant = await restaurantService.getRestaurant(REGNumber);
+      client.set(`restaurant?REGNumber=${REGNumber}`,JSON.stringify(restaurant),{
+        EX: DEFAULT_EXPRIE
+      });
+      res.status(200).json(restaurant); // 업데이트된 데이터를 프론트에 json 형태로 전달
     } catch (error) {
       next(error);
     }
